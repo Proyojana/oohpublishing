@@ -1,0 +1,1074 @@
+/*!
+* Ext JS Library 4.0
+* Copyright(c) 2006-2011 Sencha Inc.
+* licensing@sencha.com
+* http://www.sencha.com/license
+*/
+
+#poweredby {
+    position: absolute;
+    bottom: 40px;
+    left: 20px;
+    z-index: 15000;
+
+    /* IE 5-7 */
+    filter: alpha(opacity=70);
+    /* Netscape */
+    -moz-opacity: 0.7;
+    /* Safari 1.x */
+    -khtml-opacity: 0.7;
+    /* Good browsers */
+    opacity: 0.7;
+}
+
+#poweredby1 {
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+    z-index: 15000;
+
+    /* IE 5-7 */
+    filter: alpha(opacity=70);
+    /* Netscape */
+    -moz-opacity: 0.7;
+    /* Safari 1.x */
+    -khtml-opacity: 0.7;
+    /* Good browsers */
+    opacity: 0.7;
+}
+
+#poweredby div {
+    position: relative;
+    width: 150px;
+    height: 31px;
+    background-image: url(../images/logo.png);
+    background-repeat: no-repeat;
+}
+
+#poweredby1 div {
+    position: relative;
+    width: 305px;
+    height: 85px;
+    background-image: url(../images/download.png);
+    background-repeat: no-repeat;
+}
+
+/* The simple background image PNG does not work in IE6-8, but does in IE9 */
+.x-ie6 #poweredby div,
+.x-ie7 #poweredby div,
+.x-ie8 #poweredby div {
+    background-image: none;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/powered-by-ext-js.png', sizingMethod='scale');
+}
+
+.x-ie6 #poweredby1 div,
+.x-ie7 #poweredby1 div,
+.x-ie8 #poweredby1 div {
+    background-image: none;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/powered-by-ext-js.png', sizingMethod='scale');
+}
+
+/*----------------------------------------------------
+    Start Button
+*/
+
+.ux-start-button-icon {
+    background-image: url(../images/taskbar/sencha.gif) !important;
+    background-color: transparent;
+}
+
+.ux-start-button .x-btn-arrow {
+    background-image: none;
+}
+
+.ux-start-button .x-btn-arrow-right {
+    padding-left: 10px;
+}
+
+.ux-taskbar {
+    padding-left: 4px !important;
+}
+
+/*
+    Start Button (Black)
+*/
+
+.ux-desktop-black .ux-start-button {
+    height: 28px;
+    padding: 0px;
+    display: block;
+}
+
+.ux-desktop-black .ux-start-button em {
+    margin-top: 5px;
+}
+
+.ux-desktop-black .ux-start-button .x-btn-inner {
+    color: black;
+    font-size:11px;
+    font-weight: bold;
+}
+
+.ux-desktop-black .ux-start-button {
+    background-image: -moz-linear-gradient(center top , #E4F3FF, #D9EDFF 48%, #C2D8F2 52%, #C6DCF6);
+    border-radius: 8px 8px 8px 8px;
+    border-color: #81A4D0;
+}
+
+/*----------------------------------------------------
+    Start Menu
+*/
+
+.ux-start-menu-toolbar .x-btn-inner {
+    text-align: left;
+}
+
+.ux-start-menu-toolbar {
+    padding: 4px !important;
+}
+
+/*----------------------------------------------------
+    TaskBar
+*/
+ .cut
+{
+background-image:url(../shared/icons/fam/cut.png);
+}
+.paste
+{
+background-image:url(../shared/icons/fam/copy_paste.png);
+}
+
+.ux-taskbar .x-toolbar {
+    background: transparent none;
+    border-color: transparent;
+}
+
+.x-ie6 .ux-taskbar .x-toolbar {
+    border-color: #d3e1f1;
+}
+
+.ux-desktop-windowbar .x-btn-inner,
+.x-nbr .ux-desktop-windowbar .x-btn-icon-text-left button {
+    text-align: left !important;
+}
+
+.ux-taskbar .x-toolbar {
+    height: 28px;
+}
+
+.ux-taskbar {
+    height: 28px;
+    padding: 0;
+}
+
+.x-toolbar .x-toolbar {
+    padding: 0;
+}
+
+/*
+    TaskBar (Black)
+*/
+
+.ux-desktop-black .ux-taskbar {
+    background: transparent url('../images/taskbar/black/taskbar-start-panel-bg.gif') repeat-x left top;
+    border-color: transparent;
+    /*height: 30px;*/
+}
+
+.ux-desktop-black .ux-taskbar .x-splitter {
+    background: transparent url(../images/taskbar/black/taskbar-split-h.gif) no-repeat scroll 0 -2px;
+}
+
+.ux-desktop-black .ux-taskbar .x-toolbar-text {
+    color: white !important;
+}
+
+.ux-desktop-black .ux-taskbar .x-btn-default-toolbar-small-over {
+    background-color: yellow;
+}
+
+.ux-desktop-black .ux-taskbar .x-btn-inner {
+    color: white;
+}
+
+.ux-desktop-black .ux-taskbar .x-btn-pressed .x-btn-inner, .ux-taskbar .x-btn-over .x-btn-inner {
+    color: black;
+}
+
+/*----------------------------------------------------
+    Tray Clock
+*/
+
+.ux-desktop-trayclock {
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/*----------------------------------------------------
+    Desktop DataView
+*/
+
+.ux-wallpaper {
+    background-color: #3d71b8;
+}
+
+.ux-wallpaper-tiled {
+    background-repeat: repeat;
+}
+
+.ux-desktop-shortcut {
+    cursor: pointer;
+    text-align: center;
+    padding: 8px;
+    margin: 8px;
+    width: 80px;
+}
+
+.ux-desktop-shortcut-icon {
+    width: 64px;
+    height: 64px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+}
+
+.ux-desktop-shortcut-text {
+    font: normal 10px tahoma,arial,verdana,sans-serif;
+    text-decoration: none;
+    padding-top: 5px;
+    color: white;
+}
+
+.x-view-over .ux-desktop-shortcut-text {
+    text-decoration: underline;
+}
+
+
+/*----------------------------------------------------
+    Various icon classes
+*/
+
+.employees-shortcut {
+    background-image: url(../images/user.png);
+   
+}
+.stmsbooks {
+    background-image: url(../images/book.png);
+   
+}
+.wip-shortcut {
+    background-image: url(../images/wip.png);
+   
+}
+.peer-shortcut {
+    background-image: url(../images/peer.png);
+   
+}
+.performance-shortcut {
+    background-image: url(../images/report.png);
+}
+.atten-shortcut{
+	 background-image: url(../images/index.jpg);
+}
+.leave-shortcut{
+	background-image: url(../images/event.png);
+}
+.contact-shortcut{
+	background-image: url(../images/notepadLarge.png);
+}
+.dashboard{
+	background-image: url(../images/project_manager/Dashboard.png);
+}
+.projects{
+	background-image: url(../images/project_manager/projects.png);
+}
+.contacts{
+	background-image: url(../images/project_manager/contacts.png);
+}
+.events{
+	background-image: url(../images/project_manager/events.png);
+}
+.freelancers{
+	background-image: url(../images/freelancers.png);
+}
+.file_manager{
+	background-image: url(../images/file_manager.png);
+}
+.service_provider{
+	background-image: url(../images/service_provider.png);
+}
+.web-shortcut{
+	background-image: url(../images/globe1.png);
+}
+.author{
+	background-image: url(../images/author.png);
+}
+.issues{
+	background-image: url(../images/issues.png);
+}
+.market{
+	background-image: url(../images/market.png);
+}
+.reports{
+	background-image: url(../images/reports.png);
+}
+.art{
+	background-image: url(../images/art.png);
+}
+.buy{
+	background-image: url(../images/buy.png);
+}
+.copy_editing{
+	background-image: url(../images/copy_editing.png);
+}
+.editorial{
+	background-image: url(../images/editorial.png);
+}
+.conversion{
+	background-image: url(../images/conversion.png);
+}
+.rate_card{
+	background-image: url(../images/rate_card.png);
+}
+.services{
+	background-image: url(../images/services.png);
+}
+.resources{
+	background-image: url(../images/resources.png);
+}
+.pipeline{
+	background-image: url(../images/pipeline.png);
+}
+.html-shortcut{
+	background-image: url(../images/html_file.png);
+}
+.soft_proof{
+	background-image: url(../images/soft_proof.png);
+}
+
+/* New shortcuts*/
+.chat-shortcut{
+	background-image: url(../images/chat.png);
+}
+.selfpublishing-shortcut{
+	background-image: url(../images/selfpublishing.png);
+}
+.publisher-shortcut{
+	background-image: url(../images/publishers.png);
+}
+.article-shortcut{
+	background-image: url(../images/article1.png);
+}
+.collaboration-shortcut{
+	background-image: url(../images/collaborators.png);
+}
+.journals{
+	background-image: url(../images/journals.png);
+}
+.rfi{
+	background-image: url(../images/rfi.png);
+}
+.dashboard_icon
+{
+	background:url(../shared/icons/fam/dashboard.png);height:16px;width:16px;margin-right:5px;
+	}
+.smallReports
+{
+	background:url(../shared/icons/fam/report.png);height:16px;width:16px;margin-right:5px;
+}
+.users
+{
+	background:url(../shared/icons/fam/users.png);height:16px;width:16px;margin-right:5px;
+	}
+.group_clients
+{
+	background:url(../shared/icons/fam/group_clients.png);height:16px;width:16px;margin-right:5px;
+	}
+.customer
+{
+	background:url(../shared/icons/fam/customer.png);height:16px;width:16px;margin-right:5px;
+	}
+.line_chart
+{
+	background:url(../shared/icons/fam/line_chart.png);height:16px;width:16px;margin-right:5px;
+	}
+.production
+{
+	background:url(../shared/icons/fam/production.png);height:16px;width:16px;margin-right:5px;
+	}
+.project_budget
+{
+	background:url(../shared/icons/fam/project_budget.png);height:16px;width:16px;margin-right:5px;
+	}
+/* End New Shortcut*/
+.undo{
+
+background:url(../shared/icons/fam/Undo-icon.png);height:16px;width:16px;margin-right:5px;
+
+}
+.redo{
+
+background:url(../shared/icons/fam/Redo-icon.png);height:16px;width:16px;margin-right:5px;
+
+}
+.cut{
+
+background:url(../shared/icons/fam/cut.png);height:16px;width:16px;margin-right:5px;
+
+}
+.copy{
+
+background:url(../shared/icons/fam/Copy-icon.png);height:16px;width:16px;margin-right:5px;
+
+}
+.paste{
+
+background:url(../shared/icons/fam/Paste-icon.png);height:16px;width:16px;margin-right:5px;
+
+}
+.open{
+
+background:url(../shared/icons/fam/open-icon.png);height:16px;width:16px;margin-right:5px;
+
+}
+.open_hover{
+	 background-color: #fdde8c;
+            background-image: none;        
+}
+
+.payroll-shortcut {
+    background-image: url(../images/money.png);
+}
+
+.training {
+    background-image: url(../images/chalk_board.png);
+}
+
+.masters-shortcut {
+    background-image: url(../images/office_folders.png);
+}
+
+.grid-shortcut {
+    background-image: url(../images/grid48x48.png);
+}
+.write
+{
+	background:url(../shared/icons/fam/writing_app.png);height:16px;width:16px;margin-right:5px;
+}
+.renew
+{
+	background:url(../shared/icons/fam/Renew.png);height:16px;width:16px;margin-right:5px;
+}
+.buyclass
+{
+	background:url(../shared/icons/fam/buy.png);height:16px;width:16px;margin-right:5px;
+}
+.shoppingcart
+{
+	background:url(../shared/icons/fam/shopping_cart.png);height:16px;width:16px;margin-right:5px;
+}
+
+.notepad-shortcut {
+    background-image: url(../images/notepadLarge.png);
+    width: 46px;
+    height: 46px;
+}
+
+.x-ie6 .accordion-shortcut {
+    background-image: none;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/im48x48.png', sizingMethod='scale');
+}
+
+.x-ie6 .cpu-shortcut {
+    background-image: none;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/statusLarge.png', sizingMethod='scale');
+}
+
+.x-ie6 .grid-shortcut {
+    background-image: none;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/grid48x48.png', sizingMethod='scale');
+}
+
+.x-ie6 .notepad-shortcut {
+    background-image: none;
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/notepadLarge.png', sizingMethod='scale');
+}
+
+.video {
+    background-image: url(../images/gears.gif);
+}
+
+.bogus {
+    background-image: url( ../images/bogus.png ) !important;
+}
+
+.notepad {
+    background-image: url( ../images/bogus.png ) !important;
+}
+
+.logout {
+    background-image: url( ../images/logout.gif ) !important;
+}
+
+.settings {
+    background-image: url( ../images/gears.gif ) !important;
+}
+
+
+.icon-grid {
+    background-image:url( ../images/grid.png ) !important;
+}
+.add {
+    background-image:url(../shared/icons/fam/add.gif) !important;
+}
+.option {
+    background-image:url(../shared/icons/fam/plugin.gif) !important;
+}
+.remove {
+    background-image:url(../shared/icons/fam/delete.gif) !important;
+}
+.save {
+    background-image:url(../shared/icons/fam/save.png) !important;
+}
+.accordion {
+    background-image:url(../images/accordian.gif) !important;
+}
+.tabs {
+    background-image:url(../images/tabs.gif) !important;
+}
+.region{
+	 background-image:url(../images/globe.png) !important;
+}
+
+/* employee*/
+.personalinfo{
+	 background-image:url(../images/book.png) !important;
+}
+.contactinfo{
+	background-image: url(../images/phone_book.png);
+}
+.button_reset{
+	background-image: url(../images/refresh.png);
+}
+.familyinfo{
+	background-image: url(../images/home.png);
+}
+.bankinfo{
+	background-image: url(../images/credit_cart.png);
+}
+.idinfo{
+	background-image: url(../images/id_card.png);
+}
+.expinfo{
+	background-image: url(../images/portfolio.png);
+}
+.eduinfo{
+background-image: url(../images/chalk_board1.png);
+}
+.apply_leave{
+	background-image: url(../images/add_event.png);
+
+}
+.leave_balance{
+	background-image: url(../images/event_info.png);
+
+}
+.leave{
+	background-image: url(../images/event1.png);
+
+}
+.attendance_mgmt{
+	 background-image:url(../images/note_book1.png) !important;
+}
+
+.profile-grid{
+    background-image:url(../images/user1.png) !important;
+}
+/*----------------------------------------------------
+    IM window icons
+*/
+
+.user {
+    background-image:url( ../shared/icons/fam/user.gif ) !important;
+}
+
+.user-add {
+    background-image:url(../shared/icons/fam/user_add.gif) !important;
+}
+
+.user-delete {
+    background-image:url(../shared/icons/fam/user_delete.gif) !important;
+}
+
+.connect {
+    background-image:url(../shared/icons/fam/connect.gif) !important;
+}
+
+.user-girl {
+    background-image:url(../shared/icons/fam/user_female.gif) !important;
+}
+
+.user-kid {
+    background-image:url(../shared/icons/fam/user_green.gif) !important;
+}
+
+.user-suit {
+    background-image:url(../shared/icons/fam/user_suit.gif) !important;
+}
+
+.htmlClass
+{
+	background:url(../shared/icons/fam/html1.png);height:16px;width:16px;margin-right:5px;
+	}
+	.xmlClass
+{
+	background:url(../shared/icons/fam/xml1.png);height:16px;width:16px;margin-right:5px;
+	}
+	.pdfClass
+{
+	background:url(../shared/icons/fam/pdf.png);height:16px;width:16px;margin-right:5px;
+	}
+	.pdf1Class
+{
+	background:url(../shared/icons/fam/pdf1.png);height:16px;width:16px;margin-right:5px;
+	}
+	.epubClass
+{
+	background:url(../shared/icons/fam/epub1.png);height:16px;width:16px;margin-right:5px;
+	}
+	.rawClass
+{
+	background:url(../shared/icons/fam/raw1.png);height:16px;width:16px;margin-right:5px;
+	}
+		.mycollaClass
+	{
+	background:url(../shared/icons/fam/mycolla.png);height:16px;width:16px;margin-right:5px;
+	}
+		.worksClass
+{
+	background:url(../shared/icons/fam/works.png);height:16px;width:16px;margin-right:5px;
+	}
+		.msgClass
+{
+	background:url(../shared/icons/fam/msg.png);height:16px;width:16px;margin-right:5px;
+	}
+	.saveClass
+{
+	background:url(../shared/icons/fam/save.png);height:16px;width:16px;margin-right:5px;
+	}
+	.newClass
+{
+	background:url(../shared/icons/fam/new.png);height:16px;width:16px;margin-right:5px;
+	}
+	.pdfClass
+{
+	background:url(../shared/icons/fam/pdf.png);height:16px;width:16px;margin-right:5px;
+	}
+		.teamClass
+{
+	background:url(../shared/icons/fam/team.png);height:16px;width:16px;margin-right:5px;
+	}
+	.executeClass
+{
+	background:url(../shared/icons/fam/execute.png);height:16px;width:16px;margin-right:5px;
+	}
+	.revokeClass
+{
+	background:url(../shared/icons/fam/cross1.png);height:16px;width:16px;margin-right:5px;
+	}
+.deleteClass
+{
+	background:url(../shared/icons/fam/delete.png);height:16px;width:16px;
+		}
+	.viewClass
+   {
+	background:url(../shared/icons/fam/full_page.png);height:16px;width:16px;margin-right:6px;
+	}
+	.stagesClass
+   {
+	background:url(../shared/icons/fam/stages.png);height:16px;width:16px;margin-right:6px;
+	}
+	.rolesClass
+   {
+	background:url(../shared/icons/fam/roles.png);height:16px;width:16px;margin-right:6px;
+	}
+	.workflowClass
+   {
+	background:url(../shared/icons/fam/workflow.png);height:16px;width:16px;margin-right:6px;
+	}
+	.applica_goClass
+   {
+	background:url(../shared/icons/fam/application_go.png);height:16px;width:16px;margin-right:6px;
+	}
+	.control_rewindClass
+   {
+	background:url(../shared/icons/fam/control_rewind.png);height:16px;width:16px;margin-right:6px;
+	}
+	
+		
+.masterClass
+{
+	background:url(../shared/icons/fam/office_folders.png);
+	}
+.customersClass
+{
+	background:url(../shared/icons/fam/customers.png);
+	}
+.employeeClass
+{
+	background-image:url(../shared/icons/fam/user1.png);
+	}
+.attendanceClass
+{
+	background-image:url(../shared/icons/fam/index.jpg);
+	}
+.new_project
+{
+	background-image:url(../shared/icons/fam/new_project.png);
+	}
+.current_project
+{
+	background-image:url(../shared/icons/fam/current_project.png);
+	}
+.completed_project
+{
+	background-image:url(../shared/icons/fam/completed_project.png);
+	}
+	
+.addClass
+{
+	background-image:url(../shared/icons/fam/add_1.jpg);
+	}
+
+.leaveClass
+{
+	background-image:url(../shared/icons/fam/event.png);
+	}
+.smallProjects
+{
+	background-image:url(../shared/icons/fam/folder_full.png);
+	}
+.smallMoney
+{
+	background-image:url(../shared/icons/fam/money_icon.png);
+	}
+.fileuploads
+{
+	background-image:url(../shared/icons/fam/up.png);
+	}
+.csvfileuploadClass
+{
+	background-image:url(../shared/icons/fam/csv_file.png);
+	}
+.pendingleave
+{
+	background-image:url(../shared/icons/fam/event_warning.png);
+	}
+.approvedleave
+{
+	background-image:url(../shared/icons/fam/event_accept.png);
+	}
+.designation
+{
+	background-image:url(../shared/icons/fam/id_card.png);
+	}
+.jobtitle
+{
+	background-image:url(../shared/icons/fam/image.png);
+	}
+.archives
+{
+	background-image:url(../shared/icons/fam/database.png);
+	}
+	.addClass
+	{
+		background:url(../shared/icons/fam/add_1.png);height:16px;width:16px;margin-right:5px;
+	}
+#loading-mask {
+  position: absolute;
+  left:     0;
+  top:      0;
+  width:    100%;
+  height:   100%;
+  z-index:  20000;
+  background-color: white;
+}
+
+#loading {
+  position: absolute;
+  left:     50%;
+  top:      50%;
+  padding:  2px;
+  z-index:  20001;
+  height:   auto;
+  margin:   -35px 0 0 -30px;
+}
+
+#loading .loading-indicator {
+  background-image: url(../images/loading3.gif);
+  color:      #555;
+  font:       bold 13px tahoma,arial,helvetica;
+  padding:    8px 42px;
+  margin:     0;
+  text-align: center;
+  height:     auto;
+  background-repeat:no-repeat;
+}
+
+.buttonClass{
+	
+	background:url(../shared/icons/fam/search.png);height:16px;width:16px;margin-right:5px;
+	
+}
+
+.editClass
+{
+	background:url(../shared/icons/fam/edit.png);height:16px;width:16px;margin-right:6px;
+	}
+	.deleteClass
+{
+	background:url(../shared/icons/fam/delete.png);height:16px;width:16px;margin-right:6px;
+	}
+
+.button_add{
+	 background-image:url(../shared/icons/fam/add.png);height:16px;width:16px;margin-right:6px;
+}
+
+.buttonCls { background: #B3B1B1; !important }
+
+
+.saveAsClass
+{
+		background:url(../shared/icons/fam/save_as.png);height:16px;width:16px;margin-right:5px;
+}
+.acceptClass
+{
+		background:url(../shared/icons/fam/accept.png);height:16px;width:16px;margin-right:5px;
+}
+.resubmitClass
+{
+		background:url(../shared/icons/fam/Redo-icon.png);height:16px;width:16px;margin-right:5px;
+}
+.previewClass
+{
+		background:url(../shared/icons/fam/preview_icon.jpg);height:16px;width:16px;margin-right:5px;
+}
+.insertClass
+{
+		background:url(../shared/icons/fam/add_1.png);height:16px;width:16px;margin-right:5px;
+}
+.abbClass
+{
+		background:url(../shared/icons/fam/abbreviation.png);height:32px !important;width:32px !important;
+}
+.hypClass
+{
+		background:url(../shared/icons/fam/hyphenation.png);height:32px !important;width:32px !important;
+}
+.capClass
+{
+		background:url(../shared/icons/fam/capitalization.png);height:32px !important;width:32px !important;
+}
+.dicClass
+{
+		background:url(../shared/icons/fam/dictionary.png);height:32px !important;width:32px !important;
+}
+.tranClass
+{
+		background:url(../shared/icons/fam/Translate.png);height:32px !important;width:32px !important;
+}
+.spellClass
+{
+		background:url(../shared/icons/fam/spellcheck.png);height:32px !important;width:32px !important;
+}
+.youtubeClass
+{
+		background:url(../shared/icons/fam/youtube.png);height:32px !important;width:32px !important;
+}
+.flickrClass
+{
+		background:url(../shared/icons/fam/flickr.png);height:32px !important;width:32px !important;
+}
+.mathClass
+{
+		background:url(../shared/icons/fam/pi_math.png);height:32px !important;width:32px !important;
+}
+.chemClass
+{
+		background:url(../shared/icons/fam/chemdraw.png);height:32px !important;width:32px !important;
+}
+.vimeoClass
+{
+		background:url(../shared/icons/fam/vimeo.png);height:32px !important;width:32px !important;
+}
+.soundClass
+{
+		background:url(../shared/icons/fam/Soundcloud.png);height:32px !important;width:32px !important;
+}
+.wikiClass
+{
+		background:url(../shared/icons/fam/wikipedia.png);height:32px !important;width:32px !important;
+}
+.pubmedClass
+{
+		background:url(../shared/icons/fam/pubmed.png);height:32px !important;width:32px !important;
+}
+.crossrefClass
+{
+		background:url(../shared/icons/fam/crossref.png);height:32px !important;width:32px !important;
+}
+.htmlClass
+{
+		background:url(../shared/icons/fam/html2.png);height:32px !important;width:32px !important;
+}
+.pdfClass
+{
+		background:url(../shared/icons/fam/pdf2.png);height:32px !important;width:32px !important;
+}
+.ipadClass
+{
+		background:url(../shared/icons/fam/ipad.png);height:32px !important;width:32px !important;
+}
+.fbClass
+{
+		background:url(../shared/icons/fam/facebook.png);height:32px !important;width:32px !important;
+}
+.twitterClass
+{
+		background:url(../shared/icons/fam/twitter.png);height:32px !important;width:32px !important;
+}
+.linkedinClass
+{
+		background:url(../shared/icons/fam/linkedin.png);height:32px !important;width:32px !important;
+}
+.pinterestClass
+{
+		background:url(../shared/icons/fam/Pinterest.png);height:32px !important;width:32px !important;
+}
+.googleClass
+{
+		background:url(../shared/icons/fam/google-plus.png);height:32px !important;width:32px !important;
+}
+.tumblrClass
+{
+		background:url(../shared/icons/fam/tumblr.png);height:32px !important;width:32px !important;
+}
+.diggClass
+{
+		background:url(../shared/icons/fam/digg.png);height:32px !important;width:32px !important;
+}
+.deliciousClass
+{
+		background:url(../shared/icons/fam/delicious.png);height:32px !important;width:32px !important;
+}
+.stumbleuponClass
+{
+		background:url(../shared/icons/fam/stumbleupon.png);height:32px !important;width:32px !important;
+}
+.redit
+{
+		background:url(../shared/icons/fam/redit.png);height:32px !important;width:32px !important;
+}
+.startClass{
+	background:url(../images/startarticle.png);height:64px !important;width:64px !important;
+}
+.startbookClass{
+	background:url(../images/article1.png);height:64px !important;width:64px !important;
+}
+.openextClass{
+	background:url(../images/open.png);height:64px !important;width:64px !important;
+}
+.AuthorpmClass
+{
+		background:url(../shared/icons/fam/edit_profile.png);height:32px !important;width:32px !important;
+}
+.collaboratorClass
+{
+		background:url(../shared/icons/fam/business_users.png);height:32px !important;width:32px !important;
+}
+.vendorsClass
+{
+		background:url(../shared/icons/fam/light_bulb.png);height:32px !important;width:32px !important;
+}
+.pmoClass
+{
+		background:url(../shared/icons/fam/business_user.png);height:32px !important;width:32px !important;
+}
+.typesetterClass
+{
+		background:url(../shared/icons/fam/text_page.png);height:32px !important;width:32px !important;
+}
+.othersClass
+{
+		background:url(../shared/icons/fam/promotion.png);height:32px !important;width:32px !important;
+}
+.ScheduleClass
+{
+		background:url(../shared/icons/fam/clock.png);height:32px !important;width:32px !important;
+}
+.BudgetClass
+{
+		background:url(../shared/icons/fam/money.png);height:32px !important;width:32px !important;
+}
+.titleinfoClass
+{
+		background:url(../shared/icons/fam/info.png);height:32px !important;width:32px !important;
+}
+.rscutiClass
+{
+		background:url(../shared/icons/fam/business_user_info.png);height:32px !important;width:32px !important;
+}
+.simulatorClass
+{
+		background:url(../shared/icons/fam/next.png);height:32px !important;width:32px !important;
+}
+.filesClass
+{
+		background:url(../shared/icons/fam/folder.png);height:32px !important;width:32px !important;
+}
+.NotesClass
+{
+		background:url(../shared/icons/fam/note_book32.png);height:32px !important;width:32px !important;
+}
+.RemindersClass
+{
+		background:url(../shared/icons/fam/old_clock.png);height:32px !important;width:32px !important;
+}
+
+.IssuetrckrClass
+{
+		background:url(../shared/icons/fam/support.png);height:32px !important;width:32px !important;
+}
+
+
+#htmleditor{
+	width:807px !important;
+}
+#latex-inputEl_tbl{
+	width:807px !important;
+}
+#html_textarea-inputEl_tbl
+{
+	width:807px !important;
+}
+.notes{
+
+background:url(../shared/icons/fam/notes.png);height:16px;width:16px;margin-right:5px;
+
+}
+.reminders{
+
+background:url(../shared/icons/fam/reminders.png);height:16px;width:16px;margin-right:5px;
+
+}
+.issue{
+
+background:url(../shared/icons/fam/support.png);height:32px !important;width:32px !important;
+}
+.{
+
+background:url(../shared/icons/fam/Copy-icon.png);height:16px;width:16px;margin-right:5px;
+
+}
