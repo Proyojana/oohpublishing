@@ -15,7 +15,7 @@ if(isset($_SESSION['user_name']))
     <link rel="stylesheet" type="text/css" href="inc/ext/resources/css/desktop.css" />	
 	</head>
 	<body background="wallpapers/desktop.jpg">
-   <a href="http://www.proyojana.com" target="_blank" alt="Powered by Proyojana" id="poweredby"><div></div></a>
+   <a href="http://www.proyojana.in" target="_blank" alt="Powered by Proyojana" id="poweredby"><div></div></a>
 	      <a href="http://www.oohpublishing.co.uk" target="_blank" alt="Proyojana" id="poweredby1"><div></div></a>
 
 	</body>
