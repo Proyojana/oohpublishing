@@ -1,4 +1,12 @@
+
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+var service = Ext.create('MyDesktop.store.Service');
+		service.load({
+			params: {
+				start: 0,
+				limit: 50
+			}
+		});
 Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 	extend: 'Ext.form.Panel',
 	alias : 'widget.basicinfoform',
@@ -16,10 +24,18 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 	//initComponent:function(){
 			items:[		
 			{
+				id:'basicid',
+			fieldLabel: 'Basicid',
+			name: 'basicid',
+			hidden:true
+
+			},
+			{
 		id:'basiccode',
 		fieldLabel: 'Code',		
 		name: 'basiccode',
-		afterLabelTextTpl: required,			
+		afterLabelTextTpl: required,
+		allowBlank: false,			
 		x:10,
 		y:10,
 		width:250
@@ -28,6 +44,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		fieldLabel: 'Name',
 		name: 'basicname',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		x:340,
 		y:10,
 		//margin:'-25 0 0 400',
@@ -49,6 +66,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		fieldLabel: 'Address1',
 		name: 'basicaddress1',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		x:10,
 		y:40,
 		//margin:'-25 0 0 400',
@@ -66,10 +84,26 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		height:70,
 		width:250
 	},
+	{
+		xtype:'combo',
+		id:'basic_service',
+		fieldLabel:'Services',
+		x:660,
+		y:40,
+		width:250,
+		multiSelect:true,
+		store: service,
+		queryMode: 'local',
+		displayField: 'service_name',
+	    valueField: 'service_id',
+									           		         
+				
+	},
      {
       	id:'basiccity',
 		fieldLabel: 'City',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		x:10,
 		y:120,
 		width:250,
@@ -80,7 +114,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
       {
       	id:'basicstate',
 		fieldLabel: 'State',
-		afterLabelTextTpl: required,			
+		afterLabelTextTpl: required,	
+		allowBlank: false,		
 		x:340,
 		y:120,
 		name: 'state',
@@ -92,6 +127,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
       	id:'basiccountry',
 		fieldLabel: 'Country',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		width:250,
 		
 		x:660,
@@ -109,13 +145,17 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		y:150,
 		name: 'basicpin',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		//margin:'5 0 0 0'
 		
       },
-      {
+      { 
+      	xtype:'numberfield',
+		hideTrigger:true,
       	id:'basicphone',
 		fieldLabel: 'Phone',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		width:250,
 		
 		x:340,
@@ -162,39 +202,46 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
       {
 		xtype:'button',
 		text: 'Add',
-		id:'personaladd4',
+		id:'venadd',
 		iconCls: 'button_add',
 		x:340,
 		y:270,
 		width:75,
 		handler: function (){
-			            var currentForm = this.up('employeeform');
-			            var empno = Ext.getCmp('empno').getValue();
-						var firstname = Ext.getCmp('firstname').getValue();
-						var lastname = Ext.getCmp('lastname').getValue();
-						var dob=Ext.getCmp('dob').getValue();
-						var city=Ext.getCmp('city').getValue();
-						var state=Ext.getCmp('state').getValue();
-						var country=Ext.getCmp('country').getValue();
-						var address=Ext.getCmp('address').getValue();
-						if(firstname !== "" || lastname !== "" || dob !== null || city !== "" || state !== "" || country !== "" || address !== "" )
+			            var currentForm = Ext.getCmp('basicinfoform');
+			            var basiccode = Ext.getCmp('basiccode').getValue();
+						var basicname = Ext.getCmp('basicname').getValue();
+						var basicdescription = Ext.getCmp('basicdescription').getValue();
+						var basicaddress1=Ext.getCmp('basicaddress1').getValue();
+						var basicaddress2=Ext.getCmp('basicaddress2').getValue();
+						var basicservice=Ext.getCmp('basic_service').getValue();
+						var basiccity=Ext.getCmp('basiccity').getValue();
+						var basicstate=Ext.getCmp('basicstate').getValue();
+						var basiccountry=Ext.getCmp('basiccountry').getValue();
+						var basicpin=Ext.getCmp('basicpin').getValue();
+						var basicphone=Ext.getCmp('basicphone').getValue();
+						var basicfax=Ext.getCmp('basicfax').getValue();
+						var basicemail=Ext.getCmp('basicemail').getValue();
+						var basicwebsite=Ext.getCmp('basicwebsite').getValue();
+						basicservice = basicservice + ',';
+						if(currentForm.getForm().isValid()==true)
 					{
 						var conn = new Ext.data.Connection();
 					    conn.request({
-						url: 'service/EmpPersonalInfo.php',
+						url: 'service/vendors.php',
 						method: 'POST',
-						params : {action:2,id:empno,firstname:firstname,lastname:lastname,dob:dob,city:city,state:state,country:country,address:address},
+						params : {action:5,basiccode:basiccode,basicname:basicname,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicpin:basicpin,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							//currentForm.getForm().reset();
-							Ext.getCmp('employee').getStore().reload();
+							currentForm.getForm().reset();
+							Ext.getCmp('vendorsgrid').getStore().reload();
 							}
 					});
 					}
 				else
 				{
-					Ext.MessageBox.alert("Sorry, We can't add an empty row ");
+					Ext.MessageBox.alert("Enter the Required fields");
 					
 				}
 			}
@@ -203,34 +250,44 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		xtype:'button',
 		text: 'Edit',
 		
-		id:'personaledit4',
+		id:'venedit',
 		iconCls: 'editClass',
 		x:440,
 		y:270,
 		//margin:'0 0 0 10',
 		width:75,
-		/*handler: function (){
-			 var currentForm = this.up('employeeform');
-			            var empno = Ext.getCmp('empno').getValue();
-						var firstname = Ext.getCmp('firstname').getValue();
-						var lastname = Ext.getCmp('lastname').getValue();
-						var dob=Ext.getCmp('dob').getValue();
-						var city=Ext.getCmp('city').getValue();
-						var state=Ext.getCmp('state').getValue();
-						var country=Ext.getCmp('country').getValue();
-						var address=Ext.getCmp('address').getValue();
-								if(firstname !== "" || lastname !== "" || dob !== null || city !== "" || state !== "" || country !== "" || address !== "" )
+		handler: function (){
+			 var currentForm = this.up('basicinfoform');
+			 
+			            var currentForm = Ext.getCmp('basicinfoform');
+			            var basicid = Ext.getCmp('basicid').getValue();
+			            var basiccode = Ext.getCmp('basiccode').getValue();
+						var basicname = Ext.getCmp('basicname').getValue();
+						var basicdescription = Ext.getCmp('basicdescription').getValue();
+						var basicaddress1=Ext.getCmp('basicaddress1').getValue();
+						var basicaddress2=Ext.getCmp('basicaddress2').getValue();
+						var basicservice=Ext.getCmp('basic_service').getValue();
+						var basiccity=Ext.getCmp('basiccity').getValue();
+						var basicstate=Ext.getCmp('basicstate').getValue();
+						var basiccountry=Ext.getCmp('basiccountry').getValue();
+						var basicpin=Ext.getCmp('basicpin').getValue();
+						var basicphone=Ext.getCmp('basicphone').getValue();
+						var basicfax=Ext.getCmp('basicfax').getValue();
+						var basicemail=Ext.getCmp('basicemail').getValue();
+						var basicwebsite=Ext.getCmp('basicwebsite').getValue();
+						
+							if(currentForm.getForm().isValid()==true)
 					{
 						var conn = new Ext.data.Connection();
 					    conn.request({
-						url: 'service/EmpPersonalInfo.php',
+						url: 'service/vendors.php',
 						method: 'POST',
-						params : {action:1,id:empno,firstname:firstname,lastname:lastname,dob:dob,city:city,state:state,country:country,address:address},
+						params : {action:4,basicid:basicid,basiccode:basiccode,basicname:basicname,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicpin:basicpin,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							//currentForm.getForm().reset();
-							Ext.getCmp('employee').getStore().reload();
+							currentForm.getForm().reset();
+							Ext.getCmp('vendorsgrid').getStore().reload();
 						}
 					});
 					}
@@ -239,26 +296,38 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 					Ext.MessageBox.alert("Sorry, We can't edit an empty row ");
 					
 				}
-		}*/
+		}
 		},
       {
 		xtype:'button',
 		text: 'Reset',
-		id:'personalreset4',
+		id:'venreset',
 		iconCls: 'button_reset',
 		x:540,
 		y:270,
 		//margin:'0 0 0 10',
 		width:75,
-		/*handler: function (){
-						var firstname = Ext.getCmp('firstname').reset();
-						var lastname = Ext.getCmp('lastname').reset();
-						var dob=Ext.getCmp('dob').reset();
-						var city=Ext.getCmp('city').reset();
-						var state=Ext.getCmp('state').reset();
-						var country=Ext.getCmp('country').reset();
-						var address=Ext.getCmp('address').reset();
-		}*/
+		handler: function (){
+			
+							Ext.getCmp('Vendors_teamformTab').setDisabled(true);
+							Ext.getCmp('Vendors_contactTab').setDisabled(true);
+							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(true);
+						var firstname = Ext.getCmp('basiccode').reset();
+						var lastname = Ext.getCmp('basicname').reset();
+						var dob=Ext.getCmp('basicdescription').reset();
+						var city=Ext.getCmp('basicaddress1').reset();
+						var state=Ext.getCmp('basicaddress2').reset();
+						var country=Ext.getCmp('sevicesven').reset();
+						var address=Ext.getCmp('basiccity').reset();
+						var address=Ext.getCmp('basicstate').reset();
+						var address=Ext.getCmp('basiccountry').reset();
+						var address=Ext.getCmp('basicpin').reset();
+						var address=Ext.getCmp('basicphone').reset();
+						var address=Ext.getCmp('basicfax').reset();
+						var address=Ext.getCmp('basicwebsite').reset();
+						var address=Ext.getCmp('basicemail').reset();
+						
+		}
 		}
 		]
 	

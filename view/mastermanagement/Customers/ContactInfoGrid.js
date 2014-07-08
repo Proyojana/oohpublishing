@@ -5,149 +5,150 @@
 Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoGrid', {
 	extend:'Ext.grid.Panel',
 	alias:'widget.custcontactgrid',
-	//closeAction: 'hide',
 	selModel:sm,
-	//height:100,
-	//requires : ['MyDesktop.store.freelancer'],
+	requires : ['MyDesktop.store.Customers_contact'],
 	title:'',
 	id:'custcontactgrid',
 	initComponent: function() {
 		
-	/*	var ci = Ext.create('MyDesktop.store.freelancer');
+		var ci = Ext.create('MyDesktop.store.Customers_contact');
 		ci.load({
 			params: {
 				start: 0,
 				limit: 8
 			}
 		});
-		ci.loadPage(1);
-		this.store = ci,*/
+		//ci.loadPage(1);
+		this.store = ci,
 			
 			this.columns = [
 				{
-				//	dataIndex: 'Id',
+					dataIndex: 'id',
 					hidden:true
 				},
 				{
-				//	dataIndex: 'Code',
+					dataIndex: 'name',
 					text: 'Name',
 					align: 'center',
-				width:100,
+					flex:1,
 					filter: {
                 	type: 'string'
            		}
 				},
 				{
-					//dataIndex: 'Name',
+					dataIndex: 'phone',
 					text: 'Phone',
 					align: 'center',
-					flex:2,
+					flex:1,
 					filter: {
                 	type: 'string'
            		}
 				},
 				
 				{
-					//dataIndex: 'Description',
+					dataIndex: 'email',
 					text: 'E-mail',
 					align: 'center',
-					flex:2,
+					flex:1,
 					filter: {
                 	type: 'string'
            		}
 				},
 				{
-					//dataIndex: 'Description',
+					dataIndex: 'designation',
 					text: 'Designation',
 					align: 'center',
-					flex:2,
+					flex:1,
 					filter: {
                 	type: 'string'
            		}
 				},
 				
 				
-				/*{
+				{
 					xtype:'actioncolumn',
 					align: 'center',
-					width:250,
+					flex:1,
 					text:'Actions',
 					items: [{
 						iconCls: 'viewClass',
 						//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
 						tooltip: 'View',
-				/*	handler: function(grid, rowIndex, colIndex) {
-					    var currentForm = Ext.getCmp('freelancermasterform');
+					handler: function(grid, rowIndex, colIndex) {
+					    var currentForm = Ext.getCmp('customercontactsformTab');
 						var rec = grid.getStore().getAt(rowIndex);
-						var id=rec.get('Id');
-						Ext.getCmp('Code').setReadOnly(true);
+						var id=rec.get('id');
+						
+						Ext.getCmp('custcontctname').setReadOnly(true);
+						Ext.getCmp('custcontctphone').setReadOnly(true);
+						Ext.getCmp('custcntctemail').setReadOnly(true);
+						Ext.getCmp('custcntctdesignation').setReadOnly(true);
+						
+						Ext.getCmp('customersContact_add').setVisible(false); 
+						Ext.getCmp('customersContact_edit').setVisible(false); 
+						Ext.getCmp('customersContact_reset').setVisible(false);
 						currentForm.getForm().load({
-   								 url: 'service/freelancer.php',
+   								 url: 'service/customers_Contact.php',
 							     params: {
-        						 	action:2,Id:id
+        						 	action:2,id:id
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
 						
-						Ext.getCmp('freelancermastertab').layout.setActiveItem('freelancermasterform');
-						Ext.getCmp('Code').setReadOnly(true);
-						Ext.getCmp('Name').setReadOnly(true);
-						Ext.getCmp('freelancerDescription').setReadOnly(true);
-						
-				}*/
-			//},{
-				//iconCls: 'editClass',
+				}
+			},{
+				iconCls: 'editClass',
 				//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-			//	tooltip: 'Edit',
-			/*	handler: function(grid, rowIndex, colIndex) {
+				tooltip: 'Edit',
+				handler: function(grid, rowIndex, colIndex) {
 					
-					    var currentForm = Ext.getCmp('freelancermasterform');
+					   var currentForm = Ext.getCmp('customercontactsformTab');
 						var rec = grid.getStore().getAt(rowIndex);
-						var id=rec.get('Id');
-						Ext.getCmp('Code').setReadOnly(true);
+						var id=rec.get('id');
+						Ext.getCmp('custcontctname').setReadOnly(false);
+						Ext.getCmp('custcontctphone').setReadOnly(false);
+						Ext.getCmp('custcntctemail').setReadOnly(false);
+						Ext.getCmp('custcntctdesignation').setReadOnly(false);
+						
+						Ext.getCmp('customersContact_add').setVisible(true); 
+						Ext.getCmp('customersContact_edit').setVisible(true); 
+						Ext.getCmp('customersContact_reset').setVisible(true);
 						currentForm.getForm().load({
-   								 url: 'service/freelancer.php',
+   								 url: 'service/customers_Contact.php',
 							     params: {
-        						 	action:2,Id:id
+        						 	action:2,id:id
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
 						
-						Ext.getCmp('freelancermastertab').layout.setActiveItem('freelancermasterform');
-						Ext.getCmp('Id').setReadOnly(false);
-						Ext.getCmp('Name').setReadOnly(false);
-						Ext.getCmp('freelancerDescription').setReadOnly(false);
 						
 						
-				}*/
-		//	},{
-				//	iconCls: 'deleteClass',
+				}
+			},{
+					iconCls: 'deleteClass',
 					//tooltip: 'Delete',
-				/*	handler: function(grid, rowIndex, colIndex) {
+					handler: function(grid, rowIndex, colIndex) {
 					var grid = this.up('grid');
+					var teams_customerid = Ext.getCmp('basic_customerid').getValue();
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
-						Ext.Msg.confirm('Remove Record '+rec.get('Code')+' ?',+rec.get('Code'), function (button) {
+						Ext.Msg.confirm('Remove Record '+rec.get('name')+' ?',+rec.get('name'), function (button) {
 							if (button == 'yes') {
-								var id=rec.get('Id');
+								var id=rec.get('id');
 								var conn = new Ext.data.Connection();
 								conn.request({
-									url: 'service/freelancer.php',
+									url: 'service/customers_Contact.php',
 									method: 'POST',
-									params : {action:3,Id:id},
+									params : {action:3,id:id},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										stat.load({
-											params: {
-												start: 0,
-												limit: 50
-											}
-										});
+										var grid3=Ext.getCmp('custcontactgrid');
+						              grid3.getStore().load({params:{action:1,id:teams_customerid}});
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -159,9 +160,9 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoGrid', {
 							}
 						});
 					}
-					}*/
-				//}]
-		//}*/
+					}
+				}]
+		}
 		];
 		this.bbar = Ext.create('Ext.PagingToolbar', {  
 

@@ -1,7 +1,7 @@
 var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
-	var store1 = Ext.create('Ext.data.JsonStore', {
+/*	var store1 = Ext.create('Ext.data.JsonStore', {
     fields: ['trolescode','trolesname', 'description'],
     data: [{"trolescode":"TR001","trolesname":"Project Manager","description":"Manages the project"},
             {"trolescode":"TR002","trolesname":"Copy Editor","description":"Checks the formatting, style, and accuracy of text"},
@@ -10,7 +10,7 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
             {"trolescode":"TR005","trolesname":"Indexer","description":"Provides an index"},
             {"trolescode":"TR006","trolesname":"Type setter","description":"Arranging physical types or the digital equivalents"}
     ]
-    });	
+    });*/	
 Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesGrid', {
 	extend:'Ext.ux.LiveSearchGridPanel',
 	//features:[filters],
@@ -19,22 +19,22 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesGrid', {
 	closeAction: 'hide',
 	selModel:sm,
 	height:250,
-	//requires : ['MyDesktop.store.Dept'],
+		requires : ['MyDesktop.store.TeamRoles'],
 	
 	id:'trolesgrid',
 	initComponent: function() {
-		/*var ci = Ext.create('MyDesktop.store.Dept');
+	var ci = Ext.create('MyDesktop.store.TeamRoles');
 		ci.load({
 			params: {
 				start: 0,
 				limit: 8
 			}
 		});
-		ci.loadPage(1);*/
-		this.store = store1,
+		ci.loadPage(1);
+		this.store = ci,
 			this.columns = [
 				{
-					dataIndex: 'deptid',
+					dataIndex: 'trolesid',
 					hidden:true
 				},
 				{
@@ -78,35 +78,35 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesGrid', {
 						//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
 						tooltip: 'View',
 					handler: function(grid, rowIndex, colIndex) {
-					    var currentForm = Ext.getCmp('deptform');
+					    var currentForm = Ext.getCmp('trolesaddform');
 						var rec = grid.getStore().getAt(rowIndex);
-						var deptid=rec.get('deptid');
-						Ext.getCmp('deptcode').setReadOnly(true);
+						var trolesid=rec.get('trolesid');
+						Ext.getCmp('trolescode').setReadOnly(true);
 						currentForm.getForm().load({
-   								 url: 'service/Dept.php',
+   								 url: 'service/team_roles.php',
 							     params: {
-        						 	action:2,deptid:deptid
+        						 	action:4,trolesid:trolesid
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
 						
-						Ext.getCmp('depttab').layout.setActiveItem('deptform');
+					//	Ext.getCmp('depttab').layout.setActiveItem('deptform');
 						
-						Ext.getCmp('deptcode').setReadOnly(true);
-						Ext.getCmp('deptdesc').setReadOnly(true);
-						Ext.getCmp('deptname').setReadOnly(true);
+						Ext.getCmp('trolesid').setReadOnly(true);
+						Ext.getCmp('trolesname').setReadOnly(true);
+						Ext.getCmp('trolesdescription').setReadOnly(true);
 						
 						
-						Ext.getCmp('add_dept').getEl().hide();
-						Ext.getCmp('edit_dept').getEl().hide();
-						Ext.getCmp('reset_dept').getEl().hide();
+						Ext.getCmp('add_roles').getEl().hide();
+						Ext.getCmp('edit_roles').getEl().hide();
+						Ext.getCmp('reset_roles').getEl().hide();
 						
 						
     					
     					
-    					Ext.getCmp('deptaddform').setTitle('View State');
+    					Ext.getCmp('trolesaddform').setTitle('View Roles');
 						
 				}
 			},{
@@ -115,34 +115,36 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesGrid', {
 				tooltip: 'Edit',
 		 	handler: function(grid, rowIndex, colIndex) {
 					
-					    var currentForm = Ext.getCmp('deptform');
+					 	    var currentForm = Ext.getCmp('trolesaddform');
 						var rec = grid.getStore().getAt(rowIndex);
-						var deptid=rec.get('deptid');
-						Ext.getCmp('deptcode').setReadOnly(true);
+						var trolesid=rec.get('trolesid');
+						Ext.getCmp('trolescode').setReadOnly(true);
 						currentForm.getForm().load({
-   								 url: 'service/Dept.php',
+   								 url: 'service/team_roles.php',
 							     params: {
-        						 	action:2,deptid:deptid
+        						 	action:4,trolesid:trolesid
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
 						
-						Ext.getCmp('depttab').layout.setActiveItem('deptform');
-						Ext.getCmp('deptcode').setReadOnly(false);
-						Ext.getCmp('deptdesc').setReadOnly(false);
-						Ext.getCmp('deptname').setReadOnly(false);
+					//	Ext.getCmp('depttab').layout.setActiveItem('deptform');
+						
+						Ext.getCmp('trolesid').setReadOnly(false);
+						Ext.getCmp('trolesname').setReadOnly(false);
+						Ext.getCmp('trolesdescription').setReadOnly(false);
 						
 						
-						Ext.getCmp('add_dept').getEl().show();
-						Ext.getCmp('edit_dept').getEl().show();
-						Ext.getCmp('reset_dept').getEl().show();
+						Ext.getCmp('add_roles').getEl().show();
+						Ext.getCmp('edit_roles').getEl().show();
+						Ext.getCmp('reset_roles').getEl().show();
 						
 						
     					
-    					
-    					Ext.getCmp('deptaddform').setTitle('Edit Dept');
+    						Ext.getCmp('trolesaddform').setTitle('Edit Roles');
+
+//    					Ext.getCmp('trolesaddform').setTitle('View Roles');
 						
 				}
 			},{
@@ -152,14 +154,14 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesGrid', {
 					var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
-						Ext.Msg.confirm('Remove Record '+rec.get('deptcode')+' ?',+rec.get('deptcode'), function (button) {
+						Ext.Msg.confirm('Remove Record '+rec.get('trolescode')+' ?',+rec.get('trolescode'), function (button) {
 							if (button == 'yes') {
-								var deptid=rec.get('deptid');
+								var trolesid=rec.get('trolesid');
 								var conn = new Ext.data.Connection();
 								conn.request({
-									url: 'service/Dept.php',
+									url: 'service/team_roles.php',
 									method: 'POST',
-									params : {action:3,deptid:deptid},
+									params : {action:5,trolesid:trolesid},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 

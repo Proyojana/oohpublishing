@@ -8,5 +8,6 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersTabPanel',{
 					deferredRender: true,
                     xtype: 'tabpanel',
 					region: 'center',
+					
                     items: [{xtype:'customersform'}]
 	});

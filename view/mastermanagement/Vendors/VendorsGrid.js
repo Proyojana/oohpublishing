@@ -1,29 +1,19 @@
      var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
-     var store1 = Ext.create('Ext.data.JsonStore', {
-   fields: ['Code','Name', 'Email','Phone'],
-   data: [
-   { "Code":"V001","Name":"Nadalia","Email":"nadalia@gmail.com","Phone":"9034767231"},
-   { "Code":"V002","Name":"West Cliff","Email":"cliff@gmail.com","Phone":"9566567571"},
-   { "Code":"V003","Name":"Blond Forld","Email":"blond@gmail.com","Phone":"6789335667"},
-   { "Code":"V004","Name":"Lisa","Email":"lisa@gmail.com","Phone":"6767876889"},
-   { "Code":"V005","Name":"Leonard","Email":"leonard@gmail.com","Phone":"0347645456"},
-   
-    ]
-});
+     
 Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 	extend:'Ext.grid.Panel',
 	alias:'widget.vendorsgrid',
 	closeAction: 'hide',
 	selModel:sm,
 	height:190,
-	//requires : ['MyDesktop.store.freelancer'],
+	requires : ['MyDesktop.store.Vendors'],
 	
 	id:'vendorsgrid',
 	initComponent: function() {
 		
-	/*	var ci = Ext.create('MyDesktop.store.freelancer');
+	var ci = Ext.create('MyDesktop.store.Vendors');
 		ci.load({
 			params: {
 				start: 0,
@@ -31,15 +21,14 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 			}
 		});
 		ci.loadPage(1);
-		this.store = ci,*/
-		this.store = store1,
+		this.store=ci,
 			this.columns = [
 				{
-				//	dataIndex: 'Id',
+					dataIndex: 'id',
 					hidden:true
 				},
 				{
-					dataIndex: 'Code',
+					dataIndex: 'code',
 					text: 'Code',
 					align: 'center',
 					flex:1,
@@ -48,7 +37,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
            		}
 				},
 				{
-					dataIndex: 'Name',
+					dataIndex: 'name',
 					text: 'Name',
 					align: 'center',
 					flex:2,
@@ -58,7 +47,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 				},
 				
 				{
-					dataIndex: 'Email',
+					dataIndex: 'email',
 					text: 'Email',
 					align: 'center',
 					flex:2,
@@ -66,9 +55,18 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
                 	type: 'string'
            		}
 				},
-				{
-					dataIndex: 'Phone',
+			/*	{
+					dataIndex: 'phone',
 					text: 'Phone',
+					align: 'center',
+					flex:2,
+					filter: {
+                	type: 'string'
+           		}
+				},*/
+				{
+					dataIndex: 'services',
+					text: 'Services',
 					align: 'center',
 					flex:2,
 					filter: {
@@ -86,90 +84,163 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 						iconCls: 'viewClass',
 						//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
 						tooltip: 'View',
-				/*	handler: function(grid, rowIndex, colIndex) {
-					    var currentForm = Ext.getCmp('freelancermasterform');
+					handler: function(grid, rowIndex, colIndex) {
+					    var currentForm = Ext.getCmp('basicinfoform');
 						var rec = grid.getStore().getAt(rowIndex);
-						var id=rec.get('Id');
-						Ext.getCmp('Code').setReadOnly(true);
-						currentForm.getForm().load({
-   								 url: 'service/freelancer.php',
+						var id=rec.get('id');
+						 currentForm.getForm().load({
+   								 url: 'service/vendors.php',
 							     params: {
-        						 	action:2,Id:id
+        						 	action:2,id:id
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
+						Ext.getCmp('basiccode').setReadOnly(true);
 						
-						Ext.getCmp('freelancermastertab').layout.setActiveItem('freelancermasterform');
-						Ext.getCmp('Code').setReadOnly(true);
-						Ext.getCmp('Name').setReadOnly(true);
-						Ext.getCmp('freelancerDescription').setReadOnly(true);
+						Ext.getCmp('Vendors_teamformTab').setDisabled(false);
+							Ext.getCmp('Vendors_contactTab').setDisabled(false);
+							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(false);
 						
-				}*/
+						Ext.getCmp('basicname').setReadOnly(true);
+						Ext.getCmp('basicaddress1').setReadOnly(true);
+						Ext.getCmp('basicaddress2').setReadOnly(true);
+						Ext.getCmp('basiccity').setReadOnly(true);
+						
+						Ext.getCmp('basicstate').setReadOnly(true);
+						Ext.getCmp('basiccountry').setReadOnly(true);
+						
+						Ext.getCmp('basicpin').setReadOnly(true);
+						Ext.getCmp('basicphone').setReadOnly(true);
+						
+						Ext.getCmp('basicfax').setReadOnly(true);
+						Ext.getCmp('basicemail').setReadOnly(true);
+						Ext.getCmp('basicwebsite').setReadOnly(true);
+						Ext.getCmp('basicdescription').setReadOnly(true);
+						
+						/*	Ext.getCmp('contctname').setReadOnly(true);
+						Ext.getCmp('contctphone').setReadOnly(true);
+						Ext.getCmp('cntctemail').setReadOnly(true);
+						Ext.getCmp('cntctdesignation').setReadOnly(true);
+						Ext.getCmp('cntctaddven').setVisible(false); 
+						Ext.getCmp('cntcteditven').setVisible(false); 
+						Ext.getCmp('cntctrstven').setVisible(false);
+						
+						Ext.getCmp('teamaddven').setVisible(false); 
+						Ext.getCmp('teameditven').setVisible(false); 
+						Ext.getCmp('teamresetvendor').setVisible(false);
+						 
+						Ext.getCmp('teamname').setReadOnly(true);
+						Ext.getCmp('division').setReadOnly(true);
+						Ext.getCmp('teamemail').setReadOnly(true);
+						Ext.getCmp('teamphone').setReadOnly(true);
+						Ext.getCmp('teampoc').setReadOnly(true);*/
+						
+						
+						//hide add,edit and reset buttons
+						Ext.getCmp('venadd').setVisible(false); 
+						Ext.getCmp('venedit').setVisible(false); 
+						 Ext.getCmp('venreset').setVisible(false);
+						 //load teams grid
+						 var grid1=Ext.getCmp('vendorsteamgrid');
+						grid1.getStore().load({params:{action:3,basicvendorid:id}});
+						 var grid1=Ext.getCmp('vendorscontactgrid');
+						grid1.getStore().load({params:{action:1,vendorid:id}});
+						var grid1=Ext.getCmp('Vendors_ratecardgridTab');
+						grid1.getStore().load({params:{action:1,vendorid:id}});
+						 //show inner panel
+					/*	Ext.getCmp('customercontactsformTab').setDisabled(false);
+							Ext.getCmp('customerteamsformTab').setDisabled(false);
+							Ext.getCmp('customerratecardformTab').setDisabled(false);
+						Ext.getCmp('customerstab').layout.setActiveItem('custbasicinfoform');*/
+						
+						
+						
+				}
 			},{
 				iconCls: 'editClass',
 				//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
 				tooltip: 'Edit',
-			/*	handler: function(grid, rowIndex, colIndex) {
+				handler: function(grid, rowIndex, colIndex) {
 					
-					    var currentForm = Ext.getCmp('freelancermasterform');
+					    var currentForm = Ext.getCmp('basicinfoform');
 						var rec = grid.getStore().getAt(rowIndex);
-						var id=rec.get('Id');
-						Ext.getCmp('Code').setReadOnly(true);
-						currentForm.getForm().load({
-   								 url: 'service/freelancer.php',
+						var id=rec.get('id');
+						 currentForm.getForm().load({
+   								 url: 'service/vendors.php',
 							     params: {
-        						 	action:2,Id:id
+        						 	action:2,id:id
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
+						Ext.getCmp('Vendors_teamformTab').setDisabled(false);
+							Ext.getCmp('Vendors_contactTab').setDisabled(false);
+							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(false);
+
+Ext.getCmp('basiccode').setReadOnly(false);
+Ext.getCmp('basicname').setReadOnly(false);
+						Ext.getCmp('basicaddress1').setReadOnly(false);
+						Ext.getCmp('basicaddress2').setReadOnly(false);
+						Ext.getCmp('basiccity').setReadOnly(false);
 						
-						Ext.getCmp('freelancermastertab').layout.setActiveItem('freelancermasterform');
-						Ext.getCmp('Id').setReadOnly(false);
-						Ext.getCmp('Name').setReadOnly(false);
-						Ext.getCmp('freelancerDescription').setReadOnly(false);
+						Ext.getCmp('basicstate').setReadOnly(false);
+						Ext.getCmp('basiccountry').setReadOnly(false);
+						
+						Ext.getCmp('basicpin').setReadOnly(false);
+						Ext.getCmp('basicphone').setReadOnly(false);
+						
+						Ext.getCmp('basicfax').setReadOnly(false);
+						Ext.getCmp('basicemail').setReadOnly(false);
+						Ext.getCmp('basicwebsite').setReadOnly(false);
+						Ext.getCmp('basicdescription').setReadOnly(false);
+						
+						Ext.getCmp('venadd').setVisible(true); 
+						Ext.getCmp('venedit').setVisible(true); 
+						 Ext.getCmp('venreset').setVisible(true);
+						 var grid1=Ext.getCmp('vendorsteamgrid');
+						grid1.getStore().load({params:{action:3,basicvendorid:id}});
+						 var grid1=Ext.getCmp('vendorscontactgrid');
+						grid1.getStore().load({params:{action:1,vendorid:id}});
+						var grid1=Ext.getCmp('Vendors_ratecardgridTab');
+						grid1.getStore().load({params:{action:1,vendorid:id}});
 						
 						
-				}*/
+						
+				}
 			},{
 					iconCls: 'deleteClass',
 					tooltip: 'Delete',
-				/*	handler: function(grid, rowIndex, colIndex) {
+					handler: function(grid, rowIndex, colIndex) {
 					var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
-						Ext.Msg.confirm('Remove Record '+rec.get('Code')+' ?',+rec.get('Code'), function (button) {
+						Ext.Msg.confirm('Remove Record '+rec.get('code')+' ?',+rec.get('code'), function (button) {
 							if (button == 'yes') {
-								var id=rec.get('Id');
+								var id=rec.get('id');
 								var conn = new Ext.data.Connection();
 								conn.request({
-									url: 'service/freelancer.php',
+									url: 'service/vendors.php',
 									method: 'POST',
-									params : {action:3,Id:id},
+									params : {action:3,id:id},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										stat.load({
-											params: {
-												start: 0,
-												limit: 50
-											}
-										});
+										
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Deletion Failed !', obj.message); 
 									}
 								});
-								
+								Ext.getCmp('vendorsgrid').getStore().reload();
 								
 							}
 						});
 					}
-					}*/
+					}
 				}],
 				
 		}];

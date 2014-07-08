@@ -1,6 +1,6 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
-    extend: 'Ext.form.FieldSet',
+    extend: 'Ext.form.Panel',
     alias : 'widget.trolesaddform',
    		id:'trolesaddform',
     margin: '2 10 10 10',
@@ -15,6 +15,26 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
         labelWidth: 140,
     },
     defaultType: 'textfield',
+    listeners: {
+     	 afterrender: function(){
+     	 	var currentForm = Ext.getCmp('trolesaddform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/team_roles.php',
+							     params: {
+        						 	action:1
+							    },
+							    success:function(form,action){
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){							    
+							    	Ext.getCmp('trolescode').setValue(action.result.message);
+							    }
+							
+							});
+     	}},
 	initComponent:function(){
 	/*	var ci = Ext.create('MyDesktop.store.State');
 		ci.load({params:{action: 7}});
@@ -66,28 +86,28 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 			xtype:'button',
     	    text:'Add',
     	    iconCls: 'button_add',
-    	    id:'add_city',
+    	    id:'add_roles',
 			x:350,
 			y:165,
 			width:75,
 			handler: function (){				
-				var currentForm = this.up('cityform');
-				var city_code = Ext.getCmp('citycode').getValue();
-				var city_name = Ext.getCmp('cityname').getValue();
-				var city_state= Ext.getCmp('cstateid').getValue();
+				var currentForm = this.up('trolesaddform');
+				var trole_code = Ext.getCmp('trolescode').getValue();
+				var trole_name = Ext.getCmp('trolesname').getValue();
+				var trole_description= Ext.getCmp('trolesdescription').getValue();
 				if(currentForm.getForm().isValid() == true)
 				{
 				var conn = new Ext.data.Connection();
 					conn.request({
-						url: 'service/City.php',
+						url: 'service/team_roles.php',
 						method: 'POST',
-						params : {action:5,city_code:city_code,city_name:city_name,city_state:city_state},
+						params : {action:2,trole_code:trole_code,trole_name:trole_name,trole_description:trole_description},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
-							Ext.getCmp('citygrid').getStore().reload();
-							Ext.getCmp('citytab').layout.setActiveItem('citygrid');
+						//	Ext.getCmp('citygrid').getStore().reload();
+						//	Ext.getCmp('citytab').layout.setActiveItem('citygrid');
 										
 						}
 					});
@@ -104,31 +124,31 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 			xtype: 'button',
 		  	text: 'Edit',
 		  	iconCls: 'editClass',
-		  	id:'edit_city',
+		  	id:'edit_roles',
 			align:'center',
 			x:450,
 			y:165,
 			width:75,
 			handler: function ()
 			   {
-			   	var currentForm = this.up('cityform');
-				var city_code = Ext.getCmp('citycode').getValue();
-				var city_id = Ext.getCmp('cityid').getValue();
-				var city_name = Ext.getCmp('cityname').getValue();
-				var city_state= Ext.getCmp('cstateid').getValue();
+			   var currentForm = this.up('trolesaddform');
+			   var trole_id = Ext.getCmp('trolesid').getValue();
+				var trole_code = Ext.getCmp('trolescode').getValue();
+				var trole_name = Ext.getCmp('trolesname').getValue();
+				var trole_description= Ext.getCmp('trolesdescription').getValue();
 				if(currentForm.getForm().isValid() == true)
 				{
 				var conn = new Ext.data.Connection();
 					conn.request({
-						url: 'service/City.php',
+						url: 'service/team_roles.php',
 						method: 'POST',
-						params : {action:4,city_id:city_id,city_code:city_code,city_name:city_name,city_state:city_state},
+						params : {action:6,trole_id:trole_id,trole_code:trole_code,trole_name:trole_name,trole_description:trole_description},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
-							Ext.getCmp('citygrid').getStore().reload();
-							Ext.getCmp('citytab').layout.setActiveItem('citygrid');
+							Ext.getCmp('trolesgrid').getStore().reload();
+						//	Ext.getCmp('citytab').layout.setActiveItem('citygrid');
 										
 						}
 					});
@@ -145,14 +165,14 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 			xtype: 'button',
 		  	text: 'Reset',
 		  	iconCls: 'button_reset',
-		  	id:'reset_city',
+		  	id:'reset_roles',
 			x:550,
 			y:165,
 			width:75,
 			handler: function (){
-				var currentForm = this.up('cityform');
+				var currentForm = this.up('trolesaddform');
 				currentForm.getForm().reset();
-				Ext.getCmp('citycode').setReadOnly(false);
+				Ext.getCmp('trolescode').setReadOnly(false);
 			}
 	  	} ]
 	  

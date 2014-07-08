@@ -43,13 +43,13 @@ Ext.define('MyDesktop.view.MasterWindow', {
 		});
 		
 	var tab1 = Ext.create('MyDesktop.view.mastermanagement.mastermanagementTabPanel');
-	var teamstab = Ext.create('MyDesktop.view.mastermanagement.Teams.TeamsTabPanel');
+//var teamstab = Ext.create('MyDesktop.view.mastermanagement.Teams.TeamsTabPanel');
 	var userstab = Ext.create('MyDesktop.view.mastermanagement.Users.UsersTabPanel');
 	var vendors = Ext.create('MyDesktop.view.mastermanagement.Vendors.VendorsTabPanel');
 	var production = Ext.create('MyDesktop.view.mastermanagement.ProductionStages.ProductionTabPanel');
 	var customer = Ext.create('MyDesktop.view.mastermanagement.Customers.CustomersTabPanel');
-
-	//var course = Ext.create('MyDesktop.view.courses.CourseTabPanel');
+var servicetab = Ext.create('MyDesktop.view.mastermanagement.Services.ServiceTabPanel');
+	var workflow = Ext.create('MyDesktop.view.mastermanagement.Workflow.WorkflowTabPanel');
 	//var setting = Ext.create('MyDesktop.view.settings.SettingTabPanel');
 //var troles= Ext.create('MyDesktop.view.mastermanagement.TeamRoles.TeamRolesTabPanel');
 	
@@ -61,7 +61,7 @@ Ext.define('MyDesktop.view.MasterWindow', {
 			margins: '2 5 5 0',
 			activeItem: 0,
 			border: false,
-			items: [tab1,teamstab,userstab,production,vendors,customer]
+			items: [customer,tab1,servicetab,userstab,production,vendors,workflow]
 		};
 
 		var desktop = this.app.getDesktop();

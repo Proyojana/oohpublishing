@@ -12,150 +12,203 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersAddForm' ,{
 	//requires:['MyDesktop.store.State'],
     title:'Add/Edit Users',
     defaults: {
-        labelWidth: 140,
+        labelWidth: 120,
     },
     defaultType: 'textfield',
+    
 	initComponent:function(){
+			Ext.apply(Ext.form.field.VTypes, {
+               password: function(val, field) {
+            if (field.initialPassField) {
+                var pwd = field.up('form').down('#' + field.initialPassField);
+                return (val == pwd.getValue());
+            }
+            return true;
+        },
+
+        passwordText: 'Passwords do not match'
+    });  
+    var role = Ext.create('MyDesktop.store.TeamRoles');
+		role.load({
+			params: {
+				start: 0,
+				limit: 50
+			}
+		});
+			role.loadPage(1); 
 	/*	var ci = Ext.create('MyDesktop.store.State');
 		ci.load({params:{action: 7}});
 	    ci.loadPage(1);*/
 		this.items= [
-		
+			{
+			id:'userid',
+			name: 'usersid',
+			hidden:true
+			},
 			
 		{
-			id:'users_code',
+			id:'usercode',
 			fieldLabel: 'User Code',
-		//	name: 'userscode',
+			
 			x:100,
 			y:10,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},{
-			id:'users_name',
+			id:'username',
 			fieldLabel: 'User Name',
-			//name: 'usersname',
+			
 			align:'center',
-			x:470,
+			x:550,
 			y:10,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
 			},
 			{
-    		xtype:'combo',
-    		id:'teams_user',
-			fieldLabel: 'Select Role',
-			name: 'teamsuser',
+			   inputType: 'password',
+			id:'pass',
+			fieldLabel: 'Password',
+			
+			align:'center',
 			x:100,
 			y:40,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
-    	},
-    	
+			},
 			{
-    		xtype:'combo',
-    		id:'teams_role',
-			fieldLabel: 'Select Team',
-			name: 'teamsrole',
-			x:470,
+				   inputType: 'password',
+			id:'retype_password',
+			fieldLabel: 'Re-type Password',
+			
+			align:'center',
+			x:550,
 			y:40,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
-    	},
-    	
-		{  
-			id:'users_description',
-			fieldLabel: 'User Description',
-			xtype:'textareafield',
-			name: 'usersdescription',
+			msgTarget: 'side',
+			vtype:'password',
+			 initialPassField: 'pass'
+			},
+		{
+			id:'userrole',
+			fieldLabel: 'Select Role',
+			xtype:'combo',
 			align:'center',
 			x:100,
 			y:70,
 			width:320,
-		//	allowBlank: false,
-			//afterLabelTextTpl: required,
-				
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			store:role,
+			displayField: 'trolesname',
+	    	valueField: 'trolesid',
+			},
+			{
+			
+			id:'useremail',
+			fieldLabel: 'E-mail',			
+			align:'center',
+			x:550,
+			y:70,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			vtype:'email',
+			msgTarget:'side',
+			},
+    	
+		{  
+			id:'userdescription',
+			fieldLabel: 'User Description',
+			xtype:'textareafield',
+			
+			align:'center',
+			x:100,
+			y:100,
+			width:320,
+			
     	},
     		
-		{
-			xtype:'button',
-    	    text:'Add',
-    	    iconCls: 'button_add',
-    	  //  id:'add_users',
-			x:350,
-			y:165,
-			width:75,
-			handler: function (){				
-				var currentForm = this.up('cityform');
-				var city_code = Ext.getCmp('citycode').getValue();
-				var city_name = Ext.getCmp('cityname').getValue();
-				var city_state= Ext.getCmp('cstateid').getValue();
-				if(currentForm.getForm().isValid() == true)
-				{
-				var conn = new Ext.data.Connection();
-					conn.request({
-						url: 'service/City.php',
-						method: 'POST',
-						params : {action:5,city_code:city_code,city_name:city_name,city_state:city_state},
-						success:function(response){
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-							currentForm.getForm().reset();
-							Ext.getCmp('citygrid').getStore().reload();
-							Ext.getCmp('citytab').layout.setActiveItem('citygrid');
-										
-						}
-					});
-				}
-				else
-				{
-				Ext.MessageBox.alert('Please fill the required data.');
-				
-				}
-			}
-	  	},
+	{
+xtype:'button',
+        text:'Add',
+        iconCls: 'button_add',
+        id:'add_users',
+x:350,
+y:175,
+width:75,
+handler: function (){
+var currentForm = this.up('usersform');
+var usercode = Ext.getCmp('usercode').getValue();
+var username = Ext.getCmp('username').getValue();
+var password = Ext.getCmp('pass').getValue();
+var role = Ext.getCmp('userrole').getValue();
+var useremail = Ext.getCmp('useremail').getValue();
+var userdescription= Ext.getCmp('userdescription').getValue();
+if(currentForm.getForm().isValid() == true)
+{
+var conn = new Ext.data.Connection();
+conn.request({
+url: 'service/Users.php',
+method: 'POST',
+params : {action:5,usercode:usercode,username:username,password:password,role:role,useremail:useremail,userdescription:userdescription},
+success:function(response){
+obj = Ext.JSON.decode(response.responseText);
+Ext.Msg.alert('Message', obj.message); 
+currentForm.getForm().reset();
+Ext.getCmp('usersgrid').getStore().reload();
+}
+});
+}
+else
+{
+Ext.MessageBox.alert('Please fill the required data.');
+}
+}
+  },
 		
 		{
 			xtype: 'button',
 		  	text: 'Edit',
 		  	iconCls: 'editClass',
-		//  	id:'edit_users',
+		  	id:'edit_users',
 			align:'center',
 			x:450,
-			y:165,
+			y:175,
 			width:75,
 			handler: function ()
 			   {
-			   	var currentForm = this.up('cityform');
-				var city_code = Ext.getCmp('citycode').getValue();
-				var city_id = Ext.getCmp('cityid').getValue();
-				var city_name = Ext.getCmp('cityname').getValue();
-				var city_state= Ext.getCmp('cstateid').getValue();
-				if(currentForm.getForm().isValid() == true)
-				{
-				var conn = new Ext.data.Connection();
-					conn.request({
-						url: 'service/City.php',
-						method: 'POST',
-						params : {action:4,city_id:city_id,city_code:city_code,city_name:city_name,city_state:city_state},
-						success:function(response){
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-							currentForm.getForm().reset();
-							Ext.getCmp('citygrid').getStore().reload();
-							Ext.getCmp('citytab').layout.setActiveItem('citygrid');
-										
-						}
-					});
-				}
-				else
-				{
-				Ext.MessageBox.alert('Please fill the required data.');
-				
-				}
+	var currentForm = this.up('usersform');
+	var userid = Ext.getCmp('userid').getValue();
+var usercode = Ext.getCmp('usercode').getValue();
+var username = Ext.getCmp('username').getValue();
+var password = Ext.getCmp('pass').getValue();
+var role = Ext.getCmp('userrole').getValue();
+var useremail = Ext.getCmp('useremail').getValue();
+var userdescription= Ext.getCmp('userdescription').getValue();
+if(currentForm.getForm().isValid() == true)
+{
+var conn = new Ext.data.Connection();
+conn.request({
+url: 'service/Users.php',
+method: 'POST',
+params : {action:4,userid:userid,usercode:usercode,username:username,password:password,role:role,useremail:useremail,userdescription:userdescription},
+success:function(response){
+obj = Ext.JSON.decode(response.responseText);
+Ext.Msg.alert('Message', obj.message); 
+currentForm.getForm().reset();
+Ext.getCmp('usersgrid').getStore().reload();
+}
+});
+}
+else
+{
+Ext.MessageBox.alert('Please fill the required data.');
+}
 			}
 	  	},
 		
@@ -163,14 +216,14 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersAddForm' ,{
 			xtype: 'button',
 		  	text: 'Reset',
 		  	iconCls: 'button_reset',
-		  //	id:'reset_users',
+		  	id:'reset_users',
 			x:550,
-			y:165,
+			y:175,
 			width:75,
 			handler: function (){
-				var currentForm = this.up('cityform');
+				var currentForm = this.up('usersform');
 				currentForm.getForm().reset();
-				Ext.getCmp('citycode').setReadOnly(false);
+			//	Ext.getCmp('citycode').setReadOnly(false);
 			}
 	  	} ]
 	  

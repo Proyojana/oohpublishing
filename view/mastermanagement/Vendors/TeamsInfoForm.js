@@ -17,10 +17,15 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 	//initComponent:function(){
 			items:[		
 			{
+				id:'teamid',
+				hidden:true,
+			},
+			{
 		id:'teamname',
 		fieldLabel: 'Team Name',
 		name: 'teamname',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		x:150,
 		y:10,
 		//margin:'-25 0 0 400',
@@ -31,6 +36,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
       	id:'division',
 		fieldLabel: 'Division',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		x:150,
 		y:50,
 		width:250,
@@ -41,7 +47,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
       {
       	id:'teamemail',
 		fieldLabel: 'Email',	
-		afterLabelTextTpl: required,		
+		afterLabelTextTpl: required,	
+		allowBlank: false,	
 		x:150,
 		y:90,
 		name: 'teamemail',
@@ -50,11 +57,14 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 		width:250,
 		//margin:'5 0 0 0'
       },
-      {
+      { 
+      	xtype:'numberfield',
+		hideTrigger:true,
       	id:'teamphone',
 		fieldLabel: 'Phone',
 		width:250,
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		x:150,
 		y:130,
 		name: 'teamphone',
@@ -62,7 +72,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 		
       },
       {
-      	id:'poc',
+      	id:'teampoc',
 		fieldLabel: 'POC',
 		width:250,
 		
@@ -77,75 +87,81 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
       {
 		xtype:'button',
 		text: 'Add',
-		id:'personaladd2',
+		id:'teamaddven',
 		iconCls: 'button_add',
 		x:320,
 		y:220,
 		width:75,
-	/*	handler: function (){
-			            var currentForm = this.up('employeeform');
-			            var empno = Ext.getCmp('empno').getValue();
-						var firstname = Ext.getCmp('firstname').getValue();
-						var lastname = Ext.getCmp('lastname').getValue();
-						var dob=Ext.getCmp('dob').getValue();
-						var city=Ext.getCmp('city').getValue();
-						var state=Ext.getCmp('state').getValue();
-						var country=Ext.getCmp('country').getValue();
-						var address=Ext.getCmp('address').getValue();
-						if(firstname !== "" || lastname !== "" || dob !== null || city !== "" || state !== "" || country !== "" || address !== "" )
+		handler: function (){
+			var currentForm = Ext.getCmp('Vendors_teamformTab');
+			 var basicvendorid=Ext.getCmp('basicid').getValue();
+			         // var teams_customerid = Ext.getCmp('basic_customerid').getValue();
+			          //alert(basicvendorid);
+						var teamname = Ext.getCmp('teamname').getValue();
+						var division = Ext.getCmp('division').getValue();
+						var teamemail=Ext.getCmp('teamemail').getValue();
+						var teamphone=Ext.getCmp('teamphone').getValue();
+						var teampoc=Ext.getCmp('teampoc').getValue();
+					if(currentForm.getForm().isValid()==true)
 					{
 						var conn = new Ext.data.Connection();
 					    conn.request({
-						url: 'service/EmpPersonalInfo.php',
+						url: 'service/TeamsVendor.php',
 						method: 'POST',
-						params : {action:2,id:empno,firstname:firstname,lastname:lastname,dob:dob,city:city,state:state,country:country,address:address},
+						params : {action:1,basicvendorid:basicvendorid,teamname:teamname,division:division,teamemail:teamemail,teamphone:teamphone,teampoc:teampoc},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							//currentForm.getForm().reset();
-							Ext.getCmp('employee').getStore().reload();
+							currentForm.getForm().reset();
+							var grid1=Ext.getCmp('vendorsteamgrid');
+						    grid1.getStore().load({params:{action:3,basicvendorid:basicvendorid}});
 							}
 					});
 					}
 				else
 				{
-					Ext.MessageBox.alert("Sorry, We can't add an empty row ");
+					Ext.MessageBox.alert('Enter the Required fields');
 					
 				}
-			}*/
+			}
 		},
       {
 		xtype:'button',
 		text: 'Edit',
 		
-		id:'personaledit2',
+		id:'teameditven',
 		iconCls: 'editClass',
 		x:410,
 		y:220,
 		//margin:'0 0 0 10',
 		width:75,
-		/*handler: function (){
-			 var currentForm = this.up('employeeform');
-			            var empno = Ext.getCmp('empno').getValue();
-						var firstname = Ext.getCmp('firstname').getValue();
-						var lastname = Ext.getCmp('lastname').getValue();
-						var dob=Ext.getCmp('dob').getValue();
-						var city=Ext.getCmp('city').getValue();
-						var state=Ext.getCmp('state').getValue();
-						var country=Ext.getCmp('country').getValue();
-						var address=Ext.getCmp('address').getValue();
-								if(firstname !== "" || lastname !== "" || dob !== null || city !== "" || state !== "" || country !== "" || address !== "" )
+		handler: function (){
+			var currentForm = Ext.getCmp('Vendors_teamformTab');
+			
+			 var basicvendorid=Ext.getCmp('basicid').getValue();
+			 var teamid=Ext.getCmp('teamid').getValue();
+			        
+			          
+						var teamname = Ext.getCmp('teamname').getValue();
+						var division = Ext.getCmp('division').getValue();
+						var teamemail=Ext.getCmp('teamemail').getValue();
+						var teamphone=Ext.getCmp('teamphone').getValue();
+						var teampoc=Ext.getCmp('teampoc').getValue();
+						
+						if(currentForm.getForm().isValid()==true)
 					{
 						var conn = new Ext.data.Connection();
 					    conn.request({
-						url: 'service/EmpPersonalInfo.php',
+						url: 'service/TeamsVendor.php',
 						method: 'POST',
-						params : {action:1,id:empno,firstname:firstname,lastname:lastname,dob:dob,city:city,state:state,country:country,address:address},
+						params : {action:2,teamid:teamid,teamname:teamname,division:division,teamemail:teamemail,teamphone:teamphone,teampoc:teampoc},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							//currentForm.getForm().reset();
-							Ext.getCmp('employee').getStore().reload();
+							currentForm.getForm().reset();
+							var grid1=Ext.getCmp('vendorsteamgrid');
+						    grid1.getStore().load({params:{action:3,basicvendorid:basicvendorid}});
+							
 						}
 					});
 					}
@@ -154,33 +170,32 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 					Ext.MessageBox.alert("Sorry, We can't edit an empty row ");
 					
 				}
-		}*/
+		}
 		},
       {
 		xtype:'button',
 		text: 'Reset',
-		id:'personalreset2',
+		id:'teamresetvendor',
 		iconCls: 'button_reset',
 		x:500,
 		y:220,
 		//margin:'0 0 0 10',
 		width:75,
-	/*	handler: function (){
-						var firstname = Ext.getCmp('firstname').reset();
-						var lastname = Ext.getCmp('lastname').reset();
-						var dob=Ext.getCmp('dob').reset();
-						var city=Ext.getCmp('city').reset();
-						var state=Ext.getCmp('state').reset();
-						var country=Ext.getCmp('country').reset();
-						var address=Ext.getCmp('address').reset();
-		}*/
+		handler: function (){
+						var teamname = Ext.getCmp('teamname').reset();
+						var division = Ext.getCmp('division').reset();
+						var teamemail=Ext.getCmp('teamemail').reset();
+						var teamphone=Ext.getCmp('teamphone').reset();
+						var teampoc=Ext.getCmp('teampoc').reset();
+						
+		}
 	},
 		{
 			xtype:'vendorsteamgrid',
-			x:470,
+			x:440,
 			y:10,
 			height:180,
-			width:500,
+			width:568,
 		}
 		]
 	

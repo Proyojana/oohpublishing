@@ -8,7 +8,7 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesForm' ,{
             },
 	frame:true,
 	requires:['MyDesktop.view.mastermanagement.TeamRoles.TRolesGrid','MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm'],
-    title:'Team Roles',
+    title:'List Of Roles',
     defaults: {
         labelWidth: 140,
     },

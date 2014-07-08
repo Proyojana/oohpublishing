@@ -17,18 +17,26 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 	//initComponent:function(){
 			items:[		
 			{
+				id:'cntctvenid',
+				hidden:true
+			},{
 		id:'contctname',
 		fieldLabel: 'Name',		
 		name: 'contctname',		
 		afterLabelTextTpl: required,	
+		allowBlank: false,
 		x:150,
 		y:10,
 		width:250
-	},{
+	},{ 
+		xtype:'numberfield',
+		hideTrigger:true,
+
 		id:'contctphone',
 		fieldLabel: 'Phone',
 		name: 'contctphone',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		x:150,
 		y:50,
 		//margin:'-25 0 0 400',
@@ -39,6 +47,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
       	id:'cntctemail',
 		fieldLabel: 'Email',
 		afterLabelTextTpl: required,
+		allowBlank: false,
 		vtype:'email',
 		msgTarget : 'side',
 		x:150,
@@ -63,75 +72,75 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
       {
 		xtype:'button',
 		text: 'Add',
-		id:'personaladd3',
+		id:'cntctaddven',
 		iconCls: 'button_add',
 		x:320,
 		y:220,
 		width:75,
-		/*handler: function (){
-			            var currentForm = this.up('employeeform');
-			            var empno = Ext.getCmp('empno').getValue();
-						var firstname = Ext.getCmp('firstname').getValue();
-						var lastname = Ext.getCmp('lastname').getValue();
-						var dob=Ext.getCmp('dob').getValue();
-						var city=Ext.getCmp('city').getValue();
-						var state=Ext.getCmp('state').getValue();
-						var country=Ext.getCmp('country').getValue();
-						var address=Ext.getCmp('address').getValue();
-						if(firstname !== "" || lastname !== "" || dob !== null || city !== "" || state !== "" || country !== "" || address !== "" )
+		handler: function (){
+			            var currentForm = Ext.getCmp('Vendors_contactTab');
+			            var contctname = Ext.getCmp('contctname').getValue();
+						var contctphone = Ext.getCmp('contctphone').getValue();
+						var cntctemail = Ext.getCmp('cntctemail').getValue();
+						var cntctdesignation=Ext.getCmp('cntctdesignation').getValue();
+						var vendorid=Ext.getCmp('basicid').getValue();
+						var cntctvenid=Ext.getCmp('cntctvenid').getValue();
+						
+						if(currentForm.getForm().isValid()==true)
 					{
 						var conn = new Ext.data.Connection();
 					    conn.request({
-						url: 'service/EmpPersonalInfo.php',
+						url: 'service/ContactInfoVen.php',
 						method: 'POST',
-						params : {action:2,id:empno,firstname:firstname,lastname:lastname,dob:dob,city:city,state:state,country:country,address:address},
+						params : {action:5,vendorid:vendorid,contctname:contctname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							//currentForm.getForm().reset();
-							Ext.getCmp('employee').getStore().reload();
+							currentForm.getForm().reset();
+							var grid1=Ext.getCmp('vendorscontactgrid');
+						    grid1.getStore().load({params:{action:1,vendorid:vendorid}});
 							}
 					});
 					}
 				else
 				{
-					Ext.MessageBox.alert("Sorry, We can't add an empty row ");
+					Ext.MessageBox.alert('Enter the Required fields');
 					
 				}
-			}*/
+			}
 		},
       {
 		xtype:'button',
 		text: 'Edit',
 		
-		id:'personaledit3',
+		id:'cntcteditven',
 		iconCls: 'editClass',
 		x:410,
 		y:220,
 		//margin:'0 0 0 10',
 		width:75,
-	/*	handler: function (){
-			 var currentForm = this.up('employeeform');
-			            var empno = Ext.getCmp('empno').getValue();
-						var firstname = Ext.getCmp('firstname').getValue();
-						var lastname = Ext.getCmp('lastname').getValue();
-						var dob=Ext.getCmp('dob').getValue();
-						var city=Ext.getCmp('city').getValue();
-						var state=Ext.getCmp('state').getValue();
-						var country=Ext.getCmp('country').getValue();
-						var address=Ext.getCmp('address').getValue();
-								if(firstname !== "" || lastname !== "" || dob !== null || city !== "" || state !== "" || country !== "" || address !== "" )
+		handler: function (){
+			  var currentForm = Ext.getCmp('Vendors_contactTab');
+			            var contctname = Ext.getCmp('contctname').getValue();
+						var contctphone = Ext.getCmp('contctphone').getValue();
+						var cntctemail = Ext.getCmp('cntctemail').getValue();
+						var cntctdesignation=Ext.getCmp('cntctdesignation').getValue();
+						var vendorid=Ext.getCmp('basicid').getValue();
+						var id=Ext.getCmp('basicid').getValue();
+						var cntctvenid=Ext.getCmp('cntctvenid').getValue();
+								if(currentForm.getForm().isValid()==true)
 					{
 						var conn = new Ext.data.Connection();
 					    conn.request({
-						url: 'service/EmpPersonalInfo.php',
+						url: 'service/ContactInfoVen.php',
 						method: 'POST',
-						params : {action:1,id:empno,firstname:firstname,lastname:lastname,dob:dob,city:city,state:state,country:country,address:address},
+						params : {action:4,cntctvenid:cntctvenid,vendorid:vendorid,contctname:contctname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							//currentForm.getForm().reset();
-							Ext.getCmp('employee').getStore().reload();
+							currentForm.getForm().reset();
+							var grid1=Ext.getCmp('vendorscontactgrid');
+						    grid1.getStore().load({params:{action:1,vendorid:id}});
 						}
 					});
 					}
@@ -140,33 +149,31 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 					Ext.MessageBox.alert("Sorry, We can't edit an empty row ");
 					
 				}
-		}*/
+		}
 		},
       {
 		xtype:'button',
 		text: 'Reset',
-		id:'personalreset3',
+		id:'cntctrstven',
 		iconCls: 'button_reset',
 		x:500,
 		y:220,
 		//margin:'0 0 0 10',
 		width:75,
-		/*handler: function (){
-						var firstname = Ext.getCmp('firstname').reset();
-						var lastname = Ext.getCmp('lastname').reset();
-						var dob=Ext.getCmp('dob').reset();
-						var city=Ext.getCmp('city').reset();
-						var state=Ext.getCmp('state').reset();
-						var country=Ext.getCmp('country').reset();
-						var address=Ext.getCmp('address').reset();
-		}*/
+		handler: function (){
+						var contctname = Ext.getCmp('contctname').reset();
+						var contctphone = Ext.getCmp('contctphone').reset();
+						var cntctemail=Ext.getCmp('cntctemail').reset();
+						var cntctdesignation=Ext.getCmp('cntctdesignation').reset();
+						
+		}
 		},
 		{
 			xtype:'vendorscontactgrid',
 			x:470,
 			y:10,
 			height:150,
-			width:500,
+			width:528,
 		}
 		]
 	

@@ -63,7 +63,7 @@ var chart = Ext.create('Ext.chart.Chart', {
 Ext.define('MyDesktop.view.budgetmanagement.DualbarForm' ,{
     extend: 'Ext.form.Panel',
     alias : 'widget.dualbarform_budget',
-   		id:'dualbarform_budget',
+   		id:'dualbarform_budget_ooh',
     margin: '10 10 10 10',
 	layout: {
                                 type: 'absolute'

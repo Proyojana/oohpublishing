@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionForm' ,{
             },
 	frame:true,
 	requires:['MyDesktop.view.mastermanagement.ProductionStages.ProductionGrid','MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm'],
-    title:'Production Stages',
+    title:'List Of Activities',
     defaults: {
         labelWidth: 140,
     },
@@ -23,8 +23,9 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionForm' ,{
 		},
 		{
 			xtype:'Productionaddform',
-			x:01,
-			y:300
+			x:1,
+			y:270,
+			height:260
 		}
 		
 	  		]

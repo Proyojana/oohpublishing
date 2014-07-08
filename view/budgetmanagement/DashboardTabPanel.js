@@ -8,5 +8,5 @@ Ext.define('MyDesktop.view.budgetmanagement.DashboardTabPanel',{
 					deferredRender: true,
                     xtype: 'tabpanel',
 					region: 'center',
-                    items: [{xtype:'dualbarform_budget'}]
+                    items: [{xtype:'dualbarform_budget_ooh'}]
 	});

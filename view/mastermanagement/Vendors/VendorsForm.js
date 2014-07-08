@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsForm' ,{
               type: 'absolute'
             },
 	frame:true,
-	requires:[/*'MyDesktop.view.mastermanagement.Vendors.VendorsAddForm',*/'MyDesktop.view.mastermanagement.Vendors.VendorsGrid','MyDesktop.view.mastermanagement.Vendors.BasicInfoForm','MyDesktop.view.mastermanagement.Vendors.ContactInfoForm','MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm'],
+	requires:['MyDesktop.view.mastermanagement.Vendors.VendorsGrid','MyDesktop.view.mastermanagement.Vendors.BasicInfoForm','MyDesktop.view.mastermanagement.Vendors.ContactInfoForm','MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm','MyDesktop.view.mastermanagement.Vendors.RateCardGrid'],
     title:'List Of Vendors',
     defaults: {
         labelWidth: 140,
@@ -36,19 +36,35 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsForm' ,{
 		activeTab: 0,
 		height:340,
 		defaults: {
-			bodyStyle:'padding:10px'
+			//bodyStyle:'padding:10px'
 		},
+		listeners: {
+						afterrender:function(){
+							
+							Ext.getCmp('Vendors_teamformTab').setDisabled(true);
+							Ext.getCmp('Vendors_contactTab').setDisabled(true);
+							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(true);
+						}
+					},
 		items:[{
-			//iconCls: 'personalinfo',
+			
 			xtype:'basicinfoform'
 		},
 		{
 			//iconCls: 'contactinfo',
+			id:'Vendors_contactTab',
 			xtype:'contactsform'
 		},
 		{
 			//iconCls: 'familyinfo',
+			id:'Vendors_teamformTab',
 			xtype:'teamform'
+		},
+		{
+			id:'Vendors_ratecardgridTab',
+			xtype:'ratecardgrid',
+		//	width:500,
+			//height:450,
 		}
 		
 		]

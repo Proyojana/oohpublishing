@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersForm' ,{
               type: 'absolute'
             },
 	frame:true,
-	requires:['MyDesktop.view.mastermanagement.Customers.CustomersGrid','MyDesktop.view.mastermanagement.Customers.BasicInfoForm','MyDesktop.view.mastermanagement.Customers.ContactInfoForm','MyDesktop.view.mastermanagement.Customers.TeamsInfoForm'],
+	requires:['MyDesktop.view.mastermanagement.Customers.CustomersGrid','MyDesktop.view.mastermanagement.Customers.BasicInfoForm','MyDesktop.view.mastermanagement.Customers.ContactInfoForm','MyDesktop.view.mastermanagement.Customers.TeamsInfoForm','MyDesktop.view.mastermanagement.Customers.RateCardGrid'],
     title:'List Of Customers',
     defaults: {
         labelWidth: 140,
@@ -36,19 +36,33 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersForm' ,{
 		activeTab: 0,
 		height:340,
 		defaults: {
-			bodyStyle:'padding:10px'
+			//bodyStyle:'padding:10px'
 		},
+		listeners: {
+						afterrender:function(){
+							
+							Ext.getCmp('customercontactsformTab').setDisabled(true);
+							Ext.getCmp('customerteamsformTab').setDisabled(true);
+							Ext.getCmp('customerratecardformTab').setDisabled(true);
+						}
+					},
 		items:[{
 			//iconCls: 'personalinfo',
 			xtype:'custbasicinfoform'
 		},
 		{
 			//iconCls: 'contactinfo',
+			id:'customercontactsformTab',
 			xtype:'custcontactsform'
 		},
 		{
 			//iconCls: 'familyinfo',
+			id:'customerteamsformTab',
 			xtype:'custteamform'
+		},
+		{
+			id:'customerratecardformTab',
+			xtype:'ratecardcust',
 		}
 		
 		]

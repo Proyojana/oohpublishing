@@ -130,9 +130,7 @@ Where
   dept_master.name As deptname,
   dept_master.description As deptdesc
 From
-  dept_master
-			Where
-		  	id=".$deptid."");
+  dept_master Where	id=".$deptid."");
 			
 		if(!$result1)
 			{
@@ -141,15 +139,12 @@ From
 			}
 			else
 			{
-				$result["success"] = true;
-				
+				$result["success"] = true;				
 			}
        	while($row=mysql_fetch_object($result1))
 	   	{
 			$result ["data"] = $row;
 	  	}
-		
-		
       	echo(json_encode($result));
     }
   

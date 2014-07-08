@@ -8,12 +8,12 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
 	//closeAction: 'hide',
 	selModel:sm,
 	//height:100,
-	//requires : ['MyDesktop.store.freelancer'],
+	requires : ['MyDesktop.store.Customers_team'],
 	title:'',
 	id:'custteamgrid',
 	initComponent: function() {
 		
-	/*	var ci = Ext.create('MyDesktop.store.freelancer');
+		var ci = Ext.create('MyDesktop.store.Customers_team');
 		ci.load({
 			params: {
 				start: 0,
@@ -21,15 +21,15 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
 			}
 		});
 		ci.loadPage(1);
-		this.store = ci,*/
+		this.store = ci,
 			
 			this.columns = [
 				{
-				//	dataIndex: 'Id',
+					dataIndex: 'id',
 					hidden:true
 				},
 				{
-				//	dataIndex: 'Code',
+					dataIndex: 'name',
 					text: 'Team Name',
 					align: 'center',
 				width:100,
@@ -38,7 +38,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
            		}
 				},
 				{
-					//dataIndex: 'Description',
+					dataIndex: 'division',
 					text: 'Division',
 					align: 'center',
 					flex:2,
@@ -49,7 +49,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
 				
 				
 				{
-					//dataIndex: 'Description',
+					dataIndex: 'mail',
 					text: 'E-mail',
 					align: 'center',
 					flex:2,
@@ -58,7 +58,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
            		}
 				},
 				{
-					//dataIndex: 'Name',
+					dataIndex: 'phone',
 					text: 'Phone',
 					align: 'center',
 					flex:2,
@@ -67,7 +67,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
            		}
 				},
 				{
-					//dataIndex: 'Name',
+					dataIndex: 'poc',
 					text: 'POC',
 					align: 'center',
 					flex:2,
@@ -78,87 +78,92 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
 				
 				
 				
-				/*{
+				{
 					xtype:'actioncolumn',
 					align: 'center',
-					width:250,
+					flex:2,
 					text:'Actions',
 					items: [{
 						iconCls: 'viewClass',
 						//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
 						tooltip: 'View',
-				/*	handler: function(grid, rowIndex, colIndex) {
-					    var currentForm = Ext.getCmp('freelancermasterform');
+					handler: function(grid, rowIndex, colIndex) {
+					    var currentForm = Ext.getCmp('customerteamsformTab');
 						var rec = grid.getStore().getAt(rowIndex);
-						var id=rec.get('Id');
-						Ext.getCmp('Code').setReadOnly(true);
+						var id=rec.get('id');
 						currentForm.getForm().load({
-   								 url: 'service/freelancer.php',
+   								 url: 'service/customers_Teams.php',
 							     params: {
-        						 	action:2,Id:id
+        						 	action:4,teamid:id
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
+						//hide add,edit and reset buttons
+						Ext.getCmp('custteaminfo_add').setVisible(false); 
+						Ext.getCmp('custteaminfo_edit').setVisible(false); 
+						Ext.getCmp('custteaminfo_reset').setVisible(false);
+						 
+						Ext.getCmp('custteamname').setReadOnly(true);
+						Ext.getCmp('custdivision').setReadOnly(true);
+						Ext.getCmp('custteamemail').setReadOnly(true);
+						Ext.getCmp('custteamphone').setReadOnly(true);
+						Ext.getCmp('custteampoc').setReadOnly(true);
 						
-						Ext.getCmp('freelancermastertab').layout.setActiveItem('freelancermasterform');
-						Ext.getCmp('Code').setReadOnly(true);
-						Ext.getCmp('Name').setReadOnly(true);
-						Ext.getCmp('freelancerDescription').setReadOnly(true);
-						
-				}*/
-			//},{
-				//iconCls: 'editClass',
+				}
+			},{
+				iconCls: 'editClass',
 				//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-			//	tooltip: 'Edit',
-			/*	handler: function(grid, rowIndex, colIndex) {
+				tooltip: 'Edit',
+				handler: function(grid, rowIndex, colIndex) {
 					
-					    var currentForm = Ext.getCmp('freelancermasterform');
+					    var currentForm = Ext.getCmp('customerteamsformTab');
 						var rec = grid.getStore().getAt(rowIndex);
-						var id=rec.get('Id');
-						Ext.getCmp('Code').setReadOnly(true);
+						var id=rec.get('id');
 						currentForm.getForm().load({
-   								 url: 'service/freelancer.php',
+   								 url: 'service/customers_Teams.php',
 							     params: {
-        						 	action:2,Id:id
+        						 	action:4,teamid:id
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
+						//show add,edit and reset buttons
+						Ext.getCmp('custteaminfo_add').setVisible(true); 
+						Ext.getCmp('custteaminfo_edit').setVisible(true); 
+						Ext.getCmp('custteaminfo_reset').setVisible(true);
+						 
+						Ext.getCmp('custteamname').setReadOnly(false);
+						Ext.getCmp('custdivision').setReadOnly(false);
+						Ext.getCmp('custteamemail').setReadOnly(false);
+						Ext.getCmp('custteamphone').setReadOnly(false);
+						Ext.getCmp('custteampoc').setReadOnly(false);
 						
-						Ext.getCmp('freelancermastertab').layout.setActiveItem('freelancermasterform');
-						Ext.getCmp('Id').setReadOnly(false);
-						Ext.getCmp('Name').setReadOnly(false);
-						Ext.getCmp('freelancerDescription').setReadOnly(false);
 						
-						
-				}*/
-		//	},{
-				//	iconCls: 'deleteClass',
+				}
+			},{
+					iconCls: 'deleteClass',
 					//tooltip: 'Delete',
-				/*	handler: function(grid, rowIndex, colIndex) {
+				handler: function(grid, rowIndex, colIndex) {
+					var teams_customerid = Ext.getCmp('basic_customerid').getValue();
 					var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
-						Ext.Msg.confirm('Remove Record '+rec.get('Code')+' ?',+rec.get('Code'), function (button) {
+						Ext.Msg.confirm('Remove Record '+rec.get('name')+' ?',+rec.get('name'), function (button) {
 							if (button == 'yes') {
-								var id=rec.get('Id');
+								var id=rec.get('id');
 								var conn = new Ext.data.Connection();
 								conn.request({
-									url: 'service/freelancer.php',
+									url: 'service/customers_Teams.php',
 									method: 'POST',
-									params : {action:3,Id:id},
+									params : {action:5,teamid:id},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										stat.load({
-											params: {
-												start: 0,
-												limit: 50
-											}
-										});
+										var grid1=Ext.getCmp('custteamgrid');
+						grid1.getStore().load({params:{action:3,customerid:teams_customerid}});
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -170,9 +175,9 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
 							}
 						});
 					}
-					}*/
-				//}]
-		//}*/
+					}
+				}]
+		}
 		];
 		this.bbar = Ext.create('Ext.PagingToolbar', {  
 

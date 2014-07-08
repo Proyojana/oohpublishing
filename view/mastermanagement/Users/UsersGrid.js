@@ -3,11 +3,11 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
 			});
 
 var store1 = Ext.create('Ext.data.JsonStore', {
-    fields: ['usercode','username', 'userdescription','role','team'],
-    data: [{"usercode":"US001","username":"James El","userdescription":"New User","role":"Project Manager","team":"Team A"},
-    {"usercode":"US002","username":"Richard Branson","userdescription":"New User","role":"Prodution Manager","team":"Team A"},
-    {"usercode":"US003","username":"Aaron Ramsey","userdescription":"New User","role":"Copy Editor","team":"Team B"},
-     {"usercode":"US004","username":"Blinda Edward","userdescription":"New User","role":"Indexer","team":"Team "},
+    fields: ['usercode','username', 'userdescription'],
+    data: [{"usercode":"US001","username":"James El","userdescription":"New User"},
+    {"usercode":"US002","username":"Richard Branson","userdescription":"New User"},
+    {"usercode":"US003","username":"Aaron Ramsey","userdescription":"New User"},
+     {"usercode":"US004","username":"Blinda Edward","userdescription":"New User"},
     
     ]
      });	
@@ -22,15 +22,15 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersGrid', {
 	id:'usersgrid',
 	initComponent: function() {
 		
-		/*var ci = Ext.create('MyDesktop.store.Users');
+		var ci = Ext.create('MyDesktop.store.Users');
 		ci.load({
 			params: {
 				start: 0,
 				limit: 8
 			}
 		});
-		ci.loadPage(1);*/
-		this.store = store1,
+		ci.loadPage(1);
+		this.store = ci,
 			this.columns = [
 				{
 					dataIndex: 'userid',
@@ -55,27 +55,38 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersGrid', {
 					filter: {
                 	type: 'string'
            		}
+				},
+				{
+					dataIndex: 'userrole',
+					text: 'User Role',
+					align: 'center',
+ flex:1,
+					width:270,
+					filter: {
+                	type: 'string'
+           		}
+				},	
+				{
+					dataIndex: 'useremail',
+					text: 'User Email',
+					align: 'center',
+ flex:1,
+					width:270,
+					filter: {
+                	type: 'string'
+           		}
 				},				
-				{
-					dataIndex: 'role',
-					text: 'Role',
+							
+				/*{
+					dataIndex: 'userdescription',
+					text: 'User Description',
 					align: 'center',
  flex:1,
 					width:270,
 					filter: {
                 	type: 'string'
            		}
-				},
-				{
-					dataIndex: 'team',
-					text: 'Team',
-					align: 'center',
- flex:1,
-					width:270,
-					filter: {
-                	type: 'string'
-           		}
-				},
+				},*/
 				
 				{
 					xtype:'actioncolumn',
@@ -89,11 +100,11 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersGrid', {
 					handler: function(grid, rowIndex, colIndex) {
 					    var currentForm = Ext.getCmp('usersform');
 						var rec = grid.getStore().getAt(rowIndex);
-						var userid=rec.get('userid');
+						var userid1=rec.get('userid');
 						currentForm.getForm().load({
    								 url: 'service/Users.php',
 							     params: {
-        						 	action:2,userid:userid
+        						 	action:2,userid1:userid1
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
@@ -156,7 +167,7 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersGrid', {
 					var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
-						Ext.Msg.confirm('Remove Record '+rec.get('deptcode')+' ?',+rec.get('deptcode'), function (button) {
+						Ext.Msg.confirm('Remove Record '+rec.get('usercode')+' ?',+rec.get('usercode'), function (button) {
 							if (button == 'yes') {
 								var userid=rec.get('userid');
 								var conn = new Ext.data.Connection();

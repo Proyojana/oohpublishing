@@ -8,12 +8,12 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamInfoGrid', {
 	//closeAction: 'hide',
 	selModel:sm,
 	//height:100,
-	//requires : ['MyDesktop.store.freelancer'],
+requires : ['MyDesktop.store.Teamvendor'],
 	title:'',
 	id:'vendorsteamgrid',
 	initComponent: function() {
 		
-	/*	var ci = Ext.create('MyDesktop.store.freelancer');
+		var ci = Ext.create('MyDesktop.store.Teamvendor');
 		ci.load({
 			params: {
 				start: 0,
@@ -21,15 +21,15 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamInfoGrid', {
 			}
 		});
 		ci.loadPage(1);
-		this.store = ci,*/
+		this.store = ci,
 			
 			this.columns = [
 				{
-				//	dataIndex: 'Id',
+					dataIndex: 'id',
 					hidden:true
 				},
 				{
-				//	dataIndex: 'Code',
+					dataIndex: 'teamname',
 					text: 'Team Name',
 					align: 'center',
 				width:100,
@@ -38,10 +38,11 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamInfoGrid', {
            		}
 				},
 				{
-					//dataIndex: 'Description',
+				dataIndex: 'division',
 					text: 'Division',
 					align: 'center',
-					flex:2,
+					//flex:2,
+					width:80,
 					filter: {
                 	type: 'string'
            		}
@@ -49,28 +50,31 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamInfoGrid', {
 				
 				
 				{
-					//dataIndex: 'Description',
+					dataIndex: 'email',
 					text: 'E-mail',
 					align: 'center',
-					flex:2,
+					//flex:2,
+					width:100,
 					filter: {
                 	type: 'string'
            		}
 				},
 				{
-					//dataIndex: 'Name',
+					dataIndex: 'phone',
 					text: 'Phone',
 					align: 'center',
-					flex:2,
+					//flex:2,
+					width:80,
 					filter: {
                 	type: 'string'
            		}
 				},
 				{
-					//dataIndex: 'Name',
+					dataIndex: 'poc',
 					text: 'POC',
 					align: 'center',
-					flex:2,
+					//flex:2,
+					width:100,
 					filter: {
                 	type: 'string'
            		}
@@ -78,87 +82,96 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamInfoGrid', {
 				
 				
 				
-				/*{
+				{
 					xtype:'actioncolumn',
 					align: 'center',
-					width:250,
+					width:80,
 					text:'Actions',
 					items: [{
 						iconCls: 'viewClass',
 						//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
 						tooltip: 'View',
-				/*	handler: function(grid, rowIndex, colIndex) {
-					    var currentForm = Ext.getCmp('freelancermasterform');
+					handler: function(grid, rowIndex, colIndex) {
+					    var currentForm = Ext.getCmp('Vendors_teamformTab');
 						var rec = grid.getStore().getAt(rowIndex);
-						var id=rec.get('Id');
-						Ext.getCmp('Code').setReadOnly(true);
+						var id=rec.get('id');
+						//Ext.getCmp('Code').setReadOnly(true);
 						currentForm.getForm().load({
-   								 url: 'service/freelancer.php',
+   								 url: 'service/TeamsVendor.php',
 							     params: {
-        						 	action:2,Id:id
+        						 	action:4,teamid:id
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
 						
-						Ext.getCmp('freelancermastertab').layout.setActiveItem('freelancermasterform');
-						Ext.getCmp('Code').setReadOnly(true);
-						Ext.getCmp('Name').setReadOnly(true);
-						Ext.getCmp('freelancerDescription').setReadOnly(true);
+						Ext.getCmp('teamaddven').setVisible(false); 
+						Ext.getCmp('teameditven').setVisible(false); 
+						Ext.getCmp('teamresetvendor').setVisible(false);
+						 
+						Ext.getCmp('teamname').setReadOnly(true);
+						Ext.getCmp('division').setReadOnly(true);
+						Ext.getCmp('teamemail').setReadOnly(true);
+						Ext.getCmp('teamphone').setReadOnly(true);
+						Ext.getCmp('teampoc').setReadOnly(true);
 						
-				}*/
-			//},{
-				//iconCls: 'editClass',
+						
+				}
+			},{
+				iconCls: 'editClass',
 				//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-			//	tooltip: 'Edit',
-			/*	handler: function(grid, rowIndex, colIndex) {
+				tooltip: 'Edit',
+				handler: function(grid, rowIndex, colIndex) {
 					
-					    var currentForm = Ext.getCmp('freelancermasterform');
+					    var currentForm = Ext.getCmp('Vendors_teamformTab');
 						var rec = grid.getStore().getAt(rowIndex);
-						var id=rec.get('Id');
-						Ext.getCmp('Code').setReadOnly(true);
+						var id=rec.get('id');
+						//Ext.getCmp('Code').setReadOnly(true);
 						currentForm.getForm().load({
-   								 url: 'service/freelancer.php',
+   								 url: 'service/TeamsVendor.php',
 							     params: {
-        						 	action:2,Id:id
+        						 	action:4,teamid:id
 							    },
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
 						
-						Ext.getCmp('freelancermastertab').layout.setActiveItem('freelancermasterform');
-						Ext.getCmp('Id').setReadOnly(false);
-						Ext.getCmp('Name').setReadOnly(false);
-						Ext.getCmp('freelancerDescription').setReadOnly(false);
+					   
+							Ext.getCmp('teamaddven').setVisible(true); 
+						Ext.getCmp('teameditven').setVisible(true); 
+						Ext.getCmp('teamresetvendor').setVisible(true);
+						 
+						Ext.getCmp('teamname').setReadOnly(false);
+						Ext.getCmp('division').setReadOnly(false);
+						Ext.getCmp('teamemail').setReadOnly(false);
+						Ext.getCmp('teamphone').setReadOnly(false);
+						Ext.getCmp('teampoc').setReadOnly(false);
 						
 						
-				}*/
-		//	},{
-				//	iconCls: 'deleteClass',
+				}
+			},{
+					iconCls: 'deleteClass',
 					//tooltip: 'Delete',
-				/*	handler: function(grid, rowIndex, colIndex) {
+					handler: function(grid, rowIndex, colIndex) {
 					var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
-						Ext.Msg.confirm('Remove Record '+rec.get('Code')+' ?',+rec.get('Code'), function (button) {
+						var basicvendorid=Ext.getCmp('basicid').getValue();
+						Ext.Msg.confirm('Remove Record '+rec.get('teamname')+' ?',+rec.get('teamname'), function (button) {
 							if (button == 'yes') {
-								var id=rec.get('Id');
+								var id=rec.get('id');
 								var conn = new Ext.data.Connection();
 								conn.request({
-									url: 'service/freelancer.php',
+									url: 'service/TeamsVendor.php',
 									method: 'POST',
-									params : {action:3,Id:id},
+									params : {action:5,teamid:id},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										stat.load({
-											params: {
-												start: 0,
-												limit: 50
-											}
-										});
+										 var grid1=Ext.getCmp('vendorsteamgrid');
+						grid1.getStore().load({params:{action:3,basicvendorid:basicvendorid}});
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -170,9 +183,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamInfoGrid', {
 							}
 						});
 					}
-					}*/
-				//}]
-		//}*/
+					}
+				}]
+		}
 		];
 		this.bbar = Ext.create('Ext.PagingToolbar', {  
 

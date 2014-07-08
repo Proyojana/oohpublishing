@@ -1,6 +1,6 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' ,{
-    extend: 'Ext.form.FieldSet',
+    extend: 'Ext.form.Panel',
     alias : 'widget.Productionaddform',
    		id:'Productionaddform',
     margin: '2 10 10 10',
@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
             },
 	frame:true,
 	height:270,
-    title:'Add/Edit Production Stages',
+    title:'Add/Edit Activity',
     defaults: {
         labelWidth: 140,
     },
@@ -23,7 +23,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 			},
 			{
 			id:'product_code',
-			fieldLabel: 'Production Stage Code',
+			fieldLabel: 'Activity Code',
 			Name: 'product_code',
 			align:'center',
 			x:330,
@@ -34,7 +34,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 			},
 		{
 			id:'product_name',
-			fieldLabel: 'Production Stage Name',
+			fieldLabel: 'Activity Name',
 			name: 'product_name',
 			x:330,
 			y:40,
@@ -45,7 +45,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
     	
 		{   xtype: 'textareafield',
 			id:'product_description',
-			fieldLabel: 'Production Stage Description',
+			fieldLabel: ' Description',
 			name: 'product_description',
 			x:330,
 			y:70,
@@ -58,7 +58,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
     	    iconCls: 'button_add',
     	   id:'Add_production',
 			x:350,
-			y:180,
+			y:140,
 			width:75,
 			handler: function (){				
 				var currentForm = this.up('productionform');
@@ -70,7 +70,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 				{
 				var conn = new Ext.data.Connection();
 					conn.request({
-						url: 'service/productionstages.php',
+						url: 'service/activity.php',
 						method: 'POST',
 						params : {action:5,product_code:product_code,product_name:product_name,product_description:product_description},
 						success:function(response){
@@ -98,7 +98,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 		  	id:'edit_production',
 			align:'center',
 			x:450,
-			y:180,
+			y:140,
 			width:75,
 			handler: function ()
 			   {
@@ -112,7 +112,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 				{
 				var conn = new Ext.data.Connection();
 					conn.request({
-						url: 'service/productionstages.php',
+						url: 'service/activity.php',
 						method: 'POST',
 						params : {action:4,product_id:product_id,product_code:product_code,product_name:product_name,product_description:product_description},
 						success:function(response){
@@ -139,7 +139,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 		  	iconCls: 'button_reset',
 		   id:'reset_production',
 			x:550,
-			y:180,
+			y:140,
 			width:75,
 			handler: function (){
 				var currentForm = this.up('Productionaddform');
