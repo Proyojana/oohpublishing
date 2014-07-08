@@ -15,19 +15,24 @@ Ext.define('MyDesktop.store.MasterNavTree', {
 				{ id:'vendors', text: "Vendors",iconCls:'customer', leaf: true },
 				
 				 {
-                    text: "Workflow",
+                    text: "Workflows",
                     expanded: true,
                     children: [
-                    { id:'production', text: "Activity",iconCls:'stagesClass', leaf: true },
+                    { id:'production', text: "Activities",iconCls:'stagesClass', leaf: true },
                    
                       { id:'workflow', text: "Workflows",iconCls:'workflowClass',leaf: true },
                                      
                     ]
                   },
-				   
+				 {
+                    text: "User Admin",
+                    expanded: true,
+                    children: [  
 			   { id:'troles', text: "Roles",iconCls:'rolesClass', leaf: true },
 			   
         		{ id:'users', text: "Users",iconCls:'users', leaf: true },
+        		]
+        	}
         		
         		/*{ id:'teams', text: "Teams",iconCls:'group_clients', leaf: true },*/
         		

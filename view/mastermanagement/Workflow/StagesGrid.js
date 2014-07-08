@@ -5,6 +5,24 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
    var ratecard = Ext.create('Ext.data.JsonStore', {
    fields: ['Services','Name', 'Email','Phone'],
    });
+   
+   var Order = Ext.create('Ext.data.Store', {
+        fields: ['order_no'],
+        data : [
+         {"order_no":"01"},
+         {"order_no":"02"},
+         {"order_no":"03"},
+         {"order_no":"04"},
+         {"order_no":"05"},
+         {"order_no":"06"},
+         {"order_no":"07"},
+         {"order_no":"08"},
+         {"order_no":"09"},
+         {"order_no":"10"},
+   
+    
+        ]
+     });
 Ext.define('MyDesktop.view.mastermanagement.Workflow.StagesGrid', {
 	extend:'Ext.grid.Panel',
 	title: 'Stages',
@@ -73,7 +91,20 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.StagesGrid', {
 					dataIndex: 'stage_id',
 					hidden:true
 				},
+				{
+					dataIndex: 'stage_order',
+					text: 'Stage Order',
+					align:'center',
+					flex:0.5,
 				
+					editor:{
+						xtype:'combo',
+						store: Order,
+		        	queryMode: 'local',
+		       		displayField: 'order_no',
+					}
+					
+				},
 				{
 					dataIndex: 'stage_name',
 					text: 'Stage Name',
@@ -118,6 +149,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.StagesGrid', {
 					if (grid) {
 						        var rec = grid.getStore().getAt(rowIndex);
 						        var workflow_id = Ext.getCmp('workflow_id').getValue();
+						        var stage_order=rec.get('stage_order');
 								var stage_name=rec.get('stage_name');
 								var stage_id=rec.get('stage_id');
 								var activity=rec.get('activity');
@@ -126,7 +158,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.StagesGrid', {
 								conn.request({
 									url: 'service/stages.php',
 									method: 'POST',
-									params : {action:2,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name},
+									params : {action:2,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 

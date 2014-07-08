@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.WorkflowForm' ,{
             },
 	frame:true,
 	requires:['MyDesktop.view.mastermanagement.Workflow.WorkflowGrid','MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm','MyDesktop.view.mastermanagement.Workflow.StagesGrid'],
-    title:'Workflow',
+    title:'List Of Workflows',
     defaults: {
         labelWidth: 140,
     },

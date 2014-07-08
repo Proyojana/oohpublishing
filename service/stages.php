@@ -9,7 +9,7 @@ $id=$_SESSION['user_no'];
 			getRatecardMaster($_POST['workflowid']);
 			break;
 		case 2:
-			insertStageMaster($_POST['stage_id'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name']);
+			insertStageMaster($_POST['stage_id'],$_POST['stage_order'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name']);
 			break;
 		case 3:
 			deleteStageById($_POST["stage_id"]);	
@@ -21,6 +21,7 @@ $id=$_SESSION['user_no'];
 	function getRatecardMaster($workflowid)
 	{
  		$num_result = mysql_query ("Select
+ 		 ooh_publishing.stages.stage_order As stage_order,
   ooh_publishing.stages.stage_name As stage_name,
   ooh_publishing.stages.activity As activity,
   ooh_publishing.stages.id As stage_id,
@@ -35,6 +36,7 @@ Where
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
+		 ooh_publishing.stages.stage_order As stage_order,
   ooh_publishing.stages.stage_name As stage_name,
   ooh_publishing.stages.activity As activity,
   ooh_publishing.stages.id As stage_id,
@@ -52,7 +54,7 @@ Where
 		}
 	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
 	}
-	function insertStageMaster($stage_id,$workflow_id,$activity,$stage_name)
+	function insertStageMaster($stage_id,$stage_order,$workflow_id,$activity,$stage_name)
     {
 		$checkquery="SELECT id FROM stages WHERE id='".$stage_id."' ";
 		$result1=mysql_query($checkquery);
@@ -60,7 +62,7 @@ Where
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_name,activity,flag) VALUES('','".$workflow_id."','".$stage_name."','".$activity."','')");
+			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,flag) VALUES('','".$workflow_id."','".$stage_order."','".$stage_name."','".$activity."','')");
 			if(!$result1)
 			{
 				$result["failure"] = true;

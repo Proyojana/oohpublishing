@@ -8,7 +8,7 @@ Ext.define('MyDesktop.view.mastermanagement.Services.ServiceForm' ,{
             },
 	frame:true,
 	requires:['MyDesktop.view.mastermanagement.Services.ServiceGrid','MyDesktop.view.mastermanagement.Services.ServiceAddForm'],
-    title:'Services',
+    title:'List Of Services',
     defaults: {
         labelWidth: 140,
     },

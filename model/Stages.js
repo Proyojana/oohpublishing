@@ -2,7 +2,7 @@
         extend: 'Ext.data.Model',
         fields: [
             
-             'stage_id','stage_name','activity'          
+             'stage_order','stage_id','stage_name','activity'          
         ],
        //idProperty: 'statename'
     });
