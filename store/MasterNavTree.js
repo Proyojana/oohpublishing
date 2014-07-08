@@ -8,20 +8,31 @@ Ext.define('MyDesktop.store.MasterNavTree', {
         	/*{
         		id:'mastermanagement', text: "Dashboard",iconCls:'dashboard_icon', leaf: true 
 			},*/
-			   { id:'troles', text: "Team Roles",iconCls:'rolesClass', leaf: true },
-        		{ id:'users', text: "Users",iconCls:'users', leaf: true },
-        		{ id:'teams', text: "Teams",iconCls:'group_clients', leaf: true },
-        		{ id:'vendors', text: "Vendors",iconCls:'customer', leaf: true },
-        	   {
+				{ id:'customers', text: "Customers",iconCls:'customersClass', leaf: true },
+				
+				   { id:'service', text: "Services",iconCls:'servicesClass', leaf: true },
+				   
+				{ id:'vendors', text: "Vendors",iconCls:'customer', leaf: true },
+				
+				 {
                     text: "Workflow",
                     expanded: true,
                     children: [
-                    { id:'production', text: "Stages",iconCls:'stagesClass', leaf: true },
-                    { id:'', text: "Roles",iconCls:'rolesClass', leaf: true },
-                    { id:'', text: "Workflows",iconCls:'workflowClass',leaf: true },                    
+                    { id:'production', text: "Activity",iconCls:'stagesClass', leaf: true },
+                   
+                      { id:'workflow', text: "Workflows",iconCls:'workflowClass',leaf: true },
+                                     
                     ]
                   },
-        		{ id:'customers', text: "Customers",iconCls:'customersClass', leaf: true },
+				   
+			   { id:'troles', text: "Roles",iconCls:'rolesClass', leaf: true },
+			   
+        		{ id:'users', text: "Users",iconCls:'users', leaf: true },
+        		
+        		/*{ id:'teams', text: "Teams",iconCls:'group_clients', leaf: true },*/
+        		
+        	 /*  */
+        	
 		/*	{
         		//text:"Masters",
 				//expanded: false,
