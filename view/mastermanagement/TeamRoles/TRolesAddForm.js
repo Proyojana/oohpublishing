@@ -17,6 +17,7 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
     defaultType: 'textfield',
     listeners: {
      	 afterrender: function(){
+     	 //	alert("listen");
      	 	var currentForm = Ext.getCmp('trolesaddform');     
        	  	
        	
@@ -26,10 +27,12 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
         						 	action:1
 							    },
 							    success:function(form,action){
+							    	
 							    	alert("success");
 							    	alert(action.result.message);
 							    },
-							    failure:function(form,action){							    
+							    failure:function(form,action){	
+							    //	alert("failure");						    
 							    	Ext.getCmp('trolescode').setValue(action.result.message);
 							    }
 							
@@ -173,6 +176,22 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 				var currentForm = this.up('trolesaddform');
 				currentForm.getForm().reset();
 				Ext.getCmp('trolescode').setReadOnly(false);
+				currentForm.getForm().load({
+   								 url: 'service/team_roles.php',
+							     params: {
+        						 	action:1
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('trolescode').setValue(action.result.message);
+							    }
+							
+							});
 			}
 	  	} ]
 	  

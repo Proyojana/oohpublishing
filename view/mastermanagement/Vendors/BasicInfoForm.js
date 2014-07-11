@@ -1,4 +1,3 @@
-
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 var service = Ext.create('MyDesktop.store.Service');
 		service.load({
@@ -21,6 +20,29 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		labelWidth: 80,
 	},
 	defaultType: 'textfield',
+	listeners: {
+     	 afterrender: function(){
+     	 //	alert("listen");
+     	 	var currentForm = Ext.getCmp('basicinfoform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/vendors.php',
+							     params: {
+        						 	action:9
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('basiccode').setValue(action.result.message);
+							    }
+							
+							});
+     	}},
 	//initComponent:function(){
 			items:[		
 			{
@@ -36,6 +58,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		name: 'basiccode',
 		afterLabelTextTpl: required,
 		allowBlank: false,			
+		readOnly: true,
 		x:10,
 		y:10,
 		width:250
@@ -50,17 +73,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		//margin:'-25 0 0 400',
 		width:250
 	},
-	{
-		xtype:'textarea',
-		id:'basicdescription',
-		fieldLabel: 'Description',
-		name: 'basicdescription',
-		x:10,
-		y:210,
-		//margin:'-25 0 0 400',
-		height:70,
-		width:250
-	},
+	
 	{   xtype:'textarea',
 		id:'basicaddress1',
 		fieldLabel: 'Address1',
@@ -198,7 +211,17 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		//margin:'5 0 0 0'
 		
       },
-      
+      {
+		xtype:'textarea',
+		id:'basicdescription',
+		fieldLabel: 'Description',
+		name: 'basicdescription',
+		x:10,
+		y:210,
+		//margin:'-25 0 0 400',
+		height:70,
+		width:250
+	},
       {
 		xtype:'button',
 		text: 'Add',
@@ -326,6 +349,22 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 						var address=Ext.getCmp('basicfax').reset();
 						var address=Ext.getCmp('basicwebsite').reset();
 						var address=Ext.getCmp('basicemail').reset();
+						 currentForm.getForm().load({
+   								 url: 'service/vendors.php',
+							     params: {
+        						 	action:9
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('basiccode').setValue(action.result.message);
+							    }
+							
+							});
 						
 		}
 		}

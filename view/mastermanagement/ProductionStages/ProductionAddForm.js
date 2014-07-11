@@ -14,6 +14,29 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
         labelWidth: 140,
     },
     defaultType: 'textfield',
+    listeners: {
+     	 afterrender: function(){
+     	 //	alert("listen");
+     	 	var currentForm = Ext.getCmp('Productionaddform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/activity.php',
+							     params: {
+        						 	action:6
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('product_code').setValue(action.result.message);
+							    }
+							
+							});
+     	}},
 	initComponent:function(){
 		
 		this.items= [
@@ -27,6 +50,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 			Name: 'product_code',
 			align:'center',
 			x:330,
+			readOnly: true,
 			y:10,
 			width:320,
 			allowBlank: false,
@@ -144,6 +168,23 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 			handler: function (){
 				var currentForm = this.up('Productionaddform');
 				currentForm.getForm().reset();
+				
+				 currentForm.getForm().load({
+   								 url: 'service/activity.php',
+							     params: {
+        						 	action:6
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('product_code').setValue(action.result.message);
+							    }
+							
+							});
 			}
 	  	} ]
 	  

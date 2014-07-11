@@ -26,28 +26,28 @@
 		function getContactCustomerbyCustID($id)
 	{
  		$num_result = mysql_query ("Select
- 		 ooh_publishing.cutomers_contacts.id,
-  ooh_publishing.cutomers_contacts.customer_id,
-  ooh_publishing.cutomers_contacts.name,
-  ooh_publishing.cutomers_contacts.phone,
-  ooh_publishing.cutomers_contacts.email,
-  ooh_publishing.cutomers_contacts.designation
+ 		 cutomers_contacts.id,
+  cutomers_contacts.customer_id,
+  cutomers_contacts.name,
+  cutomers_contacts.phone,
+  cutomers_contacts.email,
+  cutomers_contacts.designation
 From
-  ooh_publishing.cutomers_contacts
-  			WHERE ooh_publishing.cutomers_contacts.customer_id='".$id."' and ooh_publishing.cutomers_contacts.flag=0")or die(mysql_error());
+  cutomers_contacts
+  			WHERE cutomers_contacts.customer_id='".$id."' and cutomers_contacts.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-		 ooh_publishing.cutomers_contacts.id as id,
-  ooh_publishing.cutomers_contacts.customer_id,
-  ooh_publishing.cutomers_contacts.name as name,
-  ooh_publishing.cutomers_contacts.phone as phone,
-  ooh_publishing.cutomers_contacts.email as email,
-  ooh_publishing.cutomers_contacts.designation as designation
+		 cutomers_contacts.id as id,
+  cutomers_contacts.customer_id,
+  cutomers_contacts.name as name,
+  cutomers_contacts.phone as phone,
+  cutomers_contacts.email as email,
+  cutomers_contacts.designation as designation
 From
-  ooh_publishing.cutomers_contacts
-  			WHERE ooh_publishing.cutomers_contacts.customer_id='".$id."' and ooh_publishing.cutomers_contacts.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  cutomers_contacts
+  			WHERE cutomers_contacts.customer_id='".$id."' and cutomers_contacts.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -59,16 +59,16 @@ From
 	function getContactCustomerId($id)
  	{
 		$result1 = mysql_query ("Select
-		ooh_publishing.cutomers_contacts.id as custcntctvenid,
-  ooh_publishing.cutomers_contacts.name as custcontctname,
-  ooh_publishing.cutomers_contacts.phone as custcontctphone,
-  ooh_publishing.cutomers_contacts.email as custcntctemail,
-  ooh_publishing.cutomers_contacts.designation as custcntctdesignation
+		cutomers_contacts.id as custcntctvenid,
+  cutomers_contacts.name as custcontctname,
+  cutomers_contacts.phone as custcontctphone,
+  cutomers_contacts.email as custcntctemail,
+  cutomers_contacts.designation as custcntctdesignation
   
 From
-  ooh_publishing.cutomers_contacts
+  cutomers_contacts
 		Where
-		  ooh_publishing.cutomers_contacts.id = '".$id."'");
+		  cutomers_contacts.id = '".$id."'");
 			
 		if(!$result1)
 			{

@@ -21,32 +21,32 @@ $id=$_SESSION['user_no'];
 	function getRatecardMaster($customerid)
 	{
  		$num_result = mysql_query ("Select
-  ooh_publishing.customers_ratecard.uom as uom,
-  ooh_publishing.customers_ratecard.dollars as dollars,
-  ooh_publishing.customers_ratecard.pounds as pounds,
-  ooh_publishing.customers_ratecard.id as ratecardid,
-  ooh_publishing.customers_ratecard.services as services
+  customers_ratecard.uom as uom,
+  customers_ratecard.dollars as dollars,
+  customers_ratecard.pounds as pounds,
+  customers_ratecard.id as ratecardid,
+  customers_ratecard.services as services
 From
-  ooh_publishing.customers_ratecard Inner Join
-  ooh_publishing.services On ooh_publishing.customers_ratecard.services =
-    ooh_publishing.services.id
+  customers_ratecard Inner Join
+  services On customers_ratecard.services =
+    services.id
 Where
-  ooh_publishing.customers_ratecard.customer_id =  '".$customerid."' and ooh_publishing.customers_ratecard.flag=0")or die(mysql_error());
+  customers_ratecard.customer_id =  '".$customerid."' and customers_ratecard.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  ooh_publishing.customers_ratecard.uom as uom,
-  ooh_publishing.customers_ratecard.dollars as dollars,
-  ooh_publishing.customers_ratecard.pounds as pounds,
-  ooh_publishing.customers_ratecard.id as ratecardid,
-  ooh_publishing.customers_ratecard.services as services
+  customers_ratecard.uom as uom,
+  customers_ratecard.dollars as dollars,
+  customers_ratecard.pounds as pounds,
+  customers_ratecard.id as ratecardid,
+  customers_ratecard.services as services
 From
-  ooh_publishing.customers_ratecard Inner Join
-  ooh_publishing.services On ooh_publishing.customers_ratecard.services =
-    ooh_publishing.services.id
+  customers_ratecard Inner Join
+  services On customers_ratecard.services =
+    services.id
 Where
-  ooh_publishing.customers_ratecard.customer_id =  '".$customerid."' and ooh_publishing.customers_ratecard.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  customers_ratecard.customer_id =  '".$customerid."' and customers_ratecard.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{

@@ -21,32 +21,32 @@ $id=$_SESSION['user_no'];
 	function getRatecardMaster($vendorid)
 	{
  		$num_result = mysql_query ("Select
-  ooh_publishing.vendors_ratecard.uom as uom,
-  ooh_publishing.vendors_ratecard.dollars as dollars,
-  ooh_publishing.vendors_ratecard.pounds as pounds,
-  ooh_publishing.vendors_ratecard.id as ratecardid,
-  ooh_publishing.vendors_ratecard.services as services
+  vendors_ratecard.uom as uom,
+  vendors_ratecard.dollars as dollars,
+  vendors_ratecard.pounds as pounds,
+  vendors_ratecard.id as ratecardid,
+  vendors_ratecard.services as services
 From
-  ooh_publishing.vendors_ratecard Inner Join
-  ooh_publishing.services On ooh_publishing.vendors_ratecard.services =
-    ooh_publishing.services.id
+  vendors_ratecard Inner Join
+  services On vendors_ratecard.services =
+    services.id
 Where
-  ooh_publishing.vendors_ratecard.vendor_id =  '".$vendorid."' and ooh_publishing.vendors_ratecard.flag=0")or die(mysql_error());
+  vendors_ratecard.vendor_id =  '".$vendorid."' and vendors_ratecard.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  ooh_publishing.vendors_ratecard.uom as uom,
-  ooh_publishing.vendors_ratecard.dollars as dollars,
-  ooh_publishing.vendors_ratecard.pounds as pounds,
-  ooh_publishing.vendors_ratecard.id as ratecardid,
-  ooh_publishing.vendors_ratecard.services as services
+  vendors_ratecard.uom as uom,
+  vendors_ratecard.dollars as dollars,
+  vendors_ratecard.pounds as pounds,
+  vendors_ratecard.id as ratecardid,
+  vendors_ratecard.services as services
 From
-  ooh_publishing.vendors_ratecard Inner Join
-  ooh_publishing.services On ooh_publishing.vendors_ratecard.services =
-    ooh_publishing.services.id
+  vendors_ratecard Inner Join
+  services On vendors_ratecard.services =
+    services.id
 Where
-  ooh_publishing.vendors_ratecard.vendor_id =  '".$vendorid."' and ooh_publishing.vendors_ratecard.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  vendors_ratecard.vendor_id =  '".$vendorid."' and vendors_ratecard.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{

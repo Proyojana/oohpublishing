@@ -1,6 +1,6 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 Ext.define('MyDesktop.view.mastermanagement.Services.ServiceAddForm' ,{
-    extend: 'Ext.form.FieldSet',
+    extend: 'Ext.form.Panel',
     alias : 'widget.serviceaddform',
    		id:'serviceaddform',
     margin: '2 10 10 10',
@@ -15,6 +15,29 @@ Ext.define('MyDesktop.view.mastermanagement.Services.ServiceAddForm' ,{
         labelWidth: 140,
     },
     defaultType: 'textfield',
+    listeners: {
+     	 afterrender: function(){
+     	 //	alert("listen");
+     	 	var currentForm = Ext.getCmp('serviceaddform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/Service.php',
+							     params: {
+        						 	action:9
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('service_code').setValue(action.result.message);
+							    }
+							
+							});
+     	}},
 	initComponent:function(){
 	/*	var ci = Ext.create('MyDesktop.store.State');
 		ci.load({params:{action: 7}});
@@ -33,6 +56,7 @@ Ext.define('MyDesktop.view.mastermanagement.Services.ServiceAddForm' ,{
 			x:350,
 			y:10,
 			width:320,
+			readOnly:true,
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},
@@ -145,6 +169,23 @@ Ext.MessageBox.alert('Please fill the required data.');
 				var currentForm = this.up('serviceform');
 				currentForm.getForm().reset();
 				Ext.getCmp('service_code').setReadOnly(false);
+				
+					 currentForm.getForm().load({
+   								 url: 'service/Service.php',
+							     params: {
+        						 	action:9
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('service_code').setValue(action.result.message);
+							    }
+							
+							});
 			}
 	  	} ]
 	  

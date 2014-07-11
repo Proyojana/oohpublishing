@@ -15,6 +15,30 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
         labelWidth: 140,
     },
     defaultType: 'textfield',
+    listeners: {
+     	 afterrender: function(){
+     	 //	alert("listen");
+     	 	var currentForm = Ext.getCmp('generalinfoform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/Workflow.php',
+							     params: {
+        						 	action:7
+        						 	
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('workflow_code').setValue(action.result.message);
+							    }
+							
+							});
+     	}},
 	initComponent:function(){
 		var client = Ext.create('MyDesktop.store.Customers');
 		client.load({params:{action: 1}});
@@ -32,6 +56,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			y:10,
 			width:320,
 			allowBlank: false,
+			readOnly: true,
 			afterLabelTextTpl: required,
 			},
 		{
@@ -134,6 +159,8 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 				var workflow_name = Ext.getCmp('workflow_name').getValue();
 				var workflow_description= Ext.getCmp('workflow_description').getValue();
 				
+				var workflow_client = Ext.getCmp('workflow_client').getValue();
+					alert(workflow_client);
 				if(currentForm.getForm().isValid() == true)
 				{
 				var conn = new Ext.data.Connection();
@@ -171,6 +198,24 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 				currentForm.getForm().reset();
 				var grid1=Ext.getCmp('clientgrid');
 						grid1.getStore().load();
+						
+				currentForm.getForm().load({
+   								 url: 'service/Workflow.php',
+							     params: {
+        						 	action:7
+        						 	
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('workflow_code').setValue(action.result.message);
+							    }
+							
+							});
 			}
 	  	} ]
 	  

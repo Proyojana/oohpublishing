@@ -26,6 +26,9 @@
 		case 8:
 			getFreelancerMasterById($_POST["state_id"]);	
 			break;
+		case 9: 
+			autoRequestCode($id);
+			break;
 		default: 
 			break;
 	}
@@ -34,36 +37,36 @@
 		function getVendorMaster()
 	{
  		$num_result = mysql_query ("Select
-  Group_Concat(ooh_publishing.services.name) as services,
-  ooh_publishing.vendors.code as code,
-  ooh_publishing.vendors.name As name,
-  ooh_publishing.vendors.email as email,
-  ooh_publishing.vendors.id as id
+  Group_Concat(services.name) as services,
+  vendors.code as code,
+  vendors.name As name,
+  vendors.email as email,
+  vendors.id as id
 From
-  ooh_publishing.vendors Inner Join
-  ooh_publishing.vendors_services On ooh_publishing.vendors.code =
-    ooh_publishing.vendors_services.vendors_code Inner Join
-  ooh_publishing.services On ooh_publishing.vendors_services.service_id =
-    ooh_publishing.services.id
-  			WHERE ooh_publishing.vendors.flag=0 Group By
-  ooh_publishing.vendors.code")or die(mysql_error());
+  vendors Inner Join
+  vendors_services On vendors.code =
+    vendors_services.vendors_code Inner Join
+  services On vendors_services.service_id =
+    services.id
+  			WHERE vendors.flag=0 Group By
+  vendors.code")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  Group_Concat(ooh_publishing.services.name) as services,
-  ooh_publishing.vendors.code as code,
-  ooh_publishing.vendors.name As name,
-  ooh_publishing.vendors.email as email,
-  ooh_publishing.vendors.id as id
+  Group_Concat(services.name) as services,
+  vendors.code as code,
+  vendors.name As name,
+  vendors.email as email,
+  vendors.id as id
 From
-  ooh_publishing.vendors Inner Join
-  ooh_publishing.vendors_services On ooh_publishing.vendors.code =
-    ooh_publishing.vendors_services.vendors_code Inner Join
-  ooh_publishing.services On ooh_publishing.vendors_services.service_id =
-    ooh_publishing.services.id
-  			WHERE ooh_publishing.vendors.flag=0 Group By
-  ooh_publishing.vendors.code LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  vendors Inner Join
+  vendors_services On vendors.code =
+    vendors_services.vendors_code Inner Join
+  services On vendors_services.service_id =
+    services.id
+  			WHERE vendors.flag=0 Group By
+  vendors.code LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -75,28 +78,28 @@ From
 	function getVendorsById($id)
  	{
 		$result1 = mysql_query ("Select
-		ooh_publishing.vendors.id as basicid,
-  ooh_publishing.vendors.code as basiccode,
-  ooh_publishing.vendors.name as basicname,
-  ooh_publishing.vendors.description as basicdescription,
-  ooh_publishing.vendors.address1 as basicaddress1,
-  ooh_publishing.vendors.address2 as basicaddress2,
-  Group_Concat(ooh_publishing.services.name) as basic_service,
-  ooh_publishing.vendors.city as basiccity,
-  ooh_publishing.vendors.state as basicstate,
-  ooh_publishing.vendors.country as basiccountry,
-  ooh_publishing.vendors.pin as basicpin,
-  ooh_publishing.vendors.phone as basicphone,
-  ooh_publishing.vendors.fax as basicfax,
-  ooh_publishing.vendors.email as basicemail,
-  ooh_publishing.vendors.website as basicwebsite
+		vendors.id as basicid,
+  vendors.code as basiccode,
+  vendors.name as basicname,
+  vendors.description as basicdescription,
+  vendors.address1 as basicaddress1,
+  vendors.address2 as basicaddress2,
+  Group_Concat(services.name) as basic_service,
+  vendors.city as basiccity,
+  vendors.state as basicstate,
+  vendors.country as basiccountry,
+  vendors.pin as basicpin,
+  vendors.phone as basicphone,
+  vendors.fax as basicfax,
+  vendors.email as basicemail,
+  vendors.website as basicwebsite
 From
-  ooh_publishing.vendors Inner Join
-  ooh_publishing.vendors_services On ooh_publishing.vendors.code =
-    ooh_publishing.vendors_services.vendors_code Inner Join
-  ooh_publishing.services On ooh_publishing.vendors_services.service_id =
-    ooh_publishing.services.id
-  			WHERE ooh_publishing.vendors.flag=0 and ooh_publishing.vendors.id = '".$id."' Group By ooh_publishing.vendors.code");
+  vendors Inner Join
+  vendors_services On vendors.code =
+    vendors_services.vendors_code Inner Join
+  services On vendors_services.service_id =
+    services.id
+  			WHERE vendors.flag=0 and vendors.id = '".$id."' Group By vendors.code");
 			
 		if(!$result1)
 			{
@@ -293,4 +296,39 @@ function getFreelancerMasterById($id)
 	   	echo'({"results":'.json_encode($data).'})';
     }
 	
+		function autoRequestCode($id) {
+	$autoRequest = mysql_query("select code from vendors");
+	$num_rows = mysql_num_rows($autoRequest);
+	if($num_rows > 0) {
+		while($row = mysql_fetch_array($autoRequest)) {
+			$data1 = $row['code'];
+		}
+	//	echo $data1;
+		$data = str_split($data1, 1);
+		$remain = substr($data1,1,4);
+	
+
+		//$data1 = substr($data1, -4);
+		$code = $remain + 1;
+		//echo $code;
+		$code = str_pad($code, 3, '0', STR_PAD_LEFT);
+	//	echo $code;
+		$new_code = $data[0] . $code;
+		
+		//echo $new_code;
+	} else {
+		
+		$new_code = "V001";
+	}
+
+	if(!$autoRequest) {
+		$result["failure"] = true;
+		$result["message"] = 'Invalid query: ' . mysql_error();
+	} else {
+		$result["success"] = true;
+		$result["message"] = $new_code;
+	}
+
+	echo json_encode($result);
+}
 ?>

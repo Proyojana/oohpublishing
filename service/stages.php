@@ -21,32 +21,32 @@ $id=$_SESSION['user_no'];
 	function getRatecardMaster($workflowid)
 	{
  		$num_result = mysql_query ("Select
- 		 ooh_publishing.stages.stage_order As stage_order,
-  ooh_publishing.stages.stage_name As stage_name,
-  ooh_publishing.stages.activity As activity,
-  ooh_publishing.stages.id As stage_id,
-  ooh_publishing.stages.workflow_id
+ 		 stages.stage_order As stage_order,
+  stages.stage_name As stage_name,
+  stages.activity As activity,
+  stages.id As stage_id,
+  stages.workflow_id
 From
-  ooh_publishing.stages Inner Join
-  ooh_publishing.workflow On ooh_publishing.stages.workflow_id =
-    ooh_publishing.workflow.id
+  stages Inner Join
+  workflow On stages.workflow_id =
+    workflow.id
 Where
-  ooh_publishing.stages.workflow_id ='".$workflowid."' and ooh_publishing.stages.flag=0")or die(mysql_error());
+  stages.workflow_id ='".$workflowid."' and stages.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-		 ooh_publishing.stages.stage_order As stage_order,
-  ooh_publishing.stages.stage_name As stage_name,
-  ooh_publishing.stages.activity As activity,
-  ooh_publishing.stages.id As stage_id,
-  ooh_publishing.stages.workflow_id
+		 stages.stage_order As stage_order,
+  stages.stage_name As stage_name,
+  stages.activity As activity,
+  stages.id As stage_id,
+  stages.workflow_id
 From
-  ooh_publishing.stages Inner Join
-  ooh_publishing.workflow On ooh_publishing.stages.workflow_id =
-    ooh_publishing.workflow.id
+  stages Inner Join
+  workflow On stages.workflow_id =
+    workflow.id
 Where
-  ooh_publishing.stages.workflow_id ='".$workflowid."' and ooh_publishing.stages.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  stages.workflow_id ='".$workflowid."' and stages.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{

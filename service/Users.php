@@ -24,6 +24,9 @@ $id=$_SESSION['user_no'];
 		case 6:
 			BulkDelete($_POST['id']);
 			break;	
+		case 7:
+			autoRequestCode($id);
+			break;
 		default: 
 			break;
 	}
@@ -36,12 +39,12 @@ $id=$_SESSION['user_no'];
   users.name as username,
   users.code as usercode,
   users.email as useremail,
-  ooh_publishing.team_roles.role_name as userrole,
+  team_roles.role_name as userrole,
   users.description as userdescription
   From
   users Inner Join
-  ooh_publishing.team_roles On ooh_publishing.users.role =
-    ooh_publishing.team_roles.id Where users.flag=0")or die(mysql_error());
+  team_roles On users.role =
+    team_roles.id Where users.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
@@ -50,12 +53,12 @@ $id=$_SESSION['user_no'];
   users.name as username,
   users.code as usercode,
   users.email as useremail,
-  ooh_publishing.team_roles.role_name as userrole,
+  team_roles.role_name as userrole,
   users.description as userdescription
   From
   users Inner Join
-  ooh_publishing.team_roles On ooh_publishing.users.role =
-    ooh_publishing.team_roles.id Where users.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  team_roles On users.role =
+    team_roles.id Where users.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -71,12 +74,12 @@ $id=$_SESSION['user_no'];
   users.name as username,
   users.code as usercode,
   users.email as useremail,
-  ooh_publishing.team_roles.role_name as userrole,
+  team_roles.role_name as userrole,
   users.description as userdescription
 From
   users Inner Join
-  ooh_publishing.team_roles On ooh_publishing.users.role =
-    ooh_publishing.team_roles.id
+  team_roles On users.role =
+    team_roles.id
 			Where
 		  	users.id=".$userid1."");
 			
@@ -101,6 +104,22 @@ From
   
      function updateUserMaster($userid,$usercode,$username,$userrole,$useremail,$userdescription)
     {
+    /*	$autoRequest = mysql_query("Select
+  users.password
+From
+  users
+Where
+  users.name = 'Gowri'");
+	$num_rows = mysql_num_rows($autoRequest);
+	if($num_rows > 0) {
+		while($row = mysql_fetch_array($autoRequest)) {
+			$data1 = $row['password'];
+		}
+		$emp_DecryptedPassword=decrypt($data1,'key'); 
+		echo $emp_DecryptedPassword;
+		}
+		*/
+		
 		$checkquery="SELECT id FROM users WHERE id='".$userid."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
@@ -166,7 +185,9 @@ From
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO users(id,code,name,password,role,email,description,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$usercode."','".$username."','".$password."','".$role."','".$email."','".$userdescription."','".$id."',now(),'','','')");
+			$encrypted_password = encrypt($password,'key'); //Encrypt users password
+			$result1 = mysql_query ("INSERT INTO users(id,code,name,password,role,email,description,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$usercode."','".$username."','".$encrypted_password."','".$role."','".$email."','".$userdescription."','".$id."',now(),'','','')");
+			
 			if(!$result1)
 			{
 				$result["failure"] = true;
@@ -210,6 +231,40 @@ From
 			}
 		echo json_encode($result);		
 	}
+	function autoRequestCode($id) {
+	$autoRequest = mysql_query("select code from users");
+	$num_rows = mysql_num_rows($autoRequest);
+	if($num_rows > 0) {
+		while($row = mysql_fetch_array($autoRequest)) {
+			$data1 = $row['code'];
+		}
+	//	echo $data1;
+		$data = str_split($data1, 2);
+		$remain = substr($data1,2,5);
 	
+
+		//$data1 = substr($data1, -4);
+		$code = $remain + 1;
+		//echo $code;
+		$code = str_pad($code, 3, '0', STR_PAD_LEFT);
+	//	echo $code;
+		$new_code = $data[0] . $code;
+		
+		//echo $new_code;
+	} else {
+		
+		$new_code = "R0001";
+	}
+
+	if(!$autoRequest) {
+		$result["failure"] = true;
+		$result["message"] = 'Invalid query: ' . mysql_error();
+	} else {
+		$result["success"] = true;
+		$result["message"] = $new_code;
+	}
+
+	echo json_encode($result);
+}
 	
 ?>

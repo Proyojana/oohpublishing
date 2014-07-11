@@ -1,6 +1,6 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 Ext.define('MyDesktop.view.mastermanagement.Users.UsersAddForm' ,{
-    extend: 'Ext.form.FieldSet',
+    extend: 'Ext.form.Panel',
     alias : 'widget.usersaddform',
    		id:'usersaddform',
     margin: '2 10 10 10',
@@ -15,7 +15,29 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersAddForm' ,{
         labelWidth: 120,
     },
     defaultType: 'textfield',
-    
+    listeners: {
+     	 afterrender: function(){
+     	 //	alert("listen");
+     	 	var currentForm = Ext.getCmp('usersaddform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/Users.php',
+							     params: {
+        						 	action:7
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('usercode').setValue(action.result.message);
+							    }
+							
+							});
+     	}},
 	initComponent:function(){
 			Ext.apply(Ext.form.field.VTypes, {
                password: function(val, field) {
@@ -53,7 +75,9 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersAddForm' ,{
 			x:100,
 			y:10,
 			width:320,
-			allowBlank: false,
+		//	allowBlank: false,
+		//	disabled: true,
+			readOnly : true,
 			afterLabelTextTpl: required,
     	},{
 			id:'username',
@@ -68,7 +92,7 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersAddForm' ,{
 			},
 			{
 			   inputType: 'password',
-			id:'pass',
+			id:'password',
 			fieldLabel: 'Password',
 			
 			align:'center',
@@ -91,7 +115,7 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersAddForm' ,{
 			afterLabelTextTpl: required,
 			msgTarget: 'side',
 			vtype:'password',
-			 initialPassField: 'pass'
+			 initialPassField: 'password'
 			},
 		{
 			id:'userrole',
@@ -145,7 +169,7 @@ handler: function (){
 var currentForm = this.up('usersform');
 var usercode = Ext.getCmp('usercode').getValue();
 var username = Ext.getCmp('username').getValue();
-var password = Ext.getCmp('pass').getValue();
+var password = Ext.getCmp('password').getValue();
 var role = Ext.getCmp('userrole').getValue();
 var useremail = Ext.getCmp('useremail').getValue();
 var userdescription= Ext.getCmp('userdescription').getValue();
@@ -186,10 +210,12 @@ Ext.MessageBox.alert('Please fill the required data.');
 	var userid = Ext.getCmp('userid').getValue();
 var usercode = Ext.getCmp('usercode').getValue();
 var username = Ext.getCmp('username').getValue();
-var password = Ext.getCmp('pass').getValue();
+//var password = Ext.getCmp('password').getValue();
 var role = Ext.getCmp('userrole').getValue();
 var useremail = Ext.getCmp('useremail').getValue();
 var userdescription= Ext.getCmp('userdescription').getValue();
+//alert(usercode);
+//alert(role);
 if(currentForm.getForm().isValid() == true)
 {
 var conn = new Ext.data.Connection();
@@ -223,7 +249,30 @@ Ext.MessageBox.alert('Please fill the required data.');
 			handler: function (){
 				var currentForm = this.up('usersform');
 				currentForm.getForm().reset();
+				Ext.getCmp('password').setDisabled(false);
+				Ext.getCmp('retype_password').setDisabled(false);
 			//	Ext.getCmp('citycode').setReadOnly(false);
+			
+			var currentForm = Ext.getCmp('usersaddform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/Users.php',
+							     params: {
+        						 	action:7
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('usercode').setValue(action.result.message);
+							    }
+							
+							});
+							
 			}
 	  	} ]
 	  

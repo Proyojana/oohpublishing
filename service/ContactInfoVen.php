@@ -34,28 +34,28 @@
 		function getContactVendor($vendorid)
 	{
  		$num_result = mysql_query ("Select
- 		 ooh_publishing.vendors_contacts.id,
-  ooh_publishing.vendors_contacts.vendor_id,
-  ooh_publishing.vendors_contacts.name,
-  ooh_publishing.vendors_contacts.phone,
-  ooh_publishing.vendors_contacts.email,
-  ooh_publishing.vendors_contacts.designation
+ 		 vendors_contacts.id,
+  vendors_contacts.vendor_id,
+  vendors_contacts.name,
+  vendors_contacts.phone,
+  vendors_contacts.email,
+  vendors_contacts.designation
 From
-  ooh_publishing.vendors_contacts
-  			WHERE ooh_publishing.vendors_contacts.vendor_id='".$vendorid."' and  ooh_publishing.vendors_contacts.flag=0")or die(mysql_error());
+  vendors_contacts
+  			WHERE vendors_contacts.vendor_id='".$vendorid."' and  vendors_contacts.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-		 ooh_publishing.vendors_contacts.id,
-  ooh_publishing.vendors_contacts.vendor_id,
-  ooh_publishing.vendors_contacts.name,
-  ooh_publishing.vendors_contacts.phone,
-  ooh_publishing.vendors_contacts.email,
-  ooh_publishing.vendors_contacts.designation
+		 vendors_contacts.id,
+  vendors_contacts.vendor_id,
+  vendors_contacts.name,
+  vendors_contacts.phone,
+  vendors_contacts.email,
+  vendors_contacts.designation
 From
-  ooh_publishing.vendors_contacts
-  			WHERE ooh_publishing.vendors_contacts.vendor_id='".$vendorid."' and  ooh_publishing.vendors_contacts.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  vendors_contacts
+  			WHERE vendors_contacts.vendor_id='".$vendorid."' and  vendors_contacts.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -67,17 +67,17 @@ From
 	function getContactVendorId($id)
  	{
 		$result1 = mysql_query ("Select
-		ooh_publishing.vendors_contacts.id as cntctvenid,
-  ooh_publishing.vendors_contacts.vendor_id as venid,
-  ooh_publishing.vendors_contacts.name as contctname,
-  ooh_publishing.vendors_contacts.phone as contctphone,
-  ooh_publishing.vendors_contacts.email as cntctemail,
-  ooh_publishing.vendors_contacts.designation as cntctdesignation
+		vendors_contacts.id as cntctvenid,
+  vendors_contacts.vendor_id as venid,
+  vendors_contacts.name as contctname,
+  vendors_contacts.phone as contctphone,
+  vendors_contacts.email as cntctemail,
+  vendors_contacts.designation as cntctdesignation
   
 From
-  ooh_publishing.vendors_contacts
+  vendors_contacts
 		Where
-		  ooh_publishing.vendors_contacts.id = '".$id."'");
+		  vendors_contacts.id = '".$id."'");
 			
 		if(!$result1)
 			{

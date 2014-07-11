@@ -19,6 +19,9 @@ $user_no=$_SESSION["user_no"];
 		case 5:
 			insertProduction($_POST['product_code'],$_POST['product_name'],$_POST['product_description']);
 			break;
+		case 6: 
+			autoRequestCode($id);
+			break;
 		
 		default: 
 			break;
@@ -175,5 +178,40 @@ Where
 		echo json_encode($result);
 	}
 	
+			function autoRequestCode($id) {
+	$autoRequest = mysql_query("select code from activity");
+	$num_rows = mysql_num_rows($autoRequest);
+	if($num_rows > 0) {
+		while($row = mysql_fetch_array($autoRequest)) {
+			$data1 = $row['code'];
+		}
+	//	echo $data1;
+		$data = str_split($data1, 2);
+		$remain = substr($data1,1,4);
+	
+
+		//$data1 = substr($data1, -4);
+		$code = $remain + 1;
+		//echo $code;
+		$code = str_pad($code, 2, '0', STR_PAD_LEFT);
+	//	echo $code;
+		$new_code = $data[0] . $code;
+		
+		//echo $new_code;
+	} else {
+		
+		$new_code = "A001";
+	}
+
+	if(!$autoRequest) {
+		$result["failure"] = true;
+		$result["message"] = 'Invalid query: ' . mysql_error();
+	} else {
+		$result["success"] = true;
+		$result["message"] = $new_code;
+	}
+
+	echo json_encode($result);
+}
 	
 ?>

@@ -87,32 +87,32 @@ $id=$_SESSION['user_no'];
 	function getCustomers_team($customerid)
 	{
  		$num_result = mysql_query ("Select
-  ooh_publishing.customers_teams.team_name as name,
-  ooh_publishing.customers_teams.division as division,
-  ooh_publishing.customers_teams.email as mail,
-  ooh_publishing.customers_teams.phone as phone,
-  ooh_publishing.customers_teams.poc as poc,
-  ooh_publishing.customers_teams.id as id,
-  ooh_publishing.customers_teams.customer_id  
+  customers_teams.team_name as name,
+  customers_teams.division as division,
+  customers_teams.email as mail,
+  customers_teams.phone as phone,
+  customers_teams.poc as poc,
+  customers_teams.id as id,
+  customers_teams.customer_id  
 From
-  ooh_publishing.customers_teams
+  customers_teams
 Where
-  ooh_publishing.customers_teams.customer_id = '".$customerid."' and ooh_publishing.customers_teams.flag=0")or die(mysql_error());
+  customers_teams.customer_id = '".$customerid."' and customers_teams.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  ooh_publishing.customers_teams.team_name as name,
-  ooh_publishing.customers_teams.division as division,
-  ooh_publishing.customers_teams.email as mail,
-  ooh_publishing.customers_teams.phone as phone,
-  ooh_publishing.customers_teams.poc as poc,
-  ooh_publishing.customers_teams.id as id,
-  ooh_publishing.customers_teams.customer_id  
+  customers_teams.team_name as name,
+  customers_teams.division as division,
+  customers_teams.email as mail,
+  customers_teams.phone as phone,
+  customers_teams.poc as poc,
+  customers_teams.id as id,
+  customers_teams.customer_id  
 From
-  ooh_publishing.customers_teams
+  customers_teams
 Where
-  ooh_publishing.customers_teams.customer_id = '".$customerid."' and ooh_publishing.customers_teams.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  customers_teams.customer_id = '".$customerid."' and customers_teams.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -123,17 +123,17 @@ Where
 	function getCustomers_teamById($teamid)
  	{
 		$result1 = mysql_query ("Select
-  ooh_publishing.customers_teams.team_name as custteamname,
-  ooh_publishing.customers_teams.division as custdivision,
-  ooh_publishing.customers_teams.email as custteamemail,
-  ooh_publishing.customers_teams.phone as custteamphone,
-  ooh_publishing.customers_teams.poc as custteampoc,
-  ooh_publishing.customers_teams.id as customers_teamid,
-  ooh_publishing.customers_teams.customer_id  
+  customers_teams.team_name as custteamname,
+  customers_teams.division as custdivision,
+  customers_teams.email as custteamemail,
+  customers_teams.phone as custteamphone,
+  customers_teams.poc as custteampoc,
+  customers_teams.id as customers_teamid,
+  customers_teams.customer_id  
 From
-  ooh_publishing.customers_teams
+  customers_teams
 Where
-  ooh_publishing.customers_teams.id = '".$teamid."'");
+  customers_teams.id = '".$teamid."'");
 			
 		if(!$result1)
 			{

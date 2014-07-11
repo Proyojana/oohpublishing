@@ -7,7 +7,7 @@ $id=$_SESSION['user_no'];
 	switch($_POST["action"]) /*Read action sent from front-end */
 	{
 		case 1:
-			autoRequestCode($userid);
+			autoRequestCode($id);
 			break;
 		case 2:
 			insertTeamRoles($_POST['trole_code'],$_POST['trole_name'],$_POST['trole_description'],$_POST['createdby'],$id);
@@ -38,17 +38,21 @@ $id=$_SESSION['user_no'];
 		while($row = mysql_fetch_array($autoRequest)) {
 			$data1 = $row['role_code'];
 		}
-		//echo $data1;
+	//	echo $data1;
 		$data = str_split($data1, 1);
-		echo $data[1];
+		$remain = substr($data1,1,4);
+	
 
 		//$data1 = substr($data1, -4);
-		$code = $data[1] + 1;
-		$code = str_pad($code, 4, '0', STR_PAD_LEFT);
+		$code = $remain + 1;
 		//echo $code;
+		$code = str_pad($code, 3, '0', STR_PAD_LEFT);
+	//	echo $code;
 		$new_code = $data[0] . $code;
+		
 		//echo $new_code;
 	} else {
+		
 		$new_code = "R0001";
 	}
 
@@ -96,26 +100,26 @@ $id=$_SESSION['user_no'];
 		function getTeamRoles()
 	{
  		$num_result = mysql_query ("Select
-  ooh_publishing.team_roles.role_code as trolescode,
-  ooh_publishing.team_roles.role_name as trolesname,
-  ooh_publishing.team_roles.description as description,
-  ooh_publishing.team_roles.id as trolesid
+  team_roles.role_code as trolescode,
+  team_roles.role_name as trolesname,
+  team_roles.description as description,
+  team_roles.id as trolesid
 From
-  ooh_publishing.team_roles
+  team_roles
 Where
-  ooh_publishing.team_roles.flag = 0")or die(mysql_error());
+  team_roles.flag = 0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  ooh_publishing.team_roles.role_code as trolescode,
-  ooh_publishing.team_roles.role_name as trolesname,
-  ooh_publishing.team_roles.description as description,
-  ooh_publishing.team_roles.id as trolesid
+  team_roles.role_code as trolescode,
+  team_roles.role_name as trolesname,
+  team_roles.description as description,
+  team_roles.id as trolesid
 From
-  ooh_publishing.team_roles
+  team_roles
 Where
-  ooh_publishing.team_roles.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  team_roles.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -126,13 +130,13 @@ Where
 function getTeamRolesById($trolesid)
  	{
 		$result1 = mysql_query ("Select
-  ooh_publishing.team_roles.role_code as trolescode,
-  ooh_publishing.team_roles.role_name as trolesname,
-  ooh_publishing.team_roles.description as trolesdescription
+  team_roles.role_code as trolescode,
+  team_roles.role_name as trolesname,
+  team_roles.description as trolesdescription
 From
-  ooh_publishing.team_roles
+  team_roles
 Where
-  ooh_publishing.team_roles.id =".$trolesid."");
+  team_roles.id =".$trolesid."");
 			
 		if(!$result1)
 			{

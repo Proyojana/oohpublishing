@@ -87,32 +87,32 @@ $id=$_SESSION['user_no'];
 	function getVendors_team($basicvendorid)
 	{
  		$num_result = mysql_query ("Select
-  ooh_publishing.vendors_teams.team_name as teamname,
-  ooh_publishing.vendors_teams.division as division,
-  ooh_publishing.vendors_teams.email as email,
-  ooh_publishing.vendors_teams.phone as phone,
-  ooh_publishing.vendors_teams.poc as poc,
-  ooh_publishing.vendors_teams.id as id,
-  ooh_publishing.vendors_teams.vendor_id as basicvendorid  
+  vendors_teams.team_name as teamname,
+  vendors_teams.division as division,
+  vendors_teams.email as email,
+  vendors_teams.phone as phone,
+  vendors_teams.poc as poc,
+  vendors_teams.id as id,
+  vendors_teams.vendor_id as basicvendorid  
 From
-  ooh_publishing.vendors_teams
+  vendors_teams
 Where
-  ooh_publishing.vendors_teams.vendor_id = '".$basicvendorid."' and ooh_publishing.vendors_teams.flag=0")or die(mysql_error());
+  vendors_teams.vendor_id = '".$basicvendorid."' and vendors_teams.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  ooh_publishing.vendors_teams.team_name as teamname,
-  ooh_publishing.vendors_teams.division as division,
-  ooh_publishing.vendors_teams.email as email,
-  ooh_publishing.vendors_teams.phone as phone,
-  ooh_publishing.vendors_teams.poc as poc,
-  ooh_publishing.vendors_teams.id as id,
-  ooh_publishing.vendors_teams.vendor_id  as basicvendorid 
+  vendors_teams.team_name as teamname,
+  vendors_teams.division as division,
+  vendors_teams.email as email,
+  vendors_teams.phone as phone,
+  vendors_teams.poc as poc,
+  vendors_teams.id as id,
+  vendors_teams.vendor_id  as basicvendorid 
 From
-  ooh_publishing.vendors_teams
+  vendors_teams
 Where
-  ooh_publishing.vendors_teams.vendor_id = '".$basicvendorid."' and ooh_publishing.vendors_teams.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  vendors_teams.vendor_id = '".$basicvendorid."' and vendors_teams.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -123,17 +123,17 @@ Where
 	function getVendors_teamById($teamid)
  	{
 		$result1 = mysql_query ("Select
-  ooh_publishing.vendors_teams.team_name as teamname,
-  ooh_publishing.vendors_teams.division as division,
-  ooh_publishing.vendors_teams.email as teamemail,
-  ooh_publishing.vendors_teams.phone as teamphone,
-  ooh_publishing.vendors_teams.poc as teampoc,
-  ooh_publishing.vendors_teams.id as teamid,
-  ooh_publishing.vendors_teams.vendor_id  
+  vendors_teams.team_name as teamname,
+  vendors_teams.division as division,
+  vendors_teams.email as teamemail,
+  vendors_teams.phone as teamphone,
+  vendors_teams.poc as teampoc,
+  vendors_teams.id as teamid,
+  vendors_teams.vendor_id  
 From
-  ooh_publishing.vendors_teams
+  vendors_teams
 Where
-  ooh_publishing.vendors_teams.id = '".$teamid."'");
+  vendors_teams.id = '".$teamid."'");
 			
 		if(!$result1)
 			{

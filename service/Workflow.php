@@ -22,7 +22,9 @@
 		case 6:
 			insertClients($_POST['code'],$_POST['clients']);
 			break;	
-		
+		case 7: 
+			autoRequestCode($id);
+			break;
 		default: 
 			break;
 	}
@@ -30,36 +32,36 @@
 	function getWorkflowMaster()
 	{
  		$num_result = mysql_query ("Select
-  ooh_publishing.workflow.code as workflow_code,
-  ooh_publishing.workflow.name as workflow_name,
-  Group_Concat(ooh_publishing.customers.name) as workflow_client,
-  ooh_publishing.workflow.id as workflow_id,
-  ooh_publishing.workflow.description as workflow_description
+  workflow.code as workflow_code,
+  workflow.name as workflow_name,
+  Group_Concat(customers.name) as workflow_client,
+  workflow.id as workflow_id,
+  workflow.description as workflow_description
 From
-  ooh_publishing.workflow Inner Join
-  ooh_publishing.clients_choosen On ooh_publishing.workflow.code =
-    ooh_publishing.clients_choosen.code_workflow Inner Join
-  ooh_publishing.customers On ooh_publishing.clients_choosen.clients =
-    ooh_publishing.customers.id Where ooh_publishing.workflow.flag=0
+  workflow Inner Join
+  clients_choosen On workflow.code =
+    clients_choosen.code_workflow Inner Join
+  customers On clients_choosen.clients =
+    customers.id Where workflow.flag=0
 Group By
-  ooh_publishing.workflow.id, ooh_publishing.workflow.description ")or die(mysql_error());
+  workflow.id, workflow.description ")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  ooh_publishing.workflow.code as workflow_code,
-  ooh_publishing.workflow.name as workflow_name,
-  Group_Concat(ooh_publishing.customers.name) as workflow_client,
-  ooh_publishing.workflow.id as workflow_id,
-  ooh_publishing.workflow.description as workflow_description
+  workflow.code as workflow_code,
+  workflow.name as workflow_name,
+  Group_Concat(customers.name) as workflow_client,
+  workflow.id as workflow_id,
+  workflow.description as workflow_description
 From
-  ooh_publishing.workflow Inner Join
-  ooh_publishing.clients_choosen On ooh_publishing.workflow.code =
-    ooh_publishing.clients_choosen.code_workflow Inner Join
-  ooh_publishing.customers On ooh_publishing.clients_choosen.clients =
-    ooh_publishing.customers.id Where ooh_publishing.workflow.flag=0
+  workflow Inner Join
+  clients_choosen On workflow.code =
+    clients_choosen.code_workflow Inner Join
+  customers On clients_choosen.clients =
+    customers.id Where workflow.flag=0
 Group By
-  ooh_publishing.workflow.id, ooh_publishing.workflow.description  LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  workflow.id, workflow.description  LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -71,19 +73,19 @@ Group By
 	function getWorkflowMasterById($workflow_id)
  	{
 	$result1 = mysql_query ("Select
-  ooh_publishing.workflow.code as workflow_code,
-  ooh_publishing.workflow.name as workflow_name,
- Group_Concat(ooh_publishing.customers.name) as workflow_client,
-  ooh_publishing.workflow.id as workflow_id,
-  ooh_publishing.workflow.description as workflow_description
+  workflow.code as workflow_code,
+  workflow.name as workflow_name,
+ Group_Concat(customers.name) as workflow_client,
+  workflow.id as workflow_id,
+  workflow.description as workflow_description
 From
-  ooh_publishing.workflow Inner Join
-  ooh_publishing.clients_choosen On ooh_publishing.workflow.code =
-    ooh_publishing.clients_choosen.code_workflow Inner Join
-  ooh_publishing.customers On ooh_publishing.clients_choosen.clients =
-    ooh_publishing.customers.id Where ooh_publishing.workflow.flag=0 And ooh_publishing.workflow.id = '".$workflow_id."'
+  workflow Inner Join
+  clients_choosen On workflow.code =
+    clients_choosen.code_workflow Inner Join
+  customers On clients_choosen.clients =
+    customers.id Where workflow.flag=0 And workflow.id = '".$workflow_id."'
 Group By
-  ooh_publishing.workflow.id, ooh_publishing.workflow.description");
+  workflow.id, workflow.description");
 			
 		if(!$result1)
 			{
@@ -129,12 +131,9 @@ Group By
 			$result["failure"] = true;
 			$result["message"] =  'User does not exist';
 		}
-		
-
 		echo json_encode($result);
     }
-    
-    
+  
 	function deleteWorkflow($workflow_id)
     {
 		$checkquery="SELECT id FROM workflow WHERE id='".$workflow_id."'";
@@ -219,5 +218,39 @@ Group By
 		}
 			echo json_encode($result);
 	}
+				function autoRequestCode($id) {
+	$autoRequest = mysql_query("select code from workflow");
+	$num_rows = mysql_num_rows($autoRequest);
+	if($num_rows > 0) {
+		while($row = mysql_fetch_array($autoRequest)) {
+			$data1 = $row['code'];
+		}
+	//	echo $data1;
+		$data = str_split($data1, 2);
+		$remain = substr($data1,1,4);
+	
+
+		//$data1 = substr($data1, -4);
+		$code = $remain + 1;
+		//echo $code;
+		$code = str_pad($code, 2, '0', STR_PAD_LEFT);
+	//	echo $code;
+		$new_code = $data[0] . $code;
 		
+		//echo $new_code;
+	} else {
+		
+		$new_code = "A001";
+	}
+
+	if(!$autoRequest) {
+		$result["failure"] = true;
+		$result["message"] = 'Invalid query: ' . mysql_error();
+	} else {
+		$result["success"] = true;
+		$result["message"] = $new_code;
+	}
+
+	echo json_encode($result);
+}	
 ?>

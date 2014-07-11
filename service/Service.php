@@ -28,6 +28,9 @@
 		case 8:
 			getServiceListMasterByVendors($_POST['code']);
 			break;
+		case 9: 
+			autoRequestCode($id);
+			break;
 		default: 
 			break;
 	}
@@ -205,28 +208,28 @@ From
 	function getServiceListMaster($code)
 	{
  		$num_result = mysql_query ("Select
-  ooh_publishing.services.code,
-  ooh_publishing.customers_services.service_id As service_id,
-  ooh_publishing.services.name as service_name
+  services.code,
+  customers_services.service_id As service_id,
+  services.name as service_name
 From
-  ooh_publishing.customers_services Inner Join
-  ooh_publishing.services On ooh_publishing.customers_services.service_id =
-    ooh_publishing.services.id
+  customers_services Inner Join
+  services On customers_services.service_id =
+    services.id
 Where
-  ooh_publishing.customers_services.customer_code = '".$code."' And ooh_publishing.customers_services.flag = 0")or die(mysql_error());
+  customers_services.customer_code = '".$code."' And customers_services.flag = 0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  ooh_publishing.services.code,
-  ooh_publishing.customers_services.service_id As service_id,
-  ooh_publishing.services.name as service_name
+  services.code,
+  customers_services.service_id As service_id,
+  services.name as service_name
 From
-  ooh_publishing.customers_services Inner Join
-  ooh_publishing.services On ooh_publishing.customers_services.service_id =
-    ooh_publishing.services.id
+  customers_services Inner Join
+  services On customers_services.service_id =
+    services.id
 Where
-  ooh_publishing.customers_services.customer_code = '".$code."' And ooh_publishing.customers_services.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  customers_services.customer_code = '".$code."' And customers_services.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -238,28 +241,28 @@ Where
     function getServiceListMasterByVendors($code)
 	{
  		$num_result = mysql_query ("Select
-  ooh_publishing.services.code,
-  ooh_publishing.vendors_services.service_id As service_id,
-  ooh_publishing.services.name as service_name
+  services.code,
+  vendors_services.service_id As service_id,
+  services.name as service_name
 From
-  ooh_publishing.vendors_services Inner Join
-  ooh_publishing.services On ooh_publishing.vendors_services.service_id =
-    ooh_publishing.services.id
+  vendors_services Inner Join
+  services On vendors_services.service_id =
+    services.id
 Where
-  ooh_publishing.vendors_services.vendors_code = '".$code."' And ooh_publishing.vendors_services.flag = 0")or die(mysql_error());
+  vendors_services.vendors_code = '".$code."' And vendors_services.flag = 0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  ooh_publishing.services.code,
-  ooh_publishing.vendors_services.service_id As service_id,
-  ooh_publishing.services.name as service_name
+  services.code,
+  vendors_services.service_id As service_id,
+  services.name as service_name
 From
-  ooh_publishing.vendors_services Inner Join
-  ooh_publishing.services On ooh_publishing.vendors_services.service_id =
-    ooh_publishing.services.id
+  vendors_services Inner Join
+  services On vendors_services.service_id =
+    services.id
 Where
-  ooh_publishing.vendors_services.vendors_code = '".$code."' And ooh_publishing.vendors_services.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  vendors_services.vendors_code = '".$code."' And vendors_services.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -268,5 +271,39 @@ Where
 	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
 	}
     
+		function autoRequestCode($id) {
+	$autoRequest = mysql_query("select code from services");
+	$num_rows = mysql_num_rows($autoRequest);
+	if($num_rows > 0) {
+		while($row = mysql_fetch_array($autoRequest)) {
+			$data1 = $row['code'];
+		}
+	//	echo $data1;
+		$data = str_split($data1, 2);
+		$remain = substr($data1,2,5);
 	
+
+		//$data1 = substr($data1, -4);
+		$code = $remain + 1;
+		//echo $code;
+		$code = str_pad($code, 3, '0', STR_PAD_LEFT);
+	//	echo $code;
+		$new_code = $data[0] . $code;
+		
+		//echo $new_code;
+	} else {
+		
+		$new_code = "R0001";
+	}
+
+	if(!$autoRequest) {
+		$result["failure"] = true;
+		$result["message"] = 'Invalid query: ' . mysql_error();
+	} else {
+		$result["success"] = true;
+		$result["message"] = $new_code;
+	}
+
+	echo json_encode($result);
+}
 ?>

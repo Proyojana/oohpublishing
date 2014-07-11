@@ -15,6 +15,29 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 	},
 	requires:['MyDesktop.store.Service'],
 	defaultType: 'textfield',
+	listeners: {
+     	 afterrender: function(){
+     	 //	alert("listen");
+     	 	var currentForm = Ext.getCmp('custbasicinfoform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/customers.php',
+							     params: {
+        						 	action:7
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('custbasiccode').setValue(action.result.message);
+							    }
+							
+							});
+     	}},
 	initComponent:function(){
 		var service = Ext.create('MyDesktop.store.Service');
 		service.load({
@@ -32,7 +55,8 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 			{
 		id:'custbasiccode',
 		fieldLabel: 'Code',		
-		name: 'basiccode',			
+		name: 'basiccode',	
+		readOnly:true,		
 		x:10,
 		y:10,
 		width:250,
@@ -317,6 +341,22 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 						var basicwebsite=Ext.getCmp('custbasicwebsite').reset();
 						
 						Ext.getCmp('custbasiccode').setReadOnly(false);
+						currentForm.getForm().load({
+   								 url: 'service/customers.php',
+							     params: {
+        						 	action:7
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('custbasiccode').setValue(action.result.message);
+							    }
+							
+							});
 		}
 		}
 		
