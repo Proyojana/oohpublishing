@@ -13,10 +13,10 @@ switch($_POST["action"]) /*Read action sent from front-end */ {
 		deleteCustomersById($_POST["id"]);
 		break;
 	case 4 :
-		updateBasicInfoCustomer($_POST['basicid'], $_POST['basiccode'], $_POST['basicname'], $_POST['basicdescription'], $_POST['basicaddress1'], $_POST['basicaddress2'], $_POST['sevicesven'], $_POST['basiccity'], $_POST['basicstate'], $_POST['basiccountry'], $_POST['basicpin'], $_POST['basicphone'], $_POST['basicfax'], $_POST['basicemail'], $_POST['basicwebsite']);
+		updateBasicInfoCustomer($_POST['basicid'], $_POST['basiccode'], $_POST['per'], $_POST['basicname'],$_POST['lastname'], $_POST['middlename'], $_POST['basicdescription'], $_POST['basicaddress1'], $_POST['basicaddress2'], $_POST['sevicesven'], $_POST['basiccity'], $_POST['basicstate'], $_POST['basiccountry'], $_POST['basicpin'], $_POST['basicphone'], $_POST['basicfax'], $_POST['basicemail'], $_POST['basicwebsite']);
 		break;
 	case 5 :
-		insertBasicInfoCustomer($_POST['basiccode'], $_POST['basicname'], $_POST['basicdescription'], $_POST['basicaddress1'], $_POST['basicaddress2'], $_POST['sevicesven'], $_POST['basiccity'], $_POST['basicstate'], $_POST['basiccountry'], $_POST['basicpin'], $_POST['basicphone'], $_POST['basicfax'], $_POST['basicemail'], $_POST['basicwebsite']);
+		insertBasicInfoCustomer($_POST['basiccode'], $_POST['per'], $_POST['basicname'], $_POST['lastname'], $_POST['middlename'], $_POST['basicdescription'], $_POST['basicaddress1'], $_POST['basicaddress2'], $_POST['sevicesven'], $_POST['basiccity'], $_POST['basicstate'], $_POST['basiccountry'], $_POST['basicpin'], $_POST['basicphone'], $_POST['basicfax'], $_POST['basicemail'], $_POST['basicwebsite']);
 		break;
 	case 6 :
 		getClient($_POST['workflow_code']);
@@ -77,6 +77,9 @@ function getCustomersById($id) {
 	$result1 = mysql_query("Select
 		  customers.code as custbasiccode,
 		  customers.name as custbasicname,
+		  customers.per as per,
+		  customers.last_name as custbasiclastname,
+		  customers.middle_name as custbasicmiddlename,
 		  customers.email as custbasicemail ,
 		  customers.phone as custbasicphone,
 		  customers.id as basic_customerid,
@@ -137,13 +140,13 @@ function deleteCustomersById($id) {
 	echo json_encode($result);
 }
 
-function updateBasicInfoCustomer($basicid, $basiccode, $basicname, $basicdescription, $basicaddress1, $basicaddress2, $sevicesven, $basiccity, $basicstate, $basiccountry, $basicpin, $basicphone, $basicfax, $basicemail, $basicwebsite) {
+function updateBasicInfoCustomer($basicid,$per, $basiccode, $basiclastname, $basicmiddlename, $basicname, $basicdescription, $basicaddress1, $basicaddress2, $sevicesven, $basiccity, $basicstate, $basiccountry, $basicpin, $basicphone, $basicfax, $basicemail, $basicwebsite) {
 	$checkquery = "SELECT id as id FROM customers WHERE id='" . $basicid . "'";
 	$result1 = mysql_query($checkquery);
 	$num_rows = mysql_num_rows($result1);
 
 	if($num_rows == 1) {
-		$result1 = mysql_query("UPDATE customers set code='" . $basiccode . "',name='" . $basicname . "',description='" . $basicdescription . "',address1='" . $basicaddress1 . "',address2='" . $basicaddress2 . "',services='" . $sevicesven . "',city='" . $basiccity . "',state='" . $basicstate . "',country='" . $basiccountry . "',pin='" . $basicpin . "',phone='" . $basicphone . "',fax='" . $basicfax . "',email='" . $basicemail . "',website='" . $basicwebsite . "' WHERE id=" . $basicid . "");
+		$result1 = mysql_query("UPDATE customers set code='" . $basiccode . "', per='" . $per . "',  name='" . $basicname . "', last_name='" . $basiclastname . "',middle_name='" . $basicmiddlename . "',description='" . $basicdescription . "',address1='" . $basicaddress1 . "',address2='" . $basicaddress2 . "',services='" . $sevicesven . "',city='" . $basiccity . "',state='" . $basicstate . "',country='" . $basiccountry . "',pin='" . $basicpin . "',phone='" . $basicphone . "',fax='" . $basicfax . "',email='" . $basicemail . "',website='" . $basicwebsite . "' WHERE id=" . $basicid . "");
 
 		if(!$result1) {
 			$result["failure"] = true;
@@ -160,13 +163,13 @@ function updateBasicInfoCustomer($basicid, $basiccode, $basicname, $basicdescrip
 	echo json_encode($result);
 }
 
-function insertBasicInfoCustomer($basiccode, $basicname, $basicdescription, $basicaddress1, $basicaddress2, $sevicesven, $basiccity, $basicstate, $basiccountry, $basicpin, $basicphone, $basicfax, $basicemail, $basicwebsite) {
+function insertBasicInfoCustomer($basiccode,$per, $basicname,$lastname, $middlename, $basicdescription, $basicaddress1, $basicaddress2, $sevicesven, $basiccity, $basicstate, $basiccountry, $basicpin, $basicphone, $basicfax, $basicemail, $basicwebsite) {
 	$checkquery = "SELECT code FROM customers WHERE code='" . $basiccode . "'";
 	$result1 = mysql_query($checkquery);
 	$num_rows = mysql_num_rows($result1);
 
 	if($num_rows == 0) {
-		$result1 = mysql_query("INSERT INTO customers(id,code,name,description,address1,address2,services,city,state,country,pin,phone,fax,email,website,flag) VALUES('','" . $basiccode . "','" . $basicname . "','" . $basicdescription . "','" . $basicaddress1 . "','" . $basicaddress2 . "','" . $sevicesven . "','" . $basiccity . "','" . $basicstate . "','" . $basiccountry . "','" . $basicpin . "','" . $basicphone . "','" . $basicfax . "','" . $basicemail . "','" . $email . "','" . $basicwebsite . "')");
+		$result1 = mysql_query("INSERT INTO customers(id,code,per,name,last_name,middle_name,description,address1,address2,services,city,state,country,pin,phone,fax,email,website,flag) VALUES('','" . $basiccode . "','" . $per . "','" . $basicname . "','" . $lastname . "','" . $middlename . "','" . $basicdescription . "','" . $basicaddress1 . "','" . $basicaddress2 . "','" . $sevicesven . "','" . $basiccity . "','" . $basicstate . "','" . $basiccountry . "','" . $basicpin . "','" . $basicphone . "','" . $basicfax . "','" . $basicemail . "','" . $email . "','" . $basicwebsite . "')");
 		$services = explode(',', $sevicesven);
 		for($i = 0; $i < count($services) - 1; $i++) {
 			//echo $id;

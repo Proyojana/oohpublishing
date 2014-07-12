@@ -12,10 +12,10 @@
 			deletevendorsById($_POST["id"]);	
 			break;
 		case 4:
-			updateBasicInfoVendor($_POST['basicid'],$_POST['basiccode'],$_POST['basicname'],$_POST['basicdescription'],$_POST['basicaddress1'],$_POST['basicaddress2'],$_POST['basicservice'],$_POST['basiccity'],$_POST['basicstate'],$_POST['basiccountry'],$_POST['basicpin'],$_POST['basicphone'],$_POST['basicfax'],$_POST['basicemail'],$_POST['basicwebsite']);	
+			updateBasicInfoVendor($_POST['basicid'],$_POST['basiccode'],$_POST['per1'],$_POST['basicname'],$_POST['lastname'],$_POST['middlename'],$_POST['basicdescription'],$_POST['basicaddress1'],$_POST['basicaddress2'],$_POST['basicservice'],$_POST['basiccity'],$_POST['basicstate'],$_POST['basiccountry'],$_POST['basicpin'],$_POST['basicphone'],$_POST['basicfax'],$_POST['basicemail'],$_POST['basicwebsite']);	
 			break;
 		case 5:
-			insertBasicInfoVendor($_POST['basiccode'],$_POST['basicname'],$_POST['basicdescription'],$_POST['basicaddress1'],$_POST['basicaddress2'],$_POST['basicservice'],$_POST['basiccity'],$_POST['basicstate'],$_POST['basiccountry'],$_POST['basicpin'],$_POST['basicphone'],$_POST['basicfax'],$_POST['basicemail'],$_POST['basicwebsite']);
+			insertBasicInfoVendor($_POST['basiccode'],$_POST['per1'],$_POST['basicname'],$_POST['lastname'],$_POST['middlename'],$_POST['basicdescription'],$_POST['basicaddress1'],$_POST['basicaddress2'],$_POST['basicservice'],$_POST['basiccity'],$_POST['basicstate'],$_POST['basiccountry'],$_POST['basicpin'],$_POST['basicphone'],$_POST['basicfax'],$_POST['basicemail'],$_POST['basicwebsite']);
 			break;
 		case 6:
 			BulkDelete($_POST['id']);
@@ -81,6 +81,9 @@ From
 		vendors.id as basicid,
   vendors.code as basiccode,
   vendors.name as basicname,
+  vendors.per as per1,
+  vendors.last_name as basiclastname,
+  vendors.middle_name as basicmiddlename,
   vendors.description as basicdescription,
   vendors.address1 as basicaddress1,
   vendors.address2 as basicaddress2,
@@ -120,14 +123,14 @@ From
       	echo(json_encode($result));
     }
   
-     function updateBasicInfoVendor($basicid,$basiccode,$basicname,$basicdescription,$basicaddress1,$basicaddress2,$sevicesven,$basiccity,$basicstate,$basiccountry,$basicpin,$basicphone,$basicfax,$basicemail,$basicwebsite)
+     function updateBasicInfoVendor($basicid,$basiccode,$per1,$basicname,$lastname,$middlename,$basicdescription,$basicaddress1,$basicaddress2,$sevicesven,$basiccity,$basicstate,$basiccountry,$basicpin,$basicphone,$basicfax,$basicemail,$basicwebsite)
     {
 		$checkquery="SELECT id as id FROM vendors WHERE id='".$basicid."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==1){
-			$result1= mysql_query("UPDATE vendors set code='".$basiccode."',name='".$basicname."',description='".$basicdescription."',address1='".$basicaddress1."',address2='".$basicaddress2."',services='".$sevicesven."',city='".$basiccity."',state='".$basicstate."',country='".$basiccountry."',pin='".$basicpin."',phone='".$basicphone."',fax='".$basicfax."',email='".$basicemail."',website='".$basicwebsite."' WHERE id=".$basicid."");
+			$result1= mysql_query("UPDATE vendors set code='".$basiccode."',per='".$per1."',name='".$basicname."',last_name='".$lastname."',middle_name='".$middlename."',description='".$basicdescription."',address1='".$basicaddress1."',address2='".$basicaddress2."',services='".$sevicesven."',city='".$basiccity."',state='".$basicstate."',country='".$basiccountry."',pin='".$basicpin."',phone='".$basicphone."',fax='".$basicfax."',email='".$basicemail."',website='".$basicwebsite."' WHERE id=".$basicid."");
 				
 		if(!$result1)
 			{
@@ -179,7 +182,7 @@ From
 		echo json_encode($result);
 	}
 	
-	function insertBasicInfoVendor($basiccode,$basicname,$basicdescription,$basicaddress1,$basicaddress2,$sevicesven,$basiccity,$basicstate,$basiccountry,$basicpin,$basicphone,$basicfax,$basicemail,$basicwebsite)
+	function insertBasicInfoVendor($basiccode,$per1,$basicname,$lastname,$middlename,$basicdescription,$basicaddress1,$basicaddress2,$sevicesven,$basiccity,$basicstate,$basiccountry,$basicpin,$basicphone,$basicfax,$basicemail,$basicwebsite)
     {
 		$checkquery="SELECT code FROM vendors WHERE code='".$basiccode."'";
 		$result1=mysql_query($checkquery);
@@ -187,7 +190,7 @@ From
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO vendors(id,code,name,description,address1,address2,services,city,state,country,pin,phone,fax,email,website,flag) VALUES('','".$basiccode."','".$basicname."','".$basicdescription."','".$basicaddress1."','".$basicaddress2."','".$sevicesven."','".$basiccity."','".$basicstate."','".$basiccountry."','".$basicpin."','".$basicphone."','".$basicfax."','".$basicemail."','".$email."','".$basicwebsite."')");
+			$result1 = mysql_query ("INSERT INTO vendors(id,code,per,name,last_name,middle_name,description,address1,address2,services,city,state,country,pin,phone,fax,email,website,flag) VALUES('','".$basiccode."','".$per1."','".$basicname."','".$lastname."','".$middlename."','".$basicdescription."','".$basicaddress1."','".$basicaddress2."','".$sevicesven."','".$basiccity."','".$basicstate."','".$basiccountry."','".$basicpin."','".$basicphone."','".$basicfax."','".$basicemail."','".$email."','".$basicwebsite."')");
 			$services = explode(',', $sevicesven);
 		for($i = 0; $i < count($services) - 1; $i++) {
 			//echo $id;
