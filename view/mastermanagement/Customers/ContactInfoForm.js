@@ -1,3 +1,11 @@
+var per = Ext.create('Ext.data.Store', {
+        fields: ['per_name'],
+        data : [
+         {"per_name":"Mr"},
+            {"per_name":"Mrs"},
+            {"per_name":"Miss"}
+        ]
+    });
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 	extend: 'Ext.form.Panel',
@@ -20,7 +28,65 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 				id:'custcntctvenid',
 				hidden:true
 			},		
-			{
+							{
+		xtype:'displayfield',
+		fieldLabel:'First Name',
+		afterLabelTextTpl: required,allowBlank: false,
+
+		x:150,
+		y:10,
+		width:80,
+	},
+	{
+		xtype:'combo',
+		id:'customer_per',
+		x:235,
+		y:10,
+		width:50,
+		//multiSelect:true,
+		store: per,
+		queryMode: 'local',
+	   displayField: 'per_name',
+		
+	},
+	{
+		xtype:'textfield',
+		id:'cust_first_name',
+		//fieldLabel: 'First Name',
+		name: 'basicname',
+		x:290,
+		y:10,
+		//margin:'-25 0 0 400',
+		width:130,
+		afterLabelTextTpl: required,allowBlank: false,
+	},
+	{
+		xtype:'textfield',
+		id:'cust_middle_name',
+		fieldLabel: 'Middle Name',
+		name: 'basicname',
+		width:270,
+		x:150,
+		y:40,
+		//margin:'-25 0 0 400',
+	//	width:230,
+		
+	},
+	{
+		xtype:'textfield',
+		id:'cust_last_name',
+		fieldLabel: 'Last Name',
+		name: 'basicname',
+		width:270,
+		x:150,
+		y:70,
+		//margin:'-25 0 0 400',
+	//	width:230,
+		afterLabelTextTpl: required,allowBlank: false,
+	},
+	
+				
+	/*		{
 		id:'custcontctname',
 		fieldLabel: 'Name',		
 		name: 'contctname',			
@@ -29,16 +95,16 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 		width:250,
 		allowBlank: false,
 		afterLabelTextTpl: required,
-	},{
+	},*/{
 		xtype:'numberfield',
 		hideTrigger:true,
 		id:'custcontctphone',
 		fieldLabel: 'Phone',
 		name: 'contctphone',
 		x:150,
-		y:50,
+		y:100,
 		//margin:'-25 0 0 400',
-		width:250,
+		width:270,
 		allowBlank: false,
 		afterLabelTextTpl: required,
 	},
@@ -47,8 +113,8 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
       	id:'custcntctemail',
 		fieldLabel: 'Email',
 		x:150,
-		y:90,
-		width:250,
+		y:130,
+		width:270,
 		vtype:'email',
 		allowBlank: false,
 		afterLabelTextTpl: required,
@@ -58,10 +124,10 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
       	id:'custcntctdesignation',
 		fieldLabel: 'Designation',			
 		x:150,
-		y:130,
+		y:160,
 		name: 'cntctdesignation',
 		
-		width:250,
+		width:270,
 		
       },
      
@@ -77,7 +143,10 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 	handler: function (){
 		               
 			            var currentForm = Ext.getCmp('customercontactsformTab');
-			            var contctname = Ext.getCmp('custcontctname').getValue();
+			           var per_name = Ext.getCmp('customer_per').getValue();
+			          	var firstname = Ext.getCmp('cust_first_name').getValue();
+			          	var middlename = Ext.getCmp('cust_middle_name').getValue();
+			          	var lastname = Ext.getCmp('cust_last_name').getValue();
 						var contctphone = Ext.getCmp('custcontctphone').getValue();
 						var cntctemail = Ext.getCmp('custcntctemail').getValue();
 						var cntctdesignation=Ext.getCmp('custcntctdesignation').getValue();
@@ -88,7 +157,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 					    conn.request({
 						url: 'service/customers_Contact.php',
 						method: 'POST',
-						params : {action:5,teams_customerid:teams_customerid,contctname:contctname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
+						params : {action:5,teams_customerid:teams_customerid,per_name:per_name,firstname:firstname,middlename:middlename,lastname:lastname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -116,20 +185,24 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 		width:75,
 		handler: function (){
 		var currentForm = Ext.getCmp('customercontactsformTab');
-			            var contctname = Ext.getCmp('custcontctname').getValue();
+			            var per_name = Ext.getCmp('customer_per').getValue();
+			          	var firstname = Ext.getCmp('cust_first_name').getValue();
+			          	var middlename = Ext.getCmp('cust_middle_name').getValue();
+			          	var lastname = Ext.getCmp('cust_last_name').getValue();
+
 						var contctphone = Ext.getCmp('custcontctphone').getValue();
 						var cntctemail = Ext.getCmp('custcntctemail').getValue();
 						var cntctdesignation=Ext.getCmp('custcntctdesignation').getValue();
 						 var teams_customerid = Ext.getCmp('basic_customerid').getValue();
 						var cntctvenid=Ext.getCmp('custcntctvenid').getValue();
 						
-						if(contctname!== "" || contctphone !== "" || cntctemail !== "" || cntctdesignation !== "" )
+						if(firstname!== "" || contctphone !== "" || cntctemail !== "" || cntctdesignation !== "" )
 					{
 						var conn = new Ext.data.Connection();
 					    conn.request({
 						url: 'service/customers_Contact.php',
 						method: 'POST',
-						params : {action:4,cntctvenid:cntctvenid,teams_customerid:teams_customerid,contctname:contctname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
+						params : {action:4,cntctvenid:cntctvenid,teams_customerid:teams_customerid,per_name:per_name,firstname:firstname,middlename:middlename,lastname:lastname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 

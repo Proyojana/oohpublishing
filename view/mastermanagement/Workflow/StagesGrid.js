@@ -63,6 +63,10 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.StagesGrid', {
 			}
 		});
 	
+	function color(value, metaData, record, rowIndex, colIndex,store){
+return '<span style="background-color:#c0c0c0;">' + value + '</span>';
+}
+
 		this.store = ratecard,
 		this.tbar = Ext.create('Ext.Toolbar', {  
 							   items:[{
@@ -120,12 +124,13 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.StagesGrid', {
 					text: 'Activity',
 					flex:1,
 					align:'center',
+			
 					editor:
 					{ 
 					xtype:'combo',
 					store: activity,
 		        	queryMode: 'local',
-		       		displayField: 'product_name',
+		        	displayField: 'product_name',
 		        	valueField: 'product_id',
 		        	mode: 'local',
 			   	   triggerAction: 'all',

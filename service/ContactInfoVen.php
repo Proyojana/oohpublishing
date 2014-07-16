@@ -15,7 +15,7 @@
 			updateContactVendor($_POST['cntctvenid'],$_POST['vendorid'],$_POST['contctname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);	
 			break;
 		case 5:
-			insertContactVendor($_POST['vendorid'],$_POST['contctname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);
+			insertContactVendor($_POST['vendorid'],$_POST['per_name'],$_POST['firstname'],$_POST['middlename'],$_POST['lastname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);
 			break;
 		case 6:
 			BulkDelete($_POST['id']);
@@ -36,7 +36,7 @@
  		$num_result = mysql_query ("Select
  		 vendors_contacts.id,
   vendors_contacts.vendor_id,
-  vendors_contacts.name,
+  vendors_contacts.firstname,
   vendors_contacts.phone,
   vendors_contacts.email,
   vendors_contacts.designation
@@ -47,12 +47,12 @@ From
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-		 vendors_contacts.id,
+		 vendors_contacts.id as id,
   vendors_contacts.vendor_id,
-  vendors_contacts.name,
-  vendors_contacts.phone,
-  vendors_contacts.email,
-  vendors_contacts.designation
+  vendors_contacts.firstname as name,
+  vendors_contacts.phone as phone,
+  vendors_contacts.email as email,
+  vendors_contacts.designation as designation
 From
   vendors_contacts
   			WHERE vendors_contacts.vendor_id='".$vendorid."' and  vendors_contacts.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
@@ -157,15 +157,15 @@ From
 		echo json_encode($result);
 	}
 	
-	function insertContactVendor($vendorid,$contctname,$contctphone,$cntctemail,$cntctdesignation)
+	function insertContactVendor($vendorid,$pername,$firstname,$middlename,$lastname,$contctphone,$cntctemail,$cntctdesignation)
     {
-		$checkquery="SELECT name FROM vendors_contacts WHERE name='".$contctname."' and phone = '".$contctphone."'" ;
+		$checkquery="SELECT name FROM vendors_contacts WHERE firstname='".$firstname."' and phone = '".$contctphone."'" ;
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO vendors_contacts(id,vendor_id,name,phone,email,designation) VALUES('','".$vendorid."','".$contctname."','".$contctphone."','".$cntctemail."','".$cntctdesignation."')");
+			$result1 = mysql_query ("INSERT INTO vendors_contacts(id,vendor_id,per,firstname,middlename,lastname,phone,email,designation) VALUES('','".$vendorid."','".$pername."','".$firstname."','".$middlename."','".$lastname."','".$contctphone."','".$cntctemail."','".$cntctdesignation."')");
 			if(!$result1)
 			{
 				$result["failure"] = true;

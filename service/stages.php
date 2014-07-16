@@ -23,28 +23,32 @@ $id=$_SESSION['user_no'];
  		$num_result = mysql_query ("Select
  		 stages.stage_order As stage_order,
   stages.stage_name As stage_name,
-  stages.activity As activity,
+  activity.name As activity,
   stages.id As stage_id,
   stages.workflow_id
 From
   stages Inner Join
   workflow On stages.workflow_id =
-    workflow.id
+    workflow.id Inner Join
+  activity On stages.activity =
+    activity.id
 Where
   stages.workflow_id ='".$workflowid."' and stages.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-		 stages.stage_order As stage_order,
+ 		 stages.stage_order As stage_order,
   stages.stage_name As stage_name,
-  stages.activity As activity,
+  activity.name As activity,
   stages.id As stage_id,
   stages.workflow_id
 From
   stages Inner Join
   workflow On stages.workflow_id =
-    workflow.id
+    workflow.id Inner Join
+  activity On stages.activity =
+    activity.id
 Where
   stages.workflow_id ='".$workflowid."' and stages.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   

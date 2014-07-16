@@ -74,7 +74,7 @@ $id=$_SESSION['user_no'];
   users.name as username,
   users.code as usercode,
   users.email as useremail,
-  team_roles.role_name as userrole,
+  team_roles.id as userrole,
   users.description as userdescription
 From
   users Inner Join

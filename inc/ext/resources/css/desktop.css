@@ -320,6 +320,7 @@ background-image:url(../shared/icons/fam/copy_paste.png);
 .buy{
 	background-image: url(../images/buy.png);
 }
+
 .copy_editing{
 	background-image: url(../images/copy_editing.png);
 }
@@ -468,6 +469,10 @@ background:url(../shared/icons/fam/open-icon.png);height:16px;width:16px;margin-
 .shoppingcart
 {
 	background:url(../shared/icons/fam/shopping_cart.png);height:16px;width:16px;margin-right:5px;
+}
+.services
+{
+	background:url(../shared/icons/fam/services.png);height:16px;width:16px;margin-right:5px;
 }
 
 .notepad-shortcut {

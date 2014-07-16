@@ -99,7 +99,7 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersAddForm' ,{
 			x:100,
 			y:40,
 			width:320,
-			allowBlank: false,
+		//	allowBlank: false,
 			afterLabelTextTpl: required,
 			},
 			{
@@ -111,7 +111,7 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersAddForm' ,{
 			x:550,
 			y:40,
 			width:320,
-			allowBlank: false,
+		//	allowBlank: false,
 			afterLabelTextTpl: required,
 			msgTarget: 'side',
 			vtype:'password',
@@ -222,7 +222,7 @@ var conn = new Ext.data.Connection();
 conn.request({
 url: 'service/Users.php',
 method: 'POST',
-params : {action:4,userid:userid,usercode:usercode,username:username,password:password,role:role,useremail:useremail,userdescription:userdescription},
+params : {action:4,userid:userid,usercode:usercode,username:username,role:role,useremail:useremail,userdescription:userdescription},
 success:function(response){
 obj = Ext.JSON.decode(response.responseText);
 Ext.Msg.alert('Message', obj.message); 

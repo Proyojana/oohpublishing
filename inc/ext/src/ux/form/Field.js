@@ -19,7 +19,6 @@
  * is called during the component's initialization.
  */
 Ext.define('Ext.form.field.Field', {
-	mixinId: 'field',
     /**
      * @property {Boolean} isFormField
      * Flag denoting that this component is a Field. Always true.

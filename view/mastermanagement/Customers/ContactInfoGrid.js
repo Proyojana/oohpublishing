@@ -28,7 +28,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoGrid', {
 				},
 				{
 					dataIndex: 'name',
-					text: 'Name',
+					text: 'First Name',
 					align: 'center',
 					flex:1,
 					filter: {
@@ -79,7 +79,10 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoGrid', {
 						var rec = grid.getStore().getAt(rowIndex);
 						var id=rec.get('id');
 						
-						Ext.getCmp('custcontctname').setReadOnly(true);
+						Ext.getCmp('customer_per').setReadOnly(true);
+						Ext.getCmp('cust_first_name').setReadOnly(true);
+						Ext.getCmp('cust_middle_name').setReadOnly(true);
+						Ext.getCmp('cust_last_name').setReadOnly(true);
 						Ext.getCmp('custcontctphone').setReadOnly(true);
 						Ext.getCmp('custcntctemail').setReadOnly(true);
 						Ext.getCmp('custcntctdesignation').setReadOnly(true);
@@ -107,7 +110,10 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoGrid', {
 					   var currentForm = Ext.getCmp('customercontactsformTab');
 						var rec = grid.getStore().getAt(rowIndex);
 						var id=rec.get('id');
-						Ext.getCmp('custcontctname').setReadOnly(false);
+						Ext.getCmp('customer_per').setReadOnly(false);
+						Ext.getCmp('cust_first_name').setReadOnly(false);
+						Ext.getCmp('cust_middle_name').setReadOnly(false);
+						Ext.getCmp('cust_last_name').setReadOnly(false);
 						Ext.getCmp('custcontctphone').setReadOnly(false);
 						Ext.getCmp('custcntctemail').setReadOnly(false);
 						Ext.getCmp('custcntctdesignation').setReadOnly(false);

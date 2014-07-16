@@ -10,7 +10,7 @@ Ext.define('MyDesktop.store.MasterNavTree', {
 			},*/
 				{ id:'customers', text: "Customers",iconCls:'customersClass', leaf: true },
 				
-				   { id:'service', text: "Services",iconCls:'servicesClass', leaf: true },
+				   { id:'service', text: "Services",iconCls:'services', leaf: true },
 				   
 				{ id:'vendors', text: "Vendors",iconCls:'customer', leaf: true },
 				

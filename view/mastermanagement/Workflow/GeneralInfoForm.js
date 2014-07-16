@@ -52,7 +52,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			fieldLabel: 'Workflow Code',
 			Name: 'workflow_code',
 			align:'center',
-			x:330,
+			x:100,
 			y:10,
 			width:320,
 			allowBlank: false,
@@ -63,26 +63,27 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			id:'workflow_name',
 			fieldLabel: 'Workflow Name',
 			name: 'workflow_name',
-			x:330,
-			y:40,
+			x:550,
+			y:10,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},
     	{
-    		xtype:'combo',
+    		xtype:'multiselect',
 			id:'workflow_client',
 			fieldLabel: 'Select Clients',
 			name: 'workflow_client',
-			x:330,
-			y:70,
+			x:100,
+			y:40,
 			width:320,
+		height:100,
 			allowBlank: false,
 			afterLabelTextTpl: required,
 			store:client,
 			displayField: 'name',
 			valueField: 'id',
-			multiSelect:true,
+		//	multiSelect:true,
 			
     	},
     	
@@ -90,8 +91,8 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			id:'workflow_description',
 			fieldLabel: 'Workflow Description',
 			name: 'workflow_description',
-			x:330,
-			y:100,
+			x:550,
+			y:40,
 			width:320,
 				
     	},
@@ -157,17 +158,18 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			   var workflow_id = Ext.getCmp('workflow_id').getValue();
 				var workflow_code = Ext.getCmp('workflow_code').getValue();
 				var workflow_name = Ext.getCmp('workflow_name').getValue();
+				
 				var workflow_description= Ext.getCmp('workflow_description').getValue();
 				
 				var workflow_client = Ext.getCmp('workflow_client').getValue();
-					alert(workflow_client);
+						var clients = workflow_client + ',';
 				if(currentForm.getForm().isValid() == true)
 				{
 				var conn = new Ext.data.Connection();
 					conn.request({
 						url: 'service/workflow.php',
 						method: 'POST',
-						params : {action:4,workflow_id:workflow_id,workflow_code:workflow_code,workflow_name:workflow_name,workflow_description:workflow_description},
+						params : {action:4,workflow_id:workflow_id,workflow_code:workflow_code,workflow_name:workflow_name,clients:clients,workflow_description:workflow_description},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -196,10 +198,12 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			handler: function (){
 				var currentForm = this.up('workflowform');
 				currentForm.getForm().reset();
-				var grid1=Ext.getCmp('clientgrid');
-						grid1.getStore().load();
+		//		var grid1=Ext.getCmp('clientgrid');
+			//			grid1.getStore().load();
 						
-				currentForm.getForm().load({
+				var generalForm = Ext.getCmp('generalinfoform'); 
+						
+				generalForm.getForm().load({
    								 url: 'service/Workflow.php',
 							     params: {
         						 	action:7

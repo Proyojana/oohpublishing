@@ -14,7 +14,7 @@
 			deleteWorkflow($_POST["workflow_id"]);	
 			break;
 		case 4:
-			updateWorkflowMaster($_POST["workflow_id"],$_POST['workflow_code'],$_POST['workflow_name'],$_POST['workflow_description']);	
+			updateWorkflowMaster($_POST["workflow_id"],$_POST['workflow_code'],$_POST['workflow_name'],$_POST['clients'],$_POST['workflow_description']);	
 			break;
 		case 5:
 			insertWorkflowMaster($_POST['workflow_code'],$_POST['workflow_name'],$_POST['clients'],$_POST['workflow_description']);
@@ -42,7 +42,7 @@ From
   clients_choosen On workflow.code =
     clients_choosen.code_workflow Inner Join
   customers On clients_choosen.clients =
-    customers.id Where workflow.flag=0
+    customers.id Where workflow.flag=0 and clients_choosen.flag = 0
 Group By
   workflow.id, workflow.description ")or die(mysql_error());
 		
@@ -59,7 +59,7 @@ From
   clients_choosen On workflow.code =
     clients_choosen.code_workflow Inner Join
   customers On clients_choosen.clients =
-    customers.id Where workflow.flag=0
+    customers.id Where workflow.flag=0 and clients_choosen.flag = 0
 Group By
   workflow.id, workflow.description  LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
@@ -75,7 +75,7 @@ Group By
 	$result1 = mysql_query ("Select
   workflow.code as workflow_code,
   workflow.name as workflow_name,
- Group_Concat(customers.name) as workflow_client,
+ Group_Concat(customers.id) as workflow_client,
   workflow.id as workflow_id,
   workflow.description as workflow_description
 From
@@ -83,7 +83,7 @@ From
   clients_choosen On workflow.code =
     clients_choosen.code_workflow Inner Join
   customers On clients_choosen.clients =
-    customers.id Where workflow.flag=0 And workflow.id = '".$workflow_id."'
+    customers.id Where workflow.flag=0 and clients_choosen.flag = 0 And workflow.id = '".$workflow_id."'
 Group By
   workflow.id, workflow.description");
 			
@@ -106,7 +106,7 @@ Group By
       	echo(json_encode($result));
     }
   
-     function updateWorkflowMaster($workflow_id,$workflow_code,$workflow_name,$workflow_description)
+     function updateWorkflowMaster($workflow_id,$workflow_code,$workflow_name,$client,$workflow_description)
     {
 		$checkquery="SELECT id FROM workflow WHERE id='".$workflow_id."'";
 		$result1=mysql_query($checkquery);
@@ -115,6 +115,14 @@ Group By
 		if($num_rows==1){
 			$result1= mysql_query("UPDATE workflow set code='".$workflow_code."', name='".$workflow_name."',description='".$workflow_description."',modified_by='',modified_on=now() WHERE id=".$workflow_id."");
 				
+			
+			$delete = mysql_query("update clients_choosen set flag = 1 where code_workflow = '" .$workflow_code."'");
+			 
+			 $clients=explode(',',$client);
+			for($i=0;$i<count($clients)-1;$i++){
+				//echo $id;
+			$result2 = mysql_query ("INSERT INTO clients_choosen(id,code_workflow,clients,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$workflow_code."','".$clients[$i]."','',now(),'','','')");
+			 }
 		if(!$result1)
 			{
 				$result["failure"] = true;

@@ -152,10 +152,13 @@ var ci = Ext.create('MyDesktop.store.Customers');
 							     params: {
         						 	action:2,id:id
 							    },
+							    
 							    failure: function(form, action){
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
+					
+   	    		    //alert("value ");
 							Ext.getCmp('custbasiccode').setReadOnly(true);
 						
 						
@@ -215,6 +218,7 @@ var ci = Ext.create('MyDesktop.store.Customers');
 									method: 'POST',
 									params : {action:3,id:id},
 									success:function(response){
+										
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
 										Ext.getCmp('customersgrid').getStore().reload();

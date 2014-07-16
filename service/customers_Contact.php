@@ -12,10 +12,10 @@
 			deleteCustomersContactsById($_POST["id"]);	
 			break;
 		case 4:
-			updateContactCustomer($_POST['cntctvenid'],$_POST['teams_customerid'],$_POST['contctname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);	
+			updateContactCustomer($_POST['cntctvenid'],$_POST['teams_customerid'],$_POST['per_name'],$_POST['firstname'],$_POST['middlename'],$_POST['lastname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);	
 			break;
 		case 5:
-			insertContactCustomer($_POST['teams_customerid'],$_POST['contctname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);
+			insertContactCustomer($_POST['teams_customerid'],$_POST['per_name'],$_POST['firstname'],$_POST['middlename'],$_POST['lastname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);
 			break;
 		
 		default: 
@@ -28,7 +28,7 @@
  		$num_result = mysql_query ("Select
  		 cutomers_contacts.id,
   cutomers_contacts.customer_id,
-  cutomers_contacts.name,
+  cutomers_contacts.firstname,
   cutomers_contacts.phone,
   cutomers_contacts.email,
   cutomers_contacts.designation
@@ -41,7 +41,7 @@ From
 		$result = mysql_query("Select
 		 cutomers_contacts.id as id,
   cutomers_contacts.customer_id,
-  cutomers_contacts.name as name,
+  cutomers_contacts.firstname as name,
   cutomers_contacts.phone as phone,
   cutomers_contacts.email as email,
   cutomers_contacts.designation as designation
@@ -60,7 +60,10 @@ From
  	{
 		$result1 = mysql_query ("Select
 		cutomers_contacts.id as custcntctvenid,
-  cutomers_contacts.name as custcontctname,
+  cutomers_contacts.per as customer_per,
+  cutomers_contacts.firstname as cust_first_name,
+  cutomers_contacts.middlename as cust_middle_name,
+  cutomers_contacts.lastname as cust_last_name,
   cutomers_contacts.phone as custcontctphone,
   cutomers_contacts.email as custcntctemail,
   cutomers_contacts.designation as custcntctdesignation
@@ -89,14 +92,14 @@ From
       	echo(json_encode($result));
     }
   
-     function updateContactCustomer($cntctvenid,$teams_customerid,$contctname,$contctphone,$cntctemail,$cntctdesignation)
+     function updateContactCustomer($cntctvenid,$teams_customerid,$pername,$firstname,$middlename,$lastname,$contctphone,$cntctemail,$cntctdesignation)
     {
 		$checkquery="SELECT id as id FROM cutomers_contacts WHERE id='".$cntctvenid."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==1){
-			$result1= mysql_query("UPDATE cutomers_contacts set name='".$contctname."',phone='".$contctphone."',email='".$cntctemail."',designation='".$cntctdesignation."' where id='".$cntctvenid."'");
+			$result1= mysql_query("UPDATE cutomers_contacts set per='".$pername."',firstname='".$firstname."',middlename='".$middlename."',lastname='".$lastname."',phone='".$contctphone."',email='".$cntctemail."',designation='".$cntctdesignation."' where id='".$cntctvenid."'");
 				
 		if(!$result1)
 			{
@@ -148,15 +151,15 @@ From
 		echo json_encode($result);
 	}
 	
-	function insertContactCustomer($teams_customerid,$contctname,$contctphone,$cntctemail,$cntctdesignation)
+	function insertContactCustomer($teams_customerid,$pername,$firstname,$middlename,$lastname,$contctphone,$cntctemail,$cntctdesignation)
     {
-		$checkquery="SELECT name FROM cutomers_contacts WHERE name='".$contctname."'";
+		$checkquery="SELECT firstname FROM cutomers_contacts WHERE firstname='".$firstname."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO cutomers_contacts(id,customer_id,name,phone,email,designation) VALUES('','".$teams_customerid."','".$contctname."','".$contctphone."','".$cntctemail."','".$cntctdesignation."')");
+			$result1 = mysql_query ("INSERT INTO cutomers_contacts(id,customer_id,per,firstname,middlename,lastname,phone,email,designation) VALUES('','".$teams_customerid."','".$pername."','".$firstname."','".$middlename."','".$lastname."','".$contctphone."','".$cntctemail."','".$cntctdesignation."')");
 			if(!$result1)
 			{
 				$result["failure"] = true;

@@ -18,8 +18,7 @@
  * implementations should be sufficient for common cases. You will also need to make sure that {@link #initField}
  * is called during the component's initialization.
  */
-Ext.define('Ext.form.field.Field', {
-	mixinId: 'field',
+Ext.define('Ext.form.Field', {
     /**
      * @property {Boolean} isFormField
      * Flag denoting that this component is a Field. Always true.

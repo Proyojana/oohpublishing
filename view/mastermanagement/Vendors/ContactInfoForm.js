@@ -1,3 +1,11 @@
+var per = Ext.create('Ext.data.Store', {
+        fields: ['per_name'],
+        data : [
+         {"per_name":"Mr"},
+            {"per_name":"Mrs"},
+            {"per_name":"Miss"}
+        ]
+    });
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 	extend: 'Ext.form.Panel',
@@ -19,16 +27,63 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 			{
 				id:'cntctvenid',
 				hidden:true
-			},{
-		id:'contctname',
-		fieldLabel: 'Name',		
-		name: 'contctname',		
-		afterLabelTextTpl: required,	
-		allowBlank: false,
+			},		{
+		xtype:'displayfield',
+		fieldLabel:'First Name',
+		afterLabelTextTpl: required,allowBlank: false,
+
 		x:150,
 		y:10,
-		width:250
-	},{ 
+		width:80,
+	},
+	{
+		xtype:'combo',
+		id:'vendor_per',
+		x:235,
+		y:10,
+		width:50,
+		//multiSelect:true,
+		store: per,
+		queryMode: 'local',
+	   displayField: 'per_name',
+		
+	},
+	{
+		xtype:'textfield',
+		id:'vendor_first_name',
+		//fieldLabel: 'First Name',
+		name: 'basicname',
+		x:290,
+		y:10,
+		//margin:'-25 0 0 400',
+		width:130,
+		afterLabelTextTpl: required,allowBlank: false,
+	},
+	{
+		xtype:'textfield',
+		id:'vendor_middle_name',
+		fieldLabel: 'Middle Name',
+		name: 'basicname',
+		width:270,
+		x:150,
+		y:40,
+		//margin:'-25 0 0 400',
+	//	width:230,
+		
+	},
+	{
+		xtype:'textfield',
+		id:'vendor_last_name',
+		fieldLabel: 'Last Name',
+		name: 'basicname',
+		width:270,
+		x:150,
+		y:70,
+		//margin:'-25 0 0 400',
+	//	width:230,
+		afterLabelTextTpl: required,allowBlank: false,
+	},
+{ 
 		xtype:'numberfield',
 		hideTrigger:true,
 
@@ -38,9 +93,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 		afterLabelTextTpl: required,
 		allowBlank: false,
 		x:150,
-		y:50,
+		y:100,
 		//margin:'-25 0 0 400',
-		width:250
+		width:270
 	},
 	
      {
@@ -51,8 +106,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 		vtype:'email',
 		msgTarget : 'side',
 		x:150,
-		y:90,
-		width:250,
+		y:130,
+		width:270,
 		
 		name: 'cntctemail',
 	//	margin:'-20 0 0 400',
@@ -61,10 +116,10 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
       	id:'cntctdesignation',
 		fieldLabel: 'Designation',			
 		x:150,
-		y:130,
+		y:160,
 		name: 'cntctdesignation',
 		
-		width:250,
+		width:270,
 		//margin:'5 0 0 0'
       },
      
@@ -79,7 +134,10 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 		width:75,
 		handler: function (){
 			            var currentForm = Ext.getCmp('Vendors_contactTab');
-			            var contctname = Ext.getCmp('contctname').getValue();
+			             var per_name = Ext.getCmp('vendor_per').getValue();
+			          	var firstname = Ext.getCmp('vendor_first_name').getValue();
+			          	var middlename = Ext.getCmp('vendor_middle_name').getValue();
+			          	var lastname = Ext.getCmp('vendor_last_name').getValue();
 						var contctphone = Ext.getCmp('contctphone').getValue();
 						var cntctemail = Ext.getCmp('cntctemail').getValue();
 						var cntctdesignation=Ext.getCmp('cntctdesignation').getValue();
@@ -92,7 +150,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 					    conn.request({
 						url: 'service/ContactInfoVen.php',
 						method: 'POST',
-						params : {action:5,vendorid:vendorid,contctname:contctname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
+						params : {action:5,vendorid:vendorid,per_name:per_name,firstname:firstname,middlename:middlename,lastname:lastname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 

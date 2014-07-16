@@ -66,61 +66,21 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		name: 'basiccode',
 		afterLabelTextTpl: required,
 		allowBlank: false,			
-		readOnly: true,
 		x:10,
 		y:10,
-		width:230
-	},
-	{
-		xtype:'displayfield',
-		fieldLabel:'First Name',
-		x:260,
-		y:10,
-		width:80,
-	},
-	{
-		xtype:'combo',
-		id:'per1',
-		x:345,
-		y:10,
-		width:50,
-		//multiSelect:true,
-		store: per,
-		queryMode: 'local',
-	   displayField: 'per_name',
-		
-	},
-{
+		width:250
+	},{
 		id:'basicname',
-		//fieldLabel: 'Name',
+		fieldLabel: 'Name',
+		name: 'basicname',
 		afterLabelTextTpl: required,
 		allowBlank: false,
-		x:400,
+		x:340,
 		y:10,
 		//margin:'-25 0 0 400',
-		width:130
+		width:250
 	},
-	{
-		xtype:'textfield',
-		id:'basiclastname',
-		fieldLabel: 'Last Name',
-		
-		x:550,
-		y:10,
-		//margin:'-25 0 0 400',
-		width:230,
-		//afterLabelTextTpl: required,allowBlank: false,
-	},
-	{
-		xtype:'textfield',
-		id:'basicmiddlename',
-		fieldLabel: 'Middle Name',
-		x:800,
-		y:10,
-		//margin:'-25 0 0 400',
-		width:230,
-		
-	},
+	
 	{   xtype:'textarea',
 		id:'basicaddress1',
 		fieldLabel: 'Address1',
@@ -131,32 +91,35 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		y:40,
 		//margin:'-25 0 0 400',
 		height:70,
-		width:230
+		width:250
 	},
 	{
 		xtype:'textarea',
 		id:'basicaddress2',
 		fieldLabel: 'Address2',
 		name: 'basicaddress2',
-		x:260,
+		x:340,
 		y:40,
 		//margin:'-25 0 0 400',
 		height:70,
-		width:270
+		width:250
 	},
 	{
-		xtype:'combo',
+		xtype:'multiselect',
 		id:'basic_service',
 		fieldLabel:'Services',
-		x:550,
-		y:40,
-		width:230,
-		multiSelect:true,
+		x:660,
+		y:10,
+		width:250,
+		height:100,
+	//	multiSelect:true,
 		store: service,
-		queryMode: 'local',
+	//	queryMode: 'local',
 		displayField: 'service_name',
 	    valueField: 'service_id',
-									           		         
+	    ddReorder: true,
+		afterLabelTextTpl: required,
+		allowBlank: false,							           		         
 				
 	},
      {
@@ -166,7 +129,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		allowBlank: false,
 		x:10,
 		y:120,
-		width:230,
+		width:250,
 		
 		name: 'city',
 	//	margin:'-20 0 0 400',
@@ -176,11 +139,11 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		fieldLabel: 'State',
 		afterLabelTextTpl: required,	
 		allowBlank: false,		
-		x:260,
+		x:340,
 		y:120,
 		name: 'state',
 		
-		width:270,
+		width:250,
 		//margin:'5 0 0 0'
       },
       {
@@ -188,9 +151,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		fieldLabel: 'Country',
 		afterLabelTextTpl: required,
 		allowBlank: false,
-		width:230,
+		width:250,
 		
-		x:550,
+		x:660,
 		y:120,
 		name: 'country',
 		//margin:'5 0 0 0'
@@ -199,7 +162,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
       {
       	id:'basicpin',
 		fieldLabel: 'Pin',
-		width:230,
+		width:250,
 		
 		x:10,
 		y:150,
@@ -216,9 +179,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		fieldLabel: 'Phone',
 		afterLabelTextTpl: required,
 		allowBlank: false,
-		width:270,
+		width:250,
 		
-		x:260,
+		x:340,
 		y:150,
 		name: 'basicphone',
 		//margin:'5 0 0 0'
@@ -227,9 +190,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
       {
       	id:'basicfax',
 		fieldLabel: 'Fax',
-		width:230,
+		width:250,
 		
-		x:550,
+		x:660,
 		y:150,
 		name: 'basicfax',
 		//margin:'5 0 0 0'
@@ -238,21 +201,23 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
       {
       	id:'basicemail',
 		fieldLabel: 'E-mail',
-		width:230,
+		width:250,
 		vtype:'email',
 		msgTarget : 'side',
 		x:10,
 		y:180,
 		name: 'basicemail',
+		afterLabelTextTpl: required,
+		allowBlank: false,
 		//margin:'5 0 0 0'
 		
       },
       {
       	id:'basicwebsite',
 		fieldLabel: 'Website',
-		width:270,
+		width:250,
 		
-		x:260,
+		x:340,
 		y:180,
 		name: 'basicwebsite',
 		//margin:'5 0 0 0'
@@ -267,7 +232,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		y:210,
 		//margin:'-25 0 0 400',
 		height:70,
-		width:230
+		width:250
 	},
       {
 		xtype:'button',
@@ -280,10 +245,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		handler: function (){
 			            var currentForm = Ext.getCmp('basicinfoform');
 			            var basiccode = Ext.getCmp('basiccode').getValue();
-			            var per1 = Ext.getCmp('per1').getValue();
 						var basicname = Ext.getCmp('basicname').getValue();
-						var lastname = Ext.getCmp('basiclastname').getValue();
-						var middlename = Ext.getCmp('basicmiddlename').getValue();
 						var basicdescription = Ext.getCmp('basicdescription').getValue();
 						var basicaddress1=Ext.getCmp('basicaddress1').getValue();
 						var basicaddress2=Ext.getCmp('basicaddress2').getValue();
@@ -303,7 +265,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 					    conn.request({
 						url: 'service/vendors.php',
 						method: 'POST',
-						params : {action:5,basiccode:basiccode,per1:per1,basicname:basicname,lastname:lastname,middlename:middlename,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicpin:basicpin,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
+						params : {action:5,basiccode:basiccode,basicname:basicname,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicpin:basicpin,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -330,15 +292,12 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		//margin:'0 0 0 10',
 		width:75,
 		handler: function (){
-			 var currentForm = this.up('basicinfoform');
+			var currentForm = this.up('basicinfoform');
 			 
 			            var currentForm = Ext.getCmp('basicinfoform');
 			            var basicid = Ext.getCmp('basicid').getValue();
 			            var basiccode = Ext.getCmp('basiccode').getValue();
-						 var per1 = Ext.getCmp('per1').getValue();
 						var basicname = Ext.getCmp('basicname').getValue();
-						var lastname = Ext.getCmp('basiclastname').getValue();
-						var middlename = Ext.getCmp('basicmiddlename').getValue();
 						var basicdescription = Ext.getCmp('basicdescription').getValue();
 						var basicaddress1=Ext.getCmp('basicaddress1').getValue();
 						var basicaddress2=Ext.getCmp('basicaddress2').getValue();
@@ -351,14 +310,14 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 						var basicfax=Ext.getCmp('basicfax').getValue();
 						var basicemail=Ext.getCmp('basicemail').getValue();
 						var basicwebsite=Ext.getCmp('basicwebsite').getValue();
-						
+							basicservice = basicservice + ',';
 							if(currentForm.getForm().isValid()==true)
 					{
 						var conn = new Ext.data.Connection();
 					    conn.request({
 						url: 'service/vendors.php',
 						method: 'POST',
-						params : {action:4,basicid:basicid,per1:per1,basiccode:basiccode,basicname:basicname,lastname:lastname,middlename:middlename,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicpin:basicpin,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
+						params : {action:4,basicid:basicid,basiccode:basiccode,basicname:basicname,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicpin:basicpin,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -388,7 +347,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 							Ext.getCmp('Vendors_teamformTab').setDisabled(true);
 							Ext.getCmp('Vendors_contactTab').setDisabled(true);
 							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(true);
-						var firstname = Ext.getCmp('basiccode').reset();
+							var currentForm = this.up('basicinfoform');
+				currentForm.getForm().reset();
+						/*var firstname = Ext.getCmp('basiccode').reset();
 						var lastname = Ext.getCmp('basicname').reset();
 						var dob=Ext.getCmp('basicdescription').reset();
 						var city=Ext.getCmp('basicaddress1').reset();
@@ -401,7 +362,26 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 						var address=Ext.getCmp('basicphone').reset();
 						var address=Ext.getCmp('basicfax').reset();
 						var address=Ext.getCmp('basicwebsite').reset();
-						var address=Ext.getCmp('basicemail').reset();
+						var address=Ext.getCmp('basicemail').reset();*/
+						 	var currentForm = Ext.getCmp('basicinfoform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/vendors.php',
+							     params: {
+        						 	action:9
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('basiccode').setValue(action.result.message);
+							    }
+							
+							});
 						
 		}
 		}
