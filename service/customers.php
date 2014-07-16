@@ -30,42 +30,42 @@ switch($_POST["action"]) /*Read action sent from front-end */ {
 
 function getCustomers() {
 	$num_result = mysql_query("Select
-  ooh_publishing.customers.code as code,
-  ooh_publishing.customers.name as name,
-  ooh_publishing.customers.id as id,
-  ooh_publishing.customers.description as description,
-  ooh_publishing.customers.phone as phone,
-  ooh_publishing.customers.email as mail,
-  Group_Concat(ooh_publishing.services.name) as services
+  customers.code as code,
+  customers.name as name,
+  customers.id as id,
+  customers.description as description,
+  customers.phone as phone,
+  customers.email as mail,
+  Group_Concat(services.name) as services
 From
-  ooh_publishing.customers Inner Join
-  ooh_publishing.customers_services On ooh_publishing.customers.code =
-    ooh_publishing.customers_services.customer_code Inner Join
-  ooh_publishing.services On ooh_publishing.customers_services.service_id =
-    ooh_publishing.services.id
+  customers Inner Join
+  customers_services On customers.code =
+    customers_services.customer_code Inner Join
+  services On customers_services.service_id =
+    services.id
 Where
-  ooh_publishing.customers.flag = 0 and customers_services.flag = 0 Group By
-  ooh_publishing.customers.code") or die(mysql_error());
+  customers.flag = 0 and customers_services.flag = 0 Group By
+  customers.code") or die(mysql_error());
 
 	$totaldata = mysql_num_rows($num_result);
 
 	$result = mysql_query("Select
-  ooh_publishing.customers.code as code,
-  ooh_publishing.customers.name as name,
-  ooh_publishing.customers.id as id,
-  ooh_publishing.customers.description as description,
-  ooh_publishing.customers.phone as phone,
-  ooh_publishing.customers.email as mail,
-  Group_Concat(ooh_publishing.services.name) as services
+  customers.code as code,
+  customers.name as name,
+  customers.id as id,
+  customers.description as description,
+  customers.phone as phone,
+  customers.email as mail,
+  Group_Concat(services.name) as services
 From
-  ooh_publishing.customers Inner Join
-  ooh_publishing.customers_services On ooh_publishing.customers.code =
-    ooh_publishing.customers_services.customer_code Inner Join
-  ooh_publishing.services On ooh_publishing.customers_services.service_id =
-    ooh_publishing.services.id
+  customers Inner Join
+  customers_services On customers.code =
+    customers_services.customer_code Inner Join
+  services On customers_services.service_id =
+    services.id
 Where
-  ooh_publishing.customers.flag = 0 and customers_services.flag = 0 Group By
-  ooh_publishing.customers.code LIMIT " . $_POST['start'] . ", " . $_POST['limit']) or die(mysql_error());
+  customers.flag = 0 and customers_services.flag = 0 Group By
+  customers.code LIMIT " . $_POST['start'] . ", " . $_POST['limit']) or die(mysql_error());
 
 	while($row = mysql_fetch_object($result)) {
 		$data[] = $row;
@@ -75,30 +75,30 @@ Where
 
 function getCustomersById($id) {
 	$result1 = mysql_query("Select
-		  ooh_publishing.customers.code as custbasiccode,
-		  ooh_publishing.customers.name as custbasicname,
-		  ooh_publishing.customers.email as custbasicemail ,
-		  ooh_publishing.customers.phone as custbasicphone,
-		  ooh_publishing.customers.id as basic_customerid,
-		  ooh_publishing.customers.description as custbasicdescription,
-		  ooh_publishing.customers.address1 as custbasicaddress1,
-		  ooh_publishing.customers.address2 as custbasicaddress2,
-		  ooh_publishing.customers.city as custbasiccity,
-		  ooh_publishing.customers.state as custbasicstate,
-		  ooh_publishing.customers.country as custbasiccountry,
-		  ooh_publishing.customers.pin as custbasicpin,
-		  ooh_publishing.customers.fax as custbasicfax, 
-		  ooh_publishing.customers.website As custbasicwebsite,
-		  Group_Concat(ooh_publishing.services.id) as custsevicesven
+		  customers.code as custbasiccode,
+		  customers.name as custbasicname,
+		  customers.email as custbasicemail ,
+		  customers.phone as custbasicphone,
+		  customers.id as basic_customerid,
+		  customers.description as custbasicdescription,
+		  customers.address1 as custbasicaddress1,
+		  customers.address2 as custbasicaddress2,
+		  customers.city as custbasiccity,
+		  customers.state as custbasicstate,
+		  customers.country as custbasiccountry,
+		  customers.pin as custbasicpin,
+		  customers.fax as custbasicfax, 
+		  customers.website As custbasicwebsite,
+		  Group_Concat(services.id) as custsevicesven
 		From
-  ooh_publishing.customers Inner Join
-  ooh_publishing.customers_services On ooh_publishing.customers.code =
-    ooh_publishing.customers_services.customer_code Inner Join
-  ooh_publishing.services On ooh_publishing.customers_services.service_id =
-    ooh_publishing.services.id
+  customers Inner Join
+  customers_services On customers.code =
+    customers_services.customer_code Inner Join
+  services On customers_services.service_id =
+    services.id
 Where
-  ooh_publishing.customers.flag = 0 and customers_services.flag = 0 and ooh_publishing.customers.id = '" . $id . "' Group By
-  ooh_publishing.customers.code
+  customers.flag = 0 and customers_services.flag = 0 and customers.id = '" . $id . "' Group By
+  customers.code
 		  ");
 
 	if(!$result1) {
@@ -199,27 +199,27 @@ function getClient($workflow_code) {
 
 	$num_result = mysql_query("Select
 	
-  ooh_publishing.customers.code as code,
-  ooh_publishing.customers.name as name
+  customers.code as code,
+  customers.name as name
 From
-  ooh_publishing.clients_choosen Inner Join
-  ooh_publishing.customers On ooh_publishing.customers.id =
-    ooh_publishing.clients_choosen.clients
+  clients_choosen Inner Join
+  customers On customers.id =
+    clients_choosen.clients
 Where
-  ooh_publishing.clients_choosen.code_workflow ='" . $workflow_code . "'") or die(mysql_error());
+  clients_choosen.code_workflow ='" . $workflow_code . "'") or die(mysql_error());
 
 	$totaldata = mysql_num_rows($num_result);
 
 	$result = mysql_query("Select
 	
-  ooh_publishing.customers.code as code,
-  ooh_publishing.customers.name as name
+  customers.code as code,
+  customers.name as name
 From
-  ooh_publishing.clients_choosen Inner Join
-  ooh_publishing.customers On ooh_publishing.customers.id =
-    ooh_publishing.clients_choosen.clients
+  clients_choosen Inner Join
+  customers On customers.id =
+    clients_choosen.clients
 Where
-  ooh_publishing.clients_choosen.code_workflow ='" . $workflow_code . "' LIMIT " . $_POST['start'] . ", " . $_POST['limit']) or die(mysql_error());
+  clients_choosen.code_workflow ='" . $workflow_code . "' LIMIT " . $_POST['start'] . ", " . $_POST['limit']) or die(mysql_error());
 
 	while($row = mysql_fetch_object($result)) {
 		$data[] = $row;
