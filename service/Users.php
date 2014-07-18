@@ -27,6 +27,12 @@ $id=$_SESSION['user_no'];
 		case 7:
 			autoRequestCode($id);
 			break;
+		case 8:
+			getProjectManagers();
+			break;
+		case 9:
+			getProductionEditor();
+			break;
 		default: 
 			break;
 	}
@@ -267,4 +273,73 @@ Where
 	echo json_encode($result);
 }
 	
+	function getProjectManagers()
+		{
+			
+			 		$num_result = mysql_query ("Select
+  users.code As usercode,
+  users.name As username,
+  users.id As userid
+From
+  users
+Where
+  users.role = '1' And
+  users.flag = 0")or die(mysql_error());
+		
+		$totaldata = mysql_num_rows($num_result);
+
+		$result = mysql_query("Select
+  users.code As usercode,
+  users.name As username,
+  users.id As userid
+From
+  users
+Where
+  users.role = '1' And
+  users.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
+			
+			
+			
+		}
+		
+			function getProductionEditor()
+		{
+			
+			 		$num_result = mysql_query ("Select
+  users.code As usercode,
+  users.name As username,
+  users.id As userid
+From
+  users
+Where
+  users.role = '2' And
+  users.flag = 0")or die(mysql_error());
+		
+		$totaldata = mysql_num_rows($num_result);
+
+		$result = mysql_query("Select
+  users.code As usercode,
+  users.name As username,
+  users.id As userid
+From
+  users
+Where
+  users.role = '2' And
+  users.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
+			
+			
+			
+		}
 ?>

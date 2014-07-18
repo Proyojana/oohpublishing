@@ -66,7 +66,8 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamsInfoForm' , {
 		x:150,
 		y:130,
 		name: 'teamphone',
-		afterLabelTextTpl: required,allowBlank: false,
+		afterLabelTextTpl: required,
+		allowBlank: false,
 		//margin:'5 0 0 0'
 		
       },

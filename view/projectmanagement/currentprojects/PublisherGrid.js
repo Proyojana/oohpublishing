@@ -20,7 +20,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 	//width:1040,
 //	height:250,
 	anchor: '76% 49%',
-	requires:['MyDesktop.view.projectmanagement.currentprojects.productionreport','MyDesktop.view.projectmanagement.currentprojects.typesetterform'  ],
+	requires:['MyDesktop.view.projectmanagement.currentprojects.productionreport','MyDesktop.view.projectmanagement.currentprojects.typesetterform','MyDesktop.store.Projects','MyDesktop.view.projectmanagement.currentprojects.TitleInfoGrid'  ],
 	id:'publishergrid',
 	initComponent: function() {
 		
@@ -33,7 +33,17 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 			}
 		});
 		//journal.loadPage(1);*/
-		this.store = store1,
+		
+		var ci = Ext.create('MyDesktop.store.Projects');
+		ci.load({
+			params: {
+				start: 0,
+				limit: 8
+			}
+		});
+		ci.loadPage(1);
+		this.store = ci,
+	//	this.store = store1,
 		this.columns = [
 	{
 					dataIndex: 'id',
@@ -43,7 +53,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					dataIndex: 'code',
 					text: 'Project Code',
 					align: 'left',
-					flex:1.5,
+					flex:1,
 					//width:100,
 				},
 				{
@@ -61,27 +71,28 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					flex:1,
 				},
 				
+				
 				{
-					dataIndex: 'hbisbn',
-					text: 'HB ISBN',
+					dataIndex: 'client',
+					text: 'Client',
+					align: 'center',
+					//width:100,
+					flex:1,
+				},
+				{
+					dataIndex: 'client_team',
+					text: 'Client Team',
 					align: 'center',
 					//width:100,
 					flex:1,
 					
 				},
 				{
-					dataIndex: 'pbisbn',
-					text: 'PB ISBN',
-					align: 'center',
-					//width:100,
-					flex:1,
-				},
-				{
-					dataIndex: 'format',
-					text: 'Format',
+					dataIndex: 'workflow',
+					text: 'Workflow',
 					align: 'left',
 					//width:100,
-					flex:0.5,
+					flex:1,
 					
 				},
 				
@@ -93,14 +104,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					flex:1,
 					
 				},
-{
-					dataIndex: 'word',
-					text: 'Word Count',
-					align: 'center',
-					//width:100,
-					flex:1,
-					
-				},
+			/*
 				
 				{
 					dataIndex: 'note',
@@ -109,14 +113,77 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					//width:100,
 					flex:0.5,
 					
-				},
+				},*/
 				{
 					xtype:'actioncolumn',
 					align: 'center',
 					//width:100,
 					flex:1,
 					text:'Actions',
-					items: [{
+					items: [
+					{
+						iconCls: 'viewClass',
+						tooltip: 'View',
+					handler: function(grid, rowIndex, colIndex) {
+						var rec = grid.getStore().getAt(rowIndex);
+						var project_id=rec.get('id');
+
+						var conn = new Ext.data.Connection();
+															conn.request({
+																url: 'service/projects.php',
+																method: 'POST',																
+																params : {action:8,project_id:project_id},																                           
+										                            success:function(response){
+																		obj = Ext.JSON.decode(response.responseText);
+																	//	Ext.Msg.alert(obj.message);
+																	var myGrid = Ext.getCmp('titleinfogrid');
+																	myGrid.setSource(obj);																
+																},
+																});
+							var conn = new Ext.data.Connection();
+															conn.request({
+																url: 'service/projects.php',
+																method: 'POST',																
+																params : {action:10,project_id:project_id},																                           
+										                            success:function(response){
+																		obj = Ext.JSON.decode(response.responseText);
+																	//	Ext.Msg.alert(obj.message);
+																	var myGrid = Ext.getCmp('teamgrid');
+																	myGrid.setSource(obj);																
+																},
+																});
+
+						
+					/*    var currentForm = Ext.getCmp('usersform');
+						var rec = grid.getStore().getAt(rowIndex);
+						var userid1=rec.get('userid');
+						currentForm.getForm().load({
+   								 url: 'service/Users.php',
+							     params: {
+        						 	action:2,userid1:userid1
+							    },
+							    failure: function(form, action){
+						        Ext.Msg.alert("Load failed", action.result.errorMessage);
+    							}
+						});
+						
+						Ext.getCmp('usercode').setReadOnly(true);
+						Ext.getCmp('userdescription').setReadOnly(true);
+						Ext.getCmp('username').setReadOnly(true);
+						
+						
+						Ext.getCmp('add_users').getEl().hide();
+						Ext.getCmp('edit_users').getEl().hide();
+						Ext.getCmp('reset_users').getEl().hide();
+						
+						
+    					
+    					
+    					Ext.getCmp('usersaddform').setTitle('View User');*/
+						
+				}
+			},
+					{
 						iconCls: 'control_rewindClass',
 						//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
 						tooltip: 'Production Report',

@@ -20,16 +20,46 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
             },
 	frame:true,
 	height:245,
-	//requires:['MyDesktop.store.State'],
+	requires:['MyDesktop.store.Customers','MyDesktop.store.Workflow','MyDesktop.store.Customers_team'],
   
     defaults: {
         labelWidth: 140,
     },
     defaultType: 'textfield',
+    listeners: {
+     	 afterrender: function(){
+     	 //	alert("listen");
+     	 	var currentForm = Ext.getCmp('newprojectaddform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/projects.php',
+							     params: {
+        						 	action:7
+        						 	
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('job_code').setValue(action.result.message);
+							    }
+							
+							});
+     	}},
 	initComponent:function(){
 	/*	var ci = Ext.create('MyDesktop.store.State');
 		ci.load({params:{action: 7}});
 	    ci.loadPage(1);*/
+	   	var client = Ext.create('MyDesktop.store.Customers');
+		client.load({params:{action: 1}});
+		 var team = Ext.create('MyDesktop.store.Customers_team');
+		var workflow = Ext.create('MyDesktop.store.Workflow');
+		workflow.load({params:{action: 1}});
+		
 		this.items= [
 			{
 			id:'teamsid',
@@ -38,7 +68,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			},
 			
 		{
-			id:'jobid',
+			id:'job_code',
 			fieldLabel: 'Job #',
 			x:10,
 			y:10,
@@ -47,7 +77,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			afterLabelTextTpl: required,
     	},
     	{
-			id:'title',
+			id:'project_title',
 			fieldLabel: 'Title',
 			align:'center',
 			x:360,
@@ -67,7 +97,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			afterLabelTextTpl: required,
     	},
     	{
-			id:'hb',
+			id:'hb_isbn',
 			fieldLabel: 'HB ISBN',
 			x:10,
 			y:50,
@@ -76,7 +106,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			afterLabelTextTpl: required,
     	},
     	{
-			id:'pb',
+			id:'pb_isbn',
 			fieldLabel: 'PB ISBN',
 			name: 'PB ISBN',
 			align:'center',
@@ -120,7 +150,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			},
     	{
     		
-    		id:'new_project_client_deadline',
+    		id:'castoff_extent',
 			fieldLabel: 'Cast-off extent',
 			x:10,
 			y:130,
@@ -133,7 +163,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     	{
     		xtype:'numberfield',
     		minValue: 0,
-			id:'confired_extent',
+			id:'confirmed_extent',
 			fieldLabel: 'Confirmed extent',
 			x:360,
 			y:130,
@@ -186,7 +216,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     	
 		{  
 			xtype:'numberfield',
-			id:'menuscript',
+			id:'manuscript',
 			margin:'0 0 0 28',
 			minValue: 0,
 			fieldLabel: 'Manuscript pages',
@@ -211,51 +241,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 		
     	},]
     },
-    	
-    /*	{
-    		xtype: 'displayfield',
-    		fieldLabel: 'For Indexing',
-    		width:1,
-    		x:10,
-			y:210,
-			labelWidth:470,
-             labelStyle: 'font-size: 13px;font-weight: bold;',
-    	},
-			{
-    		xtype:'numberfield',
-    		minValue: 0,
-    		id:'word_count',
-			fieldLabel: 'Word Count',
-			x:10,
-			y:240,
-			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
-    	},
-    	
-		{  
-			xtype:'numberfield',
-			id:'menuscript',
-			minValue: 0,
-			fieldLabel: 'Manuscript Pages',
-			align:'center',
-			x:360,
-			y:240,
-			width:320,
-    	},
-    	{  
-    		xtype:'numberfield',
-    		allowNegative : false,
-    		minValue: 0,
-			id:'index_extent',
-			fieldLabel: 'Expect Index Extent',
-			align:'center',
-			x:710,
-			y:240,
-			width:320,
-		
-    	},
-    	*/
+   
     	{  
     		xtype: 'checkboxfield',
 			id:'chapter_footer',
@@ -283,6 +269,17 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			x:10,
 			y:320,
 			width:320,
+			store:client,
+			displayField: 'name',
+			valueField: 'id',
+			listeners : {
+				change : function() {
+					//var currentForm = this.up('newprojectaddform');
+					var clientId = Ext.getCmp('project_client').getValue();
+					team.load({params:{action:6,clientId:clientId}}); 
+					workflow.load({params:{action:8,clientId:clientId}}); 
+				}
+			}
     	},
     	{   
     		xtype:'combo',
@@ -292,6 +289,9 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			x:360,
 			y:320,
 			width:320,
+			store:team,
+			displayField: 'name',
+			valueField: 'id',
 		
     	},
     	{   
@@ -302,7 +302,9 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			x:710,
 			y:320,
 			width:320,
-		
+			store:workflow,
+			displayField: 'workflow_name',
+			valueField: 'workflow_id',
     	},
     	
     	
@@ -316,23 +318,47 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			y:440,
 			width:75,
 			handler: function (){				
-				var currentForm = this.up('cityform');
-				var city_code = Ext.getCmp('citycode').getValue();
-				var city_name = Ext.getCmp('cityname').getValue();
-				var city_state= Ext.getCmp('cstateid').getValue();
+				var currentForm = this.up('newprojectaddform');
+				var job_code = Ext.getCmp('job_code').getValue();
+				var project_title = Ext.getCmp('project_title').getValue();
+				var project_author= Ext.getCmp('project_author').getValue();
+				var hb_isbn= Ext.getCmp('hb_isbn').getValue();
+				var pb_isbn= Ext.getCmp('pb_isbn').getValue();
+				
+				var project_series = Ext.getCmp('project_series').getValue();
+				var project_format = Ext.getCmp('project_format').getValue();
+				var project_design= Ext.getCmp('project_design').getValue();
+				var castoff_extent= Ext.getCmp('castoff_extent').getValue();
+				var confirmed_extent= Ext.getCmp('confirmed_extent').getValue();
+				
+				var client_deadline = Ext.getCmp('client_deadline').getValue();
+				var agreed_deadline = Ext.getCmp('agreed_deadline').getValue();
+				var word_count= Ext.getCmp('word_count').getValue();
+				var manuscript= Ext.getCmp('manuscript').getValue();
+				var index_extent= Ext.getCmp('index_extent').getValue();
+				
+				var chapter_footer = Ext.getCmp('chapter_footer').getValue();
+				var contain_colour = Ext.getCmp('contain_colour').getValue();
+				var project_client= Ext.getCmp('project_client').getValue();
+				var project_team= Ext.getCmp('project_team').getValue();
+				var project_workflow= Ext.getCmp('project_workflow').getValue();
+				
 				if(currentForm.getForm().isValid() == true)
 				{
 				var conn = new Ext.data.Connection();
 					conn.request({
-						url: 'service/City.php',
+						url: 'service/projects.php',
 						method: 'POST',
-						params : {action:5,city_code:city_code,city_name:city_name,city_state:city_state},
+						params : {action:5,job_code:job_code,project_title:project_title,project_author:project_author,hb_isbn:hb_isbn,pb_isbn:pb_isbn,project_series:project_series,
+							project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,client_deadline:client_deadline,
+							agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
+							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							currentForm.getForm().reset();
-							Ext.getCmp('citygrid').getStore().reload();
-							Ext.getCmp('citytab').layout.setActiveItem('citygrid');
+						//	currentForm.getForm().reset();
+						///	Ext.getCmp('citygrid').getStore().reload();
+						//	Ext.getCmp('citytab').layout.setActiveItem('citygrid');
 										
 						}
 					});
@@ -395,9 +421,29 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			y:440,
 			width:75,
 			handler: function (){
-				var currentForm = this.up('cityform');
+				var currentForm = this.up('newprojectaddform');
 				currentForm.getForm().reset();
-				Ext.getCmp('citycode').setReadOnly(false);
+			//	Ext.getCmp('citycode').setReadOnly(false);
+			 	var currentForm = Ext.getCmp('newprojectaddform');     
+       	  	
+       	
+			 currentForm.getForm().load({
+   								 url: 'service/projects.php',
+							     params: {
+        						 	action:7
+        						 	
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('job_code').setValue(action.result.message);
+							    }
+							
+							});
 			}
 	  	} ]
 	  

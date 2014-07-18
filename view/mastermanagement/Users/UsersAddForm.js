@@ -162,38 +162,38 @@ xtype:'button',
         text:'Add',
         iconCls: 'button_add',
         id:'add_users',
-x:350,
-y:175,
-width:75,
-handler: function (){
-var currentForm = this.up('usersform');
-var usercode = Ext.getCmp('usercode').getValue();
-var username = Ext.getCmp('username').getValue();
-var password = Ext.getCmp('password').getValue();
-var role = Ext.getCmp('userrole').getValue();
-var useremail = Ext.getCmp('useremail').getValue();
-var userdescription= Ext.getCmp('userdescription').getValue();
-if(currentForm.getForm().isValid() == true)
-{
-var conn = new Ext.data.Connection();
-conn.request({
-url: 'service/Users.php',
-method: 'POST',
-params : {action:5,usercode:usercode,username:username,password:password,role:role,useremail:useremail,userdescription:userdescription},
-success:function(response){
-obj = Ext.JSON.decode(response.responseText);
-Ext.Msg.alert('Message', obj.message); 
-currentForm.getForm().reset();
-Ext.getCmp('usersgrid').getStore().reload();
-}
-});
-}
-else
-{
-Ext.MessageBox.alert('Please fill the required data.');
-}
-}
-  },
+				x:350,
+				y:175,
+				width:75,
+				handler: function (){
+				var currentForm = this.up('usersform');
+				var usercode = Ext.getCmp('usercode').getValue();
+				var username = Ext.getCmp('username').getValue();
+				var password = Ext.getCmp('password').getValue();
+				var role = Ext.getCmp('userrole').getValue();
+				var useremail = Ext.getCmp('useremail').getValue();
+				var userdescription= Ext.getCmp('userdescription').getValue();
+				if(currentForm.getForm().isValid() == true)
+				{
+				var conn = new Ext.data.Connection();
+				conn.request({
+				url: 'service/Users.php',
+				method: 'POST',
+				params : {action:5,usercode:usercode,username:username,password:password,role:role,useremail:useremail,userdescription:userdescription},
+				success:function(response){
+				obj = Ext.JSON.decode(response.responseText);
+				Ext.Msg.alert('Message', obj.message); 
+				currentForm.getForm().reset();
+				Ext.getCmp('usersgrid').getStore().reload();
+				}
+				});
+				}
+				else
+				{
+				Ext.MessageBox.alert('Please fill the required data.');
+				}
+				}
+				  },
 		
 		{
 			xtype: 'button',

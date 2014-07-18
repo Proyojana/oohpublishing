@@ -20,7 +20,9 @@ $id=$_SESSION['user_no'];
 		case 5:
 			deleteCustomers_teamById($_POST["teamid"]);	
 			break;
-			
+		case 6:
+			getClientTeam($_POST['clientId']);
+			break;		
 		default: 
 			break;
 	}
@@ -180,7 +182,33 @@ Where
 		
 		echo json_encode($result);
 	}
-	
+	function getClientTeam($clientid)
+ 	{
+		$result1 = mysql_query ("Select
+		  customers_teams.team_name as name,
+		   customers_teams.id as id,
+		  customers_teams.customer_id
+		From
+		  customers_teams
+		Where
+		  customers_teams.customer_id = ".$clientid."");
+					
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				
+			}
+			$data=null;
+       while($row = mysql_fetch_object($result1)) {
+		$data[] = $row;
+	}
+	echo '({"results":' . json_encode($data) . '})';
+    }
   
 	
 ?>

@@ -25,6 +25,9 @@
 		case 7: 
 			autoRequestCode($id);
 			break;
+		case 8:
+			getClientWorkflow($_POST['clientId']);
+			break;
 		default: 
 			break;
 	}
@@ -261,4 +264,38 @@ Group By
 
 	echo json_encode($result);
 }	
+
+function getClientWorkflow($clientid)
+ 	{
+		$result1 = mysql_query ("Select
+  workflow.name As workflow_name,
+  workflow.id As workflow_id
+From
+  workflow Inner Join
+  clients_choosen On workflow.code =
+    clients_choosen.code_workflow Inner Join
+  customers On clients_choosen.clients =
+    customers.id
+Where
+  clients_choosen.clients = ".$clientid." And
+  clients_choosen.flag = 0 ");
+					
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				
+			}
+			$data=null;
+       while($row = mysql_fetch_object($result1)) {
+		$data[] = $row;
+	}
+	echo '({"results":' . json_encode($data) . '})';
+    }
+	
+
 ?>
