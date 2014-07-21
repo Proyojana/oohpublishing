@@ -1,4 +1,25 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+function autoLoadCode()
+{
+	var currentForm = Ext.getCmp('trolesaddform');  
+			 currentForm.getForm().load({
+   								 url: 'service/team_roles.php',
+							     params: {
+        						 	action:1
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('trolescode').setValue(action.result.message);
+							    }
+							
+							});
+
+}
 Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
     extend: 'Ext.form.Panel',
     alias : 'widget.trolesaddform',
@@ -17,27 +38,9 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
     defaultType: 'textfield',
     listeners: {
      	 afterrender: function(){
-     	 //	alert("listen");
-     	 	var currentForm = Ext.getCmp('trolesaddform');     
-       	  	
-       	
-			 currentForm.getForm().load({
-   								 url: 'service/team_roles.php',
-							     params: {
-        						 	action:1
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('trolescode').setValue(action.result.message);
-							    }
-							
-							});
-     	}},
+     	 autoLoadCode();
+     	 
+       	}},
 	initComponent:function(){
 	/*	var ci = Ext.create('MyDesktop.store.State');
 		ci.load({params:{action: 7}});
@@ -109,9 +112,9 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
-						//	Ext.getCmp('citygrid').getStore().reload();
+							Ext.getCmp('trolesgrid').getStore().reload();
 						//	Ext.getCmp('citytab').layout.setActiveItem('citygrid');
-										
+							 autoLoadCode();			
 						}
 					});
 				}
@@ -176,22 +179,7 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 				var currentForm = this.up('trolesaddform');
 				currentForm.getForm().reset();
 				Ext.getCmp('trolescode').setReadOnly(false);
-				currentForm.getForm().load({
-   								 url: 'service/team_roles.php',
-							     params: {
-        						 	action:1
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('trolescode').setValue(action.result.message);
-							    }
-							
-							});
+				 autoLoadCode();	
 			}
 	  	} ]
 	  

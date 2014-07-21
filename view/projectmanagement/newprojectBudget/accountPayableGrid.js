@@ -64,21 +64,21 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 		        	
 		       },
 				{
-					//dataIndex: 'unit',
+					dataIndex: 'unit',
 					text: 'Unit',
 					flex: 1,
 					align:'center',
 					
 				},
 				{
-					//dataIndex: 'swipehours',
+					dataIndex: 'num_units_budgeted',
 					text: 'No.of Units <br/>Budgeted',
 					flex: 2,align:'center',
 					editor: { xtype:'textfield'
 					}
 				},	
 				{
-					//dataIndex: 'actualhours',
+					dataIndex: 'rate',
 					text: 'Rate / Unit in USD',
 					flex: 2,align:'center',
 					 //renderer:color,
@@ -88,24 +88,17 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 					}
 					
 				},
-				/*{
-					//dataIndex: 'client',
-					text: 'Rate / Unit in GBP',
-					//id:'client',
-					flex: 1,align:'center',
-					editor: { xtype:'textfield'
-					}
-				},*/
+				
 				{
-					dataIndex: 'mode',
+					dataIndex: 'budgeted_amount',
 					text: 'Budgeted Amount <br/>in USD',
 					flex: 2,align:'center',
-					/*editor: { xtype:'textfield'
-					}*/
+					
 		       },
 		       
 		       
 	     	{
+	     			dataIndex:'actual_unit',
 		        	text: 'No. of Units<br/> Actual',
 		        	editor: { xtype:'textfield'
 					},
@@ -114,6 +107,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 		        }
 		         ,
 		        {
+		        	dataIndex:'actual_amount',
 		        	text: 'Actual Amount<br/>in USD',
 		        	flex: 2,align:'center',
 		        	
@@ -123,11 +117,23 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 				
 		];
 		 
-		this.bbar = Ext.create('Ext.PagingToolbar', {
+			this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
-			displayInfo: true,
-			displayMsg: 'Displaying topics {0} - {1} of {2}',
-			emptyMsg: "No topics to display",
+			//displayInfo: false,
+			//displayMsg: 'Displaying topics {0} - {1} of {2}',
+			//emptyMsg: "No topics to display",
+			items:[
+			{
+				xtype:'button',
+				text:'Save',
+				pressed:true,
+				width:100,
+				margin:'0 0 0 100',
+				handler:function(){
+					
+				}
+			}
+			]
 		});
 		
 		

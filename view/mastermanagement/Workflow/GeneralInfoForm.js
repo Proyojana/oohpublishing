@@ -1,4 +1,25 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+function autoLoadCode()
+{
+	var currentForm = Ext.getCmp('generalinfoform');    
+			 currentForm.getForm().load({
+   								 url: 'service/Workflow.php',
+							     params: {
+        						 	action:7
+        						 	
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('workflow_code').setValue(action.result.message);
+							    }
+							
+							});
+}
 Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
     extend: 'Ext.form.Panel',
     alias : 'widget.generalinfoform',
@@ -18,26 +39,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
     listeners: {
      	 afterrender: function(){
      	 //	alert("listen");
-     	 	var currentForm = Ext.getCmp('generalinfoform');     
-       	  	
-       	
-			 currentForm.getForm().load({
-   								 url: 'service/Workflow.php',
-							     params: {
-        						 	action:7
-        						 	
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('workflow_code').setValue(action.result.message);
-							    }
-							
-							});
+     	 	autoLoadCode();
      	}},
 	initComponent:function(){
 		var client = Ext.create('MyDesktop.store.Customers');
@@ -131,7 +133,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('workflowgrid').getStore().reload();
-															
+							autoLoadCode();								
 						}
 					});
 				}
@@ -198,28 +200,8 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			handler: function (){
 				var currentForm = this.up('workflowform');
 				currentForm.getForm().reset();
-		//		var grid1=Ext.getCmp('clientgrid');
-			//			grid1.getStore().load();
-						
-				var generalForm = Ext.getCmp('generalinfoform'); 
-						
-				generalForm.getForm().load({
-   								 url: 'service/Workflow.php',
-							     params: {
-        						 	action:7
-        						 	
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('workflow_code').setValue(action.result.message);
-							    }
-							
-							});
+				autoLoadCode();
+		
 			}
 	  	} ]
 	  

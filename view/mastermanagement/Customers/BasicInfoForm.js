@@ -1,4 +1,24 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+function autoLoadCode()
+    {
+    	var currentForm = Ext.getCmp('custbasicinfoform'); 
+			 currentForm.getForm().load({
+   								 url: 'service/customers.php',
+							     params: {
+        						 	action:7
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('custbasiccode').setValue(action.result.message);
+							    }
+							
+							});
+    };
 Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 	extend: 'Ext.form.Panel',
 	alias : 'widget.custbasicinfoform',
@@ -17,26 +37,8 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 	defaultType: 'textfield',
 	listeners: {
      	 afterrender: function(){
-     	 //	alert("listen");
-     	 	var currentForm = Ext.getCmp('custbasicinfoform');     
-       	  	
-       	
-			 currentForm.getForm().load({
-   								 url: 'service/customers.php',
-							     params: {
-        						 	action:7
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('custbasiccode').setValue(action.result.message);
-							    }
-							
-							});
+     		autoLoadCode();
+     	 	
      	}},
 	initComponent:function(){
 		var service = Ext.create('MyDesktop.store.Service');
@@ -256,6 +258,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('customersgrid').getStore().reload();
+							autoLoadCode();
 							}
 					});
 					}
@@ -332,41 +335,10 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 				Ext.getCmp('customercontactsformTab').setDisabled(true);
 							Ext.getCmp('customerteamsformTab').setDisabled(true);
 							Ext.getCmp('customerratecardformTab').setDisabled(true);
-					/*    var basiccode = Ext.getCmp('custbasiccode').reset();
-						var basicname = Ext.getCmp('custbasicname').reset();
-						var basicdescription = Ext.getCmp('custbasicdescription').reset();
-						var basicaddress1=Ext.getCmp('custbasicaddress1').reset();
-						var basicaddress2=Ext.getCmp('custbasicaddress2').reset();
-						var sevicesven=Ext.getCmp('custsevicesven').reset();
-						var basiccity=Ext.getCmp('custbasiccity').reset();
-						var basicstate=Ext.getCmp('custbasicstate').reset();
-						var basiccountry=Ext.getCmp('custbasiccountry').reset();
-						var basicpin=Ext.getCmp('custbasicpin').reset();
-						var basicphone=Ext.getCmp('custbasicphone').reset();
-						var basicfax=Ext.getCmp('custbasicfax').reset();
-						var basicemail=Ext.getCmp('custbasicemail').reset();
-						var basicwebsite=Ext.getCmp('custbasicwebsite').reset();*/
+					
 						var currentForm = this.up('custbasicinfoform');
-				currentForm.getForm().reset();
-						var currentForm = Ext.getCmp('custbasicinfoform');     
-       	  	
-       	
-			 currentForm.getForm().load({
-   								 url: 'service/customers.php',
-							     params: {
-        						 	action:7
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('custbasiccode').setValue(action.result.message);
-							    }
-							
-							});
+						currentForm.getForm().reset();
+						autoLoadCode();
 						Ext.getCmp('custbasiccode').setReadOnly(false);
 						
 						

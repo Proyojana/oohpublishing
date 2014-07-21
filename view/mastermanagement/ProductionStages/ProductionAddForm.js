@@ -1,4 +1,24 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+function autoLoadCode()
+{
+	var currentForm = Ext.getCmp('Productionaddform');    
+			 currentForm.getForm().load({
+   								 url: 'service/activity.php',
+							     params: {
+        						 	action:6
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('product_code').setValue(action.result.message);
+							    }
+							
+							});
+}
 Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' ,{
     extend: 'Ext.form.Panel',
     alias : 'widget.Productionaddform',
@@ -17,25 +37,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
     listeners: {
      	 afterrender: function(){
      	 //	alert("listen");
-     	 	var currentForm = Ext.getCmp('Productionaddform');     
-       	  	
-       	
-			 currentForm.getForm().load({
-   								 url: 'service/activity.php',
-							     params: {
-        						 	action:6
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('product_code').setValue(action.result.message);
-							    }
-							
-							});
+     	 	autoLoadCode();
      	}},
 	initComponent:function(){
 		
@@ -102,7 +104,8 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('productiongrid').getStore().reload();
-							Ext.getCmp('productiontab').layout.setActiveItem('productiongrid');
+						//Ext.getCmp('productiontab').layout.setActiveItem('productiongrid');
+						autoLoadCode();
 										
 						}
 					});
@@ -168,23 +171,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 			handler: function (){
 				var currentForm = this.up('Productionaddform');
 				currentForm.getForm().reset();
-				
-				 currentForm.getForm().load({
-   								 url: 'service/activity.php',
-							     params: {
-        						 	action:6
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('product_code').setValue(action.result.message);
-							    }
-							
-							});
+				autoLoadCode();
 			}
 	  	} ]
 	  

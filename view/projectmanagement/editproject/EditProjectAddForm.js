@@ -1,0 +1,398 @@
+var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+var times = Ext.create('Ext.data.Store', {
+        fields: ['format'],
+        data : [
+           {"format":"216 x 138"},
+            {"format":"226 x 52"},
+            {"format":"234 x 156"},
+            {"format":"246 x 189"},
+            {"format":"247 x 74"}
+        ]
+    });
+Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
+    extend: 'Ext.form.Panel',
+    title:'Edit Project',
+    alias : 'widget.editprojectaddform',
+   		id:'editprojectaddform',
+    margin: '2 10 10 10',
+	layout: {
+              type: 'absolute'
+            },
+	frame:true,
+	height:245,
+	requires:['MyDesktop.store.Customers','MyDesktop.store.Workflow','MyDesktop.store.Customers_team'],
+  
+    defaults: {
+        labelWidth: 140,
+    },
+    defaultType: 'textfield',
+    
+	initComponent:function(){
+	/*	var ci = Ext.create('MyDesktop.store.State');
+		ci.load({params:{action: 7}});
+	    ci.loadPage(1);*/
+	   	var client = Ext.create('MyDesktop.store.Customers');
+		client.load({params:{action: 1}});
+		 var team = Ext.create('MyDesktop.store.Customers_team');
+		var workflow = Ext.create('MyDesktop.store.Workflow');
+		workflow.load({params:{action: 1}});
+		
+		this.items= [
+			{
+			id:'edit_project_id',
+			name: 'edit_project_id',
+			hidden:true
+			},
+			
+		{
+			id:'edit_job_code',
+			fieldLabel: 'Job #',
+			x:10,
+			y:10,
+			width:320,
+			emptyText:'Ex.JOB001',
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			 listeners: {
+              specialkey: function(f,e){
+                if (e.getKey() == e.ENTER) {
+                	 	
+                	var project_code = Ext.getCmp("edit_job_code").getValue();
+                	//alert(project_code);
+                	var currentForm = Ext.getCmp('editprojectaddform');
+                	currentForm.getForm().load({
+   								 url: 'service/projects.php',
+							     params: {
+        						 	action:2,project_code:project_code
+							    },
+							    failure: function(form, action){
+						        Ext.Msg.alert("Job Code is not Valid", action.result.errorMessage);
+						        currentForm.getForm().reset();
+    							}
+						});
+						Ext.getCmp("job_code").setReadOnly(true);
+            
+                }
+              }
+            }
+    	},
+    	{
+			id:'edit_project_title',
+			fieldLabel: 'Title',
+			align:'center',
+			x:360,
+			y:10,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			},
+    	{
+    		
+    		id:'edit_project_author',
+			fieldLabel: 'Author',
+			x:710,
+			y:10,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+    	},
+    	{
+			id:'edit_hb_isbn',
+			fieldLabel: 'HB ISBN',
+			x:10,
+			y:50,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+    	},
+    	{
+			id:'edit_pb_isbn',
+			fieldLabel: 'PB ISBN',
+			name: 'PB ISBN',
+			align:'center',
+			x:360,
+			y:50,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			},
+    	{
+    	
+    		id:'edit_project_series',
+			fieldLabel: 'Series',
+			x:10,
+			y:90,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+    	},
+    	{
+    		xtype:'combo',
+			id:'edit_project_format',
+			fieldLabel: 'Format',
+			x:360,
+			y:90,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			store:times,
+			displayField:'format'
+    	},
+    	{
+			id:'edit_project_design',
+			fieldLabel: 'Design',
+			align:'center',
+			x:710,
+			y:90,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			},
+    	{
+    		
+    		id:'edit_castoff_extent',
+			fieldLabel: 'Cast-off extent',
+			x:10,
+			y:130,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			xtype:'numberfield',
+			minValue: 0,
+    	},
+    	{
+    		xtype:'numberfield',
+    		minValue: 0,
+			id:'edit_confirmed_extent',
+			fieldLabel: 'Confirmed extent',
+			x:360,
+			y:130,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+    	},
+    	{
+    		xtype:'datefield',
+			id:'edit_client_deadline',
+			fieldLabel: 'Client deadline',
+			align:'center',
+			x:10,
+			y:170,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			},
+    	{
+    		xtype:'datefield',
+    		id:'edit_agreed_deadline',
+			fieldLabel: 'Agreed deadline',
+			x:360,
+			y:170,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+    	},
+    	{
+        // Fieldset in Column 1 - collapsible via toggle button
+       xtype:'fieldset',
+        layout: 'hbox',
+        title: 'For Indexing',
+             x:0,
+			y:210,
+			
+        items :[{
+    		xtype:'numberfield',
+    		minValue: 0,
+    		
+    		id:'edit_word_count',
+			fieldLabel: 'Word count',
+			x:10,
+			y:240,
+			width:320,
+			labelWidth:140,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+    	},
+    	
+		{  
+			xtype:'numberfield',
+			id:'edit_manuscript',
+			margin:'0 0 0 28',
+			minValue: 0,
+			fieldLabel: 'Manuscript pages',
+			align:'center',
+			x:400,
+			y:240,
+			labelWidth:140,
+			width:320,
+    	},
+    	{  
+    		xtype:'numberfield',
+    		allowNegative : false,
+    		minValue: 0,
+    		margin:'0 0 0 36',
+			id:'edit_index_extent',
+			fieldLabel: 'Expect Index extent',
+			align:'center',
+			x:750,
+			labelWidth:140,
+			y:240,
+			width:320,
+		
+    	},]
+    },
+   
+    	{  
+    		xtype: 'checkboxfield',
+			id:'edit_chapter_footer',
+			fieldLabel: 'Chapter footer required',
+			align:'center',
+			x:10,
+			y:280,
+			width:320,
+    	},
+    	{  
+    		xtype: 'checkboxfield',
+			id:'edit_contain_colour',
+			fieldLabel: 'Contains colour',
+			align:'center',
+			x:360,
+			y:280,
+			width:320,
+		
+    	},
+    	{  
+    		xtype:'combo',
+			id:'edit_project_client',
+			fieldLabel: 'Client',
+			align:'center',
+			x:10,
+			y:320,
+			width:320,
+			store:client,
+			displayField: 'name',
+			valueField: 'id',
+			listeners : {
+				change : function() {
+					//var currentForm = this.up('newprojectaddform');
+					var clientId = Ext.getCmp('project_client').getValue();
+					team.load({params:{action:6,clientId:clientId}}); 
+					workflow.load({params:{action:8,clientId:clientId}}); 
+				}
+			}
+    	},
+    	{   
+    		xtype:'combo',
+			id:'edit_project_team',
+			fieldLabel: 'Client Team',
+			align:'center',
+			x:360,
+			y:320,
+			width:320,
+			store:team,
+			displayField: 'name',
+			valueField: 'id',
+		
+    	},
+    	{   
+    		xtype:'combo',
+			id:'edit_project_workflow',
+			fieldLabel: 'Workflow',
+			align:'center',
+			x:710,
+			y:320,
+			width:320,
+			store:workflow,
+			displayField: 'workflow_name',
+			valueField: 'workflow_id',
+    	},
+    	
+    	
+    			{
+			xtype: 'button',
+		  	text: 'Edit',
+		  	iconCls: 'editClass',
+		  	id:'edit_edit_team',
+			align:'center',
+			x:450,
+			y:440,
+			width:75,
+			handler: function ()
+			   {
+			                 
+                var currentForm = this.up('editprojectaddform');
+                var project_id = Ext.getCmp("edit_project_id").getValue();
+				var job_code = Ext.getCmp('edit_job_code').getValue();
+				var project_title = Ext.getCmp('edit_project_title').getValue();
+				var project_author= Ext.getCmp('edit_project_author').getValue();
+				var hb_isbn= Ext.getCmp('edit_hb_isbn').getValue();
+				var pb_isbn= Ext.getCmp('edit_pb_isbn').getValue();
+				
+				var project_series = Ext.getCmp('edit_project_series').getValue();
+				var project_format = Ext.getCmp('edit_project_format').getValue();
+				var project_design= Ext.getCmp('edit_project_design').getValue();
+				var castoff_extent= Ext.getCmp('edit_castoff_extent').getValue();
+				var confirmed_extent= Ext.getCmp('edit_confirmed_extent').getValue();
+				
+				var client_deadline = Ext.getCmp('edit_client_deadline').getValue();
+				var agreed_deadline = Ext.getCmp('edit_agreed_deadline').getValue();
+				var word_count= Ext.getCmp('edit_word_count').getValue();
+				var manuscript= Ext.getCmp('edit_manuscript').getValue();
+				var index_extent= Ext.getCmp('edit_index_extent').getValue();
+				
+				var chapter_footer = Ext.getCmp('edit_chapter_footer').getValue();
+				var contain_colour = Ext.getCmp('edit_contain_colour').getValue();
+				var project_client= Ext.getCmp('edit_project_client').getValue();
+				var project_team= Ext.getCmp('edit_project_team').getValue();
+				var project_workflow= Ext.getCmp('edit_project_workflow').getValue();
+                
+                if(currentForm.getForm().isValid() == true)
+				{
+					var conn = new Ext.data.Connection();
+					conn.request({
+					url: 'service/projects.php',
+					method: 'POST',
+					params : {action:4,project_id:project_id,job_code:job_code,project_title:project_title,project_author:project_author,hb_isbn:hb_isbn,pb_isbn:pb_isbn,
+						project_series:project_series,project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,
+						client_deadline:client_deadline,agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,
+						chapter_footer:chapter_footer,contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow},
+					success:function(response){
+					obj = Ext.JSON.decode(response.responseText);
+					Ext.Msg.alert('Message', obj.message); 
+					currentForm.getForm().reset();
+					Ext.getCmp('servicegrid').getStore().reload();
+					}
+					});
+				}
+                
+                
+                
+                
+			}
+	  	},
+		
+	  	{
+			xtype: 'button',
+		  	text: 'Reset',
+		  	iconCls: 'button_reset',
+		  	id:'edit_reset_team',
+			x:550,
+			y:440,
+			width:75,
+			handler: function (){
+				var currentForm = this.up('editprojectaddform');
+				currentForm.getForm().reset();
+			//	Ext.getCmp('citycode').setReadOnly(false);
+			 	var currentForm = Ext.getCmp('editprojectaddform');     
+       	  		Ext.getCmp("job_code").setReadOnly(false);
+			}
+	  	} ]
+	  
+	
+		
+	this.callParent();
+	}
+     
+}); 
+
+

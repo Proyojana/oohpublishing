@@ -14,6 +14,27 @@ var service = Ext.create('MyDesktop.store.Service');
 				limit: 50
 			}
 		});
+function autoLoadCode()
+{
+	var currentForm = Ext.getCmp('basicinfoform');   
+     	 				 currentForm.getForm().load({
+   								 url: 'service/vendors.php',
+							     params: {
+        						 	action:9
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('basiccode').setValue(action.result.message);
+							    }
+							
+							});
+
+}
 Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 	extend: 'Ext.form.Panel',
 	alias : 'widget.basicinfoform',
@@ -31,26 +52,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 	listeners: {
      	 afterrender: function(){
      	 //	alert("listen");
-     	 	var currentForm = Ext.getCmp('basicinfoform');     
-       	  	
-       	
-			 currentForm.getForm().load({
-   								 url: 'service/vendors.php',
-							     params: {
-        						 	action:9
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('basiccode').setValue(action.result.message);
-							    }
-							
-							});
-     	}},
+     	 autoLoadCode();
+     	 	     	}},
 	//initComponent:function(){
 			items:[		
 			{
@@ -271,6 +274,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('vendorsgrid').getStore().reload();
+							 autoLoadCode();
 							}
 					});
 					}
@@ -349,39 +353,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(true);
 							var currentForm = this.up('basicinfoform');
 				currentForm.getForm().reset();
-						/*var firstname = Ext.getCmp('basiccode').reset();
-						var lastname = Ext.getCmp('basicname').reset();
-						var dob=Ext.getCmp('basicdescription').reset();
-						var city=Ext.getCmp('basicaddress1').reset();
-						var state=Ext.getCmp('basicaddress2').reset();
-						var country=Ext.getCmp('sevicesven').reset();
-						var address=Ext.getCmp('basiccity').reset();
-						var address=Ext.getCmp('basicstate').reset();
-						var address=Ext.getCmp('basiccountry').reset();
-						var address=Ext.getCmp('basicpin').reset();
-						var address=Ext.getCmp('basicphone').reset();
-						var address=Ext.getCmp('basicfax').reset();
-						var address=Ext.getCmp('basicwebsite').reset();
-						var address=Ext.getCmp('basicemail').reset();*/
-						 	var currentForm = Ext.getCmp('basicinfoform');     
-       	  	
-       	
-			 currentForm.getForm().load({
-   								 url: 'service/vendors.php',
-							     params: {
-        						 	action:9
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('basiccode').setValue(action.result.message);
-							    }
-							
-							});
+						 autoLoadCode();
 						
 		}
 		}

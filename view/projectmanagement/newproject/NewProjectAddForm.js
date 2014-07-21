@@ -1,37 +1,7 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
-var times = Ext.create('Ext.data.Store', {
-        fields: ['format'],
-        data : [
-           {"format":"216 x 138"},
-            {"format":"226 x 52"},
-            {"format":"234 x 156"},
-            {"format":"246 x 189"},
-            {"format":"247 x 74"}
-        ]
-    });
-Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
-    extend: 'Ext.form.Panel',
-    title:'Create New Project',
-    alias : 'widget.newprojectaddform',
-   		id:'newprojectaddform',
-    margin: '2 10 10 10',
-	layout: {
-              type: 'absolute'
-            },
-	frame:true,
-	height:245,
-	requires:['MyDesktop.store.Customers','MyDesktop.store.Workflow','MyDesktop.store.Customers_team'],
-  
-    defaults: {
-        labelWidth: 140,
-    },
-    defaultType: 'textfield',
-    listeners: {
-     	 afterrender: function(){
-     	 //	alert("listen");
-     	 	var currentForm = Ext.getCmp('newprojectaddform');     
-       	  	
-       	
+function autoReload()
+{
+	var currentForm = Ext.getCmp('newprojectaddform');   
 			 currentForm.getForm().load({
    								 url: 'service/projects.php',
 							     params: {
@@ -49,6 +19,45 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 							    }
 							
 							});
+};
+var times = Ext.create('Ext.data.Store', {
+        fields: ['format'],
+        data : [
+           {"format":"216 x 138"},
+            {"format":"226 x 52"},
+            {"format":"234 x 156"},
+            {"format":"246 x 189"},
+            {"format":"247 x 74"}
+        ]
+    });
+    var cover = Ext.create('Ext.data.Store', {
+        fields: ['type'],
+        data : [
+           {"type":"Gloss"},
+            {"type":"Matt"}
+        ]
+    });
+Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
+    extend: 'Ext.form.Panel',
+    title:'Create New Project',
+    alias : 'widget.newprojectaddform',
+   		id:'newprojectaddform',
+    margin: '2 10 10 10',
+	layout: {
+              type: 'absolute'
+            },
+	frame:true,
+	height:245,
+	requires:['MyDesktop.store.Customers','MyDesktop.store.Workflow','MyDesktop.store.Customers_team'],
+  
+    defaults: {
+        labelWidth: 150,
+    },
+    defaultType: 'textfield',
+    listeners: {
+     	 afterrender: function(){
+     	 //	alert("listen");
+     	 	autoReload();
      	}},
 	initComponent:function(){
 	/*	var ci = Ext.create('MyDesktop.store.State');
@@ -62,8 +71,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 		
 		this.items= [
 			{
-			id:'teamsid',
-			name: 'teamsid',
+			id:'add_project_id',
+			name: 'add_project_id',
 			hidden:true
 			},
 			
@@ -86,7 +95,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			allowBlank: false,
 			afterLabelTextTpl: required,
 			},
-    	{
+    	/*{
     		
     		id:'project_author',
 			fieldLabel: 'Author',
@@ -95,12 +104,12 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
-    	},
+    	},*/
     	{
 			id:'hb_isbn',
 			fieldLabel: 'HB ISBN',
 			x:10,
-			y:50,
+			y:40,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -111,7 +120,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			name: 'PB ISBN',
 			align:'center',
 			x:360,
-			y:50,
+			y:40,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -121,7 +130,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     		id:'project_series',
 			fieldLabel: 'Series',
 			x:10,
-			y:90,
+			y:70,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -131,7 +140,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			id:'project_format',
 			fieldLabel: 'Format',
 			x:360,
-			y:90,
+			y:70,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -143,7 +152,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			fieldLabel: 'Design',
 			align:'center',
 			x:710,
-			y:90,
+			y:70,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -153,7 +162,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     		id:'castoff_extent',
 			fieldLabel: 'Cast-off extent',
 			x:10,
-			y:130,
+			y:100,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -166,7 +175,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			id:'confirmed_extent',
 			fieldLabel: 'Confirmed extent',
 			x:360,
-			y:130,
+			y:100,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -177,7 +186,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			fieldLabel: 'Client deadline',
 			align:'center',
 			x:10,
-			y:170,
+			y:130,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -187,7 +196,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     		id:'agreed_deadline',
 			fieldLabel: 'Agreed deadline',
 			x:360,
-			y:170,
+			y:130,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -198,18 +207,35 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
         layout: 'hbox',
         title: 'For Indexing',
              x:0,
-			y:210,
-			
+			y:160,
+			layout:'absolute',
+			 defaults: {
+        labelWidth: 150,
+    },
+			height:95,
         items :[{
     		xtype:'numberfield',
     		minValue: 0,
     		
     		id:'word_count',
 			fieldLabel: 'Word count',
-			x:10,
-			y:240,
+			x:0,
+			y:0,
 			width:320,
-			labelWidth:140,
+			//labelWidth:140,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+    	},
+    	{
+    		xtype:'numberfield',
+    		minValue: 0,
+    		
+    		id:'word_count_indexing',
+			fieldLabel: 'Word count for indexing',
+			x:350,
+			y:0,
+			width:320,
+			//labelWidth:140,
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},
@@ -217,57 +243,117 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 		{  
 			xtype:'numberfield',
 			id:'manuscript',
-			margin:'0 0 0 28',
+			//margin:'0 0 0 28',
 			minValue: 0,
 			fieldLabel: 'Manuscript pages',
 			align:'center',
-			x:400,
-			y:240,
-			labelWidth:140,
+			x:700,
+			y:0,
+			//labelWidth:140,
 			width:320,
     	},
     	{  
     		xtype:'numberfield',
     		allowNegative : false,
     		minValue: 0,
-    		margin:'0 0 0 36',
+    		//margin:'0 0 0 36',
 			id:'index_extent',
 			fieldLabel: 'Expect Index extent',
 			align:'center',
-			x:750,
-			labelWidth:140,
-			y:240,
+			x:0,
 			width:320,
+			y:30,
 		
     	},]
     },
-   
-    	{  
+    
+    
+      	{
+        // Fieldset in Column 1 - collapsible via toggle button
+       xtype:'fieldset',
+        layout: 'hbox',
+        title: 'Print details',
+             x:0,
+			y:265,
+			layout:'absolute',
+			 defaults: {
+        labelWidth: 150,
+    },
+			height:105,
+        items :[
+        {  
     		xtype: 'checkboxfield',
 			id:'chapter_footer',
 			fieldLabel: 'Chapter footer required',
 			align:'center',
-			x:10,
-			y:280,
+			x:00,
+			y:0,
 			width:320,
     	},
-    	{  
+    	
+        {  
     		xtype: 'checkboxfield',
 			id:'contain_colour',
 			fieldLabel: 'Contains colour',
 			align:'center',
-			x:360,
-			y:280,
+			x:350,
+			y:0,
 			width:320,
 		
     	},
+    	{
+    		xtype:'combo',
+    		id:'cover_type',
+			fieldLabel: 'Cover type',
+			x:700,
+			y:0,
+			width:320,
+			store:cover,
+			displayField:'type',
+			//labelWidth:140,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+    	},
+    	
+		{  
+			xtype:'numberfield',
+			id:'print_run',
+			minValue: 0,
+			fieldLabel: 'Print run',
+			align:'center',
+			x:0,
+			y:30,
+			width:320,
+    	},
+    	{
+    		xtype: 'checkboxfield',
+			id:'print_run_confirmed',
+			//fieldLabel: 'Chapter footer required',
+			//align:'center',
+			x:350,
+			y:30,
+			width:20,
+    		
+    	},
+    	{
+    		xtype:'label',
+    		text:'Print run confirmed?',
+    		x:370,
+			y:30,
+			width:320,
+    		
+    	}
+    	]
+    },
+   
+    	
     	{  
     		xtype:'combo',
 			id:'project_client',
 			fieldLabel: 'Client',
 			align:'center',
 			x:10,
-			y:320,
+			y:390,
 			width:320,
 			store:client,
 			displayField: 'name',
@@ -287,7 +373,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			fieldLabel: 'Client Team',
 			align:'center',
 			x:360,
-			y:320,
+			y:390,
 			width:320,
 			store:team,
 			displayField: 'name',
@@ -300,7 +386,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			fieldLabel: 'Workflow',
 			align:'center',
 			x:710,
-			y:320,
+			y:390,
 			width:320,
 			store:workflow,
 			displayField: 'workflow_name',
@@ -314,14 +400,14 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     	    text:'Add',
     	    iconCls: 'button_add',
     	    id:'add_team',
-			x:350,
-			y:440,
+			x:450,
+			y:480,
 			width:75,
 			handler: function (){				
 				var currentForm = this.up('newprojectaddform');
 				var job_code = Ext.getCmp('job_code').getValue();
 				var project_title = Ext.getCmp('project_title').getValue();
-				var project_author= Ext.getCmp('project_author').getValue();
+				//var project_author= Ext.getCmp('project_author').getValue();
 				var hb_isbn= Ext.getCmp('hb_isbn').getValue();
 				var pb_isbn= Ext.getCmp('pb_isbn').getValue();
 				
@@ -343,20 +429,25 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 				var project_team= Ext.getCmp('project_team').getValue();
 				var project_workflow= Ext.getCmp('project_workflow').getValue();
 				
+				var word_count_indexing = Ext.getCmp('word_count_indexing').getValue();
+				var cover_type= Ext.getCmp('cover_type').getValue();
+				var print_run= Ext.getCmp('print_run').getValue();
+				var print_run_confirmed= Ext.getCmp('print_run_confirmed').getValue();
+				
 				if(currentForm.getForm().isValid() == true)
 				{
 				var conn = new Ext.data.Connection();
 					conn.request({
 						url: 'service/projects.php',
 						method: 'POST',
-						params : {action:5,job_code:job_code,project_title:project_title,project_author:project_author,hb_isbn:hb_isbn,pb_isbn:pb_isbn,project_series:project_series,
+						params : {action:5,job_code:job_code,project_title:project_title,/*project_author:project_author,*/hb_isbn:hb_isbn,pb_isbn:pb_isbn,project_series:project_series,
 							project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,client_deadline:client_deadline,
 							agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
-							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow},
+							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,word_count_indexing:word_count_indexing,cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-						//	currentForm.getForm().reset();
+							currentForm.getForm().reset();
 						///	Ext.getCmp('citygrid').getStore().reload();
 						//	Ext.getCmp('citytab').layout.setActiveItem('citygrid');
 										
@@ -368,49 +459,10 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 				Ext.MessageBox.alert('Please fill the required data.');
 				
 				}
+				autoReload();
 			}
 	  	},
 		
-		{
-			xtype: 'button',
-		  	text: 'Edit',
-		  	iconCls: 'editClass',
-		  	id:'edit_team',
-			align:'center',
-			x:450,
-			y:440,
-			width:75,
-			handler: function ()
-			   {
-			   	var currentForm = this.up('cityform');
-				var city_code = Ext.getCmp('citycode').getValue();
-				var city_id = Ext.getCmp('cityid').getValue();
-				var city_name = Ext.getCmp('cityname').getValue();
-				var city_state= Ext.getCmp('cstateid').getValue();
-				if(currentForm.getForm().isValid() == true)
-				{
-				var conn = new Ext.data.Connection();
-					conn.request({
-						url: 'service/City.php',
-						method: 'POST',
-						params : {action:4,city_id:city_id,city_code:city_code,city_name:city_name,city_state:city_state},
-						success:function(response){
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-							currentForm.getForm().reset();
-							Ext.getCmp('citygrid').getStore().reload();
-							Ext.getCmp('citytab').layout.setActiveItem('citygrid');
-										
-						}
-					});
-				}
-				else
-				{
-				Ext.MessageBox.alert('Please fill the required data.');
-				
-				}
-			}
-	  	},
 		
 	  	{
 			xtype: 'button',
@@ -418,32 +470,12 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 		  	iconCls: 'button_reset',
 		  	id:'reset_team',
 			x:550,
-			y:440,
+			y:480,
 			width:75,
 			handler: function (){
 				var currentForm = this.up('newprojectaddform');
 				currentForm.getForm().reset();
-			//	Ext.getCmp('citycode').setReadOnly(false);
-			 	var currentForm = Ext.getCmp('newprojectaddform');     
-       	  	
-       	
-			 currentForm.getForm().load({
-   								 url: 'service/projects.php',
-							     params: {
-        						 	action:7
-        						 	
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('job_code').setValue(action.result.message);
-							    }
-							
-							});
+				autoReload();
 			}
 	  	} ]
 	  
