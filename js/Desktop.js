@@ -1,3 +1,4 @@
+
 /*!
  * Ext JS Library 4.0
  * Copyright(c) 2006-2011 Sencha Inc.
@@ -10,6 +11,15 @@
  * @extends Ext.panel.Panel
  * <p>This class manages the wallpaper, shortcuts and taskbar.</p>
  */
+function showLoadingMask(loadingMessage)
+{
+if (Ext.isEmpty(loadingMessage))
+loadText = 'Loading... Please wait';
+//Use the mask function on the Ext.getBody() element to mask the body element during Ajax calls
+Ext.Ajax.on('beforerequest',function(){Ext.getBody().mask(loadText, 'loading') }, Ext.getBody());
+Ext.Ajax.on('requestcomplete',Ext.getBody().unmask ,Ext.getBody());
+Ext.Ajax.on('requestexception', Ext.getBody().unmask , Ext.getBody());
+}
 Ext.define('Ext.ux.desktop.Desktop', {
     extend: 'Ext.panel.Panel',
 
@@ -197,6 +207,7 @@ Ext.define('Ext.ux.desktop.Desktop', {
     },
 
     onShortcutItemClick: function (dataView, record) {
+    	showLoadingMask();
         var me = this, module = me.app.getModule(record.data.module),
             win = module && module.createWindow();
 
