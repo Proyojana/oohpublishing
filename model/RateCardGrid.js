@@ -2,7 +2,7 @@
         extend: 'Ext.data.Model',
         fields: [
             
-            'ratecardid', 'services','uom','dollars','pounds'
+            'ratecardid', 'activity','uom','dollars','pounds'
         ],
       
     });

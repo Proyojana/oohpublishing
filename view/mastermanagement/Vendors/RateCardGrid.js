@@ -16,7 +16,7 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
         ]
     });*/
    var ratecard = Ext.create('Ext.data.JsonStore', {
-   fields: ['Services','Name', 'Email','Phone'],
+   fields: ['Activity','Name', 'Email','Phone'],
    });
 Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
 	extend:'Ext.grid.Panel',
@@ -42,14 +42,22 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
              })        
     ],
 	initComponent: function() {
-		var service = Ext.create('MyDesktop.store.Service');
+		/**var service = Ext.create('MyDesktop.store.Service');
 		service.load({
 			params: {
 				start: 0,
 				limit: 50
 			}
+		});**/
+		var activity = Ext.create('MyDesktop.store.ProductionStages');
+		activity.load({
+			params: {
+				start: 0,
+				limit: 50
+			}
 		});
-			service.loadPage(1);
+			activity.loadPage(1);
+			
 		var ratecard = Ext.create('MyDesktop.store.RateCardGrid');
 		ratecard.load({
 			params: {
@@ -71,7 +79,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
                                height : 25,
                                handler : function() {
                						 var r = Ext.create('MyDesktop.model.RateCardGrid', {
-                    				services: '',
+                    				activity: '',
                     				uom: '',
                  					dollars: '',
                     				pound: ''
@@ -88,25 +96,25 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
 				},
 				
 				{
-					dataIndex: 'services',
-					text: 'Services',
-					id:'services',
+					dataIndex: 'activity',
+					text: 'Activity',
+					id:'rate_activity',
 					width:100,
 					align:'center',
 					editor:
 					{ 
 					xtype:'combo',
-					store: service,
+					store: activity,
 		        	queryMode: 'local',
-		       		displayField: 'service_name',
-		        	valueField: 'service_id',
+		       		displayField: 'product_name',
+		        	valueField: 'product_id',
 		           },
-		             listeners : {
+		        /**     listeners : {
 				afterrender : function() {
 					var code = Ext.getCmp('basiccode').getValue();
 						service.load({params:{action:8,code:code}}); 
 				}
-			}
+			}**/
 		           
 				},
 				{
@@ -168,7 +176,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
 						
-						Ext.Msg.confirm('Remove Record '+rec.get('services')+' ?',+rec.get('services'),function (button) {
+						Ext.Msg.confirm('Remove Record '+rec.get('activity')+' ?',+rec.get('activity'),function (button) {
 							if (button == 'yes') {
 								var id=rec.get('ratecardid');
 								var vendorid=Ext.getCmp('basicid').getValue();
@@ -204,7 +212,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
 						var rec = grid.getStore().getAt(rowIndex);
 								var vendorid=Ext.getCmp('basicid').getValue();
 								var id=Ext.getCmp('basicid').getValue();
-								var services=rec.get('services');
+								var activity=rec.get('activity');
 								var uom=rec.get('uom');
 								var dollars=rec.get('dollars');
 								var pounds=rec.get('pounds');
@@ -213,7 +221,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
 								conn.request({
 									url: 'service/Vendors_ratecard.php',
 									method: 'POST',
-									params : {action:2,services:services,uom:uom,dollars:dollars,pounds:pounds,ratecardid:ratecardid,vendorid:vendorid},
+									params : {action:2,activity:activity,uom:uom,dollars:dollars,pounds:pounds,ratecardid:ratecardid,vendorid:vendorid},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 

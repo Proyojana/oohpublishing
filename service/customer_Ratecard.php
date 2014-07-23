@@ -9,7 +9,7 @@ $id=$_SESSION['user_no'];
 			getRatecardMaster($_POST['customerid']);
 			break;
 		case 2:
-			insertRateCardMaster($_POST['services'],$_POST['uom'],$_POST['dollars'],$_POST['pounds'],$_POST['ratecardid'],$_POST['teams_customerid']);
+			insertRateCardMaster($_POST['activity'],$_POST['uom'],$_POST['dollars'],$_POST['pounds'],$_POST['ratecardid'],$_POST['teams_customerid']);
 			break;
 		case 3:
 			deleteRatecardById($_POST["ratecardid"]);	
@@ -21,30 +21,30 @@ $id=$_SESSION['user_no'];
 	function getRatecardMaster($customerid)
 	{
  		$num_result = mysql_query ("Select
-  customers_ratecard.uom as uom,
-  customers_ratecard.dollars as dollars,
-  customers_ratecard.pounds as pounds,
-  customers_ratecard.id as ratecardid,
-  customers_ratecard.services as services
+  activity.id As activity,
+  customers_ratecard.uom As uom,
+  customers_ratecard.dollars As dollars,
+  customers_ratecard.pounds As pounds,
+  customers_ratecard.id As ratecardid
 From
-  customers_ratecard Inner Join
-  services On customers_ratecard.services =
-    services.id
+  activity Inner Join
+  customers_ratecard
+    On customers_ratecard.activity = activity.id
 Where
   customers_ratecard.customer_id =  '".$customerid."' and customers_ratecard.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  customers_ratecard.uom as uom,
-  customers_ratecard.dollars as dollars,
-  customers_ratecard.pounds as pounds,
-  customers_ratecard.id as ratecardid,
-  customers_ratecard.services as services
+  activity.id As activity,
+  customers_ratecard.uom As uom,
+  customers_ratecard.dollars As dollars,
+  customers_ratecard.pounds As pounds,
+  customers_ratecard.id As ratecardid
 From
-  customers_ratecard Inner Join
-  services On customers_ratecard.services =
-    services.id
+  activity Inner Join
+  customers_ratecard
+    On customers_ratecard.activity = activity.id
 Where
   customers_ratecard.customer_id =  '".$customerid."' and customers_ratecard.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
@@ -54,7 +54,7 @@ Where
 		}
 	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
 	}
-	function insertRateCardMaster($services,$uom,$dollars,$pounds,$ratecardid,$teams_customerid)
+	function insertRateCardMaster($activity,$uom,$dollars,$pounds,$ratecardid,$teams_customerid)
     {
 		$checkquery="SELECT id FROM customers_ratecard WHERE id='".$ratecardid."' ";
 		$result1=mysql_query($checkquery);
@@ -62,7 +62,7 @@ Where
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO customers_ratecard(id,customer_id,services,uom,dollars,pounds,flag) VALUES('','".$teams_customerid."','".$services."','".$uom."','".$dollars."','".$pounds."','')");
+			$result1 = mysql_query ("INSERT INTO customers_ratecard(id,customer_id,activity,uom,dollars,pounds,flag) VALUES('','".$teams_customerid."','".$activity."','".$uom."','".$dollars."','".$pounds."','')");
 			if(!$result1)
 			{
 				$result["failure"] = true;
@@ -77,7 +77,7 @@ Where
 		else if($num_rows==1)
 		{
 			
-			$result1 = mysql_query ("Update customers_ratecard set services='".$services."',uom='".$uom."',dollars='".$dollars."',pounds='".$pounds."' where id='".$ratecardid."'");
+			$result1 = mysql_query ("Update customers_ratecard set activity='".$activity."',uom='".$uom."',dollars='".$dollars."',pounds='".$pounds."' where id='".$ratecardid."'");
 			if(!$result1)
 			{
 				$result["failure"] = true;
