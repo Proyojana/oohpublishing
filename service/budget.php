@@ -31,32 +31,32 @@ $id=$_SESSION['user_no'];
 		{
 		
 		$result = mysql_query("Select
-		 activity.id As activityid,
-		 activity.name As activity,
-		 stages.stage_name As stage,
-		 stages.workflow_id,
-		 stages.id as stageid,
-		 budget_expense.vendor as vendor,
-		 budget_expense.unit as unit,
-		 budget_expense.num_units_budgeted as num_units_budgeted,
-		 budget_expense.rate_USD as rate_USD,
-		 budget_expense.rate_GBP as rate_GBP,
-		 budget_expense.budgeted_amount_USD as budgeted_amount_USD,
-		 budget_expense.budgeted_amount_GBP as budgeted_amount_GBP,
-		 budget_expense.actual_units as actual_unit,
-		 budget_expense.acual_amount_USD as actual_amount_USD,
-		 budget_expense.actual_amount_GBP as actual_amount_GBP,
-		 budget_expense.id as budgetExpense_id
-		From
-		 stages Inner Join
-		 activity Onstages.activity =
-		   activity.id Left Join
-		 budget_expense Onactivity.id =
-		   budget_expense.activity
-		Where
-		 stages.workflow_id = '".$workflowid."' And(  
-		 budget_expense.project_id = '".$projectid."' orbudget_expense.project_id is null ) And
-		 stages.flag = 0")or die(mysql_error());
+ activity.id As activityid,
+ activity.name As activity,
+ stages.stage_name As stage,
+ stages.workflow_id,
+ stages.id as stageid,
+ budget_expense.vendor as vendor,
+ budget_expense.unit as unit,
+ budget_expense.num_units_budgeted as num_units_budgeted,
+ budget_expense.rate_USD as rate_USD,
+ budget_expense.rate_GBP as rate_GBP,
+ budget_expense.budgeted_amount_USD as budgeted_amount_USD,
+ budget_expense.budgeted_amount_GBP as budgeted_amount_GBP,
+ budget_expense.actual_units as actual_unit,
+ budget_expense.acual_amount_USD as actual_amount_USD,
+ budget_expense.actual_amount_GBP as actual_amount_GBP,
+ budget_expense.id as budgetExpense_id
+From
+ stages Inner Join
+ activity On stages.activity =
+   activity.id Left Join
+ budget_expense On activity.id =
+   budget_expense.activity
+Where
+ stages.workflow_id = '".$workflowid."' And(  
+ budget_expense.project_id = '".$projectid."' or budget_expense.project_id is null ) And
+ stages.flag = 0")or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -68,18 +68,18 @@ $id=$_SESSION['user_no'];
 			{
 				
 				$result = mysql_query("Select
-			 activity.id as activityid,
-			 activity.name As activity,
-			 stages.stage_name As stage,
-			 stages.id As stageid
-			From
-			 stages Inner Join
-			 activity Onstages.activity =
-			   activity.id
-			Where
-			 stages.workflow_id = '".$workflowid."'  And
-			 stages.flag = 0
-			")or die(mysql_error());
+ activity.id as activityid,
+ activity.name As activity,
+ stages.stage_name As stage,
+ stages.id As stageid
+From
+ stages Inner Join
+ activity On stages.activity =
+   activity.id
+Where
+ stages.workflow_id = '".$workflowid."'  And
+ stages.flag = 0
+")or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -126,14 +126,14 @@ $id=$_SESSION['user_no'];
     function getBudgetUnit($vendor,$activityid)
 	{
 		$result1 = mysql_query("Select
-		 vendors_ratecard.uom as uom,
-		 vendors_ratecard.dollars As rate_USD,
-		 vendors_ratecard.pounds as rate_GBP
-		From
-		 vendors_ratecard
-		Where
-		 vendors_ratecard.vendor_id = '".$vendor."' And
-		 vendors_ratecard.activity = '".$activityid."'")or die(mysql_error());
+ vendors_ratecard.uom as uom,
+ vendors_ratecard.dollars As rate_USD,
+ vendors_ratecard.pounds as rate_GBP
+From
+ vendors_ratecard
+Where
+ vendors_ratecard.vendor_id = '".$vendor."' And
+ vendors_ratecard.activity = '".$activityid."'")or die(mysql_error());
 		
 		if(!$result1)
 		{

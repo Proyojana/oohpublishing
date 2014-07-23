@@ -205,7 +205,7 @@ From
 			else
 			{
 				$result["success"] = true;
-				$result["message"] = "Department Inserted successfully";
+				$result["message"] = "Project Inserted successfully";
 			}
 		}
 		else
