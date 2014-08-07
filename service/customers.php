@@ -44,7 +44,7 @@ From
   services On customers_services.service_id =
     services.id
 Where
-  _publishing.customers.flag = 0 and customers_services.flag = 0 Group By
+  customers.flag = 0 and customers_services.flag = 0 Group By
   customers.code") or die(mysql_error());
 
 	$totaldata = mysql_num_rows($num_result);
