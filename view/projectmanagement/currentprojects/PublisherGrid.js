@@ -20,7 +20,10 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 	//width:1040,
 //	height:250,
 	anchor: '76% 49%',
-	requires:['MyDesktop.view.projectmanagement.currentprojects.productionreport','MyDesktop.view.projectmanagement.currentprojects.typesetterform','MyDesktop.store.Projects','MyDesktop.view.projectmanagement.currentprojects.TitleInfoGrid'  ],
+	requires:['MyDesktop.view.projectmanagement.currentprojects.productionreport','MyDesktop.view.projectmanagement.currentprojects.typesetterform','MyDesktop.store.Projects','MyDesktop.view.projectmanagement.currentprojects.TitleInfoGrid',
+	'MyDesktop.view.projectmanagement.currentprojects.Author','MyDesktop.view.projectmanagement.currentprojects.ContribGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionTitleInfoGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionScheduleGrid', 
+	'MyDesktop.view.projectmanagement.currentprojects.ProductionTeamGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGrid','MyDesktop.view.projectmanagement.currentprojects.TypesetterInfoGrid',
+	'MyDesktop.view.projectmanagement.currentprojects.TypesetterAuthorGrid', 'MyDesktop.view.projectmanagement.currentproject.scheduleGrid'],
 	id:'publishergrid',
 	initComponent: function() {
 		
@@ -127,6 +130,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					handler: function(grid, rowIndex, colIndex) {
 						var rec = grid.getStore().getAt(rowIndex);
 						var project_id=rec.get('id');
+						var job_code=rec.get('code');
 
 						var conn = new Ext.data.Connection();
 															conn.request({
@@ -152,6 +156,17 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 																	myGrid.setSource(obj);																
 																},
 																});
+							 var gridAuthor=Ext.getCmp('author');
+							 gridAuthor.getStore().load({params:{action:2,job_code:job_code}});
+					
+							var gridAuthor=Ext.getCmp('contribgrid');
+							gridAuthor.getStore().load({params:{action:4,job_code:job_code}});
+							
+							var gridBudget=Ext.getCmp('budgetgrid');
+							gridBudget.getStore().load({params:{action:1,job_code:job_code}});
+							
+							var gridBudget=Ext.getCmp('schedulegrid');
+							gridBudget.getStore().load({params:{action:4,projectid:project_id}});
 
 						
 					/*    var currentForm = Ext.getCmp('usersform');
@@ -184,76 +199,116 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 				}
 			},
 					{
-						iconCls: 'control_rewindClass',
-						//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-						tooltip: 'Production Report',
-					handler: function(grid, rowIndex, colIndex) {
-					   
-					   var win = Ext.create('Ext.Window', {
-					extend : 'Ext.form.Panel',
-					layout : {
-						type : 'absolute'
-					},
-					 autoScroll:true,
-				     //   maximizable : true,
-					//title : 'Resubmission Reason',
-					//frame : true,
-					title:'Production Report',
-					width : 650,
-					height : 690,
-					//modal:true,
-					
-					items : [
-				
-				     {
-				    xtype:'productionreport',
-				      x:0,
-				    y:0
-				   
-					}
-					
-					]
-					});
-					win.show();
-					
+				iconCls : 'control_rewindClass',
+				tooltip : 'Production Report',
+				handler : function(grid, rowIndex, colIndex) {
 
-						
-				}
-			},{
-				iconCls: 'applica_goClass',
-				//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-				tooltip: 'Typesetting Report',
-				handler: function(grid, rowIndex, colIndex) {
 					var win = Ext.create('Ext.Window', {
-					extend : 'Ext.form.Panel',
-					layout : {
-						type : 'absolute'
-					},
-					 autoScroll:true,
-				     //   maximizable : true,
-					//title : 'Resubmission Reason',
-					//frame : true,
-					title:'Typesetting Report',
-					width : 650,
-					height : 690,
-					//modal:true,
-					
-					items : [
-				
-				     {
-				    xtype:'typesetterform',
-				      x:0,
-				    y:0
-				   
-					}
-					
-					]
+						extend : 'Ext.form.Panel',
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Production Report',
+						width : 680,
+						height : 600,
+						items : [{
+							xtype : 'productionreport',
+							x : 0,
+							y : 0
+
+						}]
 					});
 					win.show();
-					
+					var rec = grid.getStore().getAt(rowIndex);
+					var project_id = rec.get('id');
+					var job_code = rec.get('code');
 
-					   
-						
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url : 'service/projects.php',
+						method : 'POST',
+						params : {
+							action : 11,
+							project_id : project_id
+						},
+						success : function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							var myGrid = Ext.getCmp('ptitleinfogrid');
+							myGrid.setSource(obj);
+						},
+					});
+
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url : 'service/projects.php',
+						method : 'POST',
+						params : {
+							action : 12,
+							project_id : project_id
+						},
+						success : function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							var myGrid = Ext.getCmp('pteamgrid');
+							myGrid.setSource(obj);
+						},
+					});
+					var grid1 = Ext.getCmp('pbudgetgrid');
+					grid1.getStore().load({
+						params : {
+							action : 13,
+							project_id : project_id
+						}
+					});
+
+				}
+			}, {
+				iconCls : 'applica_goClass',
+				tooltip : 'Typesetting Report',
+				handler : function(grid, rowIndex, colIndex) {
+					var win = Ext.create('Ext.Window', {
+						extend : 'Ext.form.Panel',
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Typesetting Report',
+						width : 650,
+						height : 600,
+						items : [{
+							xtype : 'typesetterform',
+							x : 0,
+							y : 0
+
+						}]
+					});
+					win.show();
+					var rec = grid.getStore().getAt(rowIndex);
+					var project_id = rec.get('id');
+					var job_code = rec.get('code');
+					
+						var conn = new Ext.data.Connection();
+					conn.request({
+						url : 'service/projects.php',
+						method : 'POST',
+						params : {
+							action : 14,
+							project_id : project_id
+						},
+						success : function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							var myGrid = Ext.getCmp('tinfogrid');
+							myGrid.setSource(obj);
+						},
+					});
+						var grid1 = Ext.getCmp('tauthorgrid');
+					grid1.getStore().load({
+						params : {
+							action : 15,
+							job_code : job_code
+						}
+					});
+
 				}
 			}]
 		}];

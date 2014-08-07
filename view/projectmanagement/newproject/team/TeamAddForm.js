@@ -3,7 +3,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
     extend: 'Ext.form.Panel',
     alias : 'widget.teamaddform',
    		id:'teamaddform',
-    margin: '2 10 10 10',
+   // margin: '2 10 10 10',
 	layout: {
               type: 'absolute'
             },

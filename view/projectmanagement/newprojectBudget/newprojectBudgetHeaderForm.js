@@ -17,7 +17,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 	frame:true,
 	
 	width:1100,
-	height:105,
+	height:80,
 	title:'Header Data',
 	defaults: {
 		labelWidth: 80,
@@ -48,25 +48,25 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 		readOnly: true,
 		x:10,
 		y:10,
-		width:240,
+		width:220,
 	},
 	{
 		id:'budgetHeader_ClientName',
 		fieldLabel: 'Client Name',
 		margin:'0 0 0 0',
-		x:310,
+		x:260,
 		y:10,
 		readOnly: true,
-		width:240,
+		width:220,
 	},
 	{
 		id:'budgetHeader_Job',
 		fieldLabel: 'Job #',
-		emptyText:'Example: JOB001',
-		//readOnly: true,
-		x:610,
+		//emptyText:'Example: JOB001',
+		readOnly: true,
+		x:510,
 		y:10,
-		width:240,
+		width:220,
 		listeners: {
               specialkey: function(f,e){
                 if (e.getKey() == e.ENTER) {
@@ -114,10 +114,10 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 	{
 		id:'budgetHeader_ProjectName',
 		fieldLabel: 'Project Name',
-		x:10,
+		x:760,
 		readOnly: true,
-		y:40,
-		width:240,
+		y:10,
+		width:220,
 		
 	},
 	/**{
@@ -127,7 +127,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 		x:310,
 		//readOnly: true,
 		y:40,
-		width:240,
+		width:220,
 		store:times,
 		displayField:'unit',
 		listeners : {

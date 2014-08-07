@@ -26,18 +26,18 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetFo
 		id:'newprojectBudgetAccountForm',
 		plain:true,
 		x:5,
-		y:140,
+		y:120,
 		activeTab: 0,
-		height:360,
+		height:370,
 		
 		items:[{
 			
 			xtype:'accountPayableGrid'
-		},/*
+		},
 		{
 			
 			xtype:'accountsReceivableForm'
-		}*/
+		}
 		]
 		},
 	

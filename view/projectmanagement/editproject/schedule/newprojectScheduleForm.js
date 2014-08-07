@@ -8,7 +8,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
               type: 'absolute'
             },
 	frame:true,
-	requires:['MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleAddForm','MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleGrid'],
+	requires:['MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleHeaderForm','MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleAddForm','MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleGrid'],
 	title:'Schedule',
     defaults: {
         labelWidth: 140,
@@ -18,9 +18,18 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 	initComponent:function(){
 		
 		this.items = [
+		{
+			xtype:'newprojectScheduleHeaderForm',
+			x:0,
+			y:0
+		
+			
+		},
 		
 	{
 			xtype:'newprojectSchedulegrid',
+			x:0,
+			y:90
 			//xtype:'cityaddform',
 						
 		},
@@ -35,14 +44,14 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		defaults: {
 			bodyStyle:'padding:10px'
 		},
-		items:[*/
+		items:[
 		{
 			xtype:'newprojectScheduleAddform',
 			x:1,
 			y:270,
 			height:260
 		}
-		
+		*/
 	
 			]
 	  

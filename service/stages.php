@@ -14,22 +14,21 @@ $id=$_SESSION['user_no'];
 		case 3:
 			deleteStageById($_POST["stage_id"]);	
 			break;
-			
+		case 4:
+			saveStageMaster($_POST['stage_id'],$_POST['stage_order'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name']);
+			break;	
 		default: 
 			break;
 	}
 	function getRatecardMaster($workflowid)
 	{
  		$num_result = mysql_query ("Select
- 		 stages.stage_order As stage_order,
+  stages.stage_order As stage_order,
   stages.stage_name As stage_name,
-  activity.name As activity,
-  stages.id As stage_id,
-  stages.workflow_id
+  activity.id As activity,
+  stages.id As stage_id
 From
   stages Inner Join
-  workflow On stages.workflow_id =
-    workflow.id Inner Join
   activity On stages.activity =
     activity.id
 Where
@@ -38,17 +37,15 @@ Where
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
- 		 stages.stage_order As stage_order,
+  stages.stage_order As stage_order,
   stages.stage_name As stage_name,
-  activity.name As activity,
-  stages.id As stage_id,
-  stages.workflow_id
+  activity.id As activity,
+  stages.id As stage_id
 From
   stages Inner Join
-  workflow On stages.workflow_id =
-    workflow.id Inner Join
   activity On stages.activity =
     activity.id
+
 Where
   stages.workflow_id ='".$workflowid."' and stages.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
@@ -59,6 +56,99 @@ Where
 	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
 	}
 	function insertStageMaster($stage_id,$stage_order,$workflow_id,$activity,$stage_name)
+    {
+    	
+    		$stage_id1 = explode(',',$stage_id);
+			$stage_order1 = explode(',',$stage_order);
+			$activity1 = explode(',',$activity);
+			$stage_name1= explode(',',$stage_name);
+		
+		for ($i = 0; $i < count($stage_id1)-1; $i++)
+		{
+		$checkquery="SELECT id FROM stages WHERE id='".$stage_id1[$i]."' ";
+		$result1=mysql_query($checkquery);
+		$num_rows=mysql_num_rows($result1);
+		
+		if($num_rows==0)
+		{
+			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,flag) VALUES('','".$workflow_id."','".$stage_order1[$i]."','".$stage_name1[$i]."','".$activity1[$i]."','')");
+			if(!$result1)
+			{
+				$result["failure"] = true;
+				$result["message"] =  "Invalid query: " . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				$result["message"] = "Stage Inserted successfully";
+			}
+		}
+		else if($num_rows==1)
+		{
+			
+			$result1 = mysql_query ("Update stages set stage_name='".$stage_name1[$i]."',activity='".$activity1[$i]."' where id='".$stage_id1[$i]."'");
+			if(!$result1)
+			{
+				$result["failure"] = true;
+				$result["message"] =  "Invalid query: " . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				$result["message"] = "Stage Saved successfully";
+			}
+		}
+		else
+			{
+				$result["success"] = true;
+				$result["message"] = "Stage is not exist";
+			}
+			}
+		echo json_encode($result);
+	}
+	function deleteStageById($stage_id)
+    {
+		$checkquery="Select ooh_publishing.stages.workflow_id From ooh_publishing.stages Where ooh_publishing.stages.id = '".$stage_id."' ";
+		$result1=mysql_query($checkquery);
+		while($row = mysql_fetch_array($result1)) {				
+			$workflow_id = $row['workflow_id'];			
+		}
+	//	echo $workflow_id;
+		$numquery = mysql_query("Select
+  ooh_publishing.stages.workflow_id
+From
+  ooh_publishing.stages Inner Join
+  ooh_publishing.budget_expense On ooh_publishing.stages.workflow_id =
+    ooh_publishing.budget_expense.workflow_id
+Where
+  ooh_publishing.stages.workflow_id = '".$workflow_id."' And
+  ooh_publishing.budget_expense.flag = 0");
+	
+		$num_rows=mysql_num_rows($numquery);
+		if($num_rows==0){
+				$result1= mysql_query("UPDATE stages SET flag=1 WHERE id='".$stage_id."'");
+				
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  'Invalid query: ' . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = 'Deleted successfully';
+				}
+			}
+			else
+			{
+				$result["failure"] = true;
+				$result["message"] =  'This Stage is assigned to budget.So Delete action is not possible';
+			}
+		
+		echo json_encode($result);
+	}
+	
+	function saveStageMaster($stage_id,$stage_order,$workflow_id,$activity,$stage_name)
     {
 		$checkquery="SELECT id FROM stages WHERE id='".$stage_id."' ";
 		$result1=mysql_query($checkquery);
@@ -97,33 +187,6 @@ Where
 			{
 				$result["success"] = true;
 				$result["message"] = "Stage is not exist";
-			}
-		
-		echo json_encode($result);
-	}
-	function deleteStageById($stage_id)
-    {
-		$checkquery="SELECT id FROM stages WHERE id='".$stage_id."' ";
-		$result1=mysql_query($checkquery);
-		$num_rows=mysql_num_rows($result1);
-		if($num_rows==1){
-				$result1= mysql_query("UPDATE stages SET flag=1 WHERE id='".$stage_id."'");
-				
-				if(!$result1)
-				{
-					$result["failure"] = true;
-					$result["message"] =  'Invalid query: ' . mysql_error();
-				}
-				else
-				{
-					$result["success"] = true;
-					$result["message"] = 'Deleted successfully';
-				}
-			}
-			else
-			{
-				$result["failure"] = true;
-				$result["message"] =  'Stage does not exist';
 			}
 		
 		echo json_encode($result);

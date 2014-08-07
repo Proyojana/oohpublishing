@@ -236,6 +236,7 @@ Ext.define('Ext.window.Window', {
 
     // private
     initComponent: function() {
+    	
         var me = this;
         // Explicitly set frame to false, since alwaysFramed is
         // true, we only want to lookup framing in a specific instance

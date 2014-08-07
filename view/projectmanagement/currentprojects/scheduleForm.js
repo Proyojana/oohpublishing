@@ -25,16 +25,10 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.scheduleForm' ,{
 		{
 		xtype : 'schedulegrid',
 		title:'Schedule for production',
-			width:580,
-		height:400,
+			
+		height:200,
 		},
-		{
-		xtype : 'scheduleaddform11',
-		//title:'Schedule for production',
-			width:600,
-		x:600,
-		y:01
-		},
+		
 		
 			]
 	  

@@ -21,16 +21,14 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.Author', {
 	id:'author',
 	initComponent: function() {
 		
-	/*	var journal = Ext.create('MyDesktop.store.Journal');
-		journal.load({
+	var author = Ext.create('MyDesktop.store.AuthorGrid');
+		author.load({
 			params: {
 				start: 0,
-				limit: 10,
-				
+				limit: 50
 			}
 		});
-		//journal.loadPage(1);*/
-		this.store = store1,
+	this.store = author,
 		this.columns = [
 	{
             header: 'Author/Editor',
@@ -44,7 +42,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.Author', {
 			flex : 1
         },{
             header: 'Address',
-            dataIndex: 'addr',
+            dataIndex: 'address',
             align: 'center',
             flex : 2			
         }, {
@@ -54,38 +52,38 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.Author', {
 			flex:1
         }, {
             header: 'Telephone',
-            dataIndex: 'tel',
+            dataIndex: 'phone',
             align: 'center',
             flex : 1
         }, {
             header: 'To see proofs?',
-            dataIndex: 'seeproof',
+            dataIndex: 'see_proof',
             align: 'center',
 			flex : 1
         }, {
             header: 'No of Proofs',
-            dataIndex: 'noproof',
+            dataIndex: 'no_proof',
             align: 'center',
 			flex : 1
         },
-{
-xtype:'actioncolumn',
-align: 'center',
-flex : 1,
-width:250,
-text:'Actions',
-items: [{
-iconCls: 'viewClass',
-tooltip: 'View',
-},{
-iconCls: 'editClass',
-//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-tooltip: 'Edit',
-},{
-iconCls: 'deleteClass',
-tooltip: 'Delete',
-}]
-}
+		/*{
+		xtype:'actioncolumn',
+		align: 'center',
+		flex : 1,
+		width:250,
+		text:'Actions',
+		items: [{
+		iconCls: 'viewClass',
+		tooltip: 'View',
+		},{
+		iconCls: 'editClass',
+		//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
+		tooltip: 'Edit',
+		},{
+		iconCls: 'deleteClass',
+		tooltip: 'Delete',
+		}]
+		}*/
 
 ];
 		this.bbar = Ext.create('Ext.PagingToolbar', {

@@ -26,9 +26,9 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.WorkflowForm' ,{
 		id:'worktab',
 		plain:true,
 		x:5,
-		y:270,
+		y:260,
 		activeTab: 0,
-		height:340,
+		height:250,
 		defaults: {
 			},
 		items:[{

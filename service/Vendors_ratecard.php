@@ -14,7 +14,9 @@ $id=$_SESSION['user_no'];
 		case 3:
 			deleteRatecardById($_POST["ratecardid"]);	
 			break;
-			
+		case 4:
+			saveRateCardMaster($_POST['activity'],$_POST['uom'],$_POST['dollars'],$_POST['pounds'],$_POST['ratecardid'],$_POST['vendorid']);
+			break;
 		default: 
 			break;
 	}
@@ -56,6 +58,86 @@ Where
 	}
 	function insertRateCardMaster($activity,$uom,$dollars,$pounds,$ratecardid,$vendorid)
     {
+    		
+    		$activity1 = explode(',',$activity);
+			$uom1 = explode(',',$uom);
+			$dollars1 = explode(',',$dollars);
+			$pounds1 = explode(',',$pounds);
+			$ratecardid1 = explode(',',$ratecardid);
+		
+		for ($i = 0; $i < count($activity1)-1; $i++)
+		{
+    	
+		$checkquery="SELECT id FROM vendors_ratecard WHERE id='".$ratecardid1[$i]."' ";
+		$result1=mysql_query($checkquery);
+		$num_rows=mysql_num_rows($result1);
+		
+		if($num_rows==0)
+		{
+			$result1 = mysql_query ("INSERT INTO vendors_ratecard(id,vendor_id,activity,uom,dollars,pounds,flag) VALUES('','".$vendorid."','".$activity1[$i]."','".$uom1[$i]."','".$dollars1[$i]."','".$pounds1[$i]."','')");
+			if(!$result1)
+			{
+				$result["failure"] = true;
+				$result["message"] =  "Invalid query: " . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				$result["message"] = "Ratecard Inserted successfully";
+			}
+		}
+		else if($num_rows==1)
+		{
+			
+			$result1 = mysql_query ("Update vendors_ratecard set activity='".$activity1[$i]."',uom='".$uom1[$i]."',dollars='".$dollars1[$i]."',pounds='".$pounds1[$i]."' where id='".$ratecardid1[$i]."'");
+			if(!$result1)
+			{
+				$result["failure"] = true;
+				$result["message"] =  "Invalid query: " . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				$result["message"] = "Ratecard Saved successfully";
+			}
+		}
+		else
+			{
+				$result["success"] = true;
+				$result["message"] = "Ratecard is not exist";
+			}
+			}
+		echo json_encode($result);
+	}
+	function deleteRatecardById($ratecardid)
+    {
+		$checkquery="SELECT id FROM vendors_ratecard WHERE id='".$ratecardid."'";
+		$result1=mysql_query($checkquery);
+		$num_rows=mysql_num_rows($result1);
+		if($num_rows==1){
+				$result1= mysql_query("UPDATE vendors_ratecard SET flag=1 WHERE id='".$ratecardid."'");
+				
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  'Invalid query: ' . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = 'Deleted successfully';
+				}
+			}
+			else
+			{
+				$result["failure"] = true;
+				$result["message"] =  'Ratecard does not exist';
+			}
+		
+		echo json_encode($result);
+	}
+	function saveRateCardMaster($activity,$uom,$dollars,$pounds,$ratecardid,$vendorid)
+    {
 		$checkquery="SELECT id FROM vendors_ratecard WHERE id='".$ratecardid."' ";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
@@ -93,33 +175,6 @@ Where
 			{
 				$result["success"] = true;
 				$result["message"] = "Ratecard is not exist";
-			}
-		
-		echo json_encode($result);
-	}
-	function deleteRatecardById($ratecardid)
-    {
-		$checkquery="SELECT id FROM vendors_ratecard WHERE id='".$ratecardid."'";
-		$result1=mysql_query($checkquery);
-		$num_rows=mysql_num_rows($result1);
-		if($num_rows==1){
-				$result1= mysql_query("UPDATE vendors_ratecard SET flag=1 WHERE id='".$ratecardid."'");
-				
-				if(!$result1)
-				{
-					$result["failure"] = true;
-					$result["message"] =  'Invalid query: ' . mysql_error();
-				}
-				else
-				{
-					$result["success"] = true;
-					$result["message"] = 'Deleted successfully';
-				}
-			}
-			else
-			{
-				$result["failure"] = true;
-				$result["message"] =  'Ratecard does not exist';
 			}
 		
 		echo json_encode($result);

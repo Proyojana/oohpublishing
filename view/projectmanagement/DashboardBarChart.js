@@ -21,21 +21,26 @@ var store1 = Ext.create('Ext.data.Store', {
   var chart = Ext.create('Ext.chart.Chart', {
  	renderTo: Ext.getBody(),
             xtype: 'chart',
+            layout: 'fit',
+          //  x:10,
+             width: 410,
+        height: 460,
+        margin: '-10 0 0 0',
             //id: 'chartCmp',
-            animate: true,           
+            //animate: true,           
             store: store1,
             shadow: true,
             legend: {
                 position: 'center',
              
-          x:-350,
-            y:10,
+         	 x:10,
+            y:420,
              width: 450,
-        height: 230,
+        height: 210,
              
             
             },
-            insetPadding:400,
+            //insetPadding:400,
             theme: 'Base:gradients',
             
             series: [{
@@ -73,43 +78,6 @@ var store1 = Ext.create('Ext.data.Store', {
             }]
         });
 
-/*Ext.define('MyDesktop.view.projectmanagement.DashboardBarChart' ,{
-    extend: 'Ext.form.Panel',
-    alias : 'widget.dashboardpiechart',
-   		id:'dashboardpiechart',
-    margin: '10 10 10 10',
-    width:530,
-	layout: {
-                                type: 'absolute'
-                            },
-	
-	frame:true,
-	//requires:['MyDesktop.store.Kras','MyDesktop.view.kras.KrasGrid','MyDesktop.view.kras.KrasAddEditForm'],
-    title:'Schedule Chart',
-    defaults: {
-        
-        labelWidth: 90,
-
-    },
-    tbar: [{
-            text: 'Save Pie Chart',
-              pressed: true,
-            handler: function() {
-                Ext.MessageBox.confirm('Confirm Download', 'Would you like to download the chart as an image?', function(choice){
-                    if(choice == 'yes'){
-                        chart.save({
-                            type: 'image/png'
-                        });
-                    }
-                });
-            }
-        }
-        ],
-
-   // defaultType: 'textfield',
-	
-	items:[chart]
-}); */
 
 Ext.define('MyDesktop.view.projectmanagement.DashboardBarChart',{
     extend: 'Ext.form.FieldSet',
@@ -118,7 +86,7 @@ Ext.define('MyDesktop.view.projectmanagement.DashboardBarChart',{
    		width:530,
    		//y:60,
    		title:'Schedule chart',
-    //margin: '10 10 10 10',   
+    	   
 	   defaults: {
         
         labelWidth: 90,

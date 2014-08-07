@@ -284,6 +284,9 @@ background-image:url(../shared/icons/fam/copy_paste.png);
 .projects{
 	background-image: url(../images/project_manager/projects.png);
 }
+.reportsmain{
+       background-image: url(../images/project_manager/reports.png);
+}
 .contacts{
 	background-image: url(../images/project_manager/contacts.png);
 }
@@ -733,6 +736,10 @@ background-image: url(../images/chalk_board1.png);
 {
 	background-image:url(../shared/icons/fam/new_project.png);
 	}
+.edit_project
+{
+	background-image:url(../shared/icons/fam/project_edit.png);
+	}
 .current_project
 {
 	background-image:url(../shared/icons/fam/current_project.png);
@@ -1045,6 +1052,26 @@ background-image: url(../images/chalk_board1.png);
 .IssuetrckrClass
 {
 		background:url(../shared/icons/fam/support.png);height:32px !important;width:32px !important;
+}
+.projectEditClass
+{
+	background:url(../shared/icons/fam/project.png);height:16px;width:16px;margin-right:6px;
+}
+.authorEditClass
+{
+background:url(../shared/icons/fam/author.png);height:16px;width:16px;margin-right:6px;
+}
+.budgetEditClass
+{
+	background:url(../shared/icons/fam/budget.png);height:16px;width:16px;margin-right:6px;
+}
+.scheduleEditClass
+{
+	background:url(../shared/icons/fam/schedule.png);height:16px;width:16px;margin-right:6px;
+}
+.teamEditClass
+{
+	background:url(../shared/icons/fam/Team1.png);height:16px;width:16px;margin-right:6px;
 }
 
 

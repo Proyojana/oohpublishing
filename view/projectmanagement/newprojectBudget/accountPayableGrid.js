@@ -11,7 +11,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 	alias:'widget.accountPayableGrid',
 	closeAction: 'hide',
 	
-	selModel:sm,
+	//selModel:sm,
 	requires:['MyDesktop.store.Budget'],
 	id:'accountPayableGrid',
 	plugins: [
@@ -26,6 +26,22 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 		function color(value, metaData, record, rowIndex, colIndex,store){
 		return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 		}
+		//load stage
+		var stage = Ext.create('MyDesktop.store.Stages');
+		stage.load({
+			params: {
+				start: 0,
+				limit: 50
+			}
+		});
+		//load activity combo
+		var activity = Ext.create('MyDesktop.store.ProductionStages');
+		activity.load({
+			params: {
+				start: 0,
+				limit: 8
+			}
+		});
 		//load budget store
 		var budget = Ext.create('MyDesktop.store.Budget');
 		budget.load({
@@ -46,32 +62,87 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 		vendor.loadPage(1);
 		
 		this.store = budget,
+		this.tbar = Ext.create('Ext.Toolbar', {  
+							   items:[{
+                               xtype : 'button',
+                               id : 'addnewrowcust',
+                               text : 'Insert New Row',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+               						var r = Ext.create('MyDesktop.model.budget', {
+               						budgetExpense_id:'',
+                    				activityid: '',
+                    				activity: '',
+                 					stageid: '',
+                    				stage: '',
+                    				vendor:'',
+                    				unit: '',
+                    				num_units_budgeted: '',
+                 					rate_USD: '',
+                    				rate_GBP: '',
+                    				budgeted_amount_USD:'',
+                    				budgeted_amount_GBP: '',
+                    				actual_unit: '',
+                 					actual_amount_USD: '',
+                    				actual_amount_GBP: '',
+                    				
+                				});
+                		       budget.insert(0, r);
+            				 }                           
+        },
+        
+        ]
+        });
 		this.columns = [
 		
 		{
 			dataIndex: 'budgetExpense_id',
 			hidden:true,
 		},
-		{
+		/*{
 			dataIndex: 'activityid',
 			hidden:true,
 		},
 		{
 			dataIndex: 'stageid',
 			hidden:true,
-		},
+		},*/
 		        {				
-					dataIndex: 'activity',
+					dataIndex: 'activityid',
 					text: 'Activity',
 					 flex: 2,
 					 align:'center',
+					 editor: { 
+						xtype:'combo',
+						store: activity,
+						queryMode: 'local',
+						displayField: 'product_name',
+						valueField: 'product_id',
+						},
+						
+	renderer: function(value) {
+					var index = activity.find('product_id', value);
+					if (index != -1) {
+					return activity.getAt(index).data.product_name;
+					}
+					return value;
+					}
+						
 					
 				},
 				{
 					dataIndex: 'stage',
 					text: 'Stage',
 					flex: 2,
-					align:'center'
+					align:'center',
+					editor: { 
+						xtype:'textfield',
+						
+						}
 					
 					
 				},
@@ -113,7 +184,13 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
                                  }
                     }
 					},
-					  
+					  renderer: function(value) {
+					var index = vendor.find('id', value);
+					if (index != -1) {
+					return vendor.getAt(index).data.name;
+					}
+					return value;
+					}
 		        	
 		       },
 				{
@@ -231,7 +308,55 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 		        	align:'center',
 		       },
 		       ]
-		       }
+		       },
+		       							
+		{
+			xtype:'actioncolumn',
+			align: 'center',
+			flex:1,
+			text:'Actions',
+			
+			items: [
+			{
+					iconCls: 'deleteClass',
+					tooltip: 'Delete',
+					handler: function(grid, rowIndex, colIndex) {
+						
+						var grid = this.up('grid');
+					if (grid) {
+						var projectID=Ext.getCmp('budgetHeader_projectID').getValue(); 
+					var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); 
+						       	var rec = grid.getStore().getAt(rowIndex);
+						Ext.Msg.confirm('Remove Record '+rec.get('stage')+' ?',+rec.get('stage'), function (button) {
+							if (button == 'yes') {
+								var id=rec.get('budgetExpense_id');
+								var conn = new Ext.data.Connection();
+								conn.request({
+									url: 'service/budget.php',
+									method: 'POST',
+									params : {action:5,budgetid:id},
+									success:function(response){
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										  var grid3=Ext.getCmp('accountPayableGrid');
+									grid3.getStore().load({params:{action:1,workflowid:workflow,projectid:projectID}});
+									},
+									failure:function(response){
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Deletion Failed !', obj.message); 
+									}
+								});
+								
+								
+							}
+						});
+					}
+					
+					}
+				},
+				]
+		}
+		       
 		        
 			
 				
@@ -250,8 +375,11 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 				width:100,
 			//	margin:'0 0 0 100',
 				handler:function(){
-					
-					var projectID=Ext.getCmp('budgetHeader_projectID').getValue(); 
+					var job_code=Ext.getCmp('job_code').getValue(); 
+					//alert(job_code);
+					//alert("save");
+					/*var projectID=Ext.getCmp('budgetHeader_projectID').getValue(); 
+					var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); */
 							var activity='';
 							var stage='';
 							var vendor='';
@@ -271,7 +399,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 					myStore.each(function(rec) {
 						
 				    activity=activity+rec.get('activityid')+',';
-				    stage=stage+rec.get('stageid')+',';
+				    stage=stage+rec.get('stage')+',';
 				    vendor=vendor+rec.get('vendor')+',';
 				    unit=unit+rec.get('unit')+',';
 				    budgeted_unit=budgeted_unit+rec.get('num_units_budgeted')+',';
@@ -294,11 +422,37 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 					 conn.request({
 						url: 'service/budget.php',
 						method: 'POST',
-						params : {action:4,budget_id:budget_id,projectID:projectID,activity:activity,stage:stage,vendor:vendor,unit:unit,budgeted_unit:budgeted_unit,rate_USD:rate_USD,rate_GBP:rate_GBP,
+						params : {action:4,job_code:job_code,budget_id:budget_id,activity:activity,stage:stage,vendor:vendor,unit:unit,budgeted_unit:budgeted_unit,rate_USD:rate_USD,rate_GBP:rate_GBP,
 							budgeted_amount_USD:budgeted_amount_USD,budgeted_amount_GBP:budgeted_amount_GBP,actual_unit:actual_unit,actual_amount_USD:actual_amount_USD,actual_amount_GBP:actual_amount_GBP},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
+							
+							
+								var currentHeaderForm = Ext.getCmp('newprojectScheduleHeaderForm');
+                	 /****load data in header form*****/
+                	
+						
+						currentHeaderForm.getForm().load({
+   								 url: 'service/schedule.php',
+							     params: {
+        						 	action:1,job_code:job_code
+							    },
+							      failure: function(form, action){
+						        Ext.Msg.alert("Load failed", action.result.errorMessage);
+    							}
+							   
+							   
+						});
+								Ext.getCmp('newprojectscheduleformTab').setDisabled(false);	
+								
+								//refresh grid
+							var grid3=Ext.getCmp('accountPayableGrid');
+							grid3.getStore().load({params:{action:1,job_code:job_code}});
+							var grid3=Ext.getCmp('newprojectSchedulegrid');
+			          grid3.getStore().load({params:{action:2,workflowid:workflowid}});
+
+					
 						}
 					});
 					

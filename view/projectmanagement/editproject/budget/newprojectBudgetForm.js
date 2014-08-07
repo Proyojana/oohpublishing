@@ -1,14 +1,14 @@
-Ext.define('MyDesktop.view.projectmanagement.newproject.budget.newprojectBudgetForm' ,{
+Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetForm' ,{
     extend: 'Ext.form.Panel',
-    alias : 'widget.newprojectBudgetform',
-   		id:'newprojectBudgetform',
+    alias : 'widget.newprojectBudgetForm',
+   		id:'newprojectBudgetForm',
     margin: '10 10 10 10',
 	layout: {
               type: 'absolute'
             },
 	frame:true,
 	title:'Budget',
-	requires:['MyDesktop.view.projectmanagement.newproject.budget.budgetGrid','MyDesktop.view.projectmanagement.newproject.budget.newprojectBudgetAddForm','MyDesktop.view.projectmanagement.newproject.budget.additionalChargesForm' ],
+	requires:['MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHeaderForm','MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid','MyDesktop.view.projectmanagement.newprojectBudget.accountsReceivableForm' ],
     defaults: {
         labelWidth: 140,
     },
@@ -18,25 +18,25 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.budget.newprojectBudgetF
 		
 		this.items = [
 		{
-			xtype:'newprojectBudgetgrid',
+			xtype:'newprojectBudgetHeaderForm',
 		},
 		
 		{
 		xtype:'tabpanel',
-		id:'newprojectBudgetformtab',
+		id:'newprojectBudgetAccountForm',
 		plain:true,
 		x:5,
-		y:230,
+		y:140,
 		activeTab: 0,
-		height:290,
-		defaults: {
-			bodyStyle:'padding:10px'
-		},
+		height:360,
+		
 		items:[{
-			xtype:'newprojectBudgetAddForm',
-					},
+			
+			xtype:'accountPayableGrid'
+		},
 		{
-			xtype:'additionalChargesForm'
+			
+			xtype:'accountsReceivableForm'
 		}
 		]
 		},

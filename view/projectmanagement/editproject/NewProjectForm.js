@@ -71,7 +71,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectForm' ,{
 		}	
 		
 		  	]
-	 }
+	   }
 			]
 	  
 	

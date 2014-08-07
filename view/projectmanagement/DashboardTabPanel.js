@@ -8,6 +8,5 @@ Ext.define('MyDesktop.view.projectmanagement.DashboardTabPanel',{
 					deferredRender: true,
                     xtype: 'tabpanel',
 					region: 'center',
-                    items: [{xtype:'dashboardform',
-                            width:500}]
+                    items: [{xtype:'dashboardform'}]
 	});

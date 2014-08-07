@@ -27,14 +27,22 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ContribGrid', {
 			}
 		});
 		ci.loadPage(1);*/
-		this.store = available,
+		var contributor = Ext.create('MyDesktop.store.ContribGrid');
+		contributor.load({
+			params: {
+				start: 0,
+				limit: 50
+			}
+		});
+	this.store = contributor,
+	//	this.store = available,
 			this.columns = [
 				{
 					dataIndex: 'Id',
 					hidden:true
 				},
 				{
-					dataIndex: 'Chapter_number',
+					dataIndex: 'chap_num',
 					text: 'Chapter Number',
 					align: 'center',
 					flex:1,
@@ -43,7 +51,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ContribGrid', {
            		}
 				},
 				{
-					dataIndex: 'surname',
+					dataIndex: 'contrib_name',
 					text: 'Contributor Name',
 					align: 'center',
 					flex:1,
@@ -62,7 +70,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ContribGrid', {
            		}
 				},
 				{
-					dataIndex: 'approve',
+					dataIndex: 'see_proof',
 					text: 'To See Proofs?',
 					align: 'center',
 					flex:2,
@@ -72,7 +80,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ContribGrid', {
            	
 				},
 				{
-					dataIndex: 'Sent',
+					dataIndex: 'proof_sent',
 					text: 'Proof Sent',
 					align: 'center',
 					flex:2,
@@ -82,7 +90,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ContribGrid', {
            	
 				},
 				{
-					dataIndex: 'Back',
+					dataIndex: 'proof_back',
 					text: 'Proof Back',
 					align: 'center',
 					flex:2,
@@ -91,24 +99,24 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ContribGrid', {
            	},
            	
 				},
-{
-xtype:'actioncolumn',
-align: 'center',
-flex : 1,
-width:250,
-text:'Actions',
-items: [{
-iconCls: 'viewClass',
-tooltip: 'View',
-},{
-iconCls: 'editClass',
-//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-tooltip: 'Edit',
-},{
-iconCls: 'deleteClass',
-tooltip: 'Delete',
-}]
-}
+				/*{
+				xtype:'actioncolumn',
+				align: 'center',
+				flex : 1,
+				width:250,
+				text:'Actions',
+				items: [{
+				iconCls: 'viewClass',
+				tooltip: 'View',
+				},{
+				iconCls: 'editClass',
+				//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
+				tooltip: 'Edit',
+				},{
+				iconCls: 'deleteClass',
+				tooltip: 'Delete',
+				}]
+				}*/
 				
 				
 				

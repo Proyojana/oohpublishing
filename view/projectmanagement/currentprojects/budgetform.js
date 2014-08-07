@@ -25,12 +25,12 @@ Ext.define('MyDesktop.view.mastermanagement.currentprojects.budgetForm' ,{
 		{
 		xtype : 'budgetgrid',
 		title:'Budget',
-		width:660,
+		
 		height:400,
 		x:10,
 		y:10
 		},
-	{
+	/*{
 		xtype : 'budgetaddform1',
 		//title:'Schedule for production',
 		anchor:'78% 82%',
@@ -44,7 +44,7 @@ Ext.define('MyDesktop.view.mastermanagement.currentprojects.budgetForm' ,{
 		height:170,
 		x:'80%',
 		y:10
-		},
+		},*/
 		
 		
 			]

@@ -78,7 +78,7 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 				},
 				items: [{
 					region: 'west',
-					title: 'Dashboard',
+					//title: 'Dashboard',
 					split: true,
 					rootVisible: false,
 					autoScroll: true,

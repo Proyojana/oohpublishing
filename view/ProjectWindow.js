@@ -24,16 +24,20 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 	
 	],
 	id:'project-win',
+	
 	init : function() {
+		//
 		this.launcher = {
 			text: 'Project Management',
 			iconCls:'smallProjects',
 		};
 		this.callParent();
+		
 	},
+	
 	createWindow : function() {
 		
-
+  
 		var flag=0;
 		
 		var navs = Ext.create('MyDesktop.view.projectmanagement.MasterNav');
@@ -44,6 +48,7 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 		var dashboard = Ext.create('MyDesktop.view.projectmanagement.DashboardTabPanel');
 	var tab1 = Ext.create('MyDesktop.view.projectmanagement.currentprojects.projectmanagementTabPanel');
 	var newproject = Ext.create('MyDesktop.view.projectmanagement.newproject.newprojectTabPanel');
+	var editproject = Ext.create('MyDesktop.view.projectmanagement.editproject.editprojectTabPanel');
 	var report = Ext.create('MyDesktop.view.projectmanagement.Reports.ProjectReportTabPanel');
 	//var course = Ext.create('MyDesktop.view.courses.CourseTabPanel');
 	//var setting = Ext.create('MyDesktop.view.settings.SettingTabPanel');
@@ -57,11 +62,14 @@ var completedproject = Ext.create('MyDesktop.view.projectmanagement.completedpro
 			margins: '2 5 5 0',
 			activeItem: 0,
 			border: false,
-			items: [dashboard,tab1,newproject,completedproject,report]
+			items: [dashboard,tab1,newproject,editproject,completedproject,report]
 		};
-
+ 
 		var desktop = this.app.getDesktop();
+	
 		var win = desktop.getWindow('master-win');
+		
+		//	Ext.getBody().unmask();
 		if(!win) {
 			win = desktop.createWindow({
 				id: 'project-win',
@@ -69,7 +77,9 @@ var completedproject = Ext.create('MyDesktop.view.projectmanagement.completedpro
 				iconCls: 'smallProjects',
 				maximized: true,
 				animCollapse:false,
+				//loadMask:true,
 				constrainHeader:true,
+				//setLoading:true,
 				closable: true,
 				width: 600,
 				minWidth: 600,
@@ -90,5 +100,6 @@ var completedproject = Ext.create('MyDesktop.view.projectmanagement.completedpro
 			});
 		}
 		return win;
+	
 	},
 });

@@ -10,7 +10,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.RateCardGrid', {
 	title: 'Rate Card',
 	alias:'widget.ratecardcust',
 	closeAction: 'hide',
-	selModel:sm,
+	//selModel:sm,
 	requires:['MyDesktop.store.Service'],
 	id:'ratecardcust',
 	plugins: [
@@ -109,6 +109,14 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.RateCardGrid', {
 				}
 			}*/
 		           },
+		           renderer: function(value) {
+var index = activity.find('product_id', value);
+if (index != -1) {
+return activity.getAt(index).data.product_name;
+}
+return value;
+}
+
 		          
 		           
 				},
@@ -214,16 +222,13 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.RateCardGrid', {
 								conn.request({
 									url: 'service/customer_Ratecard.php',
 									method: 'POST',
-									params : {action:2,activity:activity,uom:uom,dollars:dollars,pounds:pounds,ratecardid:ratecardid,teams_customerid:teams_customerid},
+									params : {action:4,activity:activity,uom:uom,dollars:dollars,pounds:pounds,ratecardid:ratecardid,teams_customerid:teams_customerid},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 
-										country.load({
-											params: {
-												start: 0,
-												limit: 50
-											}
-										});
+										 var grid2=Ext.getCmp('customerratecardformTab');
+						grid2.getStore().load({params:{action:1,customerid:teams_customerid}});
+									
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -241,7 +246,58 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.RateCardGrid', {
 			store : this.store,
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
-			emptyMsg: "No topics to display"
+			emptyMsg: "No topics to display",
+			items:[
+				{
+				xtype:'button',
+				text:'Save',
+				pressed:true,
+				width:100,
+			//	margin:'0 0 0 100',
+				handler:function(){
+					
+					 var teams_customerid = Ext.getCmp('basic_customerid').getValue();
+							var activity='';
+							var uom='';
+							var dollars='';
+							var pounds='';
+							var ratecardid='';
+							
+							var grid=Ext.getCmp('customerratecardformTab');
+							
+					var myStore = Ext.getCmp('customerratecardformTab').getStore();
+					myStore.each(function(rec) {
+						
+				    activity=activity+rec.get('activity')+',';
+				    uom=uom+rec.get('uom')+',';
+				    dollars=dollars+rec.get('dollars')+',';
+				    pounds=pounds+rec.get('pounds')+',';
+				    ratecardid=ratecardid+rec.get('ratecardid')+',';
+				    
+				   					
+				});
+				      
+				var conn = new Ext.data.Connection();
+					conn.request({
+									url: 'service/customer_Ratecard.php',
+									method: 'POST',
+									params : {action:2,activity:activity,uom:uom,dollars:dollars,pounds:pounds,ratecardid:ratecardid,teams_customerid:teams_customerid},
+									success:function(response){
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Successfully saved', obj.message); 
+										 //load ratecard grid
+						 var grid2=Ext.getCmp('customerratecardformTab');
+						grid2.getStore().load({params:{action:1,customerid:teams_customerid}});
+									},
+									failure:function(response){
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('saving Failed !', obj.message); 
+									}
+								});
+					
+				}
+			},
+			]
 		}),
 		
 		this.callParent(arguments);

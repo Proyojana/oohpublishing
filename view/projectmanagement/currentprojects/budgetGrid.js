@@ -14,20 +14,20 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.budgetGrid', {
 	closeAction: 'hide',
 	
 	//height:200,
-	//requires : ['MyDesktop.store.freelancer'],
+	requires:['MyDesktop.store.Budget'],
 	title:'Budget',
 	id:'budgetgrid',
 	initComponent: function() {
 		
-	/*	var ci = Ext.create('MyDesktop.store.freelancer');
-		ci.load({
+	var budget = Ext.create('MyDesktop.store.Budget');
+		budget.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 50
 			}
 		});
-		ci.loadPage(1);*/
-		this.store = available,
+		budget.loadPage(1);
+		this.store = budget,
 			this.columns = [
 			{
 				xtype:'rownumberer',				
@@ -37,17 +37,17 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.budgetGrid', {
 					hidden:true
 				},
 				{
-					dataIndex: 'Activity',
+					dataIndex: 'activity_name',
 					text: 'Activity',
 					align: 'left',
-					flex:1.5,
+					flex:1,
 					filter: {
                 	type: 'string'
            		}
 				},
 				{
-					dataIndex: 'Level',
-					text: 'Level',
+					dataIndex: 'stage',
+					text: 'Stage',
 					align: 'center',
 					flex:0.5,
 					filter: {
@@ -56,8 +56,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.budgetGrid', {
 				},
 				
 				{
-					dataIndex: 'Page_rate1',
-					text: '$ Page rate',
+					dataIndex: 'rate_USD',
+					text: 'Page rate ($)',
 					align: 'center',
 					flex:1,
 					filter: {
@@ -65,8 +65,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.budgetGrid', {
            		}
 				},
 				{
-					dataIndex: 'Page_rate2',
-					text: '	Â£ Page rate',
+					dataIndex: 'rate_GBP',
+					text: 'Page rate (£)',
 					align: 'center',
 					flex:1,
 					filter: {
@@ -74,26 +74,26 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.budgetGrid', {
            		}
 				},
 				{
-					dataIndex: 'Sub_total',
-					text: '$ Sub-total',
+					dataIndex: 'budgeted_amount_USD',
+					text: 'Budgeted Amount ($)',
 					align: 'center',
-					flex:1,
+					flex:1.5,
 					filter: {
                 	type: 'string'
            		}
 				},
 				{
-					dataIndex: 'Sub_total1',
-					text: '	Â£ Sub-total',
+					dataIndex: 'budgeted_amount_GBP',
+					text: 'Budgeted Amount (£)',
 					align: 'center',
-					flex:1,
+					flex:1.5,
 					filter: {
                 	type: 'string'
            		}
 				},
 				
 				
-		{
+	/*	{
 					xtype:'actioncolumn',
 					align: 'center',
 					flex:1,
@@ -113,7 +113,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.budgetGrid', {
 					tooltip: 'Delete',
 			
 				}]
-		}];
+		}*/];
 		this.bbar = Ext.create('Ext.PagingToolbar', {  
 
 			store : this.store,

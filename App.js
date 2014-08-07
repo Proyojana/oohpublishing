@@ -41,6 +41,7 @@ Ext.define('MyDesktop.App', {
     init: function() {
         // custom logic before getXYZ methods get called..	.
         this.callParent();
+       
 		/*if(role==3){
 		  var win = Ext.create("Ext.window.Window", {
 			title:'Welcome '+name1+' !',
@@ -115,8 +116,10 @@ Ext.define('MyDesktop.App', {
 
     getDesktopConfig: function () {
         var me = this, ret = me.callParent();
+      
 if(role==1){
         return Ext.apply(ret, {
+        	
             //cls: 'ux-desktop-black',
 
             contextMenuItems: [
@@ -128,18 +131,21 @@ if(role==1){
                 data: [
 				   
                     
-                    { name: 'Masters', iconCls: 'masters-shortcut', module: 'master-win',val:'left' }, 
-                      { name: 'Projects', iconCls: 'projects', module: 'project-win',val:'left' },
-                        { name: 'Budgets', iconCls: 'payroll-shortcut', module: 'budgets-win',val:'left' },
-                   
+                    { name: 'Masters', iconCls: 'masters-shortcut', module: 'master-win',val:'left',   setLoading:true, }, 
+                      { name: 'Projects', iconCls: 'projects', module: 'project-win',val:'left', mask:"waiting",},
+                      //  { name: 'Budgets', iconCls: 'payroll-shortcut', module: 'budgets-win',val:'left' ,   waitMsg:'Sending data...',},
+                   { name: 'Reports', iconCls: 'reportsmain', module: 'budgets-win',val:'left' ,   waitMsg:'Sending data...',},
                     
                   
                 ]
             }),
-
+            
+			
             wallpaper: 'wallpapers/desktop.jpg',
-            wallpaperStretch: false
+            wallpaperStretch: false,
+             	
         });
+       
     }
     
    

@@ -8,7 +8,9 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PubForm' ,{
                             },
 	
 	frame:true,
-	requires:['MyDesktop.view.projectmanagement.currentprojects.PublisherGrid','MyDesktop.view.projectmanagement.currentprojects.Author','MyDesktop.view.projectmanagement.currentprojects.budgetform','MyDesktop.view.projectmanagement.currentprojects.AddChargesGrid','MyDesktop.view.projectmanagement.currentprojects.scheduleGrid','MyDesktop.view.projectmanagement.currentprojects.ContribGrid','MyDesktop.view.projectmanagement.currentprojects.NotesGrid','MyDesktop.view.projectmanagement.currentprojects.details','MyDesktop.view.projectmanagement.currentprojects.scheduleForm'],
+	requires:['MyDesktop.view.projectmanagement.currentprojects.PublisherGrid','MyDesktop.view.projectmanagement.currentprojects.Author','MyDesktop.view.projectmanagement.currentprojects.budgetform','MyDesktop.view.projectmanagement.currentprojects.AddChargesGrid',
+	'MyDesktop.view.projectmanagement.currentprojects.scheduleGrid','MyDesktop.view.projectmanagement.currentprojects.ContribGrid','MyDesktop.view.projectmanagement.currentprojects.NotesGrid','MyDesktop.view.projectmanagement.currentprojects.details',
+	'MyDesktop.view.projectmanagement.currentprojects.scheduleForm'],
     title:'Current Projects',
     defaults: {
         

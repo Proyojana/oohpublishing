@@ -3,11 +3,10 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.editprojectTabPanel',{
 		id:'editprojecttab',
 		alias:'widget.editprojecttab',
 		
-	requires:['MyDesktop.view.projectmanagement.editproject.EditProjectAddForm'/*,'MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetForm' ,'MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleForm'
-		,'MyDesktop.view.projectmanagement.newproject.team.newprojectTeamForm' */],
+	requires:['MyDesktop.view.projectmanagement.editproject.ProjectList' ],
 					autoDestroy: false,
 					deferredRender: true,
                     xtype: 'tabpanel',
 					region: 'center',
-                    items: [{xtype:'editprojectaddform'}/*,{xtype:'newprojectBudgetForm'},{xtype:'newprojectScheduleform'},{xtype:'newprojectTeamform'}*/]
+                    items: [{xtype:'projectlist'}/*,{xtype:'newprojectBudgetForm'},{xtype:'newprojectScheduleform'},{xtype:'newprojectTeamform'}*/]
 	});

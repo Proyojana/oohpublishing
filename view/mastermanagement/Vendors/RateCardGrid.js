@@ -109,6 +109,14 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
 		       		displayField: 'product_name',
 		        	valueField: 'product_id',
 		           },
+		           renderer: function(value) {
+					var index = activity.find('product_id', value);
+					if (index != -1) {
+					return activity.getAt(index).data.product_name;
+					}
+					return value;
+					}
+
 		        /**     listeners : {
 				afterrender : function() {
 					var code = Ext.getCmp('basiccode').getValue();
@@ -221,7 +229,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
 								conn.request({
 									url: 'service/Vendors_ratecard.php',
 									method: 'POST',
-									params : {action:2,activity:activity,uom:uom,dollars:dollars,pounds:pounds,ratecardid:ratecardid,vendorid:vendorid},
+									params : {action:4,activity:activity,uom:uom,dollars:dollars,pounds:pounds,ratecardid:ratecardid,vendorid:vendorid},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 
@@ -243,7 +251,58 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
 			store : this.store,
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
-			emptyMsg: "No topics to display"
+			emptyMsg: "No topics to display",
+			items:[
+				{
+				xtype:'button',
+				text:'Save',
+				pressed:true,
+				width:100,
+			//	margin:'0 0 0 100',
+				handler:function(){
+					
+					 var vendorid=Ext.getCmp('basicid').getValue();
+					 var id=Ext.getCmp('basicid').getValue();
+							var activity='';
+							var uom='';
+							var dollars='';
+							var pounds='';
+							var ratecardid='';
+							
+							var grid=Ext.getCmp('Vendors_ratecardgridTab');
+							
+					var myStore = Ext.getCmp('Vendors_ratecardgridTab').getStore();
+					myStore.each(function(rec) {
+						
+				    activity=activity+rec.get('activity')+',';
+				    uom=uom+rec.get('uom')+',';
+				    dollars=dollars+rec.get('dollars')+',';
+				    pounds=pounds+rec.get('pounds')+',';
+				    ratecardid=ratecardid+rec.get('ratecardid')+',';
+				    
+				   					
+				});
+				var conn = new Ext.data.Connection();
+				      
+					conn.request({
+									url: 'service/Vendors_ratecard.php',
+									method: 'POST',
+									params : {action:2,activity:activity,uom:uom,dollars:dollars,pounds:pounds,ratecardid:ratecardid,vendorid:vendorid},
+									success:function(response){
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Successfully saved', obj.message); 
+										var grid1=Ext.getCmp('Vendors_ratecardgridTab');
+						grid1.getStore().load({params:{action:1,vendorid:id}});
+									},
+									failure:function(response){
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('saving Failed !', obj.message); 
+									}
+								});
+					
+				}
+			},
+			]
 		}),
 		
 		this.callParent(arguments);

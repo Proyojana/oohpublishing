@@ -58,7 +58,12 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
      	 afterrender: function(){
      	 //	alert("listen");
      	 	autoReload();
+     	 	Ext.getCmp('newprojectauthorformTab').setDisabled(true);
+			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
+			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
+			Ext.getCmp('newprojectteamformTab').setDisabled(true);
      	}},
+     	
 	initComponent:function(){
 	/*	var ci = Ext.create('MyDesktop.store.State');
 		ci.load({params:{action: 7}});
@@ -70,6 +75,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 		workflow.load({params:{action: 1}});
 		
 		this.items= [
+		
 			{
 			id:'add_project_id',
 			name: 'add_project_id',
@@ -83,6 +89,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			y:10,
 			width:320,
 			allowBlank: false,
+			readOnly:true,
 			afterLabelTextTpl: required,
     	},
     	{
@@ -167,10 +174,12 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			allowBlank: false,
 			afterLabelTextTpl: required,
 			xtype:'numberfield',
+			hideTrigger:true,
 			minValue: 0,
     	},
     	{
     		xtype:'numberfield',
+    		hideTrigger:true,
     		minValue: 0,
 			id:'confirmed_extent',
 			fieldLabel: 'Confirmed extent',
@@ -216,7 +225,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
         items :[{
     		xtype:'numberfield',
     		minValue: 0,
-    		
+    		hideTrigger:true,
     		id:'word_count',
 			fieldLabel: 'Word count',
 			x:0,
@@ -229,7 +238,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     	{
     		xtype:'numberfield',
     		minValue: 0,
-    		
+    		hideTrigger:true,
     		id:'word_count_indexing',
 			fieldLabel: 'Word count for indexing',
 			x:350,
@@ -242,6 +251,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     	
 		{  
 			xtype:'numberfield',
+			hideTrigger:true,
 			id:'manuscript',
 			//margin:'0 0 0 28',
 			minValue: 0,
@@ -254,6 +264,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     	},
     	{  
     		xtype:'numberfield',
+    		hideTrigger:true,
     		allowNegative : false,
     		minValue: 0,
     		//margin:'0 0 0 36',
@@ -266,9 +277,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 		
     	},]
     },
-    
-    
-      	{
+        	{
         // Fieldset in Column 1 - collapsible via toggle button
        xtype:'fieldset',
         layout: 'hbox',
@@ -317,6 +326,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     	
 		{  
 			xtype:'numberfield',
+			hideTrigger:true,
 			id:'print_run',
 			minValue: 0,
 			fieldLabel: 'Print run',
@@ -358,6 +368,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			store:client,
 			displayField: 'name',
 			valueField: 'id',
+			allowBlank: false,
+			afterLabelTextTpl: required,
 			listeners : {
 				change : function() {
 					//var currentForm = this.up('newprojectaddform');
@@ -378,6 +390,10 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			store:team,
 			displayField: 'name',
 			valueField: 'id',
+			queryMode: 'local',
+			triggerAction: 'all',
+			allowBlank: false,
+			afterLabelTextTpl: required,
 		
     	},
     	{   
@@ -391,6 +407,23 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			store:workflow,
 			displayField: 'workflow_name',
 			valueField: 'workflow_id',
+			queryMode: 'local',
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			listeners : {
+			change : function() {
+			//var currentForm = this.up('newprojectaddform');
+			var workflowid = Ext.getCmp('project_workflow').getValue();
+		//	alert(workflowid);
+			
+			//team.load({params:{action:6,project_workflow:project_workflow}});
+			//workflow.load({params:{action:8,clientId:clientId}});
+			
+			var grid3=Ext.getCmp('newprojectSchedulegrid');
+			grid3.getStore().load({params:{action:2,workflowid:workflowid}});
+			}
+			}
+
     	},
     	
     	
@@ -403,7 +436,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			x:450,
 			y:480,
 			width:75,
-			handler: function (){				
+			handler: function (){			
+				//Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
 				var currentForm = this.up('newprojectaddform');
 				var job_code = Ext.getCmp('job_code').getValue();
 				var project_title = Ext.getCmp('project_title').getValue();
@@ -447,7 +481,24 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							currentForm.getForm().reset();
+							var currentHeaderForm = Ext.getCmp('newprojectAuthorHeaderForm');
+                	 /****load data in header form*****/
+                	
+						
+						currentHeaderForm.getForm().load({
+   								 url: 'service/Author.php',
+							     params: {
+        						 	action:8,job_code:job_code
+							    },
+							      failure: function(form, action){
+						        Ext.Msg.alert("Load failed", action.result.errorMessage);
+    							}
+							   
+							   
+						});
+							Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
+					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectauthorformTab');
+						//	currentForm.getForm().reset();
 						///	Ext.getCmp('citygrid').getStore().reload();
 						//	Ext.getCmp('citytab').layout.setActiveItem('citygrid');
 										
@@ -459,7 +510,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 				Ext.MessageBox.alert('Please fill the required data.');
 				
 				}
-				autoReload();
+				//autoReload();
+					
 			}
 	  	},
 		
@@ -476,6 +528,10 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 				var currentForm = this.up('newprojectaddform');
 				currentForm.getForm().reset();
 				autoReload();
+				Ext.getCmp('newprojectauthorformTab').setDisabled(true);
+			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
+			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
+			Ext.getCmp('newprojectteamformTab').setDisabled(true);
 			}
 	  	} ]
 	  

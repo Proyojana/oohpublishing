@@ -135,6 +135,14 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 		        	mode: 'local',
 			   	   triggerAction: 'all',
 		           },
+		           renderer: function(value) {
+					var index = activity.find('product_id', value);
+					if (index != -1) {
+					return activity.getAt(index).data.product_name;
+					}
+					return value;
+					}
+
 		           
 				},
 			
@@ -163,12 +171,12 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 								conn.request({
 									url: 'service/stages.php',
 									method: 'POST',
-									params : {action:2,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order},
+									params : {action:4,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 
 										var grid3=Ext.getCmp('stagesgrid');
-						grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
+						            grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -201,7 +209,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
 										 var grid3=Ext.getCmp('stagesgrid');
-						grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
+					             	grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -223,7 +231,54 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 			store : this.store,
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
-			emptyMsg: "No topics to display"
+			emptyMsg: "No topics to display",
+				items:[
+				{
+				xtype:'button',
+				text:'Save',
+				pressed:true,
+				width:100,
+			//	margin:'0 0 0 100',
+				handler:function(){
+					
+					 var workflow_id = Ext.getCmp('workflow_id').getValue();
+						        var stage_order='';
+								var stage_name='';
+								var stage_id='';
+								var activity='';
+							var grid=Ext.getCmp('stagesgrid');
+							
+					var myStore = Ext.getCmp('stagesgrid').getStore();
+					myStore.each(function(rec) {
+						
+				    stage_order=stage_order+rec.get('stage_order')+',';
+				    stage_name=stage_name+rec.get('stage_name')+',';
+				    stage_id=stage_id+rec.get('stage_id')+',';
+				    activity=activity+rec.get('activity')+',';
+				   
+				    
+				   					
+				});
+				      
+				var conn = new Ext.data.Connection();
+					conn.request({
+									url: 'service/stages.php',
+									method: 'POST',
+									params : {action:2,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order},
+									success:function(response){
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Successfully saved', obj.message); 
+										var grid3=Ext.getCmp('stagesgrid');
+						grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
+									},
+									failure:function(response){
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('saving Failed !', obj.message); 
+									}
+								});
+				}
+			},
+			]
 		}),
 		
 		this.callParent(arguments);
