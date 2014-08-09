@@ -1,16 +1,7 @@
 var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
-var store1 = Ext.create('Ext.data.JsonStore', {
-    fields: ['code','title', 'author','hbisbn','pbisbn', 'format','deadline','word', 'note'],
-    data: [
-    { "code":"PR005","title": "Tom Jones","author": "Henry Fielding","hbisbn":"23345345", "pbisbn": "23345345456","format": "HTML","deadline":"25/08/2014","word": "300","note": "Yes"},
-    {"code":"PR006", "title": "Pride and Prejudice","author": "Jane Austen","hbisbn":"87984656", "pbisbn": "87984656","format": "HTML","deadline":"23/09/2014","word": "700","note": "Yes"},
-    {"code":"PR007","title": "Le Rouge et le Noir","author": "Stendhal","hbisbn":"87984656", "pbisbn": "87984656","format": "HTML","deadline":"23/10/2014","word": "700","note": "Yes"},
-    {"code":"PR008","title": "The Brothers Karamazov","author": " Dostoevsky","hbisbn":"87984656", "pbisbn": "87984656","format": "HTML","deadline":"23/10/2014","word": "700","note": "Yes"}
-    
-     ]
-});			
+	
 Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 	extend:'Ext.grid.Panel',
 	title: 'List Of Projects',
@@ -23,7 +14,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 	requires:['MyDesktop.view.projectmanagement.currentprojects.productionreport','MyDesktop.view.projectmanagement.currentprojects.typesetterform','MyDesktop.store.Projects','MyDesktop.view.projectmanagement.currentprojects.TitleInfoGrid',
 	'MyDesktop.view.projectmanagement.currentprojects.Author','MyDesktop.view.projectmanagement.currentprojects.ContribGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionTitleInfoGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionScheduleGrid', 
 	'MyDesktop.view.projectmanagement.currentprojects.ProductionTeamGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGrid','MyDesktop.view.projectmanagement.currentprojects.TypesetterInfoGrid',
-	'MyDesktop.view.projectmanagement.currentprojects.TypesetterAuthorGrid', 'MyDesktop.view.projectmanagement.currentproject.scheduleGrid'],
+	'MyDesktop.view.projectmanagement.currentprojects.TypesetterAuthorGrid', 'MyDesktop.view.projectmanagement.currentproject.scheduleGrid','MyDesktop.view.projectmanagement.currentprojects.NotesGrid'],
 	id:'publishergrid',
 	initComponent: function() {
 		
@@ -167,6 +158,9 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							
 							var gridBudget=Ext.getCmp('schedulegrid');
 							gridBudget.getStore().load({params:{action:4,projectid:project_id}});
+							
+							var gridNotes=Ext.getCmp('notesgrid');
+							gridNotes.getStore().load({params:{action:3,project_id:project_id}});
 
 						
 					/*    var currentForm = Ext.getCmp('usersform');

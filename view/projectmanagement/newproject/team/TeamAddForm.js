@@ -28,7 +28,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
 	
 		this.items= [
 		
-		{  
+		/**{  
 			id:'job_code_team',
 			fieldLabel: 'Job Code',
 			allowBlank: false,
@@ -43,7 +43,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
 			y:10,
 			width:300,
 			
-    	},
+    	},**/
 		
 		{
 			id:'project_manager',
@@ -142,12 +142,13 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
 				
 				var currentForm = this.up('teamaddform');
 				
-				var job_code = Ext.getCmp('job_code_team').getValue();
+				var job_code = Ext.getCmp('teamHeader_Job').getValue();
+				var project_id=Ext.getCmp('teamHeader_projectID').getValue();
+				//alert(project_id);
 				var project_manager = Ext.getCmp('project_manager').getValue();
 				var production_editor = Ext.getCmp('production_editor').getValue();
 				var proofreader = Ext.getCmp('proofreader').getValue();
 				var indexer = Ext.getCmp('indexer').getValue();
-				
 				var copy_editor= Ext.getCmp('copy_editor').getValue();
 				var typesetter= Ext.getCmp('typesetter').getValue();
 				
@@ -157,7 +158,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
 				conn.request({
 				url: 'service/projects.php',
 				method: 'POST',
-				params : {action:9,job_code:job_code,project_manager:project_manager,production_editor:production_editor,proofreader:proofreader,indexer:indexer,copy_editor:copy_editor,typesetter:typesetter},
+				params : {action:9,project_id:project_id,job_code:job_code,project_manager:project_manager,production_editor:production_editor,proofreader:proofreader,indexer:indexer,copy_editor:copy_editor,typesetter:typesetter},
 				success:function(response){
 				obj = Ext.JSON.decode(response.responseText);
 				Ext.Msg.alert('Message', obj.message); 
@@ -174,7 +175,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
 			
 			
 	  	},
-		
+		/*
 		{
 			xtype: 'button',
 		  	text: 'Edit',
@@ -189,7 +190,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
 			  
 			}
 	  	},
-		
+		*/
 	  	{
 			xtype: 'button',
 		  	text: 'Reset',

@@ -419,7 +419,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
                 var project_id = Ext.getCmp("edit_project_id").getValue();
 				var job_code = Ext.getCmp('edit_job_code').getValue();
 				var project_title = Ext.getCmp('edit_project_title').getValue();
-				var project_author= Ext.getCmp('edit_project_author').getValue();
+				//var project_author= Ext.getCmp('edit_project_author').getValue();
 				var hb_isbn= Ext.getCmp('edit_hb_isbn').getValue();
 				var pb_isbn= Ext.getCmp('edit_pb_isbn').getValue();
 				
@@ -447,7 +447,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 					conn.request({
 					url: 'service/EditProjects.php',
 					method: 'POST',
-					params : {action:3,project_id:project_id,job_code:job_code,project_title:project_title,project_author:project_author,hb_isbn:hb_isbn,pb_isbn:pb_isbn,
+					params : {action:3,project_id:project_id,job_code:job_code,project_title:project_title,hb_isbn:hb_isbn,pb_isbn:pb_isbn,
 						project_series:project_series,project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,
 						client_deadline:client_deadline,agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,
 						chapter_footer:chapter_footer,contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow},

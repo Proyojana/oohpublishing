@@ -740,7 +740,7 @@ Where
 	  project_title.title as teamHeader_ProjectName,
 	  project_title.workflow as teamHeader_workflow,
 	  project_title.job_code as teamHeader_Job,
-	  project_title.id as authorHeader_projectID
+	  project_title.id as teamHeader_projectID
 	  
 	From
 	  project_title Inner Join

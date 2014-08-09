@@ -60,15 +60,16 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorF
 			xtype:'new_contrib_grid',
 			x:1,
 			y:280,
-			height:220
+			height:190
 		},
 		{
 			xtype:'button',
 			text:'Next',
 			width:100,
 			x:500,
-			y:530,
+			y:480,
 			handler:function (){
+				var job_code=Ext.getCmp('job_code').getValue(); 
 				var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
                 	 /****load data in header form*****/
                 	
@@ -84,13 +85,13 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorF
 							   
 							   
 						});
-					/**var grid3=Ext.getCmp('accountPayableGrid');
-									grid3.getStore().load({params:{action:1,job_code:job_code}});**/
+					var grid3=Ext.getCmp('accountPayableGrid');
+									grid3.getStore().load({params:{action:1,job_code:job_code}});
 									var grid3=Ext.getCmp('new_author_grid');
 									grid3.getStore().load({params:{action:2,job_code:job_code}});
 					Ext.getCmp('newprojectbudgetformTab').setDisabled(false);	
 					Ext.getCmp('newprojectauthorformTab').setDisabled(false);
-					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectauthorformTab');	
+					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectbudgetformTab');	
 			}
 		}
 

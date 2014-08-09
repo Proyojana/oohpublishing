@@ -406,6 +406,14 @@ background-image:url(../shared/icons/fam/copy_paste.png);
 {
 	background:url(../shared/icons/fam/project_budget.png);height:16px;width:16px;margin-right:5px;
 	}
+
+.notesIcon
+{
+	background:url(../shared/icons/fam/add_comment.png);height:16px;width:16px;margin-right:5px;
+	}	
+	
+	
+	
 /* End New Shortcut*/
 .undo{
 

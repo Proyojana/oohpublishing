@@ -12,7 +12,7 @@ $id=$_SESSION['user_no'];
 			getProjectById($_POST["project_code"]);	
 			break;
 		case 3:
-			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['project_author'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id);	
+			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id);	
 			break;
 		case 4:
 			getBudgetReceivables($_POST['projectid']);
@@ -116,14 +116,14 @@ Where
       	echo(json_encode($result));
     }
   
-     function updateProjectMaster($proj_id,$job_code,$title,$author,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id)
+     function updateProjectMaster($proj_id,$job_code,$title,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id)
     {
 		$checkquery="SELECT id FROM project_title WHERE id='".$proj_id."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==1){
-			$result1= mysql_query("UPDATE project_title set title='".$title."',author='".$author."',hb_isbn='".$hb_isbn."',pb_isbn='".$pb_isbn."',series='".$series."',format='".$format."',design='".$design."',castoff_extent='".$castoff_extent."',confirmed_extent='".$confirmed_extent."',client_deadline='".$client_deadline."',agreed_deadline='".$agreed_deadline."',word_count='".$word_count."',manuscript_pages='".$manuscript."',expect_index_extent='".$index_extent."',chapter_footer_req='".$footer."',contains_color='".$colour."',client='".$client."',client='".$client."',client_team='".$team."',workflow='".$workflow."',modified_by='".$id."',modified_on=now() WHERE id=".$proj_id."");
+			$result1= mysql_query("UPDATE project_title set title='".$title."',hb_isbn='".$hb_isbn."',pb_isbn='".$pb_isbn."',series='".$series."',format='".$format."',design='".$design."',castoff_extent='".$castoff_extent."',confirmed_extent='".$confirmed_extent."',client_deadline='".$client_deadline."',agreed_deadline='".$agreed_deadline."',word_count='".$word_count."',manuscript_pages='".$manuscript."',expect_index_extent='".$index_extent."',chapter_footer_req='".$footer."',contains_color='".$colour."',client='".$client."',client='".$client."',client_team='".$team."',workflow='".$workflow."',modified_by='".$id."',modified_on=now() WHERE id=".$proj_id."");
 				
 		if(!$result1)
 			{

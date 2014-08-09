@@ -13,7 +13,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 	'MyDesktop.view.projectmanagement.editproject.budget.accountPayableGrid', 'MyDesktop.view.projectmanagement.editprojectBudget.accountsReceivableForm','MyDesktop.view.projectmanagement.editproject.team.TeamGrid',
 	'MyDesktop.view.projectmanagement.editproject.budget.accountsReceivableForm','MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleGrid','MyDesktop.view.projectmanagement.editproject.team.TeamAddForm',
 	'MyDesktop.view.projectmanagement.editproject.author.AuthorHeaderForm','MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm','MyDesktop.view.projectmanagement.editproject.team.TeamHeaderForm',
-	'MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleGrid','MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleHeaderForm'],
+	'MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleGrid','MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleHeaderForm',
+	'MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid','MyDesktop.view.projectmanagement.editproject.notes.NotesHeaderForm'],
 
 	id : 'projectlist',
 	initComponent : function() {
@@ -353,6 +354,61 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					});
 					
 								
+
+				}
+			},
+			{
+				iconCls : 'notesIcon',
+				tooltip : 'Add Notes',
+				handler : function(grid, rowIndex, colIndex) {
+					var win = Ext.create('Ext.Window', {
+						extend : 'Ext.form.Panel',
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Add Notes & Remainders',
+						width : 1125,
+						height : 400,
+						items : [
+						{
+							xtype:'NotesHeaderForm',
+							x:0,
+							y:0,
+							margin:'5 5 5 5'
+						},{
+							xtype : 'editnotesgrid',
+							x : 0,
+							y :80,
+							margin:'5 5 5 5'
+							
+						}]
+					});
+					win.show();
+					
+					var rec = grid.getStore().getAt(rowIndex);
+					var project_id = rec.get('pro_id');
+					var job_code = rec.get('pro_code');
+					
+					var currentForm = Ext.getCmp('NotesHeaderForm');
+					currentForm.getForm().load({
+						url : 'service/notes.php',
+						params : {
+							action : 1,
+							job_code:job_code,
+							},
+						failure : function(form, action) {
+							Ext.Msg.alert("Load failed", action.result.errorMessage);
+						}
+					});
+					
+					var grid3=Ext.getCmp('editnotesgrid');
+							grid3.getStore().load({
+								params: {
+									action:3,
+									project_id:project_id
+								}
+							});			
 
 				}
 			}]

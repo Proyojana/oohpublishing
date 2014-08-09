@@ -246,11 +246,11 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 							   
 							   
 						});
-					var grid3=Ext.getCmp('accountPayableGrid');
-									grid3.getStore().load({params:{action:1,job_code:job_code}});
-									var grid3=Ext.getCmp('new_author_grid');
-									grid3.getStore().load({params:{action:2,job_code:job_code}});
-					Ext.getCmp('newprojectbudgetformTab').setDisabled(false);	
+					/*var grid3=Ext.getCmp('accountPayableGrid');
+									grid3.getStore().load({params:{action:1,job_code:job_code}});*/
+					var grid3=Ext.getCmp('new_author_grid');
+					grid3.getStore().load({params:{action:2,job_code:job_code}});
+					//Ext.getCmp('newprojectbudgetformTab').setDisabled(false);	
 					Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
 				}
 			},
