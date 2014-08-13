@@ -249,51 +249,9 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		dataIndex: 'bufferday',
 			text: 'Buffer Days',
 			editor: {
-				xtype:'numberfield',
-					hideTrigger:true,
-					/**	listeners: {
-						change: function(field, newValue, oldValue) {
-										
-							var grid = this.up().up();
-							//get rowIndex
-							var selectedRecord = grid.getSelectionModel().getSelection()[0];
-							var rowIndex = grid.store.indexOf(selectedRecord);
-							
-							
-							// get selection model of the grid							
-							var selModel = grid.getSelectionModel();
-							
-							
-							
-							if(rowIndex!=0){
-							var aDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
-							var aEndDate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;
-							var val=Ext.Date.add(aEndDate,Ext.Date.DAY,aDay);
-							selModel.getSelection()[0].set('actual_start_date', val);
-							var sdate=selModel.getSelection()[0].data.actual_start_date;
-						
-							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
-							//alert(val1);
-							selModel.getSelection()[0].set('actual_end_date', val1);
-							}
-							
-							else
-							{
-								
-									//selModel.getSelection()[0].set('estimated_start_date', startDate);
-									var sdate=selModel.getSelection()[0].data.actual_start_date;
-						
-									var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
-							
-									selModel.getSelection()[0].set('actual_end_date', val1);
-								
-							}
+				xtype:'textfield',
 			},
-			}**/
-			}
 			align:'center',
-		
-		
 		},/**{
 		 xtype:'actioncolumn',
 		 align: 'center',
