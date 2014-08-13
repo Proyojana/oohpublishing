@@ -104,7 +104,7 @@ function getArtworkDetails($job_code)
 		else
 		{
 
-			$result1 = mysql_query ("INSERT INTO `ooh_publishing`.`artwork` (`id`, `project_id`, `figure_number`, `input_format`, `resolution`, `colour_mode`, `vendor_assessment`, `cnvrt`, `redraw_simple`, `redraw_complex`, `relabel`, `final`, `cost`, `comments`, `flag`) 
+			$result1 = mysql_query ("INSERT INTO `artwork` (`id`, `project_id`, `figure_number`, `input_format`, `resolution`, `colour_mode`, `vendor_assessment`, `cnvrt`, `redraw_simple`, `redraw_complex`, `relabel`, `final`, `cost`, `comments`, `flag`) 
 			VALUES ('', '".$project_id."', '".$figurenumber1[$i]."','".$inputformat1[$i]."', '".$resolution1[$i]."', '".$colourmode1[$i]."', '".$vendorassessment1[$i]."', '".$convert1[$i]."', '".$redrawsimple1[$i]."', '".$redrawcomplex1[$i]."', '".$relabel1[$i]."', '".$finalartwrk1[$i]."', '".$cost1[$i]."', '".$comments1[$i]."', '')"); 
 					
 		
