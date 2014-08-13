@@ -31,12 +31,27 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		this.columns = [{
 			dataIndex: 'usersid',
 			hidden:true
-		},{
+		},
+		{
+			dataIndex: 'activityid',
+			hidden:true
+		},
+		{
+			dataIndex: 'activity',
+			text: 'Activity',
+			align: 'center',
+			flex:1,
+			//width:270,
+			filter: {
+				type: 'string'
+			}
+		},
+		{
 			dataIndex: 'stage',
 			text: 'Stage',
 			align: 'center',
 			flex:1,
-			width:270,
+			//width:270,
 			filter: {
 				type: 'string'
 			}
@@ -47,22 +62,58 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 				dataIndex: 'estimated_daysperstage',
 				text: 'Estimate',
 				align:'center',
+		
 				editor: {
-					xtype:'textfield',
-						/**listeners: {
+					xtype:'numberfield',
+					hideTrigger:true,
+						listeners: {
 						change: function(field, newValue, oldValue) {
+										
 							var grid = this.up().up();
-							// get selection model of the grid
-							var selModel = grid.getSelectionModel();
-							var startdate=selModel.getSelection()[0].data.estimated_start_date;
-								alert(startdate);
-								alert(newValue);
-							var val=Ext.Date.add(startdate,Ext.Date.DAY,newValue);
+							//get rowIndex
+							var selectedRecord = grid.getSelectionModel().getSelection()[0];
+							var rowIndex = grid.store.indexOf(selectedRecord);
 							
-							selModel.getSelection()[0].set('estimated_end_date', val);
+							
+							// get selection model of the grid							
+							var selModel = grid.getSelectionModel();
+							//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
+							
+							if(rowIndex!=0){
+							var bDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
+							var eEndDate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;
+							var val=Ext.Date.add(eEndDate,Ext.Date.DAY,bDay);
+							selModel.getSelection()[0].set('estimated_start_date', val);
+							var sdate=selModel.getSelection()[0].data.estimated_start_date;
+						
+							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+							//alert(val1);
+							selModel.getSelection()[0].set('estimated_end_date', val1);
+							}
+							
+							else
+							{
+								
+								var currentForm = this.up('newprojectScheduleform');
+								var startDate = Ext.getCmp('schedule_projectStartDate').getValue();
+								
+								if(startDate!=null)
+								{
+									selModel.getSelection()[0].set('estimated_start_date', startDate);
+									var sdate=selModel.getSelection()[0].data.estimated_start_date;
+						
+									var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+							
+									selModel.getSelection()[0].set('estimated_end_date', val1);
+								}
+								else
+								{	
+									Ext.Msg.alert('Message', 'Please Select Project Start Date');
+								}
+							}
+					} 
 
-						},
-					} ,**/
+				}
 				},
 
 				textStyle:'font-size:13px;'
@@ -70,22 +121,51 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 			},{
 				dataIndex: 'actual_daysperstage',
 				text: 'Actuals',
+				
 				editor: {
-					xtype:'textfield',
-					/**listeners: {
+					xtype:'numberfield',
+					hideTrigger:true,
+						listeners: {
 						change: function(field, newValue, oldValue) {
+										
 							var grid = this.up().up();
-							// get selection model of the grid
+							//get rowIndex
+							var selectedRecord = grid.getSelectionModel().getSelection()[0];
+							var rowIndex = grid.store.indexOf(selectedRecord);
+							
+							
+							// get selection model of the grid							
 							var selModel = grid.getSelectionModel();
-							var enddate=selModel.getSelection()[0].data.actual_start_date;
+							//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
+							
+							if(rowIndex!=0){
+							var aDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
+							var aEndDate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;
+							var val=Ext.Date.add(aEndDate,Ext.Date.DAY,aDay);
+							selModel.getSelection()[0].set('actual_start_date', val);
+							var sdate=selModel.getSelection()[0].data.actual_start_date;
+						
+							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+							//alert(val1);
+							selModel.getSelection()[0].set('actual_end_date', val1);
+							}
+							
+							else
+							{
+								
+									//selModel.getSelection()[0].set('estimated_start_date', startDate);
+									var sdate=selModel.getSelection()[0].data.actual_start_date;
+						
+									var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+							
+									selModel.getSelection()[0].set('actual_end_date', val1);
+								
+							}
+					} 
 
-							var val=Ext.Date.add(enddate,Ext.Date.DAY,newValue);
-
-							selModel.getSelection()[0].set('actual_end_date', val);
-
-						},
-					} ,**/
+				}
 				},
+	
 				align:'center',
 			}
 			]
@@ -103,6 +183,10 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 						change: function(field, newValue, oldValue) {
 							var grid = this.up().up();
 							// get selection model of the grid
+							var selectedRecord = grid.getSelectionModel().getSelection()[0];
+							var row = grid.store.indexOf(selectedRecord);
+								alert(row);
+							
 							var selModel = grid.getSelectionModel();
 							var days=selModel.getSelection()[0].data.estimated_daysperstage;
 
@@ -161,12 +245,55 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 			}
 			]
 		},{
-			dataIndex: 'bufferday',
+
+		dataIndex: 'bufferday',
 			text: 'Buffer Days',
 			editor: {
-				xtype:'textfield',
+				xtype:'numberfield',
+					hideTrigger:true,
+					/**	listeners: {
+						change: function(field, newValue, oldValue) {
+										
+							var grid = this.up().up();
+							//get rowIndex
+							var selectedRecord = grid.getSelectionModel().getSelection()[0];
+							var rowIndex = grid.store.indexOf(selectedRecord);
+							
+							
+							// get selection model of the grid							
+							var selModel = grid.getSelectionModel();
+							
+							
+							
+							if(rowIndex!=0){
+							var aDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
+							var aEndDate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;
+							var val=Ext.Date.add(aEndDate,Ext.Date.DAY,aDay);
+							selModel.getSelection()[0].set('actual_start_date', val);
+							var sdate=selModel.getSelection()[0].data.actual_start_date;
+						
+							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+							//alert(val1);
+							selModel.getSelection()[0].set('actual_end_date', val1);
+							}
+							
+							else
+							{
+								
+									//selModel.getSelection()[0].set('estimated_start_date', startDate);
+									var sdate=selModel.getSelection()[0].data.actual_start_date;
+						
+									var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+							
+									selModel.getSelection()[0].set('actual_end_date', val1);
+								
+							}
 			},
+			}**/
+			}
 			align:'center',
+		
+		
 		},/**{
 		 xtype:'actioncolumn',
 		 align: 'center',
@@ -298,20 +425,13 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 					var estimated_end_date='';
 					var actual_end_date='';
 					var bufferday='';
+					var activity='';
 					var grid=Ext.getCmp('newprojectSchedulegrid');
 
 					var myStore = Ext.getCmp('newprojectSchedulegrid').getStore();
 					//items = [];
 
 					myStore.each( function(rec) {
-						/* 	//alert(rec);
-						 items.push({
-						 html: rec.get('estimated_start_date')
-						 });
-
-						 console.log(items);
-
-						 console.log(rec);*/
 						stage=stage+rec.get('stage')+',';
 						estimated_daysperstage=estimated_daysperstage+rec.get('estimated_daysperstage')+',';
 						actual_daysperstage=actual_daysperstage+rec.get('actual_daysperstage')+',';
@@ -320,6 +440,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 						estimated_end_date=estimated_end_date+rec.get('estimated_end_date')+',';
 						actual_end_date=actual_end_date+rec.get('actual_end_date')+',';
 						bufferday=bufferday+rec.get('bufferday')+',';
+						activity=activity+rec.get('activityid')+',';
 
 					});
 					var conn = new Ext.data.Connection();
@@ -330,6 +451,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 							action:3,
 							projectid:projectid,
 							workflow:workflow,
+							activity:activity,
 							stage:stage,
 							estimated_daysperstage:estimated_daysperstage,
 							actual_daysperstage:actual_daysperstage,
@@ -353,9 +475,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 									action:16,
 									job_code:job_code
 								},
-								failure: function(form, action) {
-									Ext.Msg.alert("Load failed", action.result.errorMessage);
-								}
+								
 							});
 
 							//refresh grid

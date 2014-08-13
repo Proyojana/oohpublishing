@@ -94,9 +94,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							action : 2,
 							project_code : job_code
 						},
-						failure : function(form, action) {
-							Ext.Msg.alert("Load failed", action.result.errorMessage);
-						}
+						
 					});
 
 				}
@@ -161,9 +159,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							action : 9,
 							job_code:job_code,
 							},
-						failure : function(form, action) {
-							Ext.Msg.alert("Load failed", action.result.errorMessage);
-						}
+						
 					});
 
 				}
@@ -220,9 +216,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							action : 9,
 							job_code:job_code,
 							},
-						failure : function(form, action) {
-							Ext.Msg.alert("Load failed", action.result.errorMessage);
-						}
+						
 					});
 					var grid1 = Ext.getCmp('edit_accountPayableGrid');
 					grid1.getStore().load({
@@ -239,9 +233,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							action : 4,
 							projectid:project_id,
 							},
-						failure : function(form, action) {
-							Ext.Msg.alert("Load failed", action.result.errorMessage);
-						}
+						
 					});
 					
 				}
@@ -293,9 +285,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							action : 5,
 							job_code:job_code,
 							},
-						failure : function(form, action) {
-							Ext.Msg.alert("Load failed", action.result.errorMessage);
-						}
+						
 					});
 				}
 			}, {
@@ -348,9 +338,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							action : 10,
 							job_code:job_code,
 							},
-						failure : function(form, action) {
-							Ext.Msg.alert("Load failed", action.result.errorMessage);
-						}
+						
 					});
 					
 								
@@ -397,9 +385,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							action : 1,
 							job_code:job_code,
 							},
-						failure : function(form, action) {
-							Ext.Msg.alert("Load failed", action.result.errorMessage);
-						}
+						
 					});
 					
 					var grid3=Ext.getCmp('editnotesgrid');

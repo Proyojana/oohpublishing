@@ -11,7 +11,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 	requires:['MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleHeaderForm','MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleAddForm','MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleGrid'],
 	title:'Schedule',
     defaults: {
-        labelWidth: 140,
+        labelWidth: 115,
     },
     defaultType: 'textfield',
 	
@@ -25,11 +25,20 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		
 			
 		},
+		{
+			fieldLabel:'Project Start Date',
+			id:'schedule_projectStartDate',
+			xtype:'datefield',
+			x:15,
+			y:80,
+			width:260,	
+			afterLabelTextTpl: required,
+				},
 		
 	{
 			xtype:'newprojectSchedulegrid',
 			x:0,
-			y:90
+			y:120
 			//xtype:'cityaddform',
 						
 		},

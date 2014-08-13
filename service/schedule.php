@@ -12,7 +12,7 @@ $id=$_SESSION['user_no'];
 			getStagesdependsonWorkflow($_POST['workflowid']);
 			break;
 		case 3:
-			insertSchedule($_POST['scheduleid'],$_POST['projectid'],$_POST['workflow'],$_POST['stage'],$_POST['estimated_daysperstage'],$_POST['actual_daysperstage'],$_POST['estimated_start_date'],$_POST['actual_start_date'],$_POST['estimated_end_date'],$_POST['actual_end_date'],$_POST['bufferday']);		
+			insertSchedule($_POST['scheduleid'],$_POST['projectid'],$_POST['workflow'],$_POST['activity'],$_POST['stage'],$_POST['estimated_daysperstage'],$_POST['actual_daysperstage'],$_POST['estimated_start_date'],$_POST['actual_start_date'],$_POST['estimated_end_date'],$_POST['actual_end_date'],$_POST['bufferday']);		
 			break;
 		case 4:
 			selectSchedule($_POST['projectid']);
@@ -74,6 +74,8 @@ $id=$_SESSION['user_no'];
 		Where
 		  stages.workflow_id = '".$workflowid."'  And
 		  stages.flag = 0
+		Order By
+  		stages.stage_order
 		")or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
@@ -85,11 +87,12 @@ $id=$_SESSION['user_no'];
 	} 
   
 	  
-function insertSchedule($scheduleid,$projectid,$workflow,$stage,$estimated_daysperstage,$actual_daysperstage,$estimated_start_date,$actual_start_date,$estimated_end_date,$actual_end_date,$bufferday)
+function insertSchedule($scheduleid,$projectid,$workflow,$activity,$stage,$estimated_daysperstage,$actual_daysperstage,$estimated_start_date,$actual_start_date,$estimated_end_date,$actual_end_date,$bufferday)
     {
     	
 			$scheduleid1=explode(',',$scheduleid);
 			$stage1 = explode(',',$stage);
+			$activity1=explode(',',$activity);
 			$estimated_daysperstage1 = explode(',',$estimated_daysperstage);
 			$actual_daysperstage1 = explode(',',$actual_daysperstage);
 			$estimated_start_date1 = explode(',',$estimated_start_date);
@@ -140,9 +143,9 @@ function insertSchedule($scheduleid,$projectid,$workflow,$stage,$estimated_daysp
 			
 			else
 			{
-			//	echo 'insert';
-				$result1 = mysql_query("INSERT INTO schedule (id ,project_id ,workflow_id,stage ,estimated_daysperstage ,actual_daysperstage ,estimated_start_date ,actual_start_date ,estimated_end_date ,actual_end_date ,bufferday ,created_by ,created_on ,modified_by ,modified_on ,flag)
-                               VALUES ('' ,'".$projectid."', '".$workflow."','".$stage1[$i]."','".$estimated_daysperstage1[$i]."','".$actual_daysperstage1[$i]."',  '".$eStartDate."',  '".$aStartDate."',  '".$eEndDate."',  '".$aEndDate."','', '','', '0000-00-00 00:00:00', '', '')");
+			
+				$result1 = mysql_query("INSERT INTO schedule (id ,project_id ,workflow_id,activity,stage ,estimated_daysperstage ,actual_daysperstage ,estimated_start_date ,actual_start_date ,estimated_end_date ,actual_end_date ,bufferday ,created_by ,created_on ,modified_by ,modified_on ,flag)
+                               VALUES ('' ,'".$projectid."', '".$workflow."','".$activity1[$i]."','".$stage1[$i]."','".$estimated_daysperstage1[$i]."','".$actual_daysperstage1[$i]."',  '".$eStartDate."',  '".$aStartDate."',  '".$eEndDate."',  '".$aEndDate."','".$bufferday1[$i]."', '','', '','0000-00-00 00:00:00', '')");
 				if(!$result1)
 				{
 					$result["failure"] = true;
