@@ -47,7 +47,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
                     				resolution: '',
                  					colourmode: '',
                     				vendorassessment: '',
-                    				convert: '',
+                    				cnvrt: '',
                     				redrawsimple: '',
                     				redrawcomplex: '',
                     				relabel: '',                   				
@@ -188,7 +188,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 				handler:function(grid, rowIndex, colIndex)
 				{
 				//	alert("delete");
-				var job_code=Ext.getCmp('job_code').getValue(); 
+				var project_id=Ext.getCmp('edit_ArtworkHeader_projectID').getValue(); 
 						var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
@@ -203,8 +203,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										var grid3=Ext.getCmp('new_author_grid');
-									grid3.getStore().load({params:{action:2,job_code:job_code}});
+										var grid3=Ext.getCmp('editprojectArtworkgrid');
+									grid3.getStore().load({params:{action:3,project_id:project_id}});
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -266,7 +266,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
                     				var resolution='';
                  					var colourmode='';
                     				var vendorassessment='';
-                    				var convert='';
+                    				var cnvrt='';
                     				var redrawsimple='';
                     				var redrawcomplex='';
                     				var relabel='';                				
@@ -284,7 +284,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 						resolution=resolution+rec.get('resolution')+',';
 						colourmode=colourmode+rec.get('colourmode')+',';
 						vendorassessment=vendorassessment+rec.get('vendorassessment')+',';
-						convert=convert+rec.get('convert')+',';
+						cnvrt=cnvrt+rec.get('convert1')+',';
 						redrawsimple=redrawsimple+rec.get('redrawsimple')+',';
 						redrawcomplex=redrawcomplex+rec.get('redrawcomplex')+',';
 						relabel=relabel+rec.get('relabel')+',';
@@ -300,16 +300,18 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 						method: 'POST',
 						params : {
 							action:2,
-							artwork_id:artwork_id,
+							
 							project_id:project_id,
 							figurenumber:figurenumber,
 							inputformat:inputformat,
+							resolution:resolution,
 							colourmode:colourmode,
 							vendorassessment:vendorassessment,
-							convert:convert,
+							cnvrt:cnvrt,
 							redrawsimple:redrawsimple,
 							redrawcomplex:redrawcomplex,
 							relabel:relabel,
+							finalartwrk:finalartwrk,
 							cost:cost,
 							comments:comments,
 							artwork_id:artwork_id

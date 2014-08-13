@@ -9,7 +9,7 @@ $id=$_SESSION['user_no'];
 			getArtworkDetails($_POST['job_code']);
 			break;	
 		case 2:
-			insertArtwork($_POST['artwork_id'],$_POST['project_id'],$_POST['figurenumber'],$_POST['inputformat'],$_POST['resolution'],$_POST['colourmode'],$_POST['vendorassessment'],$_POST['convert'],$_POST['redrawsimple'],$_POST['redrawcomplex'],$_POST['relabel'],$_POST['finalartwrk'],$_POST['cost'],$_POST['comments']);
+			insertArtwork($_POST['artwork_id'],$_POST['project_id'],$_POST['figurenumber'],$_POST['inputformat'],$_POST['resolution'],$_POST['colourmode'],$_POST['vendorassessment'],$_POST['cnvrt'],$_POST['redrawsimple'],$_POST['redrawcomplex'],$_POST['relabel'],$_POST['finalartwrk'],$_POST['cost'],$_POST['comments']);
 			break;
 		case 3 :
 		     selectArtwork($_POST['project_id']);
@@ -18,6 +18,7 @@ $id=$_SESSION['user_no'];
 		       deleteArtwork($_POST['id']);
 		       break;
 		 default: 
+			 
 			break;
 	}
 function getArtworkDetails($job_code)
@@ -54,25 +55,25 @@ function getArtworkDetails($job_code)
       	echo(json_encode($result));
     }
 
-	function insertArtwork($artwork_id,$project_id,$figurenumber,$inputformat,$resolution,$colourmode,$vendorassessment,$convert,$redrawsimple,$redrawcomplex,$relabel,$finalartwrk,$cost,$comments)
+	function insertArtwork($artwork_id,$project_id,$figurenumber,$inputformat,$resolution,$colourmode,$vendorassessment,$cnvrt,$redrawsimple,$redrawcomplex,$relabel,$finalartwrk,$cost,$comments)
 	{
 		//echo $author_name;
 		$artwork_id1 = explode(',',$artwork_id);
 		$figurenumber1 = explode(',',$figurenumber);
 		$inputformat1 = explode(',',$inputformat);
-		$resolution1 = explode('_',$resolution);
+		$resolution1 = explode(',',$resolution);
 		$colourmode1 = explode(',',$colourmode);
 		$vendorassessment1 = explode(',',$vendorassessment);
 		$redrawsimple1 = explode(',',$redrawsimple);
 		$redrawcomplex1 = explode(',',$redrawcomplex);
-		$convert1 = explode(',',$convert);
+		$convert1 = explode(',',$cnvrt);
 		$relabel1 = explode(',',$relabel);
 		$finalartwrk1 = explode(',',$finalartwrk);
 		$cost1 = explode(',',$cost);
 		$comments1 = explode(',',$comments);
 		
-		//echo $name[0];
-		$l = count($name);
+		
+		
 	//	echo $id[0];
 		for($i = 0; $i < count($figurenumber1) - 1; $i++) {
 				$checkquery = "SELECT id FROM artwork WHERE id='" . $artwork_id1[$i] . "'";
@@ -86,7 +87,7 @@ function getArtworkDetails($job_code)
 			if($num_rows ==1)
 				{
 				
-					$result1 = mysql_query("UPDATE artwork SET figure_number = '".$figurenumber1[$i]."', input_format = '".$inputformat1[$i]."',resolution = '".$resolution1[$i]."',colour_mode = '".$colourmode1[$i]."',vendor_assessment	 = '".$vendorassessment1[$i]."',convert = '".$convert1[$i]."',redraw_simple = '".$redrawsimple1[$i]."',redraw_complex = '".$redrawcomplex1[$i]."' ,relabel = '".$relabel1[$i]."',final = '".$finalartwrk1[$i]."',	cost = '".$cost1[$i]."',	comments = '".$comments1[$i]."'where id = '".$id[$i]."'");
+					$result1 = mysql_query("UPDATE artwork SET figure_number = '".$figurenumber1[$i]."', input_format = '".$inputformat1[$i]."',resolution = '".$resolution1[$i]."',colour_mode = '".$colourmode1[$i]."',vendor_assessment	 = '".$vendorassessment1[$i]."',cnvrt = '".$convert1[$i]."',redraw_simple = '".$redrawsimple1[$i]."',redraw_complex = '".$redrawcomplex1[$i]."' ,relabel = '".$relabel1[$i]."',final = '".$finalartwrk1[$i]."',	cost = '".$cost1[$i]."',	comments = '".$comments1[$i]."'where id = '".$artwork_id1[$i]."'");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -103,7 +104,7 @@ function getArtworkDetails($job_code)
 		else
 		{
 
-			$result1 = mysql_query ("INSERT INTO `ooh_publishing`.`artwork` (`id`, `project_id`, `figure_number`, `input_format`, `resolution`, `colour_mode`, `vendor_assessment`, `convert`, `redraw_simple`, `redraw_complex`, `relabel`, `final`, `cost`, `comments`, `flag`) 
+			$result1 = mysql_query ("INSERT INTO `ooh_publishing`.`artwork` (`id`, `project_id`, `figure_number`, `input_format`, `resolution`, `colour_mode`, `vendor_assessment`, `cnvrt`, `redraw_simple`, `redraw_complex`, `relabel`, `final`, `cost`, `comments`, `flag`) 
 			VALUES ('', '".$project_id."', '".$figurenumber1[$i]."','".$inputformat1[$i]."', '".$resolution1[$i]."', '".$colourmode1[$i]."', '".$vendorassessment1[$i]."', '".$convert1[$i]."', '".$redrawsimple1[$i]."', '".$redrawcomplex1[$i]."', '".$relabel1[$i]."', '".$finalartwrk1[$i]."', '".$cost1[$i]."', '".$comments1[$i]."', '')"); 
 					
 		
@@ -133,13 +134,13 @@ function getArtworkDetails($job_code)
    artwork.input_format as inputformat,
    artwork.resolution as resolution,
    artwork.colour_mode as colourmode,
-   artwork.convert as convert1,
+   artwork.cnvrt as convert1,
    artwork.vendor_assessment as vendorassessment,
    artwork.redraw_simple as redrawsimple,
    artwork.redraw_complex as redrawcomplex ,
    artwork.relabel as relabel,
    artwork.cost as cost,
-   artwork.final as final ,
+   artwork.final as finalartwrk ,
    artwork.comments as comments
 From
   artwork
@@ -157,13 +158,13 @@ From
    artwork.input_format as inputformat,
    artwork.resolution as resolution,
    artwork.colour_mode as colourmode,
-   artwork.convert as convert1,
+   artwork.cnvrt as convert1,
    artwork.vendor_assessment as vendorassessment,
    artwork.redraw_simple as redrawsimple,
    artwork.redraw_complex as redrawcomplex ,
    artwork.relabel as relabel,
    artwork.cost as cost,
-   artwork.final as final ,
+   artwork.final as finalartwrk ,
    artwork.comments as comments
 From
   artwork
