@@ -378,8 +378,8 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 					var job_code=Ext.getCmp('job_code').getValue(); 
 					//alert(job_code);
 					//alert("save");
-					/*var projectID=Ext.getCmp('budgetHeader_projectID').getValue(); 
-					var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); */
+					var projectID=Ext.getCmp('budgetHeader_projectID').getValue(); 
+					var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); 
 							var activity='';
 							var stage='';
 							var vendor='';
@@ -450,7 +450,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 							var grid3=Ext.getCmp('accountPayableGrid');
 							grid3.getStore().load({params:{action:1,job_code:job_code}});
 							var grid3=Ext.getCmp('newprojectSchedulegrid');
-			          grid3.getStore().load({params:{action:2,workflowid:workflowid}});
+			          grid3.getStore().load({params:{action:2,workflowid:workflow}});
 
 					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectscheduleformTab');
 						}

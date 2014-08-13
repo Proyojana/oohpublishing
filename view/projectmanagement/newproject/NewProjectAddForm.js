@@ -435,7 +435,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     	    id:'add_team',
 			x:450,
 			y:480,
-			width:75,
+			width:110,
 			handler: function (){			
 				//Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
 				var currentForm = this.up('newprojectaddform');
@@ -521,9 +521,9 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 		  	text: 'Reset',
 		  	iconCls: 'button_reset',
 		  	id:'reset_team',
-			x:550,
+			x:600,
 			y:480,
-			width:75,
+			width:110,
 			handler: function (){
 				var currentForm = this.up('newprojectaddform');
 				currentForm.getForm().reset();
