@@ -430,7 +430,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     		
 		{
 			xtype:'button',
-    	    text:'Add',
+    	    text:'Save + Next',
     	    iconCls: 'button_add',
     	    id:'add_team',
 			x:450,

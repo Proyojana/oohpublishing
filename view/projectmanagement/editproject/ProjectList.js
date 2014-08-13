@@ -14,7 +14,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 	'MyDesktop.view.projectmanagement.editproject.budget.accountsReceivableForm','MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleGrid','MyDesktop.view.projectmanagement.editproject.team.TeamAddForm',
 	'MyDesktop.view.projectmanagement.editproject.author.AuthorHeaderForm','MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm','MyDesktop.view.projectmanagement.editproject.team.TeamHeaderForm',
 	'MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleGrid','MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleHeaderForm',
-	'MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid','MyDesktop.view.projectmanagement.editproject.notes.NotesHeaderForm'],
+	'MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid','MyDesktop.view.projectmanagement.editproject.notes.NotesHeaderForm','MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkHeaderForm',
+	'MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkgrid'],
 
 	id : 'projectlist',
 	initComponent : function() {
@@ -396,6 +397,61 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								}
 							});			
 
+				}
+			},
+			{
+				iconCls : 'artworkClass',
+				tooltip : 'Edit Artwork',
+				handler : function(grid, rowIndex, colIndex) {
+	     var win = Ext.create('Ext.Window', {
+						extend : 'Ext.form.Panel',
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Edit Artwork',
+						width : 1200,
+						height : 500,
+						items : [
+						{
+							xtype:'editprojectArtworkHeaderForm',
+							
+							x:0,
+							y:0,
+							margin:'5 5 5 5'
+						},
+						{
+							xtype:'editprojectArtworkgrid',
+							x : 5,
+							y : 80,
+							width:1150,
+							margin:'5 5 5 5',
+						}]
+					});
+					win.show();
+					var rec = grid.getStore().getAt(rowIndex);
+					var project_id = rec.get('pro_id');
+					var job_code = rec.get('pro_code');
+					var workflow=rec.get('workflow');
+					var grid1 = Ext.getCmp('editprojectArtworkgrid');
+					grid1.getStore().load({
+						params : {
+							action : 3,
+							project_id : project_id,
+							
+						}
+					});
+					var currentForm = Ext.getCmp('editprojectArtworkHeaderForm');
+					currentForm.getForm().load({
+						url : 'service/Artwork.php',
+						params : {
+							action : 1,
+							job_code:job_code,
+							},
+						failure : function(form, action) {
+							Ext.Msg.alert("Load failed", action.result.errorMessage);
+						}
+					});
 				}
 			}]
 		}];

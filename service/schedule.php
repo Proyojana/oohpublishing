@@ -66,6 +66,7 @@ $id=$_SESSION['user_no'];
 		  activity.id as activityid,
 		  activity.name As activity,
 		  stages.stage_name As stage,
+		  stages.stage_order As stageorder,
 		  stages.id As stageid
 		From
 		  stages Inner Join

@@ -1,0 +1,208 @@
+<?php
+    session_start();
+include("config.php");
+include("../inc/php/encryptDecrypt.php");
+$id=$_SESSION['user_no'];
+	switch($_POST["action"]) /*Read action sent from front-end */
+	{
+		case 1:
+			getArtworkDetails($_POST['job_code']);
+			break;	
+		case 2:
+			insertArtwork($_POST['artwork_id'],$_POST['project_id'],$_POST['figurenumber'],$_POST['inputformat'],$_POST['resolution'],$_POST['colourmode'],$_POST['vendorassessment'],$_POST['convert'],$_POST['redrawsimple'],$_POST['redrawcomplex'],$_POST['relabel'],$_POST['finalartwrk'],$_POST['cost'],$_POST['comments']);
+			break;
+		case 3 :
+		     selectArtwork($_POST['project_id']);
+		       break;
+	    case 4:
+		       deleteArtwork($_POST['id']);
+		       break;
+		 default: 
+			break;
+	}
+function getArtworkDetails($job_code)
+ 	{
+		$result1 = mysql_query ("Select
+	  customers.name as edit_ArtworkHeader_ClientName,
+	  customers.code as edit_ArtworkHeader_ClientCode,
+	  customers.id as edit_ArtworkHeader_clientId,
+	  project_title.title as edit_ArtworkHeader_ProjectName,
+	  project_title.workflow as edit_ArtworkHeader_workflow,
+	  project_title.job_code as edit_ArtworkHeader_Job,
+	  project_title.id as edit_ArtworkHeader_projectID
+	  
+	From
+	  project_title Inner Join
+	  customers On project_title.client =
+	    customers.id
+	Where
+	  project_title.job_code = '".$job_code."'");
+			
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;				
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+			$result ["data"] = $row;
+	  	}
+      	echo(json_encode($result));
+    }
+
+	function insertArtwork($artwork_id,$project_id,$figurenumber,$inputformat,$resolution,$colourmode,$vendorassessment,$convert,$redrawsimple,$redrawcomplex,$relabel,$finalartwrk,$cost,$comments)
+	{
+		//echo $author_name;
+		$artwork_id1 = explode(',',$artwork_id);
+		$figurenumber1 = explode(',',$figurenumber);
+		$inputformat1 = explode(',',$inputformat);
+		$resolution1 = explode('_',$resolution);
+		$colourmode1 = explode(',',$colourmode);
+		$vendorassessment1 = explode(',',$vendorassessment);
+		$redrawsimple1 = explode(',',$redrawsimple);
+		$redrawcomplex1 = explode(',',$redrawcomplex);
+		$convert1 = explode(',',$convert);
+		$relabel1 = explode(',',$relabel);
+		$finalartwrk1 = explode(',',$finalartwrk);
+		$cost1 = explode(',',$cost);
+		$comments1 = explode(',',$comments);
+		
+		//echo $name[0];
+		$l = count($name);
+	//	echo $id[0];
+		for($i = 0; $i < count($figurenumber1) - 1; $i++) {
+				$checkquery = "SELECT id FROM artwork WHERE id='" . $artwork_id1[$i] . "'";
+				$result2 = mysql_query($checkquery);
+				$num_rows = mysql_num_rows($result2);
+					
+				//convert string to date
+			
+				
+		//	echo $num_rows;
+			if($num_rows ==1)
+				{
+				
+					$result1 = mysql_query("UPDATE artwork SET figure_number = '".$figurenumber1[$i]."', input_format = '".$inputformat1[$i]."',resolution = '".$resolution1[$i]."',colour_mode = '".$colourmode1[$i]."',vendor_assessment	 = '".$vendorassessment1[$i]."',convert = '".$convert1[$i]."',redraw_simple = '".$redrawsimple1[$i]."',redraw_complex = '".$redrawcomplex1[$i]."' ,relabel = '".$relabel1[$i]."',final = '".$finalartwrk1[$i]."',	cost = '".$cost1[$i]."',	comments = '".$comments1[$i]."'where id = '".$id[$i]."'");
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+					
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = "Artwork saved successfully";
+				}
+				
+				}
+		else
+		{
+
+			$result1 = mysql_query ("INSERT INTO `ooh_publishing`.`artwork` (`id`, `project_id`, `figure_number`, `input_format`, `resolution`, `colour_mode`, `vendor_assessment`, `convert`, `redraw_simple`, `redraw_complex`, `relabel`, `final`, `cost`, `comments`, `flag`) 
+			VALUES ('', '".$project_id."', '".$figurenumber1[$i]."','".$inputformat1[$i]."', '".$resolution1[$i]."', '".$colourmode1[$i]."', '".$vendorassessment1[$i]."', '".$convert1[$i]."', '".$redrawsimple1[$i]."', '".$redrawcomplex1[$i]."', '".$relabel1[$i]."', '".$finalartwrk1[$i]."', '".$cost1[$i]."', '".$comments1[$i]."', '')"); 
+					
+		
+		if(!$result1)
+			{
+				$result["failure"] = true;
+				$result["message"] =  "Invalid query: " . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				$result["message"] = "Artwork Inserted successfully";
+			}
+			
+		}
+		}
+			echo json_encode($result);
+		
+	}
+
+	function selectArtwork($projectid) {
+	
+				$num_result = mysql_query("Select
+				artwork.id as id,
+  artwork.project_id as project_id,
+   artwork.figure_number as figurenumber,
+   artwork.input_format as inputformat,
+   artwork.resolution as resolution,
+   artwork.colour_mode as colourmode,
+   artwork.convert as convert1,
+   artwork.vendor_assessment as vendorassessment,
+   artwork.redraw_simple as redrawsimple,
+   artwork.redraw_complex as redrawcomplex ,
+   artwork.relabel as relabel,
+   artwork.cost as cost,
+   artwork.final as final ,
+   artwork.comments as comments
+From
+  artwork
+			
+			Where
+			  artwork.flag = 0 And
+			  artwork.project_id = '" . $projectid . "' ") or die(mysql_error());
+			
+				$totaldata = mysql_num_rows($num_result);
+			
+				$result = mysql_query("Select
+				artwork.id as id,
+  artwork.project_id as project_id,
+   artwork.figure_number as figurenumber,
+   artwork.input_format as inputformat,
+   artwork.resolution as resolution,
+   artwork.colour_mode as colourmode,
+   artwork.convert as convert1,
+   artwork.vendor_assessment as vendorassessment,
+   artwork.redraw_simple as redrawsimple,
+   artwork.redraw_complex as redrawcomplex ,
+   artwork.relabel as relabel,
+   artwork.cost as cost,
+   artwork.final as final ,
+   artwork.comments as comments
+From
+  artwork
+			
+			Where
+			  artwork.flag = 0 And
+			  artwork.project_id = '" . $projectid . "' LIMIT " . $_POST['start'] . ", " . $_POST['limit']) or die(mysql_error());
+			
+				while($row = mysql_fetch_object($result)) {
+					$data[] = $row;
+				}
+				echo '({"total":"' . $totaldata . '","results":' . json_encode($data) . '})';
+				}
+				
+function deleteArtwork($id)
+    {
+		$checkquery="SELECT id FROM artwork WHERE id='".$id."'";
+		$result1=mysql_query($checkquery);
+		$num_rows=mysql_num_rows($result1);
+		if($num_rows==1){
+				$result1= mysql_query("UPDATE artwork SET flag=1 WHERE id='".$id."'");
+				
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  'Invalid query: ' . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = 'Deleted successfully';
+				}
+			}
+			else
+			{
+				$result["failure"] = true;
+				$result["message"] =  'Deleted successfully';
+			}
+		
+		echo json_encode($result);
+	}
+	?>

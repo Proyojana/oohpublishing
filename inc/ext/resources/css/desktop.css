@@ -1028,6 +1028,10 @@ background-image: url(../images/chalk_board1.png);
 {
 		background:url(../shared/icons/fam/clock.png);height:32px !important;width:32px !important;
 }
+.artworkClass
+{
+		background:url(../shared/icons/fam/palette.png);height:16px;width:16px;margin-right:5px;
+}
 .BudgetClass
 {
 		background:url(../shared/icons/fam/money.png);height:32px !important;width:32px !important;

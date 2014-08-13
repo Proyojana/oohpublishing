@@ -370,7 +370,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 			items:[
 			{
 				xtype:'button',
-				text:'Save',
+				text:'Save + Next',
 				pressed:true,
 				width:100,
 			//	margin:'0 0 0 100',
@@ -452,7 +452,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 							var grid3=Ext.getCmp('newprojectSchedulegrid');
 			          grid3.getStore().load({params:{action:2,workflowid:workflowid}});
 
-					
+					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectscheduleformTab');
 						}
 					});
 					

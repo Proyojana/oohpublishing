@@ -37,6 +37,12 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 			hidden:true
 		},
 		{
+			dataIndex: 'stageorder',
+			text: 'Stage Order',
+			align: 'center',
+			flex:0.5,
+		},
+		{
 			dataIndex: 'activity',
 			text: 'Activity',
 			align: 'center',
@@ -57,7 +63,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 			}
 		},{
 			text:'Days per stage',
-
+			
 			columns: [{
 				dataIndex: 'estimated_daysperstage',
 				text: 'Estimate',
@@ -108,7 +114,9 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 								}
 								else
 								{	
+									selModel.getSelection()[0].set('estimated_daysperstage', 0);
 									Ext.Msg.alert('Message', 'Please Select Project Start Date');
+									selModel.getSelection()[0].set('estimated_daysperstage', 0);
 								}
 							}
 					} 
@@ -171,7 +179,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 			]
 		},{
 			text:'Start Date',
-
+			
 			columns: [{
 				dataIndex: 'estimated_start_date',
 				text: 'Estimate',
@@ -183,10 +191,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 						change: function(field, newValue, oldValue) {
 							var grid = this.up().up();
 							// get selection model of the grid
-							var selectedRecord = grid.getSelectionModel().getSelection()[0];
-							var row = grid.store.indexOf(selectedRecord);
-								alert(row);
-							
+														
 							var selModel = grid.getSelectionModel();
 							var days=selModel.getSelection()[0].data.estimated_daysperstage;
 
@@ -249,9 +254,11 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		dataIndex: 'bufferday',
 			text: 'Buffer Days',
 			editor: {
-				xtype:'textfield',
+				xtype:'numberfield',
 			},
 			align:'center',
+		
+		
 		},/**{
 		 xtype:'actioncolumn',
 		 align: 'center',
@@ -366,7 +373,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 			emptyMsg: "No topics to display",
 			items:[{
 				xtype:'button',
-				text:'Save',
+				text:'Save + Next',
 				pressed:true,
 				width:100,
 				//	margin:'0 0 0 100',
@@ -449,6 +456,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 						}
 					});
 					Ext.getCmp('newprojectteamformTab').setDisabled(false);
+					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectteamformTab');
 				}
 			},
 			]
