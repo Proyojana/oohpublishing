@@ -7,7 +7,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.productionreport' ,
             },
 	
 	requires :['MyDesktop.view.projectmanagement.currentprojects.ProductionTitleInfoGrid','MyDesktop.view.projectmanagement.currentprojects.ProductionScheduleGrid','MyDesktop.view.projectmanagement.currentprojects.ProductionTeamGrid',
-	'MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGrid'],
+	'MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGrid','MyDesktop.view.projectmanagement.currentprojects.productionReport_HeaderForm'],
 	
     defaults: {
         
@@ -22,7 +22,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.productionreport' ,
     
 		this.items  = [		
 		
-		{
+		/**{
 			xtype:'label',
 			text:'Current Status',
 			x:05,
@@ -60,35 +60,41 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.productionreport' ,
 			y:10,	
 			height:19,
 			//width:160,	
+			},**/
+			{
+				xtype:'productionReport_HeaderForm',
+				x:0,
+				y:0,
+				height:80
 			},
 		{
 			xtype:'ptitleinfogrid',
 			x:5,
-			y:40,
+			y:100,
 		},
 		{
 			xtype:'label',
 			text:'Schedule',
 			x:05,
-			y:280,
+			y:325,
 		    style:	{'font-weight':'bold'}
 		},
 		{
 			xtype:'pschedulegrid',
 			x:5,
-			y:300
+			y:340,
 		},	
 		{
 			xtype:'label',
 			text:'Team',
 			x:05,
-			y:420,
+			y:453,
 		    style:	{'font-weight':'bold'}			
 		},
 		{
 			xtype:'pteamgrid',
 			x:5,
-			y:440
+			y:470
 		},
 		{
 			xtype:'label',

@@ -10,16 +10,37 @@
 Ext.define('MyDesktop.view.projectmanagement.currentprojects.budgetGrid', {
 	extend:'Ext.grid.Panel',
 	alias:'widget.budgetgrid',
-	anchor: '50% 89%',
+	anchor: '100% 89%',
 	closeAction: 'hide',
 	
 	//height:200,
 	requires:['MyDesktop.store.Budget'],
-	title:'Budget',
+	//title:'Budget',
 	id:'budgetgrid',
 	initComponent: function() {
 		
-	var budget = Ext.create('MyDesktop.store.Budget');
+		
+		function color(value, metaData, record, rowIndex, colIndex,store){
+		return '<span style="background-color:#c0c0c0;">' + value + '</span>';
+		}
+		//load stage
+		var stage = Ext.create('MyDesktop.store.Stages');
+		stage.load({
+			params: {
+				start: 0,
+				limit: 50
+			}
+		});
+		//load activity combo
+		var activity = Ext.create('MyDesktop.store.ProductionStages');
+		activity.load({
+			params: {
+				start: 0,
+				limit: 8
+			}
+		});
+		//load budget store
+		var budget = Ext.create('MyDesktop.store.Budget');
 		budget.load({
 			params: {
 				start: 0,
@@ -27,103 +48,182 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.budgetGrid', {
 			}
 		});
 		budget.loadPage(1);
+		//load vendors column in grid
+		var vendor = Ext.create('MyDesktop.store.Vendors');
+		vendor.load({
+			params: {
+				start: 0,
+				limit: 8
+			}
+		});
+		vendor.loadPage(1);
+		
 		this.store = budget,
-			this.columns = [
-			{
-				xtype:'rownumberer',				
-			},
-				{
-					dataIndex: 'Id',
-					hidden:true
-				},
-				{
-					dataIndex: 'activity_name',
+	
+		this.columns = [
+		
+		{
+			dataIndex: 'budgetExpense_id',
+			hidden:true,
+		},
+		/*{
+			dataIndex: 'activityid',
+			hidden:true,
+		},
+		{
+			dataIndex: 'stageid',
+			hidden:true,
+		},*/
+		        {				
+					dataIndex: 'activityid',
 					text: 'Activity',
-					align: 'left',
-					flex:1,
-					filter: {
-                	type: 'string'
-           		}
+					 flex: 2,
+					 align:'center',
+					 editor: { 
+						xtype:'combo',
+						store: activity,
+						queryMode: 'local',
+						displayField: 'product_name',
+						valueField: 'product_id',
+						},
+						renderer: function(value) {
+					var index = activity.find('product_id', value);
+					if (index != -1) {
+					return activity.getAt(index).data.product_name;
+					}
+					return value;
+					}
+						
+					
 				},
 				{
 					dataIndex: 'stage',
 					text: 'Stage',
-					align: 'center',
-					flex:0.5,
-					filter: {
-                	type: 'string'
-           		}
+					flex: 2,
+					align:'center',
+					editor: { 
+						xtype:'textfield',
+						
+						}
+					
+					
 				},
-				
+				 {
+				 	dataIndex: 'vendor',
+		        	text: 'Vendor',
+		        	flex: 2,
+		        	align:'center',
+		        	editor: { xtype:'combo',
+							 store: vendor,
+						   	queryMode: 'local',
+							displayField: 'name',
+						    valueField: 'id',
+			
+					},
+					 renderer: function(value) {
+					var index = vendor.find('id', value);
+					if (index != -1) {
+					return vendor.getAt(index).data.name;
+					}
+					return value;
+					}  
+		        	
+		       },
 				{
+					dataIndex: 'unit',
+					text: 'Unit',
+					flex: 2,
+					align:'center',
+					
+				},
+				{	
+			
+					dataIndex: 'num_units_budgeted',
+					text: 'No.of Units <br/>Budgeted',
+					flex: 2,
+					align:'center',
+					
+					
+				},	
+				{
+					text:'Rate / Unit',
+					
+		columns: [{
 					dataIndex: 'rate_USD',
-					text: 'Page rate ($)',
-					align: 'center',
-					flex:1,
-					filter: {
-                	type: 'string'
-           		}
+					text: '$',
+		        	align:'center',
+		        	textStyle:'font-size:13px;'
+									
 				},
 				{
 					dataIndex: 'rate_GBP',
-					text: 'Page rate (£)',
-					align: 'center',
-					flex:1,
-					filter: {
-                	type: 'string'
-           		}
+					text: '£',
+		        	align:'center',
+				}
+				]
 				},
+				
+				{
+					text:'Budgeted Amount',
+		columns: [
 				{
 					dataIndex: 'budgeted_amount_USD',
-					text: 'Budgeted Amount ($)',
-					align: 'center',
-					flex:1.5,
-					filter: {
-                	type: 'string'
-           		}
-				},
+					text: '$',
+		        	align:'center',
+		        	
+					
+			    },
+			    {
+			    	dataIndex: 'budgeted_amount_GBP',
+					text: '£',
+		        	align:'center',
+			    }
+			    ]
+			    },
+		       
+		       
+	     	   {
+	     			dataIndex:'actual_unit',
+		        	text: 'No. of Units<br/> Actual',
+		        	
+					flex: 2,
+					align:'center',
+		        	
+		        }
+		         ,
+		        {
+		        	text:'Actual Amount',
+		        	
+		columns: [
 				{
-					dataIndex: 'budgeted_amount_GBP',
-					text: 'Budgeted Amount (£)',
-					align: 'center',
-					flex:1.5,
-					filter: {
-                	type: 'string'
-           		}
-				},
-				
-				
-	/*	{
-					xtype:'actioncolumn',
-					align: 'center',
-					flex:1,
-				//	width:180,
-					text:'Actions',
-					items: [{
-						iconCls: 'viewClass',
-						tooltip: 'View',
-		
-			},{
-				iconCls: 'editClass',
-				//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-				tooltip: 'Edit',
+		        	dataIndex:'actual_amount_USD',
+		        	text: '$',
+		        	align:'center',
+		        	
+		       },
+		       {
+		       		dataIndex:'actual_amount_GBP',
+		        	text: '£',
+		        	align:'center',
+		       },
+		       ]
+		       },
+		  
+		        
 			
-			},{
-					iconCls: 'deleteClass',
-					tooltip: 'Delete',
-			
-				}]
-		}*/];
-		this.bbar = Ext.create('Ext.PagingToolbar', {  
-
+				
+		];
+		 
+			this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
-			displayInfo: true,
-			displayMsg: 'Displaying topics {0} - {1} of {2}',
-			emptyMsg: "No topics to display",
+			//displayInfo: false,
+			//displayMsg: 'Displaying topics {0} - {1} of {2}',
+			//emptyMsg: "No topics to display",
 			items:[
-			]
 			
-		}),
+			]
+		});
+		
 		
 		this.callParent(arguments);
 

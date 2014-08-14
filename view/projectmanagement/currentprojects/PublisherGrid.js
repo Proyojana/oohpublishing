@@ -205,12 +205,32 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						autoScroll : true,
 						title : 'Production Report',
 						width : 680,
-						height : 600,
+						height : 630,
 						items : [{
 							xtype : 'productionreport',
 							x : 0,
 							y : 0
 
+						}],
+								buttons:[{
+							text:'Send Email',
+							 
+							handler:function()
+							{
+							
+							Ext.MessageBox.show({
+						    title:'',
+						    msg: 'Do you like to send as Html or PDF?',
+						    buttonText: {yes: "Html",no: "PDF"},
+						    fn: function(btn){
+						        console.debug('you clicked: ',btn); //you clicked:  yes
+						    }
+						});
+							},
+							
+							
+						},{
+							text:'Print'
 						}]
 					});
 					win.show();
@@ -252,6 +272,18 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						params : {
 							action : 13,
 							project_id : project_id
+						}
+					});
+					
+						var currentForm = Ext.getCmp('productionreport');
+					currentForm.getForm().load({
+						url : 'service/Reports.php',
+						params : {
+							action : 1,
+							project_id:project_id,
+							},
+						failure : function(form, action) {
+							Ext.Msg.alert("Load failed", action.result.errorMessage);
 						}
 					});
 
