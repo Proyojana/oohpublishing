@@ -2,7 +2,7 @@
         extend: 'Ext.data.Model',
         fields: [
             
-             'id','dateraised','narrative' ,'dateresolved' ],
+             'id','narrative' ,{name: 'dateraised', type: 'date'},{name: 'dateresolved', type: 'date'} ],
      
     });
-    0
+    

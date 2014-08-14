@@ -56,8 +56,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PubForm' ,{
 		},
 		{
 			//iconCls: 'personalinfo',
-			xtype:'scheduleform',
-			title:'Schedule for production',
+			xtype:'schedulegrid',
+			//title:'Schedule for production',
 			//width:500
 		},
 		{

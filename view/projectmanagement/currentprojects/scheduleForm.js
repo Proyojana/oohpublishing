@@ -23,7 +23,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.scheduleForm' ,{
 		//heads.load({params:{action: 5}});
 		this.items = [
 		{
-		xtype : 'schedulegrid',
+		xtype : '',
 		title:'Schedule for production',
 			
 		height:200,

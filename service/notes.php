@@ -60,16 +60,25 @@ function insertNotes($notes_id, $project_id, $dateraised, $narrative, $dateresol
 				$checkquery = "SELECT id FROM notes WHERE id='" . $notes_id1[$i] . "'";
 				$result2 = mysql_query($checkquery);
 				$num_rows = mysql_num_rows($result2);
-					if($dateraised1[$i]!=''&&$dateresolved1[$i]!=''){
+					if($dateraised1[$i]!='null'){
 				//convert string to date
 				$dateraised_date = substr($dateraised1[$i], 0, 16);
 				$dateraised_string = strtotime($dateraised_date);
 				$raisedDate = date("Y-m-d h:i:sa", $dateraised_string);
-		
+					}
+					else
+						{
+						$raisedDate='';	
+						}
+					if($dateresolved1[$i]!='null'){
 				$dateresolved_date = substr($dateresolved1[$i], 0, 16);
 				$dateresolved_string = strtotime($dateresolved_date);
 				$resolvedDate = date("Y-m-d h:i:sa", $dateresolved_string);
 		      }
+					else
+						{
+							$resolvedDate='';
+						}
 				if($num_rows == 1) {
 		
 					$result1 = mysql_query("UPDATE notes SET  date_raised = '" . $raisedDate . "', narrative = '" . $narrative1[$i] . "',  date_resolved = '" . $resolvedDate . "' WHERE id = '" . $notes_id1[$i] . "'");
