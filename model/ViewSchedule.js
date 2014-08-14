@@ -2,7 +2,7 @@ Ext.define('MyDesktop.model.ViewSchedule', {
         extend: 'Ext.data.Model',
         fields: [
            
-              'schedule_id','schedule_stage','schedule_estimated_daysperstage','schedule_actual_daysperstage','schedule_estimated_start_date','schedule_actual_start_date','schedule_actual_end_date','schedule_bufferday','schedule_estimated_end_date'      
+           'schedule_id',{name: 'stageorder', type: 'string'},{name: 'activityid', type: 'int'}, {name: 'activity', type: 'string'},{name: 'stage', type: 'string'},{name: 'estimated_daysperstage', type: 'int'},{name: 'actual_daysperstage', type: 'int'},{name: 'estimated_start_date', type: 'date'},{name: 'actual_start_date', type: 'date'},{name: 'estimated_end_date', type: 'date'},{name: 'actual_end_date', type: 'date'}, {name: 'bufferday', type: 'int'}      
         ],
       //  idProperty: 'cityname'
     });

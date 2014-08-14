@@ -29,7 +29,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		ci.loadPage(1);
 		this.store = ci,
 		this.columns = [{
-			dataIndex: 'usersid',
+			dataIndex: 'schedule_id',
 			hidden:true
 		},
 		{
@@ -383,6 +383,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 					var workflow=Ext.getCmp('scheduleHeader_workflow').getValue();
 					var job_code=Ext.getCmp('scheduleHeader_Job').getValue();
 					var stage='';
+					var stageorder='';
 					var estimated_daysperstage='';
 					var actual_daysperstage='';
 					var estimated_start_date='';
@@ -391,6 +392,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 					var actual_end_date='';
 					var bufferday='';
 					var activity='';
+					var schedule_id='';
 					var grid=Ext.getCmp('newprojectSchedulegrid');
 
 					var myStore = Ext.getCmp('newprojectSchedulegrid').getStore();
@@ -406,6 +408,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 						actual_end_date=actual_end_date+rec.get('actual_end_date')+',';
 						bufferday=bufferday+rec.get('bufferday')+',';
 						activity=activity+rec.get('activityid')+',';
+						stageorder=stageorder+rec.get('stageorder')+',';
+						schedule_id=schedule_id+rec.get('schedule_id')+',';
 
 					});
 					var conn = new Ext.data.Connection();
@@ -415,6 +419,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 						params : {
 							action:3,
 							projectid:projectid,
+							stageorder:stageorder,
+							scheduleid:schedule_id,
 							workflow:workflow,
 							activity:activity,
 							stage:stage,
@@ -447,9 +453,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 							var grid3=Ext.getCmp('newprojectSchedulegrid');
 							grid3.getStore().load({
 								params: {
-									action:8,
-									workflowid:workflow,
-									projectid:projectID
+									action:4,
+									projectid:projectid
 								}
 							});
 
