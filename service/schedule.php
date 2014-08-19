@@ -20,6 +20,9 @@ $id=$_SESSION['user_no'];
 		case 5:
 			getScheduleDetails($_POST['job_code']);
 			break;	
+		case 6:
+			deleteScheduleactivity($_POST['id']);
+			break;
 		default: 
 			break;
 	}
@@ -198,7 +201,7 @@ function insertSchedule($scheduleid,$projectid,$workflow,$stageorder,$activity,$
   activity On schedule.activity =
     activity.id
 Where
-    schedule.project_id ='".$projectid."' ")or die(mysql_error());
+    schedule.project_id ='".$projectid."' and schedule.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
@@ -221,7 +224,7 @@ From
   activity On schedule.activity =
     activity.id
 Where
-    schedule.project_id ='".$projectid."'  LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+    schedule.project_id ='".$projectid."' and schedule.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -262,5 +265,32 @@ Where
 	  	}
       	echo(json_encode($result));
     }
+  function deleteScheduleactivity($id)
+    {
+		$checkquery="SELECT id FROM schedule WHERE id='".$id."'";
+		$result1=mysql_query($checkquery);
+		$num_rows=mysql_num_rows($result1);
+		if($num_rows==1){
+				$result1= mysql_query("UPDATE schedule SET flag=1 WHERE id='".$id."'");
+				
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  'Invalid query: ' . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = 'Deleted successfully';
+				}
+			}
+			else
+			{
+				$result["failure"] = true;
+				$result["message"] =  'Schedule stage does not exist';
+			}
+		
+		echo json_encode($result);
+	}
   
 ?>

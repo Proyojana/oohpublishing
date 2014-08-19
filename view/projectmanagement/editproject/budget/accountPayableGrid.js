@@ -4,20 +4,22 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
 var encode = false;
     
   
-Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGrid', {
+Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayableGrid', {
 	extend:'Ext.grid.Panel',
 	title:'Budgeted Expenses and Accounts Payable',
 	
-	alias:'widget.edit_accountPayableGrid',
+	alias:'widget.editaccountPayableGrid',
 	closeAction: 'hide',
+	width:1100,
 	//selModel:sm,
 	requires:['MyDesktop.store.Budget'],
-	id:'edit_accountPayableGrid',
+	id:'editaccountPayableGrid',
 	plugins: [
               Ext.create('Ext.grid.plugin.CellEditing', {
                   clicksToEdit: 1
              })        
     ],
+  
 	initComponent: function() {
 		
 		
@@ -63,7 +65,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
 		this.tbar = Ext.create('Ext.Toolbar', {  
 							   items:[{
                                xtype : 'button',
-                               id : 'addnewrowcust1',
+                              //id : 'addnewrowcust',
                                text : 'Insert New Row',
                                pressed:true,
                                x : 500,
@@ -121,7 +123,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
 						displayField: 'product_name',
 						valueField: 'product_id',
 						},
-						renderer: function(value) {
+						
+	renderer: function(value) {
 					var index = activity.find('product_id', value);
 					if (index != -1) {
 					return activity.getAt(index).data.product_name;
@@ -157,7 +160,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
                 change: function (field, newValue, oldValue) {
                 	var grid = this.up().up();
                         // get selection model of the grid  
-                     var selModel = grid.getSelectionModel();
+                    var selModel = grid.getSelectionModel();
                 	var activityid=selModel.getSelection()[0].data.activityid;
                 	
 					var conn = new Ext.data.Connection();
@@ -177,17 +180,16 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
                          selModel.getSelection()[0].set('rate_GBP', rate1);
 					 }
 					 });
-                   
-                                 }
+					 }
                     }
 					},
-					 renderer: function(value) {
+					  renderer: function(value) {
 					var index = vendor.find('id', value);
 					if (index != -1) {
 					return vendor.getAt(index).data.name;
 					}
 					return value;
-					}  
+					}
 		        	
 		       },
 				{
@@ -310,7 +312,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
 		{
 			xtype:'actioncolumn',
 			align: 'center',
-			flex:1,
+			flex:2,
 			text:'Actions',
 			
 			items: [
@@ -321,8 +323,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
 						
 						var grid = this.up('grid');
 					if (grid) {
-						var projectID=Ext.getCmp('budgetHeader_projectID').getValue(); 
-					var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); 
+						var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue(); 
+					var workflow=Ext.getCmp('editbudgetHeader_workflow').getValue(); 
 						       	var rec = grid.getStore().getAt(rowIndex);
 						Ext.Msg.confirm('Remove Record '+rec.get('stage')+' ?',+rec.get('stage'), function (button) {
 							if (button == 'yes') {
@@ -372,10 +374,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
 				width:100,
 			//	margin:'0 0 0 100',
 				handler:function(){
-					
+					var actual_amt_USD=0;
+					var actual_amt_GBP=0;
+					var type=2;
+					var job_code=Ext.getCmp('edit_Job_code').getValue(); 
+					//alert(job_code);
+					//alert("save");
 					var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue(); 
-					var workflow=Ext.getCmp('editbudgetHeader_workflow').getValue(); 
-					//alert(projectID);
+					/*var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); */
+					
 							var activity='';
 							var stage='';
 							var vendor='';
@@ -389,11 +396,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
 							var actual_amount_USD='';
 							var actual_amount_GBP='';
 							var budget_id='';
-							var grid=Ext.getCmp('edit_accountPayableGrid');
+							var grid=Ext.getCmp('editaccountPayableGrid');
 							
-					var myStore = Ext.getCmp('edit_accountPayableGrid').getStore();
+					var myStore = Ext.getCmp('editaccountPayableGrid').getStore();
 					myStore.each(function(rec) {
-						
+					actual_amt_USD=actual_amt_USD+parseInt(rec.get('actual_amount_USD'));
+				    actual_amt_GBP=actual_amt_GBP+parseInt(rec.get('actual_amount_GBP'));	
 				    activity=activity+rec.get('activityid')+',';
 				    stage=stage+rec.get('stage')+',';
 				    vendor=vendor+rec.get('vendor')+',';
@@ -409,30 +417,51 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
 				    budget_id=budget_id+rec.get('budgetExpense_id')+',';
 				   					
 				});
-				      //alert(e);	
-					 //alert(d);
-					//alert(tid);	
-				   //alert(secid);
-				
+							
 					var conn = new Ext.data.Connection();
 					 conn.request({
 						url: 'service/budget.php',
 						method: 'POST',
-						params : {action:4,workflow:workflow,budget_id:budget_id,projectID:projectID,activity:activity,stage:stage,vendor:vendor,unit:unit,budgeted_unit:budgeted_unit,rate_USD:rate_USD,rate_GBP:rate_GBP,
+						params : {action:4,job_code:job_code,budget_id:budget_id,activity:activity,stage:stage,vendor:vendor,unit:unit,budgeted_unit:budgeted_unit,rate_USD:rate_USD,rate_GBP:rate_GBP,
 							budgeted_amount_USD:budgeted_amount_USD,budgeted_amount_GBP:budgeted_amount_GBP,actual_unit:actual_unit,actual_amount_USD:actual_amount_USD,actual_amount_GBP:actual_amount_GBP},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							//refresh grid
-							var grid3=Ext.getCmp('accountPayableGrid');
-							grid3.getStore().load({params:{action:1,workflowid:workflow,projectid:projectID}});
+							
+							
+								/*var currentHeaderForm = Ext.getCmp('newprojectScheduleHeaderForm');
+                	 /****load data in header form*****/
+                	
+						
+						/*currentHeaderForm.getForm().load({
+   								 url: 'service/schedule.php',
+							     params: {
+        						 	action:1,job_code:job_code
+							    },
+							      failure: function(form, action){
+						        Ext.Msg.alert("Load failed", action.result.errorMessage);
+    							}
+							   
+							   
+						});
+								Ext.getCmp('newprojectscheduleformTab').setDisabled(false);	*/
+								
+								//refresh grid
+							var grid3=Ext.getCmp('editaccountPayableGrid');
+							grid3.getStore().load({params:{action:1,job_code:job_code}});
+							
+
+					
 						}
 					});
+					 Ext.getCmp('edit_total_pay_USD').setValue(actual_amt_USD);
+					 Ext.getCmp('edit_total_pay_GBP').setValue(actual_amt_GBP);
+
 					
 				}
 			},
 			
-			{
+		/*	{
 				xtype:'button',
 				text:'Show total',
 				pressed:true,
@@ -440,17 +469,17 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
 				margin:'0 0 0 50',
 				handler:function(){
 					
-					/**variable declaration**/
+					/**variable declaration
 					var budgeted_amount_USD=0;
 					var budgeted_amount_GBP=0;
 					var actual_amount_USD=0;
 					var actual_amount_GBP=0;
-					/*** get value from store**/
+					/*** get value from store
 					var myStore = Ext.getCmp('accountPayableGrid').getStore();
 					myStore.each(function(rec) {
-					
+					alert(rec.get('budgeted_amount_USD'));
 				    budgeted_amount_USD=budgeted_amount_USD+parseInt(rec.get('budgeted_amount_USD'));
-				    
+				    alert(budgeted_amount_USD);
 				    budgeted_amount_GBP=budgeted_amount_GBP+parseInt(rec.get('budgeted_amount_GBP'));
 				   
 				    actual_amount_USD=actual_amount_USD+parseInt(rec.get('actual_amount_USD'));
@@ -573,7 +602,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountPayableGr
 					
 					
 				}
-			},
+			},*/
 			
 			
 			]

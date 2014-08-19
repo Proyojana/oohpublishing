@@ -21,7 +21,7 @@ $id=$_SESSION['user_no'];
 			deleteBudgetactivity($_POST['budgetid']);
 			break;
 		case 6:
-			insertBudgetReceivables($_POST['project_code'],$_POST['projectid'],$_POST['cast_off_extent'],$_POST['confirmed_extent'],$_Post['unit_account_receivable'],$_POST['unit_usd_ar'],$_POST['unit_gbp_ar'],$_POST['actual_billable_ar'],$_POST['actual_billable_usd_ar'],$_POST['actual_billable_gbp_ar'],$_POST['total_contract_usd'],$_POST['total_contract_gbp']);
+			insertBudgetReceivables_p($_POST['job_code'],$_POST['projectID'],$_POST['rate_USD'],$_POST['rate_GBP'],$_POST['actual_unit'],$_POST['amt_USD'],$_POST['amt_GBP']);
 			break;
 		case 7:
 			getStagesdependsonWorkflow($_POST['workflowid']);
@@ -32,6 +32,14 @@ $id=$_SESSION['user_no'];
 		case 9:
 			getHeaderData($_POST['job_code']);
 			break;
+		case 10:
+			getActivity_a($_POST['job_code']);
+			break;
+		case 11:
+			insertBudgetReceivables_a($_POST['job_code'],$_POST['projectID'],$_POST['activity_name'],$_POST['uom'],$_POST['rate_USD'],$_POST['rate_GBP'],$_POST['actual_unit'],$_POST['amt_USD'],$_POST['amt_GBP']);
+			break;
+		
+		
 		default: 
 			break;
 	}
@@ -54,8 +62,8 @@ $id=$_SESSION['user_no'];
 		{
 		
 		$result = mysql_query("Select Distinct
-			  budget_expense.project_id ,
-			  stages.workflow_id  ,
+			  budget_expense.project_id,
+			  stages.workflow_id,
 			   stages.stage_name as stage,
 			  budget_expense.vendor as vendor,
 			  budget_expense.unit as unit,
@@ -152,7 +160,9 @@ $id=$_SESSION['user_no'];
 	  project_title.title as budgetHeader_ProjectName,
 	  project_title.workflow as budgetHeader_workflow,
 	  project_title.job_code as budgetHeader_Job,
-	  project_title.id as budgetHeader_projectID
+	  project_title.id as budgetHeader_projectID,
+	  project_title.castoff_extent as budgetHeader_castoffextent,
+	  project_title.confirmed_extent as budgetHeader_confirmedextent
 	  
 	From
 	  project_title Inner Join
@@ -301,44 +311,59 @@ function deleteBudgetactivity($budgetid)
 		echo json_encode($result);
 	}
 	
-	function insertBudgetReceivables($project_code,$projectid,$cast_off_extent,$confirmed_extent,$unit_account_receivable,$unit_usd_ar,$unit_gbp_ar,$actual_billable_ar,$actual_billable_usd_ar,$actual_billable_gbp_ar,$total_contract_usd,$total_contract_gbp)
+	function insertBudgetReceivables_p($job_code,$projectID,$rate_USD,$rate_GBP,$actual_unit,$amt_USD,$amt_GBP)
     {
-    	$globalCheck="select title from project_title where job_code='".$project_code."' and id='".$projectid."'"; 
-    	$res=mysql_query($globalCheck);
-		$num_row=mysql_num_rows($res);
-    	if($num_row==1){
-		$checkquery="SELECT id FROM budget_receivable WHERE project_id='".$projectid."'";
-		$result1=mysql_query($checkquery);
-		$num_rows=mysql_num_rows($result1);
+/*	$selectworkflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($selectworkflow)) {
+				
+			$workflow = $row['workflow'];
+			$projectID = $row['id'];
+			
+		// }*/
 		
-		if($num_rows==0)
+			$rate_USD1 = explode(',',$rate_USD);
+			$rate_GBP1 = explode(',',$rate_GBP);
+			$actual_unit1 = explode(',',$actual_unit);
+			$amt_USD1 = explode(',',$amt_USD);
+			$amt_GBP1 = explode(',',$amt_GBP);
+			
+		for ($i = 0; $i < count($rate_USD1)-1; $i++)
 		{
-			$result1 = mysql_query ("INSERT INTO budget_receivable (id, project_id, cast_off_extent, confirmed_extent, unit, unit_usd, unit_gbp, actual_billable_unit, actual_billable_amount_usd, actual_billable_amount_gbp, total_usd, total_gbp, created_by, created_on, modified_by, modified_on, flag)
-			 VALUES('','".$projectid."','".$cast_off_extent."','".$confirmed_extent."','".$unit_account_receivable."','".$unit_usd_ar."','".$unit_gbp_ar."','".$actual_billable_ar."','".$actual_billable_usd_ar."','".$actual_billable_gbp_ar."','".$total_contract_usd."','".$total_contract_gbp."','',now(),'','','')");
-			if(!$result1)
+			$checkquery="SELECT id FROM budget_receivable WHERE project_id='".$projectID."'";
+       		$result2=mysql_query($checkquery);
+       		$num_rows=mysql_num_rows($result2);
+			if($num_rows == 1)
 			{
-				$result["failure"] = true;
-				$result["message"] =  "Invalid query: " . mysql_error();
-			}
+				
+				$result1 = mysql_query("UPDATE budget_receivable SET  unit='Per Page',unit_usd = '".$rate_USD1[$i]."', unit_gbp = '".$rate_GBP1[$i]."', actual_billable_unit = '".$actual_unit1[$i]."', actual_billable_amount_usd= '".$amt_USD1[$i]."', actual_billable_amount_gbp = '".$amt_GBP1[$i]."' WHERE project_id='".$projectID."'");
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = "Budget saved successfully";
+				}
+		  }
+			
 			else
 			{
-				$result["success"] = true;
-				$result["message"] = "Inserted successfully";
+				$result1 = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity, unit, unit_usd, unit_gbp, actual_billable_unit, actual_billable_amount_usd, actual_billable_amount_gbp,total_usd,total_gbp,created_by,created_on,modified_by,modified_on,flag)
+                                VALUES ('','".$projectID."',' ','Per Project','".$rate_USD1[$i]."','".$rate_GBP1[$i]."','".$actual_unit1[$i]."','".$amt_USD1[$i]."','".$amt_GBP1[$i]."','".$amt_USD1[$i]."', '".$amt_GBP1[$i]."','','','','','')");
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = "Budget inserted successfully";
+				}
 			}
 		}
-		else
-		{
-			$result["success"] = false;
-			$result["message"] =  "Budget already exists for this project";
-		}
-		}
-else
-	{
-		$result["success"] = false;
-		$result["message"] =  "Job code and project is not matching. Please enter a valid job code";
-		
-	}
-		
 		echo json_encode($result);
 	}
 	function getStagesdependsonWorkflow($workflowid)
@@ -437,13 +462,16 @@ else
 	  customers.id as editbudgetHeader_clientId,
 	  project_title.title as editbudgetHeader_ProjectName,
 	  project_title.workflow as editbudgetHeader_workflow,
-	  project_title.job_code as editbudgetHeader_Job,
-	  project_title.id as editbudgetHeader_projectID
+	  project_title.job_code as edit_Job_code,
+	  project_title.id as editbudgetHeader_projectID,
+	  project_title.job_code as editbudgetHeader_projectID,
+	  project_title.castoff_extent as editbudgetHeader_castoffextent,
+	  project_title.confirmed_extent as editbudgetHeader_confirmedextent
 	  
 	From
 	  project_title Inner Join
 	  customers On project_title.client =
-	    customers.id
+	  customers.id
 	Where
 	  project_title.job_code = '".$job_code."'");
 			
@@ -462,4 +490,93 @@ else
 	  	}
       	echo(json_encode($result));
     }
-?>
+	
+	function getActivity_a($job_code)
+	{
+		$workflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($workflow)) {
+				
+			$workflowid = $row['workflow'];
+			$projectid = $row['id'];
+			
+		}
+		$result = mysql_query("
+		 Select
+ customers_ratecard.uom as uom,
+ customers_ratecard.dollars as rate_USD,
+ customers_ratecard.pounds as rate_GBP,
+ activity.id as activity_name
+From
+ stages Left Join
+ customers_ratecard On stages.activity =
+   customers_ratecard.activity Inner Join
+ activity On stages.activity =
+   activity.id
+Where
+ stages.workflow_id = '".$workflowid."' And
+ ooh_publishing.stages.flag = 0
+")or die(mysql_error());
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"results":'.json_encode($data).'})';
+	}
+	
+	function insertBudgetReceivables_a($job_code,$projectID,$activity_name,$uom,$rate_USD,$rate_GBP,$actual_unit,$amt_USD,$amt_GBP)
+    {
+/*	$selectworkflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($selectworkflow)) {
+				
+			$workflow = $row['workflow'];
+			$projectID = $row['id'];
+			
+		// }*/
+		    $activity_name1 = explode(',',$activity_name);
+		    $uom1 = explode(',',$uom);
+			$rate_USD1 = explode(',',$rate_USD);
+			$rate_GBP1 = explode(',',$rate_GBP);
+			$actual_unit1 = explode(',',$actual_unit);
+			$amt_USD1 = explode(',',$amt_USD);
+			$amt_GBP1 = explode(',',$amt_GBP);
+			
+		for ($i = 0; $i < count($activity_name1)-1; $i++)
+		{
+			$checkquery="SELECT id FROM budget_receivable WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."' ";
+       		$result2=mysql_query($checkquery);
+       		$num_rows=mysql_num_rows($result2);
+			if($num_rows == 1)
+			{
+				
+				$result1 = mysql_query("UPDATE budget_receivable SET  unit='".$uom1[$i]."',unit_usd = '".$rate_USD1[$i]."', unit_gbp = '".$rate_GBP1[$i]."', actual_billable_unit = '".$actual_unit1[$i]."', actual_billable_amount_usd= '".$amt_USD1[$i]."', actual_billable_amount_gbp = '".$amt_GBP1[$i]."',total_usd='".$amt_USD1[$i]."',total_gbp='".$amt_USD1[$i]."' WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."'");
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = "Budget saved successfully";
+				}
+		  }
+			
+			else
+			{
+				$result1 = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity, unit, unit_usd, unit_gbp, actual_billable_unit, actual_billable_amount_usd, actual_billable_amount_gbp,total_usd,total_gbp,created_by,created_on,modified_by,modified_on,flag)
+                                VALUES ('','".$projectID."','".$activity_name1[$i]."','".$uom1[$i]."','".$rate_USD1[$i]."','".$rate_GBP1[$i]."','".$actual_unit1[$i]."','".$amt_USD1[$i]."','".$amt_GBP1[$i]."','".$amt_USD1[$i]."', '".$amt_GBP1[$i]."','','','','','')");
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = "Budget inserted successfully";
+				}
+			}
+		}
+		echo json_encode($result);
+	}
+	?>

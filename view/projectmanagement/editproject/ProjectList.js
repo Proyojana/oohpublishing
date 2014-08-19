@@ -1,7 +1,13 @@
 var sm = Ext.create('Ext.selection.CheckboxModel', {
 	checkOnly : true
 });
-
+var type = Ext.create('Ext.data.Store', {
+        fields: ['id', 'name'],
+        data : [
+         {"id":"1", "name":"by Project"},
+            {"id":"2", "name":"by Activity"}
+        ]
+    });
 Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.projectlist',
@@ -15,7 +21,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 	'MyDesktop.view.projectmanagement.editproject.author.AuthorHeaderForm','MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm','MyDesktop.view.projectmanagement.editproject.team.TeamHeaderForm',
 	'MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleGrid','MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleHeaderForm',
 	'MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid','MyDesktop.view.projectmanagement.editproject.notes.NotesHeaderForm','MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkHeaderForm',
-	'MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkgrid'],
+	'MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkgrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid_a'],
 
 	id : 'projectlist',
 	initComponent : function() {
@@ -164,7 +170,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					});
 
 				}
-			}, {
+			},  {
 				iconCls : 'budgetEditClass',
 				tooltip : 'Edit Budget',
 				handler : function(grid, rowIndex, colIndex) {
@@ -175,33 +181,98 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						},
 						autoScroll : true,
 						title : 'Edit Budget',
-						width : 1125,
-						height : 500,
+						width : 1145,
+						height : 600,
 						items : [
 						{
 							xtype:'BudgetHeaderForm',
 							x:0,
 							y:0,
 							margin:'5 5 5 5'
-						},{
-							xtype : 'tabpanel',
-							id : 'editprojectBudgetAccountForm',
-							plain : true,
-							x : 5,
-							y : 80,
-							width:1100,
-							margin:'5 5 5 5',
-							activeTab : 0,
-							height : 360,
-
-							items : [{
-
-								xtype : 'edit_accountPayableGrid'
-							}, {
-
-								xtype : 'edit_accountsReceivableForm'
-							}]
-						}]
+						},
+							{
+							xtype:'combo',
+							x:10,
+							y:120,
+							fieldLabel:'Receivable type',
+							store: type,
+							id:'receive2',
+					        queryMode: 'local',
+					        displayField: 'name',
+					        valueField: 'id',
+					        	listeners: {
+					        		afterrender: function(combo){
+					        	var recordSelected = combo.getStore().getAt(0);                     
+                                combo.setValue(recordSelected.get('id'));
+                             },
+                            change: function(combo) {
+                                var val = Ext.getCmp('receive2').getValue();
+                                if(val==1){
+                                	Ext.getCmp('editaccountReceiveGrid_a').hide();
+                                	Ext.getCmp('editaccountReceiveGrid').show();
+                                }
+                                else{
+                                		Ext.getCmp('editaccountReceiveGrid').hide();
+                                		Ext.getCmp('editaccountReceiveGrid_a').show();
+                                }
+                               } 
+                        }
+							
+					},
+					{
+							xtype:'editaccountReceiveGrid',
+							x:5,
+							y:150,
+							height:150,
+						},
+						{
+							xtype:'editaccountReceiveGrid_a',
+							x:5,
+							y:150,
+							height:150,
+						},
+								{
+								xtype:'textfield',
+								  id:'edit_total_receive_USD',
+								  fieldLabel: 'Total Receivable amount in $',
+								  x:5,
+								  y:310,
+								 // width:400,
+								  labelWidth: 180,
+								},
+								{
+								xtype:'textfield',
+								  id:'edit_total_receive_GBP',
+								  fieldLabel: 'Total Receivable amount in £',
+								  x:500,
+								  y:310,
+								  //width:400,
+								  labelWidth: 180,
+								},
+								{
+							xtype : 'editaccountPayableGrid',
+							x:5,
+							y:340,
+							height:200,
+							},
+									{
+								xtype:'textfield',
+								  id:'edit_total_pay_USD',
+								  fieldLabel: 'Total Payable amount in $',
+								  x:5,
+								  y:545,
+								 // width:400,
+								  labelWidth: 180,
+								},
+								{
+								xtype:'textfield',
+								  id:'edit_total_pay_GBP',
+								  fieldLabel: 'Total Payable amount in £',
+								  x:500,
+								  y:545,
+								  //width:400,
+								  labelWidth: 180,
+								},]
 					});
 					win.show();
 
@@ -217,25 +288,25 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							action : 9,
 							job_code:job_code,
 							},
-						
-					});
-					var grid1 = Ext.getCmp('edit_accountPayableGrid');
-					grid1.getStore().load({
-						params : {
-							action : 1,
-							job_code : job_code,
-							
+						failure : function(form, action) {
+							Ext.Msg.alert("Load failed", action.result.errorMessage);
 						}
 					});
-					var currentForm = Ext.getCmp('edit_accountsReceivableForm');
+					var grid1 = Ext.getCmp('editaccountPayableGrid');
+					grid1.getStore().load({	params : {action : 1,job_code : job_code,}});
+					var grid4=Ext.getCmp('editaccountReceiveGrid_a');
+					grid4.getStore().load({params:{action:10,job_code:job_code}});
+					/*var currentForm = Ext.getCmp('edit_accountsReceivableForm');
 					currentForm.getForm().load({
 						url : 'service/EditProjects.php',
 						params : {
 							action : 4,
 							projectid:project_id,
 							},
-						
-					});
+						failure : function(form, action) {
+							Ext.Msg.alert("Load failed", action.result.errorMessage);
+						}
+					});*/
 					
 				}
 			}, {

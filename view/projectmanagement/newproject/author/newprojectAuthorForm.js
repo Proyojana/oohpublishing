@@ -8,7 +8,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorF
 		type: 'absolute'
 	},
 	frame:true,
-	requires:['MyDesktop.view.projectmanagement.newproject.author.AuthorGrid','MyDesktop.view.projectmanagement.newproject.author.ContribGrid','MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorHeaderForm'],
+	requires:['MyDesktop.view.projectmanagement.newproject.author.AuthorGrid','MyDesktop.view.projectmanagement.newproject.author.ContribGrid','MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorHeaderForm','MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableGrid_a'],
 	title:'Author',
 	defaults: {
 		labelWidth: 120,
@@ -73,7 +73,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorF
 				var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
                 	 /****load data in header form*****/
                 	
-						
+						; 
 						currentForm.getForm().load({
    								 url: 'service/budget.php',
 							     params: {
@@ -87,7 +87,9 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorF
 						});
 					var grid3=Ext.getCmp('accountPayableGrid');
 									grid3.getStore().load({params:{action:1,job_code:job_code}});
-									var grid3=Ext.getCmp('new_author_grid');
+					var grid4=Ext.getCmp('accountReceiveGrid_a');
+									grid4.getStore().load({params:{action:10,job_code:job_code}});
+					var grid3=Ext.getCmp('new_author_grid');
 									grid3.getStore().load({params:{action:2,job_code:job_code}});
 					Ext.getCmp('newprojectbudgetformTab').setDisabled(false);	
 					Ext.getCmp('newprojectauthorformTab').setDisabled(false);

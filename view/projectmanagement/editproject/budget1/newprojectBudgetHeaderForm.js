@@ -16,11 +16,11 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
             },
 	frame:true,
 	
-	width:1050,
-	height:110,
+	width:1100,
+	height:105,
 	title:'Header Data',
 	defaults: {
-		labelWidth: 100,
+		labelWidth: 180,
 	},
 	// collapsible: true,
 	defaultType: 'textfield',
@@ -48,27 +48,27 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 		readOnly: true,
 		x:10,
 		y:10,
-		width:220,
+		width:320,
 	},
 	{
 		id:'budgetHeader_ClientName',
 		fieldLabel: 'Client Name',
 		margin:'0 0 0 0',
-		x:260,
+		x:360,
 		y:10,
 		readOnly: true,
-		width:220,
+		width:320,
 	},
 	{
 		id:'budgetHeader_Job',
 		fieldLabel: 'Job #',
-		//emptyText:'Example: JOB001',
-		readOnly: true,
-		x:510,
+		emptyText:'Example: JOB001',
+		//readOnly: true,
+		x:710,
 		y:10,
-		width:220,
+		width:320,
 		listeners: {
-             /* specialkey: function(f,e){
+              specialkey: function(f,e){
                 if (e.getKey() == e.ENTER) {
                
                 	var project_code = Ext.getCmp("budgetHeader_Job").getValue();
@@ -78,7 +78,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
                 	 /****load data in header form*****/
                 	
 						
-						/*currentForm.getForm().load({
+						currentForm.getForm().load({
    								 url: 'service/budget.php',
 							     params: {
         						 	action:2,project_code:project_code
@@ -107,36 +107,17 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 					
             
                 }
-              }*/
+              }
             }
 		//labelWidth: 60,
 	},
 	{
 		id:'budgetHeader_ProjectName',
 		fieldLabel: 'Project Name',
-		x:760,
-		readOnly: true,
-		y:10,
-		width:220,
-		
-	},
-		
-	{
-		id:'budgetHeader_castoffextent',
-		fieldLabel: 'Cast Off Extent',
 		x:10,
 		readOnly: true,
 		y:40,
-		width:220,
-		
-	},
-	{
-		id:'budgetHeader_confirmedextent',
-		fieldLabel: 'Confirmed Extent',
-		x:260,
-		readOnly: true,
-		y:40,
-		width:220,
+		width:320,
 		
 	},
 	/**{
@@ -146,7 +127,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 		x:310,
 		//readOnly: true,
 		y:40,
-		width:220,
+		width:320,
 		store:times,
 		displayField:'unit',
 		listeners : {

@@ -10,10 +10,10 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	frame:true,
 	
 	width:1100,
-	height:100,
+	height:65,
 	title:'Header Data',
 	defaults: {
-		labelWidth: 90,
+		labelWidth: 80,
 	},
 	defaultType: 'textfield',
 	
@@ -21,7 +21,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		
 	
 		this.items= [
-		
 		{
 			id:'editbudgetHeader_projectID',
 			hidden:true
@@ -44,14 +43,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		id:'editbudgetHeader_ClientName',
 		fieldLabel: 'Client Name',
 		margin:'0 0 0 0',
-		labelWidth: 98,
 		x:260,
 		y:0,
 		readOnly: true,
 		width:220,
 	},
 	{
-		id:'edit_Job_code',
+		id:'editbudgetHeader_Job',
 		fieldLabel: 'Job #',
 		//emptyText:'Example: JOB001',
 		readOnly: true,
@@ -69,27 +67,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		width:220,
 		
 	},
-		
-	{
-		id:'editbudgetHeader_castoffextent',
-		fieldLabel: 'Cast Off Extent',
-		x:10,
-		readOnly: true,
-		y:30,
-		width:220,
-		
-	},
-	{
-		id:'editbudgetHeader_confirmedextent',
-		fieldLabel: 'Confirmed Extent',
-		x:260,
-		labelWidth: 98,
-		readOnly: true,
-		y:30,
-		width:220,
-		
-	},
 	]
+	
 	this.callParent();
 }
 });
