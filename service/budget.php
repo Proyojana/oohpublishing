@@ -514,7 +514,7 @@ From
    activity.id
 Where
  stages.workflow_id = '".$workflowid."' And
- ooh_publishing.stages.flag = 0
+ stages.flag = 0
 ")or die(mysql_error());
 		while($row=mysql_fetch_object($result))
 		{
