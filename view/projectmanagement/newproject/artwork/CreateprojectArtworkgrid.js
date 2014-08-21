@@ -58,11 +58,11 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.artwork.CreateprojectArt
                 		       author.insert(0, r);
             				 }                           
         },
-        {
+       /** {
 				xtype:'exporterbutton',
 				text:'Export',
 				//margin:'0 0 0 40'
-			},
+			},**/
         
         ]
         });
