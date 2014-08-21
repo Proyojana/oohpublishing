@@ -17,6 +17,7 @@ Ext.define('MyDesktop.App', {
     requires: [
         'Ext.window.MessageBox',
 		'Ext.ux.panel.PDF',
+		'Ext.ux.exporter.Exporter',
         'Ext.ux.desktop.ShortcutModel',
 		'Ext.ux.LiveSearchGridPanel',
 		'Ext.ux.form.MultiSelect',

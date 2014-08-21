@@ -17,6 +17,9 @@ switch($_POST["action"]) /*Read action sent from front-end */ {
 	case 4:
 		deleteNotes($_POST['id']);
 		break;
+	case 5:
+		getAddProjectDetails($_POST['job_code']);
+		break;
 	default :
 		break;
 }
@@ -165,4 +168,34 @@ function deleteNotes($id)
 		
 		echo json_encode($result);
 	}
+	
+	
+		function getAddProjectDetails($job_code) {
+				$result1 = mysql_query("Select
+				  customers.name as addnotesHeader_ClientName,
+				  customers.code as addnotesHeader_ClientCode,
+				  customers.id as editnotesHeader_clientId,
+				  project_title.title as addnotesHeader_ProjectName,
+				  project_title.workflow as addnotesHeader_workflow,
+				  project_title.job_code as addnotesHeader_Job,
+				  project_title.id as addnotesHeader_projectID
+				  
+				From
+				  project_title Inner Join
+				  customers On project_title.client =
+				    customers.id
+				Where
+				  project_title.job_code = '" . $job_code . "'");
+			
+				if(!$result1) {
+					$result[failure] = true;
+					$result[message] = 'Invalid query: ' . mysql_error();
+				} else {
+					$result["success"] = true;
+				}
+				while($row = mysql_fetch_object($result1)) {
+					$result["data"] = $row;
+				}
+				echo(json_encode($result));
+			}
 ?>

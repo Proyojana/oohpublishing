@@ -132,7 +132,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
     		
 		{
 			xtype:'button',
-    	    text:'Add',
+    	    text:'Save + Next',
     	    iconCls: 'button_add',
     	    id:'add_job_team',
 			x:350,
@@ -164,6 +164,19 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
 				Ext.Msg.alert('Message', obj.message); 
 			//	currentForm.getForm().reset();
 			//	Ext.getCmp('usersgrid').getStore().reload();
+			Ext.getCmp('newprojectnotesformTab').setDisabled(false);	
+				var currentHeaderForm = Ext.getCmp('newprojectNotesHeaderForm');
+							/****load data in header form*****/
+
+							currentHeaderForm.getForm().load({
+								url: 'service/notes.php',
+								params: {
+									action:5,
+									job_code:job_code
+								},
+								
+							});
+			Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectnotesformTab');
 				}
 				});
 				}
@@ -171,6 +184,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamAddForm' ,{
 				{
 				Ext.MessageBox.alert('Please fill the required data.');
 				}
+				
 				}
 			
 			

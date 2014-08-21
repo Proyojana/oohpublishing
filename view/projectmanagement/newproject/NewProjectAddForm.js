@@ -62,6 +62,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
 			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
 			Ext.getCmp('newprojectteamformTab').setDisabled(true);
+			Ext.getCmp('newprojectnotesformTab').setDisabled(true);
+			Ext.getCmp('newprojectartworkformTab').setDisabled(true);
      	}},
      	
 	initComponent:function(){
@@ -532,6 +534,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
 			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
 			Ext.getCmp('newprojectteamformTab').setDisabled(true);
+			Ext.getCmp('newprojectnotesformTab').setDisabled(true);
+			Ext.getCmp('newprojectartworkformTab').setDisabled(true);
 			}
 	  	} ]
 	  

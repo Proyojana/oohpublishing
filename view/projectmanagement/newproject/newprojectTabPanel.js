@@ -4,7 +4,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.newprojectTabPanel',{
 		alias:'widget.newprojecttab',
 		
 	requires:['MyDesktop.view.projectmanagement.newproject.NewProjectAddForm','MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetForm' ,'MyDesktop.view.projectmanagement.newproject.schedule.newprojectScheduleForm'
-		,'MyDesktop.view.projectmanagement.newproject.team.newprojectTeamForm','MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorForm' ],
+		,'MyDesktop.view.projectmanagement.newproject.team.newprojectTeamForm','MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorForm','MyDesktop.view.projectmanagement.newproject.notes.newprojectNotesForm','MyDesktop.view.projectmanagement.newproject.artwork.newprojectArtworkForm' ],
 					autoDestroy: false,
 					deferredRender: true,
                     xtype: 'tabpanel',
@@ -36,5 +36,13 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.newprojectTabPanel',{
                     {
                     	id:'newprojectteamformTab',
                     	xtype:'newprojectTeamform'
+                    },
+                    {
+                       id:'newprojectnotesformTab',
+                       xtype:'newprojectNotesform'
+                    },
+                    {
+                    	  id:'newprojectartworkformTab',
+                          xtype:'newprojectArtworkform'
                     }]
 	});

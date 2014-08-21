@@ -42,6 +42,9 @@ header( "Location:index.php" );
     <script type="text/javascript" src="inc/ext/src/ux/panel/PDF.js"></script>
     <script type="text/javascript" src="inc/ext/src/ux/util/PDF/TextLayerBuilder.js"></script> 
  
+ <script type="text/javascript" src="inc/ext/src/ux/exporter/swfobject.js"></script>
+<script type="text/javascript" src="inc/ext/src/ux/exporter/downloadify.min.js"></script>
+ 
   
    
     <!-- </x-bootstrap> -->
