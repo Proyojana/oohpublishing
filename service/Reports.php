@@ -86,17 +86,15 @@ function sendEmail($from, $to, $cc, $html, $message) {
 
 function sendEmailPdf($from, $to,$cc, $html,$message) {
 									
-			require_once("dompdf/dompdf_config.inc.php");	
-			
-			
-				$html='<html><head><link rel="stylesheet" type="text/css" href="../inc/ext/resources/css/ext-all.css" />
+			require_once("dompdf/dompdf_config.inc.php");					
+				$html='<html><head><link rel="stylesheet" type="text/css" href="http://proyojana.in/oohpublishing/inc/ext/resources/css/ext-all.css" /><style>.x-form-item-label{width:80px;}</style>
 				</head><body>'.$html.'</body></html> ';	
-			
+			$subject = "Report";
 			$dompdf = new DOMPDF();
 			$dompdf->load_html($html);
 			$dompdf->render();
 			$output = $dompdf->output();
-			file_put_contents('Report.pdf', $output);
+			//file_put_contents('Report.pdf', $output);
 			
 		
 		$separator = md5(time());
@@ -119,5 +117,15 @@ function sendEmailPdf($from, $to,$cc, $html,$message) {
         $body .= "Content-Disposition: attachment" . $eol . $eol;
         $body .= $attachment . $eol;
         $body .= "--" . $separator . "--";
-        mail($to, $subject, $body, $headers);
-}?>
+       $retval=mail($to, $subject, $body, $headers);
+		 if(!$retval) {
+				$result["failure"] = true;
+				$result["message"] = 'Invalid query: ' . mysql_error();
+			} else {
+				$result["success"] = true;
+				$result["message"] = 'Message send sucessfully';
+			}
+			
+			echo(json_encode($result));
+			}
+?>
