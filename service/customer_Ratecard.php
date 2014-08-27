@@ -1,8 +1,8 @@
 <?php
-    session_start();
+    //session_start();
 include("config.php");
 include("../inc/php/encryptDecrypt.php");
-$id=$_SESSION['user_no'];
+//$id=$_SESSION['user_no'];
 	switch($_POST["action"]) /*Read action sent from front-end */
 	{
 		case 1:

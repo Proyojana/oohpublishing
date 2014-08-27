@@ -2,8 +2,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ProductionTitleInfo
 	extend:'Ext.grid.property.Grid',
 	alias:'widget.ptitleinfogrid',
 	closeAction: 'hide',
-	
-	height:220,
+	//title:'Title Info',
+	//height:220,
 	hideHeaders:true,
 	id:'ptitleinfogrid',
 	listeners: {

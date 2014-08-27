@@ -2,16 +2,14 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.productionreport' ,
     extend: 'Ext.form.Panel',
     alias : 'widget.productionreport', 
 	id:'productionreport',
-	layout: {
-                 type: 'absolute'
-            },
+	layout: 'anchor',
 	
 	requires :['MyDesktop.view.projectmanagement.currentprojects.ProductionTitleInfoGrid','MyDesktop.view.projectmanagement.currentprojects.ProductionScheduleGrid','MyDesktop.view.projectmanagement.currentprojects.ProductionTeamGrid',
-	'MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGrid','MyDesktop.view.projectmanagement.currentprojects.productionReport_HeaderForm'],
+	'MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGrid'],
 	
     defaults: {
         
-        labelWidth: 200,
+        labelWidth: 60,
 
     },
 
@@ -21,7 +19,26 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.productionreport' ,
              
     
 		this.items  = [		
-		
+		{
+			fieldLabel:'JOB#',
+			id:'productionreport_jobCode',
+			style:	{'font-weight':'bold'},
+			//readOnly:true,
+			width:340,
+			labelWidth: 80,
+			margin:'10 0 0 10'
+		},
+		{
+			fieldLabel:'Project Title',
+			id:'productionreport_projectTtile',
+			//readOnly:true,
+			labelWidth: 80,
+			x:220,
+			y:10,
+			width:340,
+			margin:'10 0 10 10',
+			style:	{'font-weight':'bold'}
+		},
 		/**{
 			xtype:'label',
 			text:'Current Status',
@@ -60,54 +77,70 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.productionreport' ,
 			y:10,	
 			height:19,
 			//width:160,	
-			},**/
+			},
 			{
 				xtype:'productionReport_HeaderForm',
 				x:0,
 				y:0,
 				height:80
-			},
+			},**/
+			
+			{
+			xtype:'label',
+			text:'Tilte Info',
+			margin:'0 0 0 10',
+		    style:	{'font-weight':'bold'}
+		},
 		{
 			xtype:'ptitleinfogrid',
-			x:5,
-			y:100,
+			margin:'10 0 10 10',
+			//x:5,
+			//y:100,
 		},
 		{
 			xtype:'label',
 			text:'Schedule',
-			x:05,
-			y:325,
+			margin:'0 0 0 10',
 		    style:	{'font-weight':'bold'}
 		},
 		{
 			xtype:'pschedulegrid',
-			x:5,
-			y:340,
+			margin:'10 0 10 10',
+			//x:5,
+		//	y:340,
 		},	
 		{
 			xtype:'label',
 			text:'Team',
-			x:05,
-			y:453,
+			margin:'10 0 0 10',
 		    style:	{'font-weight':'bold'}			
 		},
 		{
 			xtype:'pteamgrid',
-			x:5,
-			y:470
+			margin:'10 0 10 10',
+			
 		},
 		{
 			xtype:'label',
 			text: 'Budget: ',
-			x:05,
-			y:560	,	
-			style:	{'font-weight':'bold'}			
+			style:	{'font-weight':'bold'},
+			margin:'0 0 0 10',		
 		},	
        {
 	       xtype:'pbudgetgrid',
-	       x:5,
-	       y:580
-       }	
+	       margin:'10 0 10 10',
+	     //  x:5,
+	      // y:580
+       },
+     /*  {
+			fieldLabel:'Total $',
+			id:'productionreport_BudgetTotal',
+			style:	{'font-weight':'bold'},
+			//readOnly:true,
+			width:340,
+			labelWidth: 80,
+			margin:'10 0 10 10'
+		},*/
 			];
 			
 			

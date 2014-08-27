@@ -1,7 +1,7 @@
 <?php
     include("config.php");
-	session_start();
-$user_no=$_SESSION["user_no"];
+//	session_start();
+//$user_no=$_SESSION["user_no"];
 	switch($_POST["action"]) /*Read action sent from front-end */
 	{
 		case 1:
