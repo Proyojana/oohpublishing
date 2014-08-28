@@ -26,7 +26,7 @@ Ext.define('MyDesktop.view.MasterWindow', {
 	id:'master-win',
 	init : function() {
 		this.launcher = {
-			text: 'Project Management',
+			text: 'Master Management',
 			iconCls:'masterClass',
 		};
 		this.callParent();

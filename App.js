@@ -15,25 +15,24 @@ Ext.define('MyDesktop.App', {
     extend: 'Ext.ux.desktop.App',
 
     requires: [
-        'Ext.window.MessageBox',
+         'Ext.window.MessageBox',
 		'Ext.ux.panel.PDF',
-		//'Ext.ux.exporter.Exporter',
         'Ext.ux.desktop.ShortcutModel',
 		'Ext.ux.LiveSearchGridPanel',
 		'Ext.ux.form.MultiSelect',
-        'MyDesktop.view.SystemStatus',
+        /*'MyDesktop.view.SystemStatus',
         'MyDesktop.view.VideoWindow',
-        'MyDesktop.view.GridWindow',
+        'MyDesktop.view.GridWindow',*/
 	
-		'MyDesktop.view.CollaboratorsWindow',
+		//'MyDesktop.view.CollaboratorsWindow',
 		'MyDesktop.view.MasterWindow',
-        'MyDesktop.view.TabWindow',
-        'MyDesktop.view.AccordionWindow',
+        //'MyDesktop.view.TabWindow',
+        /*'MyDesktop.view.AccordionWindow',
         'MyDesktop.view.Notepad',
 		'MyDesktop.view.WordMark',
         'MyDesktop.view.BogusMenuModule',
         'MyDesktop.view.BogusModule',
-          'MyDesktop.view.Settings',
+          'MyDesktop.view.Settings',*/
      'MyDesktop.view.ProjectWindow',
      'MyDesktop.view.BudgetsWindow'
         
@@ -94,24 +93,18 @@ Ext.define('MyDesktop.App', {
     //controllers:['EmployeeGroup'],
     getModules : function(){
         return [
-            new MyDesktop.view.VideoWindow(),            
+           /* new MyDesktop.view.VideoWindow(),            
             new MyDesktop.view.SystemStatus(),
             new MyDesktop.view.GridWindow(),
-            new MyDesktop.view.TabWindow(),
+            new MyDesktop.view.TabWindow(),*/
 			new MyDesktop.view.MasterWindow(),
-            new MyDesktop.view.AccordionWindow(),
+          /*  new MyDesktop.view.AccordionWindow(),
             new MyDesktop.view.Notepad(),
 			new MyDesktop.view.WordMark(),
             new MyDesktop.view.BogusMenuModule(),
-            new MyDesktop.view.BogusModule(),
+            new MyDesktop.view.BogusModule(),*/
             new MyDesktop.view.ProjectWindow(),
             new MyDesktop.view.BudgetsWindow(),
-            
-           
-           
-            
-            
-            
         ];
     },
 
@@ -192,8 +185,8 @@ if(role==1){
 
         return Ext.apply(ret, {
             quickStart: [
-                { name: 'Accordion Window', iconCls: 'accordion', module: 'acc-win' },
-                { name: 'Grid Window', iconCls: 'icon-grid', module: 'grid-win' }
+               /* { name: 'Accordion Window', iconCls: 'accordion', module: 'acc-win' },
+                { name: 'Grid Window', iconCls: 'icon-grid', module: 'grid-win' }*/
             ],
             trayItems: [
                 { xtype: 'trayclock', flex: 1 }

@@ -1,14 +1,14 @@
- Ext.define('MyDesktop.store.TAuthor', {
+ Ext.define('MyDesktop.store.Team', {
         extend:'Ext.data.Store',
 		pageSize: 8,
-        model: 'MyDesktop.model.TAuthor',
+        model: 'MyDesktop.model.Team',
         proxy: {
     		type:'ajax',
-			url: 'service/projects.php',
+			url: 'service/Users.php',
 			actionMethods: {
 		     read: 'POST'
     		},
-    			extraParams:{action:17},
+    			extraParams:{action:12},
     		reader: {
 				type:'json',
 	        	root: 'results',

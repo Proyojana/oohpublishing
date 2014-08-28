@@ -587,7 +587,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					var grid1 = Ext.getCmp('tauthorgrid');
 					grid1.getStore().load({
 						params : {
-							action : 15,
+							action : 17,
 							job_code : job_code
 						}
 					});

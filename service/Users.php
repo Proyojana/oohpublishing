@@ -3,7 +3,7 @@
 session_start();    
     include("config.php");
 	include("../inc/php/encryptDecrypt.php");
-$id=$_SESSION['id'];
+$id=$_SESSION['user_no'];
 	switch($_POST["action"]) /*Read action sent from front-end */
 	{
 		case 1:
@@ -36,6 +36,12 @@ $id=$_SESSION['id'];
 		case 10:
 		    getHeaderData($_POST['job_code']);
 			break;
+        case 11:
+			insertTeam($_POST['project_id'],$_POST['role'],$_POST['name'],$_POST['email']);
+			break;
+	   case 12:
+			getTeam($_POST['project_id']);
+	        break;
 		default: 
 			break;
 	}
@@ -385,4 +391,79 @@ Where
 	  	}
       	echo(json_encode($result));
     }
+	
+	function insertTeam($project_id, $role, $name, $email){
+		$role = explode(',',$role);
+		$name = explode(',',$name);
+		$email = explode(',',$email);
+		for ($i = 0; $i < count($name)-1; $i++)
+		{
+			$checkquery="SELECT id FROM project_team WHERE project_id='".$project_id."' and role='".$role[$i]."'";
+       		$result2=mysql_query($checkquery);
+       		$num_rows=mysql_num_rows($result2);
+			if($num_rows == 1)
+			{
+				
+				$result1 = mysql_query("UPDATE project_team SET  user = '".$name[$i]."', email = '".$email[$i]."' WHERE project_id='".$project_id."' and role='".$role[$i]."'");
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = "Team Updated successfully";
+				}
+		  }
+			
+			else
+			{
+				$result1 = mysql_query("INSERT INTO project_team (id ,project_id, role, user, email,created_by,created_on,modified_by,modified_on,flag)
+                                VALUES ('','".$project_id."','".$role[$i]."','".$name[$i]."','".$email[$i]."','','','','','')");
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = "Team created successfully";
+				}
+			}
+			}
+	}
+	function getTeam($project_id)
+	{
+ 		$num_result = mysql_query ("Select
+  project_team.id as id,
+ project_team.role as role,
+ users.id as name,
+ project_team.email as email
+From
+ project_team Left Join
+ users On project_team.user =
+   users.id
+    Where project_team.project_id='".$project_id."' and project_team.flag=0")or die(mysql_error());
+		
+		$totaldata = mysql_num_rows($num_result);
+
+		$result = mysql_query("Select
+		project_team.id as id,
+ project_team.role as role,
+ users.id as name,
+ project_team.email as email
+From
+ project_team Left Join
+ users On project_team.user =
+   users.id
+    Where  project_team.project_id='".$project_id."' and project_team.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
+	}
 ?>

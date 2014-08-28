@@ -380,7 +380,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							y:0,
 							margin:'5 5 5 5'
 						},{
-							xtype : 'edit_teamaddform',
+							xtype : 'editteamgrid',
 							x : 0,
 							y :80,
 							margin:'5 5 5 5'
@@ -392,14 +392,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					var rec = grid.getStore().getAt(rowIndex);
 					var project_id = rec.get('pro_id');
 					var job_code = rec.get('pro_code');
-					var currentForm = Ext.getCmp('edit_teamaddform');
-					currentForm.getForm().load({
-						url : 'service/projects.php',
+				    var grid1 = Ext.getCmp('editteamgrid');
+					grid1.getStore().load({
 						params : {
-							action : 15,
-							project_id:project_id,
-							},
-						failure : function(form, action) {
+							action : 12,
+							project_id : project_id,
 							
 						}
 					});

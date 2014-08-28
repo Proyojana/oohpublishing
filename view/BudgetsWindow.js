@@ -26,8 +26,8 @@ Ext.define('MyDesktop.view.BudgetsWindow', {
 	id:'budgets-win',
 	init : function() {
 		this.launcher = {
-			text: 'Project Management',
-			iconCls:'masterClass',
+			text: 'Reports',
+			iconCls:'reportsmain',
 		};
 		this.callParent();
 	},

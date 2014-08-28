@@ -2,135 +2,114 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
 var store1 = Ext.create('Ext.data.JsonStore', {
-    fields: ['job','jobtitle', 'name','role','description'],
-    data: [{"job":"US001","jobtitle":"Project A","name":"James El","role":"Project Manager","description":"Manages the project"},
-    {"job":"US002","jobtitle":"Project A","name":"Richard Branson","role":"Production Editor","description":"Focused on putting the article into its printed form"},
-    {"job":"US003","jobtitle":"Project A","name":"Aaron Ramsey","role":"Copy Editor","description":"Checks the formatting, style, and accuracy of text"},
-     {"job":"US004","jobtitle":"Project A","name":"Blinda Edward","role":"Proof Reader","description":"Correct typographical errors and mistakes in grammar"},
-      {"job":"US004","jobtitle":"Project A","name":"Gilbert","role":"Indexer","description":"Provides an index"},
-       {"job":"US004","jobtitle":"Project A","name":"Steve Jaccob","role":"Typesetter","description":"Arranging physical types or the digital equivalents"},
-    
-    ]
-     });	
+    fields: ['role_id','role',],
+    data: [{"role_id":"1","role":"Project Manager"},
+    {"role_id":"2","role":"Production Editor"},
+    {"role_id":"3","role":"Copy Editor"},
+    {"role_id":"4","role":"Proof Reader"},
+    {"role_id":"5","role":"Indexer"},
+    {"role_id":"6","role":"Typesetter"},
+    ]});
+    	
 Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
-	extend:'Ext.ux.LiveSearchGridPanel',
+	extend:'Ext.grid.Panel',
 	alias:'widget.newteamgrid',
 	closeAction: 'hide',
 	selModel:sm,
 	height:250,
-	//requires : ['MyDesktop.store.Dept'],
-	
+	requires:['MyDesktop.store.ProjectManagers','MyDesktop.store.ProductionEditor','MyDesktop.store.Projects'],
 	id:'newteamgrid',
+	plugins: [
+             Ext.create('Ext.grid.plugin.CellEditing', {
+                 clicksToEdit: 1,
+                  markDirty: true,
+                   listeners: {
+                 'edit': function (editor,e) {
+                                         var grid = e.grid;
+                                                    var record = e.record;
+                                                    if(record.data.status==2 || record.data.status==3)
+                                                    return false;
+                                   }
+                               }
+             })        
+   ],
 	initComponent: function() {
 		
+		var projectmanager = Ext.create('MyDesktop.store.ProjectManagers');
+		projectmanager.load({params:{action: 8}});
 		
+		var productioneditor = Ext.create('MyDesktop.store.ProductionEditor');
+		productioneditor.load({params:{action: 9}});
+	
 		this.store = store1,
 			this.columns = [
 				{
-					dataIndex: 'job',
-					text: 'Job #',
+					dataIndex: 'role_id',
 					align: 'center',
                     flex:1,
                     hidden:true
- 			},
-				{
-					dataIndex: 'jobtitle',
-					text: 'Title',
-					align: 'center',
- flex:1,
-					
-				},
+ 			   },
+			    {
+				 dataIndex: 'role',
+				 text: 'Role',
+				 align: 'center',
+                 flex:1,
+				 editor:{
+				 xtype:'textfield'
+                 },
+				},	
 				{
 					dataIndex: 'name',
 					text: 'Name',
 					align: 'center',
                     flex:1,
-					
-					filter: {
-                	type: 'string'
-           		}
-				},
-				{
-					dataIndex: 'role',
-					text: 'Role',
-					align: 'center',
- flex:1,
-					
-					filter: {
-                	type: 'string'
-           		}
-				},				
-				{
-					dataIndex: 'description',
-					text: 'Description',
-					align: 'center',
- flex:1,
-					
-					filter: {
-                	type: 'string'
-           		}
-				},
-				/*{
-					dataIndex: 'description',
-					text: 'Proof Reader',
-					align: 'center',
- flex:1,
-					
-					filter: {
-                	type: 'string'
-           		}
-				},
-				{
-					dataIndex: 'description',
-					text: 'Indexer',
-					align: 'center',
- flex:1,
-					
-					filter: {
-                	type: 'string'
-           		}
-				},
-				{
-					dataIndex: 'description',
-					text: 'Typesetter',
-					align: 'center',
- flex:1,
-					
-					filter: {
-                	type: 'string'
-           		}
-				},*/
-				
-				{
-					xtype:'actioncolumn',
-					align: 'center',
- flex:1,
-					width:250,
-					text:'Actions',
-					items: [{
-						iconCls: 'viewClass',
-						tooltip: 'View',
-					handler: function(grid, rowIndex, colIndex) {
-					  
-						
-				}
-			},{
-				iconCls: 'editClass',
-				tooltip: 'Edit',
-		 	handler: function(grid, rowIndex, colIndex) {
-					
-					   
-						
-				}
-			},{
-					iconCls: 'deleteClass',
-					tooltip: 'Delete',
-					handler: function(grid, rowIndex, colIndex) {
-					
-					
+					editor:{
+					 	xtype:'combo',
+					 	store: productioneditor,
+						queryMode: 'local',
+						displayField: 'username',
+						valueField: 'userid',
+						listeners: {
+                change: function (field, newValue, oldValue) {
+                	var grid = this.up().up();
+                        // get selection model of the grid  
+                     
+                    var selModel = grid.getSelectionModel();
+                		var conn = new Ext.data.Connection();
+					 conn.request({
+					 url: 'service/Users.php',
+					 method: 'POST',
+					 params : {action:2,userid1:newValue},
+					 success:function(response){
+					 obj1 = Ext.JSON.decode(response.responseText);
+					 var email=obj1.data.useremail;
+					selModel.getSelection()[0].set('email', email);                         
+					 }
+					 });
+                    
+			            }
+			              }	
+                        },
+                         renderer: function(value) {
+					var index = productioneditor.find('userid', value);
+					if (index != -1) {
+					return productioneditor.getAt(index).data.username;
 					}
-				}]
-		}];
+					return value;
+					}
+
+				},
+				{
+					dataIndex: 'email',
+					text: 'Email',
+					align: 'center',
+                    flex:1,
+					editor:{
+					 	xtype:'textfield'
+                        },
+
+				},
+			];
 		this.bbar = Ext.create('Ext.PagingToolbar', {  
 
 			store : this.store,
@@ -138,8 +117,43 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
 			items:[
-		]
+			{
+				xtype:'button',
+				text:'Save',
+				pressed:true,
+				width:100,
+				handler:function(){
+					var project_id=Ext.getCmp('teamHeader_projectID').getValue(); 
+					var role='';
+					var name='';
+					var email='';
+					var myStore = Ext.getCmp('newteamgrid').getStore();
+					myStore.each(function(rec) {
+						role=role+rec.get('role')+',';
+						name=name+rec.get('name')+',';
+						email=email+rec.get('email')+',';
+						});
+						
+					var conn = new Ext.data.Connection();
+					 conn.request({
+						url: 'service/Users.php',
+						method: 'POST',
+						params : {action:11,project_id:project_id,role:role,name:name,email:email},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message); 
+						//	Ext.getCmp('newprojectscheduleformTab').setDisabled(false);	
+							
+							
+
+					
+						}
+					});
+					
+				}
+			}]
 			
+						
 		}),
 		
 		this.callParent(arguments);

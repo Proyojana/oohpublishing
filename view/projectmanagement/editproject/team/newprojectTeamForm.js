@@ -7,7 +7,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.newprojectTeamForm'
               type: 'absolute'
             },
 	frame:true,
-	requires:['MyDesktop.view.projectmanagement.newproject.team.TeamGrid','MyDesktop.view.projectmanagement.newproject.team.TeamAddForm'],
+	requires:['MyDesktop.view.projectmanagement.newproject.team.TeamGrid','MyDesktop.view.projectmanagement.editproject.team.TeamGrid'],
 	title:'Team',
     defaults: {
         labelWidth: 140,
@@ -24,7 +24,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.newprojectTeamForm'
 			height:260
 	},
 		{
-			xtype:'teamaddform',
+			xtype:'editteamgrid',
 			x:1,
 			y:300,
 			height:260

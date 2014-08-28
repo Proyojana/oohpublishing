@@ -53,7 +53,9 @@ $id=$_SESSION['id'];
 		case 16:
 			getProjectDetails($_POST['job_code']);
 			break;
-				
+	   case 17:
+			tauthorinfo($_POST['job_code']);
+			break;
 		default: 
 			break;
 	}
