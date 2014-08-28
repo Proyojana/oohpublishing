@@ -79,7 +79,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.typesetterform', {
 		}, {
 			xtype : 'tauthorgrid',
 			x : 5,
-			y : 300
+			y : 300,
+			height:80
 		},
 		{
 
@@ -87,7 +88,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.typesetterform', {
 		 text : 'Typesetting Notes',
 		 align:'center',
 		 x:10,
-		 y:440,
+		 y:400,
 		 allowBlank: false,
 		 width:300,
 		 style:{
@@ -97,22 +98,11 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.typesetterform', {
 		 {
 		 	xtype:'textarea',
 		 	x:5,
-		 	y:460,
+		 	y:420,
 		 	width:750,
 		 },
 
-		{
-			xtype : 'button',
-			text : 'Send',
-			x : 300,
-			y : 540,
-
-		}, {
-			xtype : 'button',
-			text : 'Cancel',
-			x : 250,
-			y : 540,
-		}];
+		];
 		/*  bbar:
 		 [
 		 this.items = [
