@@ -248,7 +248,9 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 									},
 									fn: function(btn) {
 										if(btn=='yes') {
-																						
+					var rec = grid.getStore().getAt(rowIndex);
+					var project_id = rec.get('id');
+										//	alert(project_id);											
 											//create send message window
 					var messagewin = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
@@ -311,11 +313,11 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						buttons:[{
 							text:'Send Email',
 							handler: function() {
-								var html=win.body.dom.innerHTML;
+								//var html=win.body.dom.innerHTML;
 								var from=Ext.getCmp('html_from').getValue();
 								var html_to=Ext.getCmp('html_to').getValue().toString();
 								var html_cc=Ext.getCmp('html_cc').getValue().toString();
-								var message=Ext.getCmp('html_message').getValue()+html;
+								var message=Ext.getCmp('html_message').getValue();
 										//send data to php
 								var conn = new Ext.data.Connection();
 								conn.request({
@@ -326,7 +328,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 										html : message,
 										from:from,
 										to:html_to,
-										cc:html_cc
+										cc:html_cc,
+										project_id:project_id
 									},
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);
@@ -345,6 +348,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 											
 										} 
 										else if(btn=='no'){
+											var rec = grid.getStore().getAt(rowIndex);
+					var project_id = rec.get('id');
 											//create send message window
 					var messagewin1 = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
@@ -401,7 +406,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						buttons:[{
 							text:'Send Email',
 							handler: function() {
-								var html=win.body.dom.innerHTML;
+							//	var html=win.body.dom.innerHTML;
 								var from=Ext.getCmp('pdf_from').getValue();
 								var pdf_to=Ext.getCmp('pdf_to').getValue().toString();
 								var pdf_cc=Ext.getCmp('pdf_cc').getValue().toString();
@@ -413,11 +418,12 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 									method : 'POST',
 									params : {
 										action : 4,
-										html : html,
+										
 										from:from,
 										to:pdf_to,
 										cc:pdf_cc,
-										message:message
+										message:message,
+										project_id:project_id
 									},
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);

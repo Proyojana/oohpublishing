@@ -54,9 +54,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 				 text: 'Role',
 				 align: 'center',
                  flex:1,
-				 editor:{
-				 xtype:'textfield'
-                 },
+				 
 				},	
 				{
 					dataIndex: 'name',
