@@ -16,6 +16,12 @@ switch($_POST["action"]) /*Read action sent from front-end */ {
 	case 4 :
 		sendEmailPdf($_POST['from'], $_POST['to'], $_POST['cc'],$_POST['message'],$_POST['project_id']);
 		break;
+	case 5 :
+		sendEmail1($_POST['from'], $_POST['to'], $_POST['cc'], $_POST['html'], $_POST['job_code']);
+		break;
+	case 6:
+		sendEmailPdf1($_POST['from'], $_POST['to'], $_POST['cc'],$_POST['message'],$_POST['job_code']);
+		break;
 	default :
 		break;
 }
@@ -622,4 +628,349 @@ Where
 			
 			echo(json_encode($result));
 			}
+
+function sendEmail1($from, $to, $cc, $html, $jobcode) {
+		
+			$subject = "Typesetting Report";
+			ob_start();
+
+$template=mysql_query("Select
+  project_title.title,
+  project_title.hb_isbn,
+  project_title.pb_isbn,
+  project_title.series,
+  project_title.format,
+  project_title.design,
+  project_title.castoff_extent,
+  project_title.confirmed_extent,
+  project_title.agreed_deadline,
+  project_title.client_deadline,
+  project_title.word_count,
+  Count(author.author) as authorCount,
+  project_title.job_code
+From
+  project_title Inner Join
+  author On project_title.job_code =
+    author.job_code
+Where
+  project_title.job_code = '" . $jobcode . "'
+Group By
+  project_title.job_code");
+			while($template1=mysql_fetch_array($template))
+			{
+				$pTitle = $template1['title'];
+				$pJob = $template1['job_code'];
+				$pHB= $template1['hb_isbn'];
+				$pBP= $template1['pb_isbn'];
+				$design= $template1['design'];
+				$format= $template1['format'];
+				$cast= $template1['castoff_extent'];
+				$confirmed= $template1['agreed_deadline'];
+				$agreed= $template1['hb_isbn'];
+				$client= $template1['client_deadline'];
+				$word= $template1['word_count'];
+				$author= $template1['authorCount'];
+			}	
+				
+			
+			
+			$sch=mysql_query("Select
+  author.name,
+  author.address,
+  author.no_proof
+From
+  author
+Where
+  author.job_code = '" . $jobcode . "'");
+			while($sch1=mysql_fetch_array($sch))
+			{
+				
+				$name[]= $sch1['name'];
+				$addr[]= $sch1['address'];
+				$proof[]= $sch1['no_proof'];
+			
+			}	
+			
+					
+		
+?>
+<html>
+	
+	<body>
+		<b><center><p style="font-size:16px;">Typesetting Report</p></center> </b>
+	<table>
+	
+	</br>
+	<b>Title Info:</br>
+	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<tr>
+	<td>Title</td>
+	<td><?php echo $pTitle?></td>
+	</tr>
+	<tr>
+	<td>HB ISBN</td>
+	<td><?php echo $pHB ?></td>
+	</tr>	
+	<tr>
+	<td>PB ISBN</td>
+	<td><?php echo $pBP?></td>
+	</tr>	
+	<tr>
+	<td>Format</td>
+	<td> <?php echo $format?></td>
+	</tr>
+	<tr>
+	<td>Design</td>
+	<td> <?php echo $design?></td>
+	</tr>	
+	<tr>
+	<td>No. of Authors</td>
+	<td><?php echo $author?></td>
+	</tr>	
+	<tr>
+	<td>Date Proofs required</td>
+	<td></td>
+	</tr>
+	
+	</table>
+	
+	</br>
+	<b>Author Details</b>
+	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<tr>
+		<td>
+			Name
+		</td>
+		<td>
+			Address
+		</td>
+		<td>
+			No. of Proof
+		</td>
+		
+	</tr>
+<?php for($i=0;$i<count($name);$i++)
+		{
+			echo "<tr>";
+			echo "<td>" .$name[$i]."</td>";
+			echo "<td>" .$addr[$i]. "</td>";
+			echo "<td>" .$proof[$i]. "</td>";
+			echo "</tr>";
+			
+		}
+		?>
+		
+	</table>
+		</table>
+	
+	
+	</body></html>
+	<?php
+	 $variable = ob_get_clean();
+
+
+		
+			 // Always set content-type when sending HTML email
+			 $headers = "MIME-Version: 1.0" . "\r\n";
+			 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+			 $headers .= 'Cc:'.$cc . "\r\n";
+			 $headers .= "From:".$from."\r\n";
+			 $headers .= "Reply-To:".$from."\r\n";
+			  $retval=mail($to,$subject,$variable,$headers);
+			 if(!$retval) {
+				$result["failure"] = true;
+				$result["message"] = 'Invalid query: ' . mysql_error();
+			} else {
+				$result["success"] = true;
+				$result["message"] = 'Message send sucessfully';
+			}
+			
+			echo(json_encode($result));
+	
+
+}
+
+function sendEmailPdf1($from, $to,$cc, $message,$jobcode) {
+									
+			require_once("dompdf/dompdf_config.inc.php");					
+				
+				
+						$subject = "Typesetting Report";
+			ob_start();
+
+$template=mysql_query("Select
+  project_title.title,
+  project_title.hb_isbn,
+  project_title.pb_isbn,
+  project_title.series,
+  project_title.format,
+  project_title.design,
+  project_title.castoff_extent,
+  project_title.confirmed_extent,
+  project_title.agreed_deadline,
+  project_title.client_deadline,
+  project_title.word_count,
+  Count(author.author) as authorCount,
+  project_title.job_code
+From
+  project_title Inner Join
+  author On project_title.job_code =
+    author.job_code
+Where
+  project_title.job_code = '" . $jobcode . "'
+Group By
+  project_title.job_code");
+			while($template1=mysql_fetch_array($template))
+			{
+				$pTitle = $template1['title'];
+				$pJob = $template1['job_code'];
+				$pHB= $template1['hb_isbn'];
+				$pBP= $template1['pb_isbn'];
+				$design= $template1['design'];
+				$format= $template1['format'];
+				$cast= $template1['castoff_extent'];
+				$confirmed= $template1['agreed_deadline'];
+				$agreed= $template1['hb_isbn'];
+				$client= $template1['client_deadline'];
+				$word= $template1['word_count'];
+				$author= $template1['authorCount'];
+			}	
+				
+			
+			
+			$sch=mysql_query("Select
+  author.name,
+  author.address,
+  author.no_proof
+From
+  author
+Where
+  author.job_code = '" . $jobcode . "'");
+			while($sch1=mysql_fetch_array($sch))
+			{
+				
+				$name[]= $sch1['name'];
+				$addr[]= $sch1['address'];
+				$proof[]= $sch1['no_proof'];
+			
+			}	
+			
+					
+		
+?>
+<html>
+	
+	<body>
+		<b><center><p style="font-size:16px;">Typesetting Report</p></center> </b>
+	<table>
+	
+	</br>
+	<b>Title Info:</br>
+	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<tr>
+	<td>Title</td>
+	<td><?php echo $pTitle?></td>
+	</tr>
+	<tr>
+	<td>HB ISBN</td>
+	<td><?php echo $pHB ?></td>
+	</tr>	
+	<tr>
+	<td>PB ISBN</td>
+	<td><?php echo $pBP?></td>
+	</tr>	
+	<tr>
+	<td>Format</td>
+	<td> <?php echo $format?></td>
+	</tr>
+	<tr>
+	<td>Design</td>
+	<td> <?php echo $design?></td>
+	</tr>	
+	<tr>
+	<td>No. of Authors</td>
+	<td><?php echo $author?></td>
+	</tr>	
+	<tr>
+	<td>Date Proofs required</td>
+	<td></td>
+	</tr>
+	
+	</table>
+	
+	</br>
+	<b>Author Details</b>
+	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<tr>
+		<td>
+			Name
+		</td>
+		<td>
+			Address
+		</td>
+		<td>
+			No. of Proof
+		</td>
+		
+	</tr>
+<?php for($i=0;$i<count($name);$i++)
+		{
+			echo "<tr>";
+			echo "<td>" .$name[$i]."</td>";
+			echo "<td>" .$addr[$i]. "</td>";
+			echo "<td>" .$proof[$i]. "</td>";
+			echo "</tr>";
+			
+		}
+		?>
+		
+	</table>
+		</table>
+	
+	
+	</body></html>
+	<?php
+	 $variable = ob_get_clean();
+				
+				
+		//	$subject = "Report";
+			$dompdf = new DOMPDF();
+			$dompdf->load_html($variable);
+			$dompdf->render();
+			$output = $dompdf->output();
+			//file_put_contents('Report.pdf', $output);
+			
+		
+		$separator = md5(time());
+        $eol = PHP_EOL;
+        $filename = "Report.pdf";
+        $pdfdoc = $output;
+        $attachment = chunk_split(base64_encode($pdfdoc));
+        $headers = "From: " . $from . $eol;
+        $headers .= "MIME-Version: 1.0" . $eol;
+	    $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol . $eol;
+	    $body .= "Content-Transfer-Encoding: 7bit" . $eol;
+	    $body .= "This is a MIME encoded message." . $eol; 
+        $body .= "--" . $separator . $eol;
+        $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
+        $body .= "Content-Transfer-Encoding: 8bit" . $eol . $eol;
+        $body .= $message . $eol;
+        $body .= "--" . $separator . $eol;
+        $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
+        $body .= "Content-Transfer-Encoding: base64" . $eol;
+        $body .= "Content-Disposition: attachment" . $eol . $eol;
+        $body .= $attachment . $eol;
+        $body .= "--" . $separator . "--";
+       $retval=mail($to, $subject, $body, $headers);
+		 if(!$retval) {
+				$result["failure"] = true;
+				$result["message"] = 'Invalid query: ' . mysql_error();
+			} else {
+				$result["success"] = true;
+				$result["message"] = 'Message send sucessfully';
+			}
+			
+			echo(json_encode($result));
+			}
+
 ?>

@@ -202,7 +202,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					        valueField: 'id',
 					        	listeners: {
 					        		afterrender: function(combo){
-					        	var recordSelected = combo.getStore().getAt(0);                     
+					        	var recordSelected = combo.getStore().getAt(1);                     
                                 combo.setValue(recordSelected.get('id'));
                              },
                             change: function(combo) {

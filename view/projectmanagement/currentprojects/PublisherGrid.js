@@ -569,7 +569,239 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							x : 0,
 							y : 0
 
+						}],
+							buttons:[{
+							text:'Send Email',
+
+							handler: function() {
+
+								Ext.Msg.show({
+									title:'Send Email',
+									id:'selectMailOption1',
+									msg: 'Do you like to send as Html or PDF?',
+									buttons: Ext.Msg.YESNOCANCEL,
+									buttonText: {
+										yes: "Html",
+										no: "PDF"
+									},
+									fn: function(btn) {
+										if(btn=='yes') {
+					var rec = grid.getStore().getAt(rowIndex);
+					var project_id = rec.get('id');
+					var job_code = rec.get('code');
+											//alert(project_id);											
+											//create send message window
+					var messagewin = Ext.create('Ext.Window', {
+						extend : 'Ext.form.Panel',
+						id:'message_sendHtml1',
+						modal:true,
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Message',
+						width : 400,
+						height :400,
+						items : [{
+							xtype : 'textfield',
+							x : 10,
+							y : 10,
+							fieldLabel:'From',
+							id:'html_from1',
+							width:320
+						},{
+							xtype:'combo',
+							fieldLabel:'To',
+							multiSelect:true,
+							id:'html_to1',
+							x:10,
+							y:40,
+							store:customers,
+							//typeAhead:true,
+							triggerAction:'all',
+							displayField:'mail',
+							width:320,
+							allowBlank: false,
+							queryMode: 'local',
+						    afterLabelTextTpl: required,
+						},
+						{
+							xtype:'combo',
+							fieldLabel:'Cc',
+							multiSelect:true,
+							id:'html_cc1',
+							x:10,
+							y:70,
+							store:customers,
+							ddReorder: true,
+							//typeAhead:true,
+							triggerAction:'all',
+							displayField:'mail',
+							width:320
+						},
+						{
+							xtype:'textarea',
+							fieldLabel:'Message',
+							id:'html_message1',
+							x:10,
+							y:100,
+							width:320,
+							height:200
+						}
+						],
+						buttons:[{
+							text:'Send Email',
+							handler: function() {
+								//var html=win.body.dom.innerHTML;
+								var from=Ext.getCmp('html_from1').getValue();
+								var html_to=Ext.getCmp('html_to1').getValue().toString();
+								var html_cc=Ext.getCmp('html_cc1').getValue().toString();
+								var message=Ext.getCmp('html_message1').getValue()    ;
+										//send data to php
+								var conn = new Ext.data.Connection();
+								conn.request({
+									url : 'service/Reports.php',
+									method : 'POST',
+									params : {
+										action : 5,
+										html : message,
+										from:from,
+										to:html_to,
+										cc:html_cc,
+										job_code:job_code
+									},
+									success : function(response) {
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Message', obj.message); 
+									},
+								});
+										
+									
+																
+							}						
+							}]
+					});
+				Ext.getCmp('html_from1').setValue(mail);
+											messagewin.show();
+											
+											
+										} 
+										else if(btn=='no'){
+												var rec = grid.getStore().getAt(rowIndex);
+					var project_id = rec.get('id');
+					var job_code = rec.get('code');
+											//create send message window
+					var messagewin1 = Ext.create('Ext.Window', {
+						extend : 'Ext.form.Panel',
+						id:'message_sendPdf1',
+						modal:true,
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Message',
+						width : 400,
+						height : 400,
+						items : [{
+							xtype : 'textfield',
+							x : 10,
+							y : 10,
+							fieldLabel:'From',
+							id:'pdf_from1',
+							width:320
+						},{
+							xtype:'combo',
+							fieldLabel:'To',
+							id:'pdf_to1',
+							x:10,
+							y:40,
+							store:customers,
+							typeAhead:true,
+							triggerAction:'all',
+							displayField:'mail',
+							width:320
+						},
+						{
+							xtype:'combo',
+							fieldLabel:'Cc',
+							multiSelect:true,
+							id:'pdf_cc1',
+							x:10,
+							y:70,
+							store:customers,
+							//typeAhead:true,
+							triggerAction:'all',
+							displayField:'mail',
+							width:320
+						},{
+							xtype:'textarea',
+							fieldLabel:'Message',
+							id:'pdf_message1',
+							x:10,
+							y:100,
+							width:320,
+							height:200,
+						}
+						],
+						buttons:[{
+							text:'Send Email',
+							handler: function() {
+								//var html=win.body.dom.innerHTML;
+								var from=Ext.getCmp('pdf_from1').getValue();
+								var pdf_to=Ext.getCmp('pdf_to1').getValue().toString();
+								var pdf_cc=Ext.getCmp('pdf_cc1').getValue().toString();
+								var message=Ext.getCmp('pdf_message1').getValue();
+								
+								var conn = new Ext.data.Connection();
+								conn.request({
+									url : 'service/Reports.php',
+									method : 'POST',
+									params : {
+										action : 6,
+										//html : html,
+										from:from,
+										to:pdf_to,
+										cc:pdf_cc,
+										message:message,
+										job_code:job_code
+									},
+									success : function(response) {
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Message', obj.message); 
+									},
+								});
+									
+														
+							}
 						}]
+					});
+				Ext.getCmp('pdf_from1').setValue(mail);
+											messagewin1.show();
+										}
+
+										
+									}
+								});
+							},
+						},{
+							text:'Print',
+							handler: function()
+							{
+							//	Ext.ux.grid.Printer.printAutomatically = false;
+                             //   Ext.ux.grid.Printer.print(Ext.getCmp('pschedulegrid'));
+                            var targetElement = Ext.getCmp('typesetterform');
+		                    var myWindow = window.open('', '', 'width=400,height=500');
+		                    myWindow.document.write('<html><head>');
+		                    myWindow.document.write('<title>' + 'Title' + '</title>');
+		                    myWindow.document.write('<link rel="Stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-4.0.1/resources/css/ext-all.css" />');
+		                    myWindow.document.write('<script type="text/javascript" src="http://dev.sencha.com/deploy/ext-4.0.1/bootstrap.js"></script>');
+		                    myWindow.document.write('</head><body>');
+		                    myWindow.document.write(targetElement.body.dom.innerHTML);
+		                    myWindow.document.write('</body></html>');
+		                    myWindow.print();
+							},
+						}]
+
 					});
 					win.show();
 					var rec = grid.getStore().getAt(rowIndex);
