@@ -334,6 +334,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Message', obj.message); 
+										messagewin.close();
 									},
 								});
 										
@@ -428,6 +429,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Message', obj.message); 
+										messagewin1.close();
 									},
 								});
 									
@@ -672,7 +674,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 									},
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Message', obj.message); 
+										Ext.Msg.alert('Message', obj.message);
+										messagewin.close(); 
 									},
 								});
 										
@@ -767,7 +770,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 									},
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Message', obj.message); 
+										Ext.Msg.alert('Message', obj.message);
+										messagewin1.close(); 
 									},
 								});
 									

@@ -182,7 +182,7 @@ Where
 	</table>
 	</br>
 	<b>Title Info:</br>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 	<td>Title</td>
 	<td><?php echo $pTitle?></td>
@@ -227,7 +227,7 @@ Where
 	
 	</br>
 	<b>Schedule</b>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
 			Activity
@@ -257,13 +257,13 @@ Where
 	</table>
 	</br>
 	<b>Team</b>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 		
 		<?php for($i=0;$i<count($name);$i++)
 		{
 			echo "<tr>";
-			echo "<td>" .$role[$i]."</td>";
-			echo "<td>" .$name[$i]. "</td>";
+			echo "<td width='20%'>" .$role[$i]."</td>";
+			echo "<td width='80%'>" .$name[$i]. "</td>";
 			
 			echo "</tr>";
 			
@@ -273,7 +273,7 @@ Where
 	</table>
 	</br>
 	<b>Budget</b>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 	
 	<tr>
 		<td>
@@ -285,10 +285,10 @@ Where
 		<td>
 			Unit
 		</td>
-		<td>
+		<td style="text-align:center">
 			No. of Units Actual
 		</td>
-		<td>
+		<td style="text-align:center">
 			Actual Amount in $
 		</td>
 	</tr>
@@ -298,8 +298,8 @@ Where
 			echo "<td>" .$bActivity[$i]."</td>";
 			echo "<td>" .$bStage[$i]. "</td>";
 			echo "<td>" .$unit[$i]. "</td>";
-			echo "<td>" .$actualUnit[$i]. "</td>";
-			echo "<td>" .$actualAmount[$i]. "</td>";
+			echo "<td style='text-align:center'>" .$actualUnit[$i]. "</td>";
+			echo "<td style='text-align:center'>" .$actualAmount[$i]. "</td>";
 			echo "</tr>";
 			
 		}
@@ -456,7 +456,7 @@ Where
 	</table>
 	</br>
 	<b>Title Info:</br>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 	<td>Title</td>
 	<td><?php echo $pTitle?></td>
@@ -501,7 +501,7 @@ Where
 	
 	</br>
 	<b>Schedule</b>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
 			Activity
@@ -531,13 +531,13 @@ Where
 	</table>
 	</br>
 	<b>Team</b>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 		
 		<?php for($i=0;$i<count($name);$i++)
 		{
 			echo "<tr>";
-			echo "<td>" .$role[$i]."</td>";
-			echo "<td>" .$name[$i]. "</td>";
+			echo "<td width='20%'>" .$role[$i]."</td>";
+			echo "<td width='80%'>" .$name[$i]. "</td>";
 			
 			echo "</tr>";
 			
@@ -547,7 +547,7 @@ Where
 	</table>
 	</br>
 	<b>Budget</b>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 	
 	<tr>
 		<td>
@@ -559,10 +559,10 @@ Where
 		<td>
 			Unit
 		</td>
-		<td>
+		<td style="text-align:center">
 			No. of Units Actual
 		</td>
-		<td>
+		<td style="text-align:center">
 			Actual Amount in $
 		</td>
 	</tr>
@@ -572,8 +572,8 @@ Where
 			echo "<td>" .$bActivity[$i]."</td>";
 			echo "<td>" .$bStage[$i]. "</td>";
 			echo "<td>" .$unit[$i]. "</td>";
-			echo "<td>" .$actualUnit[$i]. "</td>";
-			echo "<td>" .$actualAmount[$i]. "</td>";
+			echo "<td style='text-align:center'>" .$actualUnit[$i]. "</td>";
+			echo "<td style='text-align:center'>" .$actualAmount[$i]. "</td>";
 			echo "</tr>";
 			
 		}
@@ -702,7 +702,7 @@ Where
 	
 	</br>
 	<b>Title Info:</br>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 	<td>Title</td>
 	<td><?php echo $pTitle?></td>
@@ -736,7 +736,7 @@ Where
 	
 	</br>
 	<b>Author Details</b>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
 			Name
@@ -862,11 +862,11 @@ Where
 	
 	<body>
 		<b><center><p style="font-size:16px;">Typesetting Report</p></center> </b>
-	<table>
+	<table width="60%">
 	
 	</br>
 	<b>Title Info:</br>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 	<td>Title</td>
 	<td><?php echo $pTitle?></td>
@@ -900,7 +900,7 @@ Where
 	
 	</br>
 	<b>Author Details</b>
-	<table border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
 			Name
