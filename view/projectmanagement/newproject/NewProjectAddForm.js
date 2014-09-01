@@ -198,9 +198,20 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			x:360,
 			y:100,
 			width:320,
+			step: 2,
+value: 0,
+
+// Add change handler to force user-entered numbers to evens
+listeners: {
+change: function(field, value) {
+value = parseInt(value, 10);
+field.setValue(value + value % 2);
+}
+}
 			//allowBlank: false,
 			//afterLabelTextTpl: required,
     	},
+    	
     	{
     		xtype:'datefield',
     		format: 'd/m/y',
