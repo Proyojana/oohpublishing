@@ -1,4 +1,5 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+var require_one = '<span style="color:blue;font-weight:bold" data-qtip="Required">*</span>';
 function autoReload()
 {
 	var currentForm = Ext.getCmp('newprojectaddform');   
@@ -120,6 +121,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
             x:10,
 			y:40,
 			width:320,
+			afterLabelTextTpl: require_one,
 			
     	},
     	{
@@ -132,6 +134,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			x:360,
 			y:40,
 			width:320,
+			afterLabelTextTpl: require_one,
 			
 			},
     	{
