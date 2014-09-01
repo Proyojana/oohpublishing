@@ -77,13 +77,11 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 		workflow.load({params:{action: 1}});
 		
 		this.items= [
-		
 			{
 			id:'add_project_id',
 			name: 'add_project_id',
 			hidden:true
 			},
-			
 		{
 			id:'job_code',
 			fieldLabel: 'Job #',
@@ -110,29 +108,31 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			fieldLabel: 'Author',
 			x:710,
 			y:10,
-			width:320,
+			width:320,0000
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},*/
     	{
 			id:'hb_isbn',
 			fieldLabel: 'HB ISBN',
-			x:10,
+			maxLength: 13, // for validation
+            enforceMaxLength :13,
+            x:10,
 			y:40,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
     	{
 			id:'pb_isbn',
 			fieldLabel: 'PB ISBN',
+			maxLength: 13, // for validation
+            enforceMaxLength :13,
 			name: 'PB ISBN',
 			align:'center',
 			x:360,
 			y:40,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
 			},
     	{
     	
@@ -141,8 +141,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			x:10,
 			y:70,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			//allowBlank: false,
+			//afterLabelTextTpl: required,
     	},
     	{
     		xtype:'combo',
@@ -173,12 +173,22 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			x:10,
 			y:100,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			//allowBlank: false,
+			//afterLabelTextTpl: required,
 			xtype:'numberfield',
 			hideTrigger:true,
 			minValue: 0,
+			   step: 2,
+            value: 0,
+             // Add change handler to force user-entered numbers to evens
+           listeners: {
+           change: function(field, value) {
+               value = parseInt(value, 10);
+               field.setValue(value + value % 2);
+           }
+       }
     	},
+  
     	{
     		xtype:'numberfield',
     		hideTrigger:true,
@@ -188,11 +198,12 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			x:360,
 			y:100,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			//allowBlank: false,
+			//afterLabelTextTpl: required,
     	},
     	{
     		xtype:'datefield',
+    		format: 'd/m/y',
 			id:'client_deadline',
 			fieldLabel: 'Client deadline',
 			align:'center',
@@ -204,13 +215,14 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			},
     	{
     		xtype:'datefield',
+    		format: 'd/m/y',
     		id:'agreed_deadline',
 			fieldLabel: 'Agreed deadline',
 			x:360,
 			y:130,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			//allowBlank: false,
+			//afterLabelTextTpl: required,
     	},
     	{
         // Fieldset in Column 1 - collapsible via toggle button
@@ -234,8 +246,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			y:0,
 			width:320,
 			//labelWidth:140,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			//allowBlank: false,
+			//afterLabelTextTpl: required,
     	},
     	{
     		xtype:'numberfield',
@@ -247,8 +259,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			y:0,
 			width:320,
 			//labelWidth:140,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			//allowBlank: false,
+			//afterLabelTextTpl: required,
     	},
     	
 		{  
@@ -394,8 +406,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			valueField: 'id',
 			queryMode: 'local',
 			triggerAction: 'all',
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			//allowBlank: false,
+			//afterLabelTextTpl: required,
 		
     	},
     	{   
@@ -472,6 +484,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 				
 				if(currentForm.getForm().isValid() == true)
 				{
+					if(hb_isbn!='' || pb_isbn!='')
+					{
 				var conn = new Ext.data.Connection();
 					conn.request({
 						url: 'service/projects.php',
@@ -506,6 +520,10 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 										
 						}
 					});
+					}
+					else{
+						Ext.MessageBox.alert('Please fill HB ISBN or PB ISBN.');
+					}
 				}
 				else
 				{

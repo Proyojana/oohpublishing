@@ -339,8 +339,8 @@ function autoRequestCode($id) {
 			$data1 = $row['job_code'];
 		}
 	//	echo $data1;
-		$data = str_split($data1, 4);
-		$remain = substr($data1,3,6);
+		$data = str_split($data1, 3);
+		$remain = substr($data1,2,5);
 	
 
 		//$data1 = substr($data1, -4);

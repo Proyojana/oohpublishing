@@ -182,7 +182,7 @@ Where
 	</table>
 	</br>
 	<b>Title Info:</br>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 	<td>Title</td>
 	<td><?php echo $pTitle?></td>
@@ -227,7 +227,7 @@ Where
 	
 	</br>
 	<b>Schedule</b>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
 			Activity
@@ -257,7 +257,7 @@ Where
 	</table>
 	</br>
 	<b>Team</b>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 		
 		<?php for($i=0;$i<count($name);$i++)
 		{
@@ -273,7 +273,7 @@ Where
 	</table>
 	</br>
 	<b>Budget</b>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 	
 	<tr>
 		<td>
@@ -456,7 +456,7 @@ Where
 	</table>
 	</br>
 	<b>Title Info:</br>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 	<td>Title</td>
 	<td><?php echo $pTitle?></td>
@@ -501,7 +501,7 @@ Where
 	
 	</br>
 	<b>Schedule</b>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
 			Activity
@@ -531,7 +531,7 @@ Where
 	</table>
 	</br>
 	<b>Team</b>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 		
 		<?php for($i=0;$i<count($name);$i++)
 		{
@@ -547,7 +547,7 @@ Where
 	</table>
 	</br>
 	<b>Budget</b>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 	
 	<tr>
 		<td>
@@ -702,7 +702,7 @@ Where
 	
 	</br>
 	<b>Title Info:</br>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 	<td>Title</td>
 	<td><?php echo $pTitle?></td>
@@ -736,7 +736,7 @@ Where
 	
 	</br>
 	<b>Author Details</b>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
 			Name
@@ -862,11 +862,11 @@ Where
 	
 	<body>
 		<b><center><p style="font-size:16px;">Typesetting Report</p></center> </b>
-	<table width="60%">
+	<table width="100%">
 	
 	</br>
 	<b>Title Info:</br>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 	<td>Title</td>
 	<td><?php echo $pTitle?></td>
@@ -900,7 +900,7 @@ Where
 	
 	</br>
 	<b>Author Details</b>
-	<table width="60%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
 			Name
