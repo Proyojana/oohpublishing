@@ -54,7 +54,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     defaults: {
         labelWidth: 150,
     },
-    defaultType: 'textfield',
+  //  defaultType: 'textfield',
     listeners: {
      	 afterrender: function(){
      	 //	alert("listen");
@@ -79,11 +79,13 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 		
 		this.items= [
 			{
+				xtype:'textfield',
 			id:'add_project_id',
 			name: 'add_project_id',
 			hidden:true
 			},
 		{
+			xtype:'textfield',
 			id:'job_code',
 			fieldLabel: 'Job #',
 			x:10,
@@ -94,6 +96,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			afterLabelTextTpl: required,
     	},
     	{
+    		xtype:'textfield',
 			id:'project_title',
 			fieldLabel: 'Title',
 			align:'center',
@@ -114,6 +117,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			afterLabelTextTpl: required,
     	},*/
     	{
+    		xtype:'textfield',
 			id:'hb_isbn',
 			fieldLabel: 'HB ISBN',
 			maxLength: 13, // for validation
@@ -125,6 +129,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			
     	},
     	{
+    		xtype:'textfield',
 			id:'pb_isbn',
 			fieldLabel: 'PB ISBN',
 			maxLength: 13, // for validation
@@ -138,7 +143,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			
 			},
     	{
-    	
+    	    xtype:'textfield',
     		id:'project_series',
 			fieldLabel: 'Series',
 			x:10,
@@ -160,6 +165,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			displayField:'format'
     	},
     	{
+    		xtype:'textfield',
 			id:'project_design',
 			fieldLabel: 'Design',
 			align:'center',
@@ -379,7 +385,6 @@ field.setValue(value + value % 2);
     		x:370,
 			y:30,
 			width:320,
-    		
     	}
     	]
     },
@@ -453,9 +458,6 @@ field.setValue(value + value % 2);
 			}
 
     	},
-    	
-    	
-    		
 		{
 			xtype:'button',
     	    text:'Save + Next',
