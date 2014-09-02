@@ -64,8 +64,8 @@ function getClientTeamMails() {
 		}
 
 function sendEmail($from, $to, $cc, $html, $project_id) {
-		
-			$subject = "Production Report";
+		    $dat=date("d/m/Y");
+			$subject = "Production Report".' '.$dat;
 			ob_start();
 
 $template=mysql_query("Select
@@ -184,44 +184,44 @@ Where
 	<b>Title Info:</br>
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
-	<td>Title</td>
-	<td><?php echo $pTitle?></td>
+	<td style="padding-left:10px;">Title</td>
+	<td style="padding-left:10px;"><?php echo $pTitle?></td>
 	</tr>
 	<tr>
-	<td>HB ISBN</td>
-	<td><?php echo $pHB ?></td>
+	<td style="padding-left:10px;">HB ISBN</td>
+	<td style="padding-left:10px;"><?php echo $pHB ?></td>
 	</tr>	
 	<tr>
-	<td>PB ISBN</td>
-	<td><?php echo $pBP?></td>
+	<td style="padding-left:10px;">PB ISBN</td>
+	<td style="padding-left:10px;"><?php echo $pBP?></td>
 	</tr>	
 	<tr>
-	<td>Format</td>
-	<td> <?php echo $format?></td>
+	<td style="padding-left:10px;">Format</td>
+	<td style="padding-left:10px;"> <?php echo $format?></td>
 	</tr>
 	<tr>
-	<td>Design</td>
-	<td> <?php echo $design?></td>
+	<td style="padding-left:10px;">Design</td>
+	<td style="padding-left:10px;"> <?php echo $design?></td>
 	</tr>	
 	<tr>
-	<td>Cast-off Extent</td>
-	<td><?php echo $cast?></td>
+	<td style="padding-left:10px;">Cast-off Extent</td>
+	<td style="padding-left:10px;"><?php echo $cast?></td>
 	</tr>	
 	<tr>
-	<td>Confirmed Exttent</td>
-	<td><?php echo $confirmed?></td>
+	<td style="padding-left:10px;">Confirmed Exttent</td>
+	<td style="padding-left:10px;"><?php echo $confirmed?></td>
 	</tr>
 	<tr>
-	<td>Client Deadline</td>
-	<td><?php echo $client?></td>
+	<td style="padding-left:10px;">Client Deadline</td>
+	<td style="padding-left:10px;"><?php echo $client?></td>
 	</tr>	
 	<tr>
-	<td>Agreed deadline</td>
-	<td><?php echo $agreed?></td>
+	<td style="padding-left:10px;">Agreed deadline</td>
+	<td style="padding-left:10px;"><?php echo $agreed?></td>
 	</tr>
 	<tr>
-	<td>Word Count</td>
-	<td><?php echo $word?></td>
+	<td style="padding-left:10px;">Word Count</td>
+	<td style="padding-left:10px;"><?php echo $word?></td>
 	</tr>
 	</table>
 	
@@ -229,26 +229,34 @@ Where
 	<b>Schedule</b>
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
-		<td>
+		<td style="padding-left:10px;">
+			<b>
 			Activity
+			</b>
 		</td>
-		<td>
+		<td style="padding-left:10px;">
+			<b>
 			Stage
+			</b>
 		</td>
-		<td>
+		<td style="padding-left:10px;">
+			<b>
 			Estimated End Date
+			</b>
 		</td>
-		<td>
+		<td style="padding-left:10px;">
+			<b>
 			Actual End Date
+			</b>
 		</td>
 	</tr>
 <?php for($i=0;$i<count($stage);$i++)
 		{
 			echo "<tr>";
-			echo "<td>" .$stage[$i]."</td>";
-			echo "<td>" .$activity[$i]. "</td>";
-			echo "<td>" .$estimated[$i]. "</td>";
-			echo "<td>" .$actual[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$stage[$i]."</td>";
+			echo "<td style='padding-left:10px;'>" .$activity[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$estimated[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$actual[$i]. "</td>";
 			echo "</tr>";
 			
 		}
@@ -262,8 +270,8 @@ Where
 		<?php for($i=0;$i<count($name);$i++)
 		{
 			echo "<tr>";
-			echo "<td width='20%'>" .$role[$i]."</td>";
-			echo "<td width='80%'>" .$name[$i]. "</td>";
+			echo "<td width='20%' style='padding-left:10px;'>" .$role[$i]."</td>";
+			echo "<td width='80%' style='padding-left:10px;'>" .$name[$i]. "</td>";
 			
 			echo "</tr>";
 			
@@ -276,13 +284,13 @@ Where
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 	
 	<tr>
-		<td>
+		<td style="padding-left:10px;">
 			Activity
 		</td>
-		<td>
+		<td style="padding-left:10px;">
 			Stage
 		</td>
-		<td>
+		<td style="padding-left:10px;">
 			Unit
 		</td>
 		<td style="text-align:center">
@@ -295,9 +303,9 @@ Where
 <?php for($i=0;$i<count($bActivity);$i++)
 		{
 			echo "<tr>";
-			echo "<td>" .$bActivity[$i]."</td>";
-			echo "<td>" .$bStage[$i]. "</td>";
-			echo "<td>" .$unit[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$bActivity[$i]."</td>";
+			echo "<td style='padding-left:10px;'>" .$bStage[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$unit[$i]. "</td>";
 			echo "<td style='text-align:center'>" .$actualUnit[$i]. "</td>";
 			echo "<td style='text-align:center'>" .$actualAmount[$i]. "</td>";
 			echo "</tr>";
@@ -439,12 +447,13 @@ Where
 			
 		
 ?>
+
 <html>
 	
 	<body>
-		<b><center><p style="font-size:16px;">Production Report</p></center> </b>
+	<b><center><p style="font-size:16px;">Production Report</p></center> </b>
 	<table>
-	<table style="border-collapse: collapse;margin-bottom:10px;">
+	<table style="margin-bottom:10px;">
 	<tr>
 	<td><b>JOB #:</b></td>
 	<td><?php echo $pJob?></td>
@@ -458,44 +467,44 @@ Where
 	<b>Title Info:</br>
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
-	<td>Title</td>
-	<td><?php echo $pTitle?></td>
+	<td style="padding-left:10px;">Title</td>
+	<td style="padding-left:10px;"><?php echo $pTitle?></td>
 	</tr>
 	<tr>
-	<td>HB ISBN</td>
-	<td><?php echo $pHB ?></td>
+	<td style="padding-left:10px;">HB ISBN</td>
+	<td style="padding-left:10px;"><?php echo $pHB ?></td>
 	</tr>	
 	<tr>
-	<td>PB ISBN</td>
-	<td><?php echo $pBP?></td>
+	<td style="padding-left:10px;">PB ISBN</td>
+	<td style="padding-left:10px;"><?php echo $pBP?></td>
 	</tr>	
 	<tr>
-	<td>Format</td>
-	<td> <?php echo $format?></td>
+	<td style="padding-left:10px;">Format</td>
+	<td style="padding-left:10px;"> <?php echo $format?></td>
 	</tr>
 	<tr>
-	<td>Design</td>
-	<td> <?php echo $design?></td>
+	<td style="padding-left:10px;">Design</td>
+	<td style="padding-left:10px;"> <?php echo $design?></td>
 	</tr>	
 	<tr>
-	<td>Cast-off Extent</td>
-	<td><?php echo $cast?></td>
+	<td style="padding-left:10px;">Cast-off Extent</td>
+	<td style="padding-left:10px;"><?php echo $cast?></td>
 	</tr>	
 	<tr>
-	<td>Confirmed Exttent</td>
-	<td><?php echo $confirmed?></td>
+	<td style="padding-left:10px;">Confirmed Exttent</td>
+	<td style="padding-left:10px;"><?php echo $confirmed?></td>
 	</tr>
 	<tr>
-	<td>Client Deadline</td>
-	<td><?php echo $client?></td>
+	<td style="padding-left:10px;">Client Deadline</td>
+	<td style="padding-left:10px;"><?php echo $client?></td>
 	</tr>	
 	<tr>
-	<td>Agreed deadline</td>
-	<td><?php echo $agreed?></td>
+	<td style="padding-left:10px;">Agreed deadline</td>
+	<td style="padding-left:10px;"><?php echo $agreed?></td>
 	</tr>
 	<tr>
-	<td>Word Count</td>
-	<td><?php echo $word?></td>
+	<td style="padding-left:10px;">Word Count</td>
+	<td style="padding-left:10px;"><?php echo $word?></td>
 	</tr>
 	</table>
 	
@@ -503,26 +512,34 @@ Where
 	<b>Schedule</b>
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
-		<td>
+		<td style="padding-left:10px;">
+			<b>
 			Activity
+			</b>
 		</td>
-		<td>
+		<td style="padding-left:10px;">
+			<b>
 			Stage
+			</b>
 		</td>
-		<td>
+		<td style="padding-left:10px;">
+			<b>
 			Estimated End Date
+			</b>
 		</td>
-		<td>
+		<td style="padding-left:10px;">
+			<b>
 			Actual End Date
+			</b>
 		</td>
 	</tr>
 <?php for($i=0;$i<count($stage);$i++)
 		{
 			echo "<tr>";
-			echo "<td>" .$stage[$i]."</td>";
-			echo "<td>" .$activity[$i]. "</td>";
-			echo "<td>" .$estimated[$i]. "</td>";
-			echo "<td>" .$actual[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$stage[$i]."</td>";
+			echo "<td style='padding-left:10px;'>" .$activity[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$estimated[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$actual[$i]. "</td>";
 			echo "</tr>";
 			
 		}
@@ -536,8 +553,8 @@ Where
 		<?php for($i=0;$i<count($name);$i++)
 		{
 			echo "<tr>";
-			echo "<td width='20%'>" .$role[$i]."</td>";
-			echo "<td width='80%'>" .$name[$i]. "</td>";
+			echo "<td width='20%' style='padding-left:10px;'>" .$role[$i]."</td>";
+			echo "<td width='80%' style='padding-left:10px;'>" .$name[$i]. "</td>";
 			
 			echo "</tr>";
 			
@@ -550,13 +567,13 @@ Where
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 	
 	<tr>
-		<td>
+		<td style="padding-left:10px;">
 			Activity
 		</td>
-		<td>
+		<td style="padding-left:10px;">
 			Stage
 		</td>
-		<td>
+		<td style="padding-left:10px;">
 			Unit
 		</td>
 		<td style="text-align:center">
@@ -569,9 +586,9 @@ Where
 <?php for($i=0;$i<count($bActivity);$i++)
 		{
 			echo "<tr>";
-			echo "<td>" .$bActivity[$i]."</td>";
-			echo "<td>" .$bStage[$i]. "</td>";
-			echo "<td>" .$unit[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$bActivity[$i]."</td>";
+			echo "<td style='padding-left:10px;'>" .$bStage[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$unit[$i]. "</td>";
 			echo "<td style='text-align:center'>" .$actualUnit[$i]. "</td>";
 			echo "<td style='text-align:center'>" .$actualAmount[$i]. "</td>";
 			echo "</tr>";
@@ -588,8 +605,8 @@ Where
 	 $variable = ob_get_clean();
 
 				
-				
-			$subject = "Report";
+			$dat=date("d/m/Y");	
+			$subject = "Production Report".' '.$dat;
 			$dompdf = new DOMPDF();
 			$dompdf->load_html($variable);
 			$dompdf->render();
@@ -630,8 +647,8 @@ Where
 			}
 
 function sendEmail1($from, $to, $cc, $html, $jobcode) {
-		
-			$subject = "Typesetting Report";
+		   $dat=date("d/m/Y");
+			$subject = "Typesetting Report".' '.$dat;
 			ob_start();
 
 $template=mysql_query("Select
@@ -704,32 +721,32 @@ Where
 	<b>Title Info:</br>
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
-	<td>Title</td>
-	<td><?php echo $pTitle?></td>
+	<td style="padding-left:10px;">Title</td>
+	<td style="padding-left:10px;"><?php echo $pTitle?></td>
 	</tr>
 	<tr>
-	<td>HB ISBN</td>
-	<td><?php echo $pHB ?></td>
+	<td style="padding-left:10px;">HB ISBN</td>
+	<td style="padding-left:10px;"><?php echo $pHB ?></td>
 	</tr>	
 	<tr>
-	<td>PB ISBN</td>
-	<td><?php echo $pBP?></td>
+	<td style="padding-left:10px;">PB ISBN</td>
+	<td style="padding-left:10px;"><?php echo $pBP?></td>
 	</tr>	
 	<tr>
-	<td>Format</td>
-	<td> <?php echo $format?></td>
+	<td style="padding-left:10px;">Format</td>
+	<td style="padding-left:10px;"> <?php echo $format?></td>
 	</tr>
 	<tr>
-	<td>Design</td>
-	<td> <?php echo $design?></td>
+	<td style="padding-left:10px;">Design</td>
+	<td style="padding-left:10px;"> <?php echo $design?></td>
 	</tr>	
 	<tr>
-	<td>No. of Authors</td>
-	<td><?php echo $author?></td>
+	<td style="padding-left:10px;">No. of Authors</td>
+	<td style="padding-left:10px;"><?php echo $author?></td>
 	</tr>	
 	<tr>
-	<td>Date Proofs required</td>
-	<td></td>
+	<td style="padding-left:10px;">Date Proofs required</td>
+	<td style="padding-left:10px;"></td>
 	</tr>
 	
 	</table>
@@ -739,22 +756,28 @@ Where
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
+			<b>
 			Name
+			</b>
 		</td>
 		<td>
+			<b>
 			Address
+			</b>
 		</td>
 		<td>
+			<b>
 			No. of Proof
+			</b>
 		</td>
 		
 	</tr>
 <?php for($i=0;$i<count($name);$i++)
 		{
 			echo "<tr>";
-			echo "<td>" .$name[$i]."</td>";
-			echo "<td>" .$addr[$i]. "</td>";
-			echo "<td>" .$proof[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$name[$i]."</td>";
+			echo "<td style='padding-left:10px;'>" .$addr[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$proof[$i]. "</td>";
 			echo "</tr>";
 			
 		}
@@ -793,9 +816,8 @@ Where
 function sendEmailPdf1($from, $to,$cc, $message,$jobcode) {
 									
 			require_once("dompdf/dompdf_config.inc.php");					
-				
-				
-						$subject = "Typesetting Report";
+				$dat=date("d/m/Y");
+				$subject = "Typesetting Report".' '.$dat;
 			ob_start();
 
 $template=mysql_query("Select
@@ -862,38 +884,38 @@ Where
 	
 	<body>
 		<b><center><p style="font-size:16px;">Typesetting Report</p></center> </b>
-	<table width="100%">
+	<table>
 	
 	</br>
 	<b>Title Info:</br>
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
-	<td>Title</td>
-	<td><?php echo $pTitle?></td>
+	<td style="padding-left:10px;">Title</td>
+	<td style="padding-left:10px;"><?php echo $pTitle?></td>
 	</tr>
 	<tr>
-	<td>HB ISBN</td>
-	<td><?php echo $pHB ?></td>
+	<td style="padding-left:10px;">HB ISBN</td>
+	<td style="padding-left:10px;"><?php echo $pHB ?></td>
 	</tr>	
 	<tr>
-	<td>PB ISBN</td>
-	<td><?php echo $pBP?></td>
+	<td style="padding-left:10px;">PB ISBN</td>
+	<td style="padding-left:10px;"><?php echo $pBP?></td>
 	</tr>	
 	<tr>
-	<td>Format</td>
-	<td> <?php echo $format?></td>
+	<td style="padding-left:10px;">Format</td>
+	<td style="padding-left:10px;"> <?php echo $format?></td>
 	</tr>
 	<tr>
-	<td>Design</td>
-	<td> <?php echo $design?></td>
+	<td style="padding-left:10px;">Design</td>
+	<td style="padding-left:10px;"> <?php echo $design?></td>
 	</tr>	
 	<tr>
-	<td>No. of Authors</td>
-	<td><?php echo $author?></td>
+	<td style="padding-left:10px;">No. of Authors</td>
+	<td style="padding-left:10px;"><?php echo $author?></td>
 	</tr>	
 	<tr>
-	<td>Date Proofs required</td>
-	<td></td>
+	<td style="padding-left:10px;">Date Proofs required</td>
+	<td style="padding-left:10px;"></td>
 	</tr>
 	
 	</table>
@@ -903,22 +925,28 @@ Where
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
 	<tr>
 		<td>
+			<b>
 			Name
+			</b>
 		</td>
 		<td>
+			<b>
 			Address
+			</b>
 		</td>
 		<td>
+			<b>
 			No. of Proof
+			</b>
 		</td>
 		
 	</tr>
 <?php for($i=0;$i<count($name);$i++)
 		{
 			echo "<tr>";
-			echo "<td>" .$name[$i]."</td>";
-			echo "<td>" .$addr[$i]. "</td>";
-			echo "<td>" .$proof[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$name[$i]."</td>";
+			echo "<td style='padding-left:10px;'>" .$addr[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$proof[$i]. "</td>";
 			echo "</tr>";
 			
 		}
