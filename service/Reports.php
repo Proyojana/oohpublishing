@@ -168,7 +168,7 @@ Where
 <html>
 	
 	<body>
-		<b><center><p style="font-size:16px;">Production Report</p></center> </b>
+		<b><p style="font-size:16px;">Production Report</p> </b>
 	<table>
 	<table style="margin-bottom:10px;">
 	<tr>
@@ -451,7 +451,7 @@ Where
 <html>
 	
 	<body>
-	<b><center><p style="font-size:16px;">Production Report</p></center> </b>
+	<b><p style="font-size:16px;">Production Report</p> </b>
 	<table>
 	<table style="margin-bottom:10px;">
 	<tr>
@@ -714,7 +714,7 @@ Where
 <html>
 	
 	<body>
-		<b><center><p style="font-size:16px;">Typesetting Report</p></center> </b>
+		<b><p style="font-size:16px;">Typesetting Report</p> </b>
 	<table>
 	
 	</br>
@@ -883,7 +883,7 @@ Where
 <html>
 	
 	<body>
-		<b><center><p style="font-size:16px;">Typesetting Report</p></center> </b>
+		<b><p style="font-size:16px;">Typesetting Report</p> </b>
 	<table>
 	
 	</br>
