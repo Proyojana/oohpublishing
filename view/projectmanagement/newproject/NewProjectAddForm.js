@@ -569,7 +569,43 @@ field.setValue(value + value % 2);
 			Ext.getCmp('newprojectnotesformTab').setDisabled(true);
 			Ext.getCmp('newprojectartworkformTab').setDisabled(true);
 			}
-	  	} ]
+	  	},
+	  	{
+xtype:'label',
+text:'Note:',
+x:10,
+y:530,
+},
+{
+
+html:'<span style="background-color:#dfe8f5; color:red;font-weight:bold">*</span>',
+border:false,
+x:10,
+y:550,
+width:8,
+
+},
+{
+xtype:'label',
+text:'Mandatory fields',
+x:20,
+y:550,
+
+},
+{
+html:'<span style="background-color:#dfe8f5; color:blue;font-weight:bold">*</span>',
+border:false,
+x:10,
+y:570,
+width:8,
+},
+{
+xtype:'label',
+text:'Both are not mandatory but should fill one atleast.',
+x:20,
+y:570,
+
+}]
 	  
 	
 		
