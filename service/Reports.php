@@ -453,16 +453,7 @@ Where
 	<body>
 	<b><p style="font-size:16px;">Production Report</p> </b>
 	<table>
-	<table style="margin-bottom:10px;">
-	<tr>
-	<td><b>JOB #:</b></td>
-	<td><?php echo $pJob?></td>
-	</tr>
-	<tr>
-	<td><b>Project Title:</b></td>
-	<td><?php echo $pTitle ?></td>
-	</tr>
-	</table>
+	
 	</br>
 	<b>Title Info:</br>
 	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
