@@ -50,8 +50,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.ContribGrid', {
                                id : 'add_new_contrib',
                                text : 'Insert New Row',
                                pressed:true,
-                               x : 500,
-                               y : 10,
+                              
+                               
                                width : 100,
                                height : 25,
                                handler : function() {
@@ -67,8 +67,16 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.ContribGrid', {
                 		       contributor.insert(0, r);
             				 }                           
         },
+       {
+                               iconCls:'informationClass',
+                             
+                              
+                                                            
+                               tooltip:'Contributors should receive a PDF proof for their chapter. Send this directly by email. 1.Volume editors will usually collate the corrections themselves: this is a part of their contract with Cambridge. 2.Typesetting scales include four sets of black and white A4 proofs. 3.No voucher is required. 4.Ensure additional hardcopy proofs (author revises for example) are recorded in the column above so that we can recover the appropriate costs from the client'
+                               //margin:'0 0 0 40'
+                       },
+        ],
         
-        ]
         });
 		this.columns = [{
 			dataIndex: 'Id',
@@ -107,7 +115,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.ContribGrid', {
 			text: 'Proof Sent',
 			align: 'center',
 			flex:2,
-			editor: { xtype:'textfield'
+			editor: { xtype:'datefield',
 					}
 
 		},{
@@ -115,7 +123,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.ContribGrid', {
 			text: 'Proof Back',
 			align: 'center',
 			flex:2,
-			editor: { xtype:'textfield'
+			editor: { xtype:'datefield',
 					}
 
 		},{

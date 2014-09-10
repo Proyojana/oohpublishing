@@ -36,7 +36,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.budgetGrid', {
 		activity.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 50
 			}
 		});
 		//load budget store

@@ -17,7 +17,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionGrid', {
 		product.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 50
 			}
 		});
 		product.loadPage(1);

@@ -39,7 +39,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 		activity.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 50
 			}
 		});
 		//load budget store

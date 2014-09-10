@@ -18,7 +18,7 @@ $id=$_SESSION['id'];
 			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['project_author'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id);	
 			break;
 		case 5:
-			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed']);
+			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note']);
 			break;
 		case 6:
 			BulkDelete($_POST['id']);
@@ -232,7 +232,7 @@ Where
 		echo json_encode($result);
 	}
 	
-	function insertProjectMaster($job_code,$title,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed)
+	function insertProjectMaster($job_code,$title,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed,$project_note)
 		
     {
     	
@@ -243,8 +243,8 @@ Where
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO project_title(id,job_code,title,author,hb_isbn,pb_isbn,series,format,design,castoff_extent,confirmed_extent,client_deadline,agreed_deadline,word_count,word_count_indexing,manuscript_pages,expect_index_extent,chapter_footer_req,contains_color,cover_type,print_run,print_run_confirmed,client,client_team,workflow,created_by,created_on,modified_by,modified_on,flag) 
-			VALUES('','".$job_code."','".$title."','','".$hb_isbn."','".$pb_isbn."','".$series."','".$format."','".$design."','".$castoff_extent."','".$confirmed_extent."','".$client_deadline."','".$agreed_deadline."','".$word_count."','".$word_count_indexing."','".$manuscript."','".$index_extent."','".$footer."','".$colour."','".$cover_type."','".$print_run."','".$print_run_confirmed."','".$client."','".$team."','".$workflow."','".$id."',now(),'','','')");
+			$result1 = mysql_query ("INSERT INTO project_title(id,job_code,title,author,hb_isbn,pb_isbn,series,format,design,castoff_extent,confirmed_extent,client_deadline,agreed_deadline,word_count,word_count_indexing,manuscript_pages,expect_index_extent,chapter_footer_req,contains_color,cover_type,print_run,print_run_confirmed,note,client,client_team,workflow,created_by,created_on,modified_by,modified_on,flag) 
+			VALUES('','".$job_code."','".$title."','','".$hb_isbn."','".$pb_isbn."','".$series."','".$format."','".$design."','".$castoff_extent."','".$confirmed_extent."','".$client_deadline."','".$agreed_deadline."','".$word_count."','".$word_count_indexing."','".$manuscript."','".$index_extent."','".$footer."','".$colour."','".$cover_type."','".$print_run."','".$print_run_confirmed."','".$project_note."','".$client."','".$team."','".$workflow."','".$id."',now(),'','','')");
 			
 /** mail function
  			$to = "durairajgowri13@gmail.com";

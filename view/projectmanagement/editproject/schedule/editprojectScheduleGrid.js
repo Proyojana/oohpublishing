@@ -22,7 +22,7 @@ initComponent: function() {//load activity combo
 		activity.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 50
 			}
 		});
 		var ci = Ext.create('MyDesktop.store.Schedule');

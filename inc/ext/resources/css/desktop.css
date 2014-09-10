@@ -842,7 +842,10 @@ background-image: url(../images/chalk_board1.png);
 	background:url(../shared/icons/fam/search.png);height:16px;width:16px;margin-right:5px;
 	
 }
-
+.informationClass
+{
+       background:url(../shared/icons/fam/information.png);height:16px;width:16px;margin-right:5px;
+       } 
 .editClass
 {
 	background:url(../shared/icons/fam/edit.png);height:16px;width:16px;margin-right:6px;

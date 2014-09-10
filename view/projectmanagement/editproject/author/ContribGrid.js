@@ -106,7 +106,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 			text: 'Proof Sent',
 			align: 'center',
 			flex:2,
-			editor: { xtype:'textfield'
+			editor: {  xtype:'datefield',
 					}
 
 		},{
@@ -114,7 +114,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 			text: 'Proof Back',
 			align: 'center',
 			flex:2,
-			editor: { xtype:'textfield'
+			editor: {  xtype:'datefield',
 					}
 
 		},{

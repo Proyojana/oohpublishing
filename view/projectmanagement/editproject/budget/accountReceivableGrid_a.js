@@ -29,7 +29,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 		activity.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 50
 			}
 		});
 	var budget = Ext.create('MyDesktop.store.Receive_a');

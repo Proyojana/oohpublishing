@@ -3,7 +3,7 @@
 session_start();    
     include("config.php");
 	include("../inc/php/encryptDecrypt.php");
-$id=$_SESSION['user_no'];
+//$id=$_SESSION['user_no'];
 	switch($_POST["action"]) /*Read action sent from front-end */
 	{
 		case 1:
@@ -31,7 +31,7 @@ $id=$_SESSION['user_no'];
 			getProjectManagers();
 			break;
 		case 9:
-			getProductionEditor();
+			getUser();
 			break;
 		case 10:
 		    getHeaderData($_POST['job_code']);
@@ -324,7 +324,7 @@ Where
 			
 		}
 		
-			function getProductionEditor()
+			function getUser()
 		{
 			
 			 		$num_result = mysql_query ("Select
@@ -334,7 +334,7 @@ Where
 From
   users
 Where
-  users.role = '2' And
+  
   users.flag = 0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
@@ -346,7 +346,7 @@ Where
 From
   users
 Where
-  users.role = '2' And
+  
   users.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
@@ -419,9 +419,9 @@ Where
 			
 			else
 			{
-				$result1 = mysql_query("INSERT INTO project_team (id ,project_id, role, user, email,created_by,created_on,modified_by,modified_on,flag)
+				$result2 = mysql_query("INSERT INTO project_team (id ,project_id, role, user, email,created_by,created_on,modified_by,modified_on,flag)
                                 VALUES ('','".$project_id."','".$role[$i]."','".$name[$i]."','".$email[$i]."','','','','','')");
-				if(!$result1)
+				if(!$result2)
 				{
 					$result["failure"] = true;
 					$result["message"] =  "Invalid query: " . mysql_error();
@@ -429,7 +429,7 @@ Where
 				else
 				{
 					$result["success"] = true;
-					$result["message"] = "Team created successfully";
+					$result["message"] = "Team saved successfully";
 				}
 			}
 			}

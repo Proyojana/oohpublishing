@@ -6,7 +6,8 @@ var author123 = Ext.create('Ext.data.Store', {
         data : [
          {"author_type":"Main Contact"},
             {"author_type":"Author"},
-            {"author_type":"Editor"}
+            {"author_type":"Editor"},
+            {"author_type":"Other"},
         ]
     });
 var store1 = Ext.create('Ext.data.JsonStore', {
@@ -255,7 +256,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 				}
 			},
 			// For Additional sets
-			{
+		/*	{
 				xtype:'button',
 				text:'Plus',
 				pressed:true,
@@ -278,7 +279,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
         win.show();
 					
 				}
-			}
+			}*/
 			],
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',

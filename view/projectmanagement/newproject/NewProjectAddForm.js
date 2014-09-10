@@ -38,6 +38,13 @@ var times = Ext.create('Ext.data.Store', {
             {"type":"Matt"}
         ]
     });
+   var note = Ext.create('Ext.data.Store', {
+        fields: ['note'],
+        data : [
+           {"note":"Foot Notes"},
+            {"note":"Book endfoot"}
+        ]
+    });
 Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     extend: 'Ext.form.Panel',
     title:'Create New Project',
@@ -59,10 +66,10 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
      	 afterrender: function(){
      	 //	alert("listen");
      	 	autoReload();
-     	 	Ext.getCmp('newprojectauthorformTab').setDisabled(true);
+     	 //	Ext.getCmp('newprojectauthorformTab').setDisabled(true);
 			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
 			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
-			Ext.getCmp('newprojectteamformTab').setDisabled(true);
+			//Ext.getCmp('newprojectteamformTab').setDisabled(true);
 			Ext.getCmp('newprojectnotesformTab').setDisabled(true);
 			Ext.getCmp('newprojectartworkformTab').setDisabled(true);
      	}},
@@ -186,15 +193,31 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			//afterLabelTextTpl: required,
 			xtype:'numberfield',
 			hideTrigger:true,
+			
 			minValue: 0,
-			   step: 2,
+			step: 2,
             value: 0,
-             // Add change handler to force user-entered numbers to evens
-           listeners: {
-           change: function(field, value) {
-               value = parseInt(value, 10);
-               field.setValue(value + value % 2);
-           }
+            listeners: {
+      'blur': function(t, ev, b)
+{
+// Ext.getBody().mask("Modifying Instance...");
+// $.get("updateInstances/"+)
+var value=t.lastValue;
+
+var sum= value%2;
+
+if(sum==0)
+{
+
+t.setValue(value);
+}
+else
+{
+var value1=value+1;
+t.setValue(value1);
+}
+
+},
        }
     	},
   
@@ -212,10 +235,26 @@ value: 0,
 
 // Add change handler to force user-entered numbers to evens
 listeners: {
-change: function(field, value) {
-value = parseInt(value, 10);
-field.setValue(value + value % 2);
+      'blur': function(t, ev, b)
+{
+// Ext.getBody().mask("Modifying Instance...");
+// $.get("updateInstances/"+)
+var value=t.lastValue;
+
+var sum= value%2;
+
+if(sum==0)
+{
+
+t.setValue(value);
 }
+else
+{
+var value1=value+1;
+t.setValue(value1);
+}
+
+},
 }
 			//allowBlank: false,
 			//afterLabelTextTpl: required,
@@ -303,7 +342,7 @@ field.setValue(value + value % 2);
     		minValue: 0,
     		//margin:'0 0 0 36',
 			id:'index_extent',
-			fieldLabel: 'Expect Index extent',
+			fieldLabel: 'Expected Index extent',
 			align:'center',
 			x:0,
 			width:320,
@@ -353,9 +392,7 @@ field.setValue(value + value % 2);
 			width:320,
 			store:cover,
 			displayField:'type',
-			//labelWidth:140,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
     	
 		{  
@@ -385,6 +422,17 @@ field.setValue(value + value % 2);
     		x:370,
 			y:30,
 			width:320,
+    	},
+    	{
+    		xtype:'combo',
+			id:'project_note',
+			fieldLabel: 'Note',
+			x:700,
+			y:30,
+			width:320,
+			store:note,
+			displayField: 'note',
+			valueField: 'note',
     	}
     	]
     },
@@ -496,6 +544,8 @@ field.setValue(value + value % 2);
 				var word_count_indexing = Ext.getCmp('word_count_indexing').getValue();
 				var cover_type= Ext.getCmp('cover_type').getValue();
 				var print_run= Ext.getCmp('print_run').getValue();
+				var project_note= Ext.getCmp('project_note').getValue();
+				
 				var print_run_confirmed= Ext.getCmp('print_run_confirmed').getValue();
 				
 				if(currentForm.getForm().isValid() == true)
@@ -509,7 +559,8 @@ field.setValue(value + value % 2);
 						params : {action:5,job_code:job_code,project_title:project_title,/*project_author:project_author,*/hb_isbn:hb_isbn,pb_isbn:pb_isbn,project_series:project_series,
 							project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,client_deadline:client_deadline,
 							agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
-							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,word_count_indexing:word_count_indexing,cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed},
+							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,word_count_indexing:word_count_indexing,
+							cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed,project_note:project_note},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -564,7 +615,7 @@ field.setValue(value + value % 2);
 				var currentForm = this.up('newprojectaddform');
 				currentForm.getForm().reset();
 				autoReload();
-				Ext.getCmp('newprojectauthorformTab').setDisabled(true);
+			Ext.getCmp('newprojectauthorformTab').setDisabled(true);
 			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
 			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
 			Ext.getCmp('newprojectteamformTab').setDisabled(true);

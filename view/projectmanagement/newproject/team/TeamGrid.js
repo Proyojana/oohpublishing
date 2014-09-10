@@ -17,7 +17,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 	closeAction: 'hide',
 	selModel:sm,
 	height:250,
-	requires:['MyDesktop.store.ProjectManagers','MyDesktop.store.ProductionEditor','MyDesktop.store.Projects'],
+	requires:['MyDesktop.store.ProjectManagers','MyDesktop.store.ProductionEditor','MyDesktop.store.Projects',],
 	id:'newteamgrid',
 	plugins: [
              Ext.create('Ext.grid.plugin.CellEditing', {
@@ -117,11 +117,12 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 			items:[
 			{
 				xtype:'button',
-				text:'Save',
+				text:'Save + Next',
 				pressed:true,
 				width:100,
 				handler:function(){
 					var project_id=Ext.getCmp('teamHeader_projectID').getValue(); 
+					var job_code=Ext.getCmp('teamHeader_Job').getValue(); 
 					var role='';
 					var name='';
 					var email='';
@@ -139,15 +140,28 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 						params : {action:11,project_id:project_id,role:role,name:name,email:email},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-						//	Ext.getCmp('newprojectscheduleformTab').setDisabled(false);	
+							Ext.Msg.alert('Message', obj.message);
+							//Ext.getCmp('newprojectnotesformTab').setDisabled(false);
 							
-							
-
-					
 						}
 					});
-					
+					var currentHeaderForm = Ext.getCmp('newprojectNotesHeaderForm');
+                	 /****load data in header form*****/
+                	
+						
+						currentHeaderForm.getForm().load({
+   								 url: 'service/notes.php',
+							     params: {
+        						 	action:5,job_code:job_code
+							    },
+							      failure: function(form, action){
+						        Ext.Msg.alert("Load failed", action.result.errorMessage);
+    							}
+							   
+							   
+						});
+					Ext.getCmp('newprojectnotesformTab').setDisabled(false);
+						Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectnotesformTab');
 				}
 			}]
 			

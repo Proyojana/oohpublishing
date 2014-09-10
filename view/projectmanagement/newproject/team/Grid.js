@@ -39,7 +39,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 		activity.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 50
 			}
 		});
 		//load budget store

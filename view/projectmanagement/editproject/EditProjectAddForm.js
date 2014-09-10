@@ -1,4 +1,5 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+var require_one = '<span style="color:blue;font-weight:bold" data-qtip="Required">*</span>';
 var times = Ext.create('Ext.data.Store', {
         fields: ['format'],
         data : [
@@ -14,6 +15,13 @@ var times = Ext.create('Ext.data.Store', {
         data : [
            {"type":"Gloss"},
             {"type":"Matt"}
+        ]
+    });
+     var note = Ext.create('Ext.data.Store', {
+        fields: ['note'],
+        data : [
+           {"note":"Foot Notes"},
+            {"note":"Book endfoot"}
         ]
     });
 Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
@@ -56,28 +64,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			emptyText:'Ex.JOB001',
 			allowBlank: false,
 			afterLabelTextTpl: required,
-			/* listeners: {
-              specialkey: function(f,e){
-                if (e.getKey() == e.ENTER) {
-                	 	
-                	var project_code = Ext.getCmp("edit_job_code").getValue();
-                	//alert(project_code);
-                	var currentForm = Ext.getCmp('editprojectaddform');
-                	currentForm.getForm().load({
-   								 url: 'service/projects.php',
-							     params: {
-        						 	action:2,project_code:project_code
-							    },
-							    failure: function(form, action){
-						        Ext.Msg.alert("Job Code is not Valid", action.result.errorMessage);
-						        currentForm.getForm().reset();
-    							}
-						});
-						Ext.getCmp("job_code").setReadOnly(true);
-            
-                }
-              }
-            }*/
+
     	},
     	{
 			id:'edit_project_title',
@@ -105,19 +92,21 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			x:10,
 			y:40,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			maxLength: 13, // for validation
+            enforceMaxLength :13,
+			afterLabelTextTpl: require_one,
     	},
     	{
 			id:'edit_pb_isbn',
 			fieldLabel: 'PB ISBN',
 			name: 'PB ISBN',
 			align:'center',
+			maxLength: 13, // for validation
+            enforceMaxLength :13,
 			x:360,
 			y:40,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			afterLabelTextTpl: require_one,
 			},
     	{
     	
@@ -126,8 +115,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			x:10,
 			y:70,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
     	{
     		xtype:'combo',
@@ -158,21 +146,63 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			x:10,
 			y:100,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			hideTrigger:true,
 			xtype:'numberfield',
 			minValue: 0,
+			 listeners: {
+      'blur': function(t, ev, b)
+{
+// Ext.getBody().mask("Modifying Instance...");
+// $.get("updateInstances/"+)
+var value=t.lastValue;
+
+var sum= value%2;
+
+if(sum==0)
+{
+
+t.setValue(value);
+}
+else
+{
+var value1=value+1;
+t.setValue(value1);
+}
+
+},
+       }
     	},
     	{
     		xtype:'numberfield',
+    		hideTrigger:true,
     		minValue: 0,
 			id:'edit_confirmed_extent',
 			fieldLabel: 'Confirmed extent',
 			x:360,
 			y:100,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			listeners: {
+      'blur': function(t, ev, b)
+{
+// Ext.getBody().mask("Modifying Instance...");
+// $.get("updateInstances/"+)
+var value=t.lastValue;
+
+var sum= value%2;
+
+if(sum==0)
+{
+
+t.setValue(value);
+}
+else
+{
+var value1=value+1;
+t.setValue(value1);
+}
+
+},
+}
     	},
     	{
     		xtype:'datefield',
@@ -192,8 +222,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			x:360,
 			y:130,
 			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
        	{
         // Fieldset in Column 1 - collapsible via toggle button
@@ -216,9 +245,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			x:0,
 			y:0,
 			width:320,
-			//labelWidth:140,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
     	{
     		xtype:'numberfield',
@@ -229,9 +256,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			x:350,
 			y:0,
 			width:320,
-			//labelWidth:140,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
     	
 		{  
@@ -252,7 +277,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
     		minValue: 0,
     		//margin:'0 0 0 36',
 			id:'edit_index_extent',
-			fieldLabel: 'Expect Index extent',
+			fieldLabel: 'Expected Index extent',
 			align:'center',
 			x:0,
 			width:320,
@@ -303,8 +328,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			store:cover,
 			displayField:'type',
 			//labelWidth:140,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
     	
 		{  
@@ -334,6 +358,17 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			y:30,
 			width:320,
     		
+    	},
+    	{
+    		xtype:'combo',
+			id:'edit_project_note',
+			fieldLabel: 'Note',
+			x:700,
+			y:30,
+			width:320,
+			store:note,
+			displayField: 'note',
+			valueField: 'note',
     	}
     	]
     },
@@ -434,7 +469,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 				var word_count= Ext.getCmp('edit_word_count').getValue();
 				var manuscript= Ext.getCmp('edit_manuscript').getValue();
 				var index_extent= Ext.getCmp('edit_index_extent').getValue();
-				
+				var project_note= Ext.getCmp('edit_project_note').getValue();
 				var chapter_footer = Ext.getCmp('edit_chapter_footer').getValue();
 				var contain_colour = Ext.getCmp('edit_contain_colour').getValue();
 				var project_client= Ext.getCmp('edit_project_client').getValue();
@@ -450,7 +485,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 					params : {action:3,project_id:project_id,job_code:job_code,project_title:project_title,hb_isbn:hb_isbn,pb_isbn:pb_isbn,
 						project_series:project_series,project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,
 						client_deadline:client_deadline,agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,
-						chapter_footer:chapter_footer,contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow},
+						chapter_footer:chapter_footer,contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,project_note:project_note},
 					success:function(response){
 					obj = Ext.JSON.decode(response.responseText);
 					Ext.Msg.alert('Message', obj.message); 
