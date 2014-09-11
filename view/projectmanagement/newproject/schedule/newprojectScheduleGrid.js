@@ -31,7 +31,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		ci.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 30
 			}
 		});
 		
