@@ -410,7 +410,7 @@ t.setValue(value1);
 			listeners : {
 				change : function() {
 					//var currentForm = this.up('newprojectaddform');
-					var clientId = Ext.getCmp('project_client').getValue();
+					var clientId = Ext.getCmp('edit_project_client').getValue();
 					team.load({params:{action:6,clientId:clientId}}); 
 					workflow.load({params:{action:8,clientId:clientId}}); 
 				}
