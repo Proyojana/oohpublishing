@@ -1,6 +1,17 @@
 var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
+var role = Ext.create('Ext.data.Store', {
+        fields: ['role'],
+        data : [
+         {"role":"Project Manager"},
+         {"role":"Production Editor"},
+         {"role":"Copy Editor"},
+         {"role":"Proof Reader"},
+         {"role":"Indexer"},
+         {"role":"Typesetter"},
+        ]
+    });
 Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 	extend:'Ext.grid.Panel',
 	alias:'widget.editteamgrid',
@@ -29,6 +40,31 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 		var team = Ext.create('MyDesktop.store.Team');
 		team.load({params:{action: 12}});
 		this.store = team,
+				this.tbar = Ext.create('Ext.Toolbar', {  
+							   items:[{
+                               xtype : 'button',
+                               text : 'Insert New Row',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+               						var r = Ext.create('MyDesktop.model.Team', {
+               						id:'',
+                    				role: '',
+                    				name: '',
+                 					email: '',
+                    				
+                    				
+                				});
+                				//store.getCount()-1
+                		       team.insert(team.getCount(), r);
+            				 }                           
+        },
+        
+        ]
+        });
 			this.columns = [
 				{
 					dataIndex: 'id',
@@ -41,6 +77,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 				 text: 'Role',
 				 align: 'center',
                  flex:1,
+                 editor:{
+					 	xtype:'combo',
+					 	store: role,
+						queryMode: 'local',
+						displayField: 'role',
+						valueField: 'role',
+						}
 				
 				},	
 				{
