@@ -24,11 +24,16 @@ function autoReload()
 var times = Ext.create('Ext.data.Store', {
         fields: ['format'],
         data : [
-           {"format":"216 x 138"},
-            {"format":"226 x 52"},
-            {"format":"234 x 156"},
-            {"format":"246 x 189"},
-            {"format":"247 x 74"}
+            		{"format":"216 x 138"},
+					{"format":"226 x 52"},
+					{"format":"234 x 156"},
+					{"format":"246 x 189"},
+					{"format":"247 x 74"},
+					{"format":"247 x 174"},
+					{"format":"228 x 152"},
+					{"format":"246 x 174"},
+					{"format":"247 x 74"},
+
         ]
     });
     var cover = Ext.create('Ext.data.Store', {
