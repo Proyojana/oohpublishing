@@ -38,6 +38,9 @@ include("../inc/php/encryptDecrypt.php");
 		case 11:
 			insertBudgetReceivables_a($_POST['job_code'],$_POST['projectID'],$_POST['activity_name'],$_POST['uom'],$_POST['rate_USD'],$_POST['rate_GBP'],$_POST['actual_unit'],$_POST['amt_USD'],$_POST['amt_GBP']);
 			break;
+		case 12:
+			getReceivable_p($_POST['job_code']);
+			break;
 		
 		
 		default: 
@@ -578,5 +581,34 @@ Where
 			}
 		}
 		echo json_encode($result);
+	}
+function getReceivable_p($job_code)
+	{
+		$workflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($workflow)) {
+				
+			$workflowid = $row['workflow'];
+			$projectid = $row['id'];
+			
+		}
+		$result = mysql_query("
+		 Select
+  oohpublishing.budget_receivable.id as budgetReceive_id,
+  oohpublishing.budget_receivable.unit_gbp as rate_GBP,
+  oohpublishing.budget_receivable.unit_usd as rate_USD,
+  oohpublishing.budget_receivable.actual_billable_unit as actual_unit,
+  oohpublishing.budget_receivable.actual_billable_amount_usd as amt_USD,
+  oohpublishing.budget_receivable.actual_billable_amount_gbp as amt_GBP
+  
+From
+  oohpublishing.budget_receivable
+Where
+  oohpublishing.budget_receivable.project_id = '".$projectid."'
+")or die(mysql_error());
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"results":'.json_encode($data).'})';
 	}
 	?>

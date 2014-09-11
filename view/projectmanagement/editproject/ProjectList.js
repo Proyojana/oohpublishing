@@ -202,7 +202,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					        valueField: 'id',
 					        	listeners: {
 					        		afterrender: function(combo){
-					        	var recordSelected = combo.getStore().getAt(1);                     
+					        	var recordSelected = combo.getStore().getAt(0);                     
                                 combo.setValue(recordSelected.get('id'));
                              },
                             change: function(combo) {
@@ -296,6 +296,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					grid1.getStore().load({	params : {action : 1,job_code : job_code,}});
 					var grid4=Ext.getCmp('editaccountReceiveGrid_a');
 					grid4.getStore().load({params:{action:10,job_code:job_code}});
+					var grid4=Ext.getCmp('editaccountReceiveGrid');
+					grid4.getStore().load({params:{action:12,job_code:job_code}});
 					/*var currentForm = Ext.getCmp('edit_accountsReceivableForm');
 					currentForm.getForm().load({
 						url : 'service/EditProjects.php',

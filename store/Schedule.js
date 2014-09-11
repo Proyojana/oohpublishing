@@ -1,6 +1,6 @@
  Ext.define('MyDesktop.store.Schedule', {
         extend:'Ext.data.Store',
-		pageSize: 8,
+		pageSize: 20,
         model: 'MyDesktop.model.Schedule',
         proxy: {
     		type:'ajax',

@@ -4,11 +4,11 @@
         model: 'MyDesktop.model.Receivable',
         proxy: {
     		type:'ajax',
-			url: 'service/Receivable.php',
+			url: 'service/budget.php',
 			actionMethods: {
 		     read: 'POST'
     		},
-    			extraParams:{action:1},
+    			extraParams:{action:12},
     		reader: {
 				type:'json',
 	        	root: 'results',
