@@ -120,7 +120,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 			dataIndex: 'phone',
 			align: 'center',
 			flex : 1,
-			editor: { xtype:'numberfield',
+			editor: { xtype:'textfield',
 					   hideTrigger:true,
 					}
 		},{
@@ -128,14 +128,14 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 			dataIndex: 'see_proof',
 			align: 'center',
 			flex : 1,
-			editor: { xtype:'textfield'
+			editor: { xtype:'checkbox'
 					}
 		},{
 			header: 'No of Proofs',
 			dataIndex: 'no_proof',
 			align: 'center',
 			flex : 1,
-			editor: { xtype:'numberfield',
+			editor: { xtype:'textfield',
 					  hideTrigger:true,
 					}
 		},{

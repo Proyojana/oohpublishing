@@ -98,7 +98,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 			text: 'To See Proofs?',
 			align: 'center',
 			flex:2,
-			editor: { xtype:'textfield'
+			editor: { xtype:'checkbox'
 					}
 
 		},{

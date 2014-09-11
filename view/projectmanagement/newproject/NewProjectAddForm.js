@@ -154,6 +154,20 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			afterLabelTextTpl: require_one,
 			
 			},
+			{
+    		xtype:'textfield',
+			id:'ebook_isbn',
+			fieldLabel: 'ebook ISBN',
+			maxLength: 13, // for validation
+            enforceMaxLength :13,
+			name: 'ebook ISBN',
+			align:'center',
+			x:710,
+			y:40,
+			width:320,
+			//afterLabelTextTpl: require_one,
+			
+			},
     	{
     	    xtype:'textfield',
     		id:'project_series',
@@ -429,12 +443,14 @@ t.setValue(value1);
 			width:320,
     	},
     	{
-    		xtype:'combo',
+    		xtype:'multiselect',
 			id:'project_note',
-			fieldLabel: 'Note',
+			fieldLabel: 'Notes',
+			multiselect:true,
 			x:700,
 			y:30,
 			width:320,
+			height:56,
 			store:note,
 			displayField: 'note',
 			valueField: 'note',
@@ -527,6 +543,7 @@ t.setValue(value1);
 				//var project_author= Ext.getCmp('project_author').getValue();
 				var hb_isbn= Ext.getCmp('hb_isbn').getValue();
 				var pb_isbn= Ext.getCmp('pb_isbn').getValue();
+				var ebook_isbn= Ext.getCmp('ebook_isbn').getValue();
 				
 				var project_series = Ext.getCmp('project_series').getValue();
 				var project_format = Ext.getCmp('project_format').getValue();
@@ -565,7 +582,7 @@ t.setValue(value1);
 							project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,client_deadline:client_deadline,
 							agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
 							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,word_count_indexing:word_count_indexing,
-							cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed,project_note:project_note},
+							cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed,project_note:project_note,ebook_isbn:ebook_isbn},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -631,15 +648,16 @@ t.setValue(value1);
 	  	{
 xtype:'label',
 text:'Note:',
+
 x:10,
-y:530,
+y:450,
 },
 {
 
 html:'<span style="background-color:#dfe8f5; color:red;font-weight:bold">*</span>',
 border:false,
 x:10,
-y:550,
+y:470,
 width:8,
 
 },
@@ -647,21 +665,21 @@ width:8,
 xtype:'label',
 text:'Mandatory fields',
 x:20,
-y:550,
+y:470,
 
 },
 {
 html:'<span style="background-color:#dfe8f5; color:blue;font-weight:bold">*</span>',
 border:false,
 x:10,
-y:570,
+y:495,
 width:8,
 },
 {
 xtype:'label',
 text:'Both are not mandatory but should fill one atleast.',
 x:20,
-y:570,
+y:495,
 
 }]
 	  
