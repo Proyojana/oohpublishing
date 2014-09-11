@@ -504,7 +504,7 @@ function deleteBudgetactivity($budgetid)
 			
 		}
 		$result = mysql_query("
-		 Select
+		 Select distinct
  customers_ratecard.uom as uom,
  customers_ratecard.dollars as rate_USD,
  customers_ratecard.pounds as rate_GBP,

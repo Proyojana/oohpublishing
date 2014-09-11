@@ -214,7 +214,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 			//	margin:'0 0 0 100',
 				handler:function(){
 					 var job_code=Ext.getCmp('edit_Job_code').getValue();
-					 var projectID=Ext.getCmp('budgetHeader_projectID').getValue();  
+					 var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();  
 					 var activity_name = '';
 					 var uom = '';
 				     var rate_USD = '';
