@@ -12,6 +12,7 @@ var times = Ext.create('Ext.data.Store', {
 					{"format":"228 x 152"},
 					{"format":"246 x 174"},
 					{"format":"247 x 74"},
+					
         ]
     });
       var cover = Ext.create('Ext.data.Store', {
