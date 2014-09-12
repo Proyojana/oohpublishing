@@ -41,6 +41,9 @@ include("../inc/php/encryptDecrypt.php");
 		case 12:
 			getReceivable_p($_POST['job_code']);
 			break;
+		case 13:
+			getReceivable_a($_POST['job_code']);
+			break;
 		
 		
 		default: 
@@ -332,13 +335,13 @@ function deleteBudgetactivity($budgetid)
 			
 		for ($i = 0; $i < count($rate_USD1)-1; $i++)
 		{
-			$checkquery="SELECT id FROM budget_receivable WHERE project_id='".$projectID."'";
+			$checkquery="SELECT id FROM budget_receivable_project WHERE project_id='".$projectID."'";
        		$result2=mysql_query($checkquery);
        		$num_rows=mysql_num_rows($result2);
 			if($num_rows == 1)
 			{
 				
-				$result1 = mysql_query("UPDATE budget_receivable SET  unit='Per Page',unit_usd = '".$rate_USD1[$i]."', unit_gbp = '".$rate_GBP1[$i]."', actual_billable_unit = '".$actual_unit1[$i]."', actual_billable_amount_usd= '".$amt_USD1[$i]."', actual_billable_amount_gbp = '".$amt_GBP1[$i]."' WHERE project_id='".$projectID."'");
+				$result1 = mysql_query("UPDATE budget_receivable_project SET  unit_usd = '".$rate_USD1[$i]."', unit_gbp = '".$rate_GBP1[$i]."', actual_billable_unit = '".$actual_unit1[$i]."', actual_billable_amount_usd= '".$amt_USD1[$i]."', actual_billable_amount_gbp = '".$amt_GBP1[$i]."' WHERE project_id='".$projectID."'");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -353,8 +356,8 @@ function deleteBudgetactivity($budgetid)
 			
 			else
 			{
-				$result1 = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity, unit, unit_usd, unit_gbp, actual_billable_unit, actual_billable_amount_usd, actual_billable_amount_gbp,total_usd,total_gbp,created_by,created_on,modified_by,modified_on,flag)
-                                VALUES ('','".$projectID."',' ','Per Project','".$rate_USD1[$i]."','".$rate_GBP1[$i]."','".$actual_unit1[$i]."','".$amt_USD1[$i]."','".$amt_GBP1[$i]."','".$amt_USD1[$i]."', '".$amt_GBP1[$i]."','','','','','')");
+				$result1 = mysql_query("INSERT INTO budget_receivable_project (id ,project_id, unit_usd, unit_gbp, actual_billable_unit, actual_billable_amount_usd, actual_billable_amount_gbp,total_usd,total_gbp,created_by,created_on,modified_by,modified_on,flag)
+                                VALUES ('','".$projectID."','".$rate_USD1[$i]."','".$rate_GBP1[$i]."','".$actual_unit1[$i]."','".$amt_USD1[$i]."','".$amt_GBP1[$i]."','".$amt_USD1[$i]."', '".$amt_GBP1[$i]."','','','','','')");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -467,7 +470,6 @@ function deleteBudgetactivity($budgetid)
 	  project_title.workflow as editbudgetHeader_workflow,
 	  project_title.job_code as edit_Job_code,
 	  project_title.id as editbudgetHeader_projectID,
-	  project_title.job_code as editbudgetHeader_projectID,
 	  project_title.castoff_extent as editbudgetHeader_castoffextent,
 	  project_title.confirmed_extent as editbudgetHeader_confirmedextent
 	  
@@ -593,17 +595,49 @@ function getReceivable_p($job_code)
 		}
 		$result = mysql_query("
 		 Select
-  oohpublishing.budget_receivable.id as budgetReceive_id,
-  oohpublishing.budget_receivable.unit_gbp as rate_GBP,
-  oohpublishing.budget_receivable.unit_usd as rate_USD,
-  oohpublishing.budget_receivable.actual_billable_unit as actual_unit,
-  oohpublishing.budget_receivable.actual_billable_amount_usd as amt_USD,
-  oohpublishing.budget_receivable.actual_billable_amount_gbp as amt_GBP
+  oohpublishing.budget_receivable_project.id as budgetReceive_id,
+  oohpublishing.budget_receivable_project.unit_gbp as rate_GBP,
+  oohpublishing.budget_receivable_project.unit_usd as rate_USD,
+  oohpublishing.budget_receivable_project.actual_billable_unit as actual_unit,
+  oohpublishing.budget_receivable_project.actual_billable_amount_usd as amt_USD,
+  oohpublishing.budget_receivable_project.actual_billable_amount_gbp as amt_GBP
   
 From
-  oohpublishing.budget_receivable
+  oohpublishing.budget_receivable_project
 Where
-  oohpublishing.budget_receivable.project_id = '".$projectid."'
+  oohpublishing.budget_receivable_project.project_id = '".$projectid."'
+")or die(mysql_error());
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"results":'.json_encode($data).'})';
+	}
+function getReceivable_a($job_code)
+	{
+		$workflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($workflow)) {
+				
+			$workflowid = $row['workflow'];
+			$projectid = $row['id'];
+			
+		}
+		$result = mysql_query("
+		Select
+ oohpublishing.budget_receivable.id As budgetReceive_id,
+ oohpublishing.budget_receivable.unit As uom,
+ oohpublishing.budget_receivable.unit_gbp As rate_GBP,
+ oohpublishing.budget_receivable.unit_usd As rate_USD,
+ oohpublishing.budget_receivable.actual_billable_unit As actual_unit,
+ oohpublishing.budget_receivable.actual_billable_amount_usd As amt_USD,
+ oohpublishing.budget_receivable.actual_billable_amount_gbp As amt_GBP,
+ oohpublishing.activity.name as activity_name
+From
+ oohpublishing.budget_receivable Inner Join
+ oohpublishing.activity On oohpublishing.budget_receivable.activity =
+   oohpublishing.activity.id
+Where
+ oohpublishing.budget_receivable.project_id ='".$projectid."'
 ")or die(mysql_error());
 		while($row=mysql_fetch_object($result))
 		{

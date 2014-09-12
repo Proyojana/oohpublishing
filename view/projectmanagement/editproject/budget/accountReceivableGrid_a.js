@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 	alias:'widget.editaccountReceiveGrid_a',
 	closeAction: 'hide',
 	width:1100,
-	requires:['MyDesktop.model.Receive_a'],
+	requires:['MyDesktop.model.Receivable_a'],
 	id:'editaccountReceiveGrid_a',
 	plugins: [
               Ext.create('Ext.grid.plugin.CellEditing', {
@@ -32,7 +32,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 				limit: 50
 			}
 		});
-	var budget = Ext.create('MyDesktop.store.Receive_a');
+	var budget = Ext.create('MyDesktop.store.Receivable_a');
 		budget.load({
 			params: {
 				start: 0,
@@ -215,6 +215,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 				handler:function(){
 					 var job_code=Ext.getCmp('edit_Job_code').getValue();
 					 var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();  
+					 alert(projectID);
 					 var activity_name = '';
 					 var uom = '';
 				     var rate_USD = '';

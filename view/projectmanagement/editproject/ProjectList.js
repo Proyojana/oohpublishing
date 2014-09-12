@@ -295,7 +295,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					var grid1 = Ext.getCmp('editaccountPayableGrid');
 					grid1.getStore().load({	params : {action : 1,job_code : job_code,}});
 					var grid4=Ext.getCmp('editaccountReceiveGrid_a');
-					grid4.getStore().load({params:{action:10,job_code:job_code}});
+					grid4.getStore().load({params:{action:13,job_code:job_code}});
 					var grid4=Ext.getCmp('editaccountReceiveGrid');
 					grid4.getStore().load({params:{action:12,job_code:job_code}});
 					/*var currentForm = Ext.getCmp('edit_accountsReceivableForm');
