@@ -191,7 +191,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
 			items:[
-			{
+			/*{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -232,7 +232,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 						}
 					});
 					var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
-                	 /****load data in header form*****/
+                	 /****load data in header form
                 	
 						
 						currentForm.getForm().load({
@@ -254,31 +254,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 					Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
 				}
 			},
-			// For Additional sets
-		/*	{
-				xtype:'button',
-				text:'Plus',
-				pressed:true,
-				width:100,
-				margin:'0 0 0 150',
-				handler:function(){
-				
-					var win = Ext.create("Ext.window.Window", {
-		            layout: 'fit',
-		            modal: true,
-		            maximizable: true,
-		            width: 350,
-		            title:'Additional Sets',
-		            id:'open_plus_win',
-		            height: 250,
-		            items:[{
-                		xtype: 'authorplusform',
-           		 }]
-        });
-        win.show();
-					
-				}
-			}*/
+		*/
 			],
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',

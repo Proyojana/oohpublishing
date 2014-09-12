@@ -367,7 +367,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 			//displayMsg: 'Displaying topics {0} - {1} of {2}',
 			//emptyMsg: "No topics to display",
 			items:[
-			{
+			/**{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -381,7 +381,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 					//alert(job_code);
 					//alert("save");
 					var projectID=Ext.getCmp('budgetHeader_projectID').getValue(); 
-					/*var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); */
+					var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); 
 					
 							var activity='';
 							var stage='';
@@ -443,7 +443,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 
 					
 				}
-			},
+			},**/
 			
 		/*	{
 				xtype:'button',

@@ -135,10 +135,82 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							xtype : 'edit_contrib_grid',
 							width:1100,
 							x : 0,
-							y : 330,
+							y : 290,
 							margin:'5 5 5 5'
 
-						}]
+						},
+						{
+                      xtype:'button',
+                       text:'Update',
+                      width:100,
+						x:500,
+						y:480,
+						handler:function(){
+							/** For Author Grid Save**/
+				    var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
+					var c='';var d='';
+					var e=''; var f='';
+					var g=''; var h='';
+					var i=''; var b='';
+					var grid=Ext.getCmp('new_author_grid');
+							
+					var myStore = Ext.getCmp('edit_author_grid').getStore();
+					myStore.each(function(rec) {
+					b=b+rec.get('id')+',';
+					c=c+rec.get('author')+',';
+				    d=d+rec.get('name')+',';
+				    e=e+rec.get('address')+'_';
+				    f=f+rec.get('email')+',';
+				    g=g+rec.get('phone')+',';
+				    h=h+rec.get('see_proof')+',';
+				    i=i+rec.get('no_proof')+',';
+				    });
+				
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/Author.php',
+						method: 'POST',
+						params : {action:1,id:b,job_code:job_code,author:c,name:d,address:e,email:f,phone:g,see_proof:h,no_proof:i},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message); 
+						}
+					});
+					
+					/** For Contrib Grid Save**/
+									var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
+					var c='';var d='';
+					var e=''; var f='';
+					var g=''; var h='';
+					var i=''; var b='';
+					var grid=Ext.getCmp('new_author_grid');
+							
+					var myStore = Ext.getCmp('edit_contrib_grid').getStore();
+					myStore.each(function(rec) {
+					b=b+rec.get('id')+',';
+					c=c+rec.get('chap_num')+',';
+				    d=d+rec.get('contrib_name')+',';
+				    e=e+rec.get('email')+',';
+				    f=f+rec.get('see_proof')+',';
+				    g=g+rec.get('proof_sent')+',';
+				    h=h+rec.get('proof_back')+',';
+				  //  i=i+rec.get('no_proof')+',';
+				});
+				var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/Author.php',
+						method: 'POST',
+						params : {action:3,id:b,job_code:job_code,chap_num:c,contrib_name:d,email:e,see_proof:f,proof_sent:g,proof_back:h},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message); 
+						}
+					});
+					
+					
+				}
+				}
+						]
 					});
 					win.show();
 

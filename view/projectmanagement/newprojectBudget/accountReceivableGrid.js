@@ -171,7 +171,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 			this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
 			items:[
-			{
+			/**{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -208,7 +208,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 					});
 					
 				}
-			}
+			}**/
 			]
 		});
 		

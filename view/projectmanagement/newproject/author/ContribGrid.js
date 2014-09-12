@@ -182,7 +182,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.ContribGrid', {
 
 			store : this.store,
 			items:[
-			{
+			/*{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -226,7 +226,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.ContribGrid', {
 					grid3.getStore().load({params:{action:4,job_code:job_code}});
 					Ext.getCmp('newprojectbudgetformTab').setDisabled(false);	
 				}
-			}
+			}*/
 			],
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',

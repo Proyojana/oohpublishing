@@ -206,7 +206,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 			this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
 			items:[
-			{
+			/**{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -223,7 +223,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 				     var amt_USD = '';
 				     var amt_GBP = '';
 				     var grid=Ext.getCmp('accountReceiveGrid_a');
-				     /**variable declaration**/
+				     
 					var total_USD=0;
 					var total_GBP=0;
 					
@@ -255,7 +255,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 					 Ext.getCmp('total_receive_USD').setValue(total_USD);
 					 Ext.getCmp('total_receive_GDP').setValue(total_GBP);
 										}
-			}
+			}**/
 			]
 		});
 		

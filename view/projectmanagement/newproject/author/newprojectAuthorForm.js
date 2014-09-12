@@ -67,9 +67,9 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorF
 		
 		{
 xtype:'button',
-text:'Save',
+text:'Save + Next',
 width:100,
-x:300,
+x:500,
 y:480,
 handler:function(){
 var job_code=Ext.getCmp('job_code').getValue();
@@ -168,22 +168,8 @@ grid3.getStore().load({params:{action:4,job_code:job_code}});
 Ext.getCmp('newprojectbudgetformTab').setDisabled(false);
 
 //--------------
-
-}
-},
-
-		
-		
-		
-		//ends
-		{
-			xtype:'button',
-			text:'Next',
-			width:100,
-			x:500,
-			y:480,
-			handler:function (){
-				var job_code=Ext.getCmp('job_code').getValue(); 
+/** Function for Next**/
+var job_code=Ext.getCmp('job_code').getValue(); 
 				var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
                 	 /****load data in header form*****/
                 	
@@ -208,8 +194,47 @@ Ext.getCmp('newprojectbudgetformTab').setDisabled(false);
 					Ext.getCmp('newprojectbudgetformTab').setDisabled(false);	
 					Ext.getCmp('newprojectauthorformTab').setDisabled(false);
 					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectbudgetformTab');	
+}
+},
+
+		
+		
+		
+		//ends
+	/*	{
+			xtype:'button',
+			text:'Next',
+			width:100,
+			x:500,
+			y:480,
+			handler:function (){
+				var job_code=Ext.getCmp('job_code').getValue(); 
+				var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
+                	 /****load data in header form
+                	
+						; 
+						currentForm.getForm().load({
+   								 url: 'service/budget.php',
+							     params: {
+        						 	action:2,job_code:job_code
+							    },
+							      failure: function(form, action){
+						        Ext.Msg.alert("Load failed", action.result.errorMessage);
+    							}
+							   
+							   
+						});
+					var grid3=Ext.getCmp('accountPayableGrid');
+									grid3.getStore().load({params:{action:1,job_code:job_code}});
+					var grid4=Ext.getCmp('accountReceiveGrid_a');
+									grid4.getStore().load({params:{action:10,job_code:job_code}});
+					var grid3=Ext.getCmp('new_author_grid');
+									grid3.getStore().load({params:{action:2,job_code:job_code}});
+					Ext.getCmp('newprojectbudgetformTab').setDisabled(false);	
+					Ext.getCmp('newprojectauthorformTab').setDisabled(false);
+					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectbudgetformTab');	
 			}
-		}
+		}*/
 
 		]
 

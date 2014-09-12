@@ -176,7 +176,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 
 			store : this.store,
 			items:[
-			{
+			/*{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -217,7 +217,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 					});
 					
 				}
-			}
+			}*/
 			],
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
