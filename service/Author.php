@@ -169,7 +169,7 @@ Where
 				else
 				{
 					$result["success"] = true;
-					$result["message"] = "Contributor saved successfully";
+					$result["message"] = "Authors and Contributors saved successfully";
 				}
 				
 				}

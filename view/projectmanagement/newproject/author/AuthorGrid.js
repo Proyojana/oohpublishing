@@ -192,7 +192,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
 			items:[
-			{
+		/**	{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -233,7 +233,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 						}
 					});
 					var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
-                	 /****load data in header form*****/
+                
                 	
 						
 						currentForm.getForm().load({
@@ -247,14 +247,14 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 							   
 							   
 						});
-					/*var grid3=Ext.getCmp('accountPayableGrid');
-									grid3.getStore().load({params:{action:1,job_code:job_code}});*/
+					var grid3=Ext.getCmp('accountPayableGrid');
+									grid3.getStore().load({params:{action:1,job_code:job_code}});
 					var grid3=Ext.getCmp('new_author_grid');
 					grid3.getStore().load({params:{action:2,job_code:job_code}});
 					//Ext.getCmp('newprojectbudgetformTab').setDisabled(false);	
 					Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
 				}
-			},
+			},**/
 			// For Additional sets
 		/*	{
 				xtype:'button',
