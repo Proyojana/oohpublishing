@@ -116,7 +116,7 @@ xtype:'textfield',
 		{
 			xtype:'button',
 		    text:'Save',
-		    x:300,
+		    x:450,
 		    width:100,
 	        y:580,
 	        handler:function(){
