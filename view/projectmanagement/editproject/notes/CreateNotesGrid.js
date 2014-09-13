@@ -28,7 +28,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid',
 		});
 		notes.loadPage(1);
 		this.store = notes,
-		this.tbar = Ext.create('Ext.Toolbar', {
+		/*this.tbar = Ext.create('Ext.Toolbar', {
 			items:[{
 				xtype : 'button',
 				text : 'Insert New Row',
@@ -50,7 +50,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid',
 			},
 
 			]
-		});
+		});*/
 		this.columns = [{
 			dataIndex: 'id',
 			hidden:true
@@ -139,7 +139,27 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid',
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
-			items:[{
+			items:[
+			{
+				xtype : 'button',
+				text : 'Insert New Row',
+				pressed:true,
+				x : 500,
+				y : 10,
+				width : 100,
+				height : 25,
+				handler : function() {
+					var r = Ext.create('MyDesktop.model.Notes', {
+						id:'',
+						dateraised: '',
+						narrative: '',
+						dateresolved:''
+
+					});
+					notes.insert(notes.getCount(), r);
+				}
+			},
+        /*   {
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -192,7 +212,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid',
 					});
 
 				}
-			},
+			},*/
 
 			]
 

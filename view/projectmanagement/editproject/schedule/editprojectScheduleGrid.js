@@ -36,7 +36,7 @@ initComponent: function() {//load activity combo
 		
 		ci.loadPage(1);
 		this.store = ci,
-		this.tbar = Ext.create('Ext.Toolbar', {  
+	/*	this.tbar = Ext.create('Ext.Toolbar', {  
 							   items:[{
                                xtype : 'button',
                                text : 'Insert New Row',
@@ -67,7 +67,7 @@ initComponent: function() {//load activity combo
         },
         
         ]
-        });
+        });*/
 		this.columns = [{
 			dataIndex: 'schedule_id',
 			hidden:true
@@ -514,6 +514,33 @@ initComponent: function() {//load activity combo
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
 			items:[{
+                               xtype : 'button',
+                               text : 'Insert New Row',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+               						var r = Ext.create('MyDesktop.model.Schedule', {
+               						schedule_id:'',
+                    				stageorder: '',
+                    				activity: '',
+                 					activityid: '',
+                    				stage: '',
+                    				estimated_daysperstage:'',
+                    				actual_daysperstage: '',
+                    				estimated_start_date: '',
+                 					actual_start_date: '',
+                    				estimated_end_date: '',
+                    				actual_end_date:'',
+                    				bufferday: '',
+                    				
+                				});
+                				//store.getCount()-1
+                		       ci.insert(ci.getCount(), r);
+            				 }                           
+        },/*{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -593,7 +620,7 @@ initComponent: function() {//load activity combo
 					});
 				
 				}
-			},
+			},*/
 			]
 
 		}),

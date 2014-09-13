@@ -49,7 +49,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 			}
 		});
 	this.store = author,
-	this.tbar = Ext.create('Ext.Toolbar', {  
+	/*this.tbar = Ext.create('Ext.Toolbar', {  
 							   items:[{
                                xtype : 'button',
                                id : 'edit_add_new_author',
@@ -75,7 +75,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
         },
         
         ]
-        });
+        });*/
 		this.columns = [
 		{
 			dataIndex:'id',
@@ -190,72 +190,31 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 		];
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
-			items:[
-			/*{
-				xtype:'button',
-				text:'Save',
-				pressed:true,
-				width:100,
-				margin:'0 0 0 100',
-				handler:function(grid, rowIndex, colIndex){
-					var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
-					
-					var c='';var d='';
-					var e=''; var f='';
-					var g=''; var h='';
-					var i=''; var b='';
-					var grid=Ext.getCmp('new_author_grid');
-							
-					var myStore = Ext.getCmp('new_author_grid').getStore();
-					myStore.each(function(rec) {
-					b=b+rec.get('id')+',';
-					c=c+rec.get('author')+',';
-				    d=d+rec.get('name')+',';
-				    e=e+rec.get('address')+'_';
-				    f=f+rec.get('email')+',';
-				    g=g+rec.get('phone')+',';
-				    h=h+rec.get('see_proof')+',';
-				    i=i+rec.get('no_proof')+',';
-				});
-				//alert(e);	
-				//	 alert(b);
-					 //alert(tid);	
-					// alert(secid);
-					var conn = new Ext.data.Connection();
-					conn.request({
-						url: 'service/Author.php',
-						method: 'POST',
-						params : {action:1,id:b,job_code:job_code,author:c,name:d,address:e,email:f,phone:g,see_proof:h,no_proof:i},
-						success:function(response){
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-						}
-					});
-					var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
-                	 /****load data in header form
-                	
-						
-						currentForm.getForm().load({
-   								 url: 'service/budget.php',
-							     params: {
-        						 	action:2,job_code:job_code
-							    },
-							      failure: function(form, action){
-						        Ext.Msg.alert("Load failed", action.result.errorMessage);
-    							}
-							   
-							   
-						});
-					var grid3=Ext.getCmp('accountPayableGrid');
-									grid3.getStore().load({params:{action:1,job_code:job_code}});
-									var grid3=Ext.getCmp('new_author_grid');
-									grid3.getStore().load({params:{action:2,job_code:job_code}});
-					Ext.getCmp('newprojectbudgetformTab').setDisabled(false);	
-					Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
-				}
-			},
-		*/
-			],
+						   items:[{
+                               xtype : 'button',
+                               id : 'edit_add_new_author',
+                               text : 'Insert New Row',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              // 	alert("insert");
+               						 var r = Ext.create('MyDesktop.model.AuthorGrid', {
+               						 author:'',
+                    				name: '',
+                    				address: '',
+                 					email: '',
+                    				phone: '',
+                    				see_proof: '',
+                    				no_proof: ''
+                				});
+                		       author.insert(author.getCount(), r);
+            				 }                           
+        },
+        
+        ],
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display"

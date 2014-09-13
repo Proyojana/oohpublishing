@@ -50,7 +50,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 			}
 		});
 	this.store = author,
-	this.tbar = Ext.create('Ext.Toolbar', {  
+	/*this.tbar = Ext.create('Ext.Toolbar', {  
 							   items:[{
                                xtype : 'button',
                                id : 'add_new_author',
@@ -76,7 +76,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
         },
         
         ]
-        });
+        });*/
 		this.columns = [
 		{
 			dataIndex:'id',
@@ -191,7 +191,29 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 		];
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
-			items:[
+			items:[{
+                               xtype : 'button',
+                               id : 'add_new_author',
+                               text : 'Insert New Row',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              // 	alert("insert");
+               						 var r = Ext.create('MyDesktop.model.AuthorGrid', {
+               						 author:'',
+                    				name: '',
+                    				address: '',
+                 					email: '',
+                    				phone: '',
+                    				see_proof: '',
+                    				no_proof: ''
+                				});
+                		       author.insert(author.getCount(), r);
+            				 }                           
+        },
 		/**	{
 				xtype:'button',
 				text:'Save',

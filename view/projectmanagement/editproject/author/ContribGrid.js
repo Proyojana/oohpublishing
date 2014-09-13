@@ -22,11 +22,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 	extend:'Ext.grid.Panel',
 	alias:'widget.edit_contrib_grid',
 	closeAction: 'hide',
-
-	//	height:200,
-	//requires : ['MyDesktop.store.freelancer'],
-	//anchor: '76% 30%',
-	id:'edit_contrib_grid',
+    id:'edit_contrib_grid',
 	title:'Contributors',
 	plugins: [
               Ext.create('Ext.grid.plugin.CellEditing', {
@@ -43,7 +39,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 			}
 		});
 	this.store = contributor,
-	this.tbar = Ext.create('Ext.Toolbar', {  
+	/*this.tbar = Ext.create('Ext.Toolbar', {  
 							   items:[{
                                xtype : 'button',
                                id : 'edit_new_contrib',
@@ -68,7 +64,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
         },
         
         ]
-        });
+        });*/
 		this.columns = [{
 			dataIndex: 'Id',
 			hidden:true
@@ -175,50 +171,30 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 
 			store : this.store,
-			items:[
-			/*{
-				xtype:'button',
-				text:'Save',
-				pressed:true,
-				width:100,
-				margin:'0 0 0 100',
-				handler:function(){
-					var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
-					var c='';var d='';
-					var e=''; var f='';
-					var g=''; var h='';
-					var i=''; var b='';
-					var grid=Ext.getCmp('new_author_grid');
-							
-					var myStore = Ext.getCmp('edit_contrib_grid').getStore();
-					myStore.each(function(rec) {
-					b=b+rec.get('id')+',';
-					c=c+rec.get('chap_num')+',';
-				    d=d+rec.get('contrib_name')+',';
-				    e=e+rec.get('email')+',';
-				    f=f+rec.get('see_proof')+',';
-				    g=g+rec.get('proof_sent')+',';
-				    h=h+rec.get('proof_back')+',';
-				  //  i=i+rec.get('no_proof')+',';
-				});
-				//alert(e);	
-					 //alert(d);
-					 //alert(tid);	
-					// alert(secid);
-					var conn = new Ext.data.Connection();
-					conn.request({
-						url: 'service/Author.php',
-						method: 'POST',
-						params : {action:3,id:b,job_code:job_code,chap_num:c,contrib_name:d,email:e,see_proof:f,proof_sent:g,proof_back:h},
-						success:function(response){
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-						}
-					});
-					
-				}
-			}*/
-			],
+	items:[{
+                               xtype : 'button',
+                               id : 'edit_new_contrib',
+                               text : 'Insert New Row',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              // 	alert("insert");
+               						 var r = Ext.create('MyDesktop.model.ContribGrid', {
+               						chap_num:'',
+                    				contrib_name: '',
+                    				email: '',
+                 					see_proof: '',
+                      				proof_sent: '',
+                    				proof_back: ''
+                				});
+                		       contributor.insert(contributor.getCount(), r);
+            				 }                           
+        },
+        
+        ],
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",

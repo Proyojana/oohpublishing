@@ -46,7 +46,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 	frame:true,
 	title:'Basic Info',
 	defaults: {
-		labelWidth: 80,
+		labelWidth: 100,
 	},
 	defaultType: 'textfield',
 	listeners: {
@@ -138,7 +138,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
       },
       {
       	id:'basicstate',
-		fieldLabel: 'State',
+		fieldLabel: 'Country/State',
 		afterLabelTextTpl: required,	
 		allowBlank: false,		
 		x:340,

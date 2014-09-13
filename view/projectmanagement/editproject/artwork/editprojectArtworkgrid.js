@@ -28,7 +28,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 			}
 		});
 	this.store = author,
-	this.tbar = Ext.create('Ext.Toolbar', {  
+	/*this.tbar = Ext.create('Ext.Toolbar', {  
 							   items:[{
                                xtype : 'button',
                                id : 'edit_add_new_artwork',
@@ -60,7 +60,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
         },
         
         ]
-        });
+        });*/
 		this.columns = [
 		{
 			dataIndex:'id',
@@ -226,6 +226,34 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 			store : this.store,
 			items:[
 			{
+                               xtype : 'button',
+                               id : 'edit_add_new_artwork',
+                               text : 'Insert New Row',
+                               pressed:true,
+                             
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              // 	alert("insert");
+               						 var r = Ext.create('MyDesktop.model.Artwork', {
+               						 	id:'',
+               						 figurenumber:'',
+                    				inputformat: '',
+                    				resolution: '',
+                 					colourmode: '',
+                    				vendorassessment: '',
+                    				cnvrt: '',
+                    				redrawsimple: '',
+                    				redrawcomplex: '',
+                    				relabel: '',                   				
+                    				finalartwrk: '',
+                    				cost: '',
+                    				comments: ''
+                				});
+                		       author.insert(author.getCount(), r);
+            				 }                           
+        },
+			/*{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -238,7 +266,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 					var total_redraws=0;
 					var total_relabel=0;
 					var total_final=0;
-					/*** get value from store**/
+					/*** get value from store
 					var myStore = Ext.getCmp('editprojectArtworkgrid').getStore();
 					myStore.each(function(rec) {
 					
@@ -332,7 +360,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 					});
 
 				}
-			},
+			},*/
 			{
 						xtype:'textfield',
 						fieldLabel:'Total Cost',

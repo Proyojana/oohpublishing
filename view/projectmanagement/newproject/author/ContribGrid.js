@@ -45,28 +45,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.ContribGrid', {
 		});
 	this.store = contributor,
 	this.tbar = Ext.create('Ext.Toolbar', {  
-							   items:[{
-                               xtype : 'button',
-                               id : 'add_new_contrib',
-                               text : 'Insert New Row',
-                               pressed:true,
-                              
-                               
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-                              // 	alert("insert");
-               						 var r = Ext.create('MyDesktop.model.ContribGrid', {
-               						chap_num:'',
-                    				contrib_name: '',
-                    				email: '',
-                 					see_proof: '',
-                      				proof_sent: '',
-                    				proof_back: ''
-                				});
-                		       contributor.insert(0, r);
-            				 }                           
-        },
+							   items:[
        {
                                iconCls:'informationClass',
                              
@@ -182,6 +161,28 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.ContribGrid', {
 
 			store : this.store,
 			items:[
+			{
+                               xtype : 'button',
+                               id : 'add_new_contrib',
+                               text : 'Insert New Row',
+                               pressed:true,
+                              
+                               
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              // 	alert("insert");
+               						 var r = Ext.create('MyDesktop.model.ContribGrid', {
+               						chap_num:'',
+                    				contrib_name: '',
+                    				email: '',
+                 					see_proof: '',
+                      				proof_sent: '',
+                    				proof_back: ''
+                				});
+                		       contributor.insert(contributor.getCount(), r);
+            				 }                           
+        },
 			/*{
 				xtype:'button',
 				text:'Save',
