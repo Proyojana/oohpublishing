@@ -461,7 +461,7 @@ t.setValue(value1);
     			{
 			xtype: 'button',
 		  	text: 'Update',
-		  	iconCls: 'editClass',
+		  	iconCls: 'updateClass',
 		  	id:'edit_edit_team',
 			align:'center',
 			x:450,
@@ -521,7 +521,7 @@ t.setValue(value1);
 			}
 	  	},
 		
-	  	{
+	  	/*{
 			xtype: 'button',
 		  	text: 'Cancel',
 		  	iconCls: 'button_reset',
@@ -532,7 +532,7 @@ t.setValue(value1);
 			handler: function (){
 				
 			}
-	  	} ]
+	  	}*/ ]
 	  
 	
 		

@@ -1,6 +1,6 @@
  Ext.define('MyDesktop.store.Projects', {
         extend:'Ext.data.Store',
-		pageSize: 8,
+		pageSize: 10,
         model: 'MyDesktop.model.Projects',
         proxy: {
     		type:'ajax',
