@@ -142,9 +142,10 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						{
                       xtype:'button',
                        text:'Update',
+                       iconCls : 'updateClass',
                       width:100,
-						x:500,
-						y:480,
+						x:450,
+						y:460,
 						handler:function(){
 							/** For Author Grid Save**/
 				    var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
@@ -178,7 +179,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					});
 					
 					/** For Contrib Grid Save**/
-									var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
+				    var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
 					var c='';var d='';
 					var e=''; var f='';
 					var g=''; var h='';
@@ -194,7 +195,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				    f=f+rec.get('see_proof')+',';
 				    g=g+rec.get('proof_sent')+',';
 				    h=h+rec.get('proof_back')+',';
-				  //  i=i+rec.get('no_proof')+',';
+				  
 				});
 				var conn = new Ext.data.Connection();
 					conn.request({
@@ -209,6 +210,17 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					
 					
 				}
+				},
+				{
+					 xtype:'button',
+                       text:'Cancel',
+                       iconCls : 'cancelClass',
+                      width:100,
+						x:600,
+						y:460,
+						handler:function(){
+							win.close();
+						}
 				}
 						]
 					});
@@ -383,7 +395,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					});*/
 					
 				}
-			}, {
+			}, 
+			{
 				iconCls : 'scheduleEditClass',
 				tooltip : 'Edit Schedule',
 				handler : function(grid, rowIndex, colIndex) {
@@ -395,7 +408,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Edit Schedule',
 						width : 1125,
-						height : 500,
+						height : 550,
 						items : [
 						{
 							xtype:'editprojectScheduleHeaderForm',
@@ -409,7 +422,104 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							y : 80,
 							width:1100,
 							margin:'5 5 5 5',
-						}]
+						},
+						{
+				xtype:'button',
+				text:'Update',
+				iconCls : 'updateClass',
+				pressed:true,
+				width:100,
+				x:450,
+				y:460,
+				//	margin:'0 0 0 100',
+				handler: function() {
+
+					var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
+					var workflow=Ext.getCmp('edit_scheduleHeader_workflow').getValue();
+					var job_code=Ext.getCmp('edit_scheduleHeader_Job').getValue();
+					var stage='';
+					var stageorder='';
+					var estimated_daysperstage='';
+					var actual_daysperstage='';
+					var estimated_start_date='';
+					var actual_start_date='';
+					var estimated_end_date='';
+					var actual_end_date='';
+					var bufferday='';
+					var activity='';
+					var schedule_id='';
+					var grid=Ext.getCmp('editprojectSchedulegrid');
+
+					var myStore = Ext.getCmp('editprojectSchedulegrid').getStore();
+					//items = [];
+
+					myStore.each( function(rec) {
+						stage=stage+rec.get('stage')+',';
+						estimated_daysperstage=estimated_daysperstage+rec.get('estimated_daysperstage')+',';
+						actual_daysperstage=actual_daysperstage+rec.get('actual_daysperstage')+',';
+						estimated_start_date=estimated_start_date+rec.get('estimated_start_date')+',';
+						actual_start_date=actual_start_date+rec.get('actual_start_date')+',';
+						estimated_end_date=estimated_end_date+rec.get('estimated_end_date')+',';
+						actual_end_date=actual_end_date+rec.get('actual_end_date')+',';
+						bufferday=bufferday+rec.get('bufferday')+',';
+						activity=activity+rec.get('activityid')+',';
+						stageorder=stageorder+rec.get('stageorder')+',';
+						schedule_id=schedule_id+rec.get('schedule_id')+',';
+
+					});
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/schedule.php',
+						method: 'POST',
+						params : {
+							action:3,
+							projectid:projectid,
+							stageorder:stageorder,
+							scheduleid:schedule_id,
+							workflow:workflow,
+							activity:activity,
+							stage:stage,
+							estimated_daysperstage:estimated_daysperstage,
+							actual_daysperstage:actual_daysperstage,
+							estimated_start_date:estimated_start_date,
+							actual_start_date:actual_start_date,
+							estimated_end_date:estimated_end_date,
+							actual_end_date:actual_end_date,
+							bufferday:bufferday
+
+						},
+						success: function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message);
+
+
+							//refresh grid
+							var grid3=Ext.getCmp('editprojectSchedulegrid');
+							grid3.getStore().load({
+								params: {
+									action:4,
+									projectid:projectid
+								}
+							});
+
+						}
+					});
+				
+				}
+			},
+			{
+				xtype:'button',
+				text:'Cancel',
+				iconCls : 'cancelClass',
+				pressed:true,
+				width:100,
+				x:600,
+				y:460,
+				//	margin:'0 0 0 100',
+				handler: function() {
+					win.close();
+					}
+					}]
 					});
 					win.show();
 					var rec = grid.getStore().getAt(rowIndex);
@@ -446,7 +556,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Edit Team',
 						width : 1125,
-						height : 400,
+						height : 450,
 						items : [
 						{
 							xtype:'TeamHeaderForm',
@@ -459,7 +569,53 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							y :80,
 							margin:'5 5 5 5'
 							
-						}]
+						},
+						{
+				xtype:'button',
+				text:'Update',
+				iconCls : 'updateClass',
+				pressed:true,
+				x:450,
+				y:350,
+				width:100,
+				handler:function(){
+					var project_id=Ext.getCmp('editteamHeader_projectID').getValue(); 
+					var role='';
+					var name='';
+					var email='';
+					var myStore = Ext.getCmp('editteamgrid').getStore();
+					myStore.each(function(rec) {
+						role=role+rec.get('role')+',';
+						name=name+rec.get('name')+',';
+						email=email+rec.get('email')+',';
+						});
+					var conn = new Ext.data.Connection();
+					 conn.request({
+						url: 'service/Users.php',
+						method: 'POST',
+						params : {action:11,project_id:project_id,role:role,name:name,email:email},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message); 
+						}
+					});
+					
+				}
+			},
+			{
+				xtype:'button',
+				text:'Cancel',
+				iconCls : 'cancelClass',
+				pressed:true,
+				x:600,
+				y:350,
+				width:100,
+				handler:function(){
+					win.close();
+				}
+			}
+			
+			]
 					});
 					win.show();
 					
@@ -500,7 +656,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Add Notes & Remainders',
 						width : 1125,
-						height : 400,
+						height : 450,
 						items : [
 						{
 							xtype:'NotesHeaderForm',
@@ -511,9 +667,79 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							xtype : 'editnotesgrid',
 							x : 0,
 							y :80,
-							margin:'5 5 5 5'
+							margin:'5 5 5 5',
+							height:250,
 							
-						}]
+						},
+						{
+				xtype:'button',
+				text:'Update',
+				iconCls : 'updateClass',
+				pressed:true,
+				x:450,
+				y:350,
+				width:100,
+				handler:function(){
+							var job_code=Ext.getCmp('job_code').getValue();
+					var project_id=Ext.getCmp('editnotesHeader_projectID').getValue();
+
+					var dateresolved='';
+					var narrative='';
+					var dateraised='';
+					var notes_id='';
+					var grid=Ext.getCmp('editnotesgrid');
+
+					var myStore = Ext.getCmp('editnotesgrid').getStore();
+					myStore.each( function(rec) {
+
+						dateresolved=dateresolved+rec.get('dateresolved')+',';
+						narrative=narrative+rec.get('narrative')+',';
+						dateraised=dateraised+rec.get('dateraised')+',';
+						notes_id=notes_id+rec.get('id')+',';
+
+					});
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/notes.php',
+						method: 'POST',
+						params : {
+							action:2,
+							project_id:project_id,
+							dateresolved:dateresolved,
+							narrative:narrative,
+							dateraised:dateraised,
+							notes_id:notes_id
+						},
+						success: function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message);
+							//refresh grid
+							var grid3=Ext.getCmp('editnotesgrid');
+							grid3.getStore().load({
+								params: {
+									action:3,
+									project_id:project_id
+								}
+							});
+
+						}
+					});
+					
+				}
+			},
+			{
+				xtype:'button',
+				text:'Cancel',
+				iconCls : 'cancelClass',
+				pressed:true,
+				x:600,
+				y:350,
+				width:100,
+				handler:function(){
+					win.close();
+				}
+			}
+			]
 					});
 					win.show();
 					
@@ -553,7 +779,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Edit Artwork',
 						width : 1200,
-						height : 500,
+						height : 450,
 						items : [
 						{
 							xtype:'editprojectArtworkHeaderForm',
@@ -568,7 +794,129 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							y : 80,
 							width:1150,
 							margin:'5 5 5 5',
-						}]
+						},
+						{
+				xtype:'button',
+				text:'Update',
+				iconCls : 'updateClass',
+				pressed:true,
+				x:450,
+				y:350,
+				width:100,
+				//	margin:'0 0 0 100',
+				handler: function() {
+					var total_cost=0;
+					var total_redraws=0;
+					var total_relabel=0;
+					var total_final=0;
+					/*** get value from store**/
+					var myStore = Ext.getCmp('editprojectArtworkgrid').getStore();
+					myStore.each(function(rec) {
+					
+				    total_cost=total_cost+parseInt(rec.get('cost'));
+				    
+				    total_redraws=total_redraws+parseInt(rec.get('redrawsimple'));
+				   
+				    total_relabel=total_relabel+parseInt(rec.get('relabel'));
+				    total_final=total_final+parseInt(rec.get('finalartwrk'));
+				    
+				   					
+				});
+				
+				Ext.getCmp('total_cost').setValue(total_cost);
+				Ext.getCmp('total_redraws').setValue(total_redraws);
+				Ext.getCmp('total_relabel').setValue(total_relabel);
+				Ext.getCmp('total_final').setValue(total_final);
+					
+					
+				//	var job_code=Ext.getCmp('job_code').getValue();
+					var project_id=Ext.getCmp('edit_ArtworkHeader_projectID').getValue();
+
+				                   var figurenumber='';
+                    				var inputformat= '';
+                    				var resolution='';
+                 					var colourmode='';
+                    				var vendorassessment='';
+                    				var cnvrt='';
+                    				var redrawsimple='';
+                    				var redrawcomplex='';
+                    				var relabel='';                				
+                    				var finalartwrk='';
+                    				var cost='';
+                    				var comments='';
+                    				var artwork_id='';
+					var grid=Ext.getCmp('editprojectArtworkgrid');
+
+					var myStore = Ext.getCmp('editprojectArtworkgrid').getStore();
+					myStore.each( function(rec) {
+
+						figurenumber=figurenumber+rec.get('figurenumber')+',';
+						inputformat=inputformat+rec.get('inputformat')+',';
+						resolution=resolution+rec.get('resolution')+',';
+						colourmode=colourmode+rec.get('colourmode')+',';
+						vendorassessment=vendorassessment+rec.get('vendorassessment')+',';
+						cnvrt=cnvrt+rec.get('convert1')+',';
+						redrawsimple=redrawsimple+rec.get('redrawsimple')+',';
+						redrawcomplex=redrawcomplex+rec.get('redrawcomplex')+',';
+						relabel=relabel+rec.get('relabel')+',';
+						finalartwrk=finalartwrk+rec.get('finalartwrk')+',';
+						cost=cost+rec.get('cost')+',';
+						comments=comments+rec.get('comments')+',';
+						artwork_id=artwork_id+rec.get('id')+',';
+
+					});
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/Artwork.php',
+						method: 'POST',
+						params : {
+							action:2,
+							
+							project_id:project_id,
+							figurenumber:figurenumber,
+							inputformat:inputformat,
+							resolution:resolution,
+							colourmode:colourmode,
+							vendorassessment:vendorassessment,
+							cnvrt:cnvrt,
+							redrawsimple:redrawsimple,
+							redrawcomplex:redrawcomplex,
+							relabel:relabel,
+							finalartwrk:finalartwrk,
+							cost:cost,
+							comments:comments,
+							artwork_id:artwork_id
+						},
+						success: function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message);
+							//refresh grid
+							var grid3=Ext.getCmp('editprojectArtworkgrid');
+							grid3.getStore().load({
+								params: {
+									action:3,
+									project_id:project_id
+								}
+							});
+
+						}
+					});
+
+				}
+			},
+			{
+				xtype:'button',
+				text:'Cancel',
+				pressed:true,
+				iconCls : 'cancelClass',
+				x:600,
+				y:350,
+				width:100,
+				//	margin:'0 0 0 100',
+				handler: function() {
+					win.close();
+				}
+				}]
 					});
 					win.show();
 					var rec = grid.getStore().getAt(rowIndex);

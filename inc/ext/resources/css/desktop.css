@@ -605,7 +605,13 @@ background-image: url(../images/chalk_board1.png);
 /*----------------------------------------------------
     IM window icons
 */
-
+.updateClass
+{
+	background:url(../shared/icons/fam/up.png);height:16px;width:16px;margin-right:5px;
+}
+.cancelClass{
+background:url(../shared/icons/fam/cross.png);height:16px;width:16px;margin-right:5px;
+}
 .user {
     background-image:url( ../shared/icons/fam/user.gif ) !important;
 }

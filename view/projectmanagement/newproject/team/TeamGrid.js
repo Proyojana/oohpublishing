@@ -115,7 +115,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
 			items:[
-			{
+			/*{
 				xtype:'button',
 				text:'Save + Next',
 				pressed:true,
@@ -146,7 +146,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 						}
 					});
 					var currentHeaderForm = Ext.getCmp('newprojectNotesHeaderForm');
-                	 /****load data in header form*****/
+                	
                 	
 						
 						currentHeaderForm.getForm().load({
@@ -163,7 +163,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 					Ext.getCmp('newprojectnotesformTab').setDisabled(false);
 						Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectnotesformTab');
 				}
-			}]
+			}*/
+			]
 			
 						
 		}),

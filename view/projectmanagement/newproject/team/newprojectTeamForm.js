@@ -27,7 +27,59 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.newprojectTeamForm'
 			x:0,
 			y:80,
 			height:260
-		}
+		},
+		
+		{
+				xtype:'button',
+				text:'Save + Next',
+				pressed:true,
+				width:100,
+				x:450,
+				y:350,
+				handler:function(){
+					var project_id=Ext.getCmp('teamHeader_projectID').getValue(); 
+					var job_code=Ext.getCmp('teamHeader_Job').getValue(); 
+					var role='';
+					var name='';
+					var email='';
+					var myStore = Ext.getCmp('newteamgrid').getStore();
+					myStore.each(function(rec) {
+						role=role+rec.get('role')+',';
+						name=name+rec.get('name')+',';
+						email=email+rec.get('email')+',';
+						});
+						
+					var conn = new Ext.data.Connection();
+					 conn.request({
+						url: 'service/Users.php',
+						method: 'POST',
+						params : {action:11,project_id:project_id,role:role,name:name,email:email},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message);
+							//Ext.getCmp('newprojectnotesformTab').setDisabled(false);
+							
+						}
+					});
+					var currentHeaderForm = Ext.getCmp('newprojectNotesHeaderForm');
+                	 //load data in header form
+                	
+						
+						currentHeaderForm.getForm().load({
+   								 url: 'service/notes.php',
+							     params: {
+        						 	action:5,job_code:job_code
+							    },
+							      failure: function(form, action){
+						        Ext.Msg.alert("Load failed", action.result.errorMessage);
+    							}
+							   
+							   
+						});
+					Ext.getCmp('newprojectnotesformTab').setDisabled(false);
+						Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectnotesformTab');
+				}
+			}
 			]
 	  
 	
