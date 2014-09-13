@@ -61,6 +61,81 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.notes.newprojectNotesFor
 			height:260
 		}
 		*/
+		
+		{
+				xtype:'button',
+				text:'Save + Next',
+                x:450,
+                y:350,
+				pressed:true,
+				width:100,
+				//	margin:'0 0 0 100',
+				handler: function() {
+					var job_code=Ext.getCmp('job_code').getValue();
+					var project_id=Ext.getCmp('addnotesHeader_projectID').getValue();
+					var dateresolved='';
+					var narrative='';
+					var dateraised='';
+					var notes_id='';
+					var grid=Ext.getCmp('newprojectNotesgrid');
+
+					var myStore = Ext.getCmp('newprojectNotesgrid').getStore();
+					myStore.each( function(rec) {
+
+						dateresolved=dateresolved+rec.get('dateresolved')+',';
+						narrative=narrative+rec.get('narrative')+',';
+						dateraised=dateraised+rec.get('dateraised')+',';
+						notes_id=notes_id+rec.get('id')+',';
+
+					});
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/notes.php',
+						method: 'POST',
+						params : {
+							action:2,
+							project_id:project_id,
+							dateresolved:dateresolved,
+							narrative:narrative,
+							dateraised:dateraised,
+							notes_id:notes_id
+						},
+						success: function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message);
+							//refresh grid
+							var grid3=Ext.getCmp('newprojectNotesgrid');
+							grid3.getStore().load({
+								params: {
+									action:3,
+									project_id:project_id
+								}
+							});
+							
+							
+								Ext.getCmp('newprojectartworkformTab').setDisabled(false);
+							 var currentHeaderForm = Ext.getCmp('createprojectArtworkHeaderForm');
+							
+
+							currentHeaderForm.getForm().load({
+								url: 'service/Artwork.php',
+								params: {
+									action:5,
+									job_code:job_code
+								},
+								
+							});
+							Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectartworkformTab');
+
+
+                         
+						}
+						
+						
+					});
+
+				}
+			},
 	
 			]
 	  

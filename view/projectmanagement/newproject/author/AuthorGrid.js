@@ -113,7 +113,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.AuthorGrid', {
 			dataIndex: 'email',
 			align: 'center',
 			flex:1,
-			editor: { xtype:'textfield'
+			editor: { xtype:'textfield',
+			          vtype:'email',
 					}
 		},{
 			header: 'Telephone',

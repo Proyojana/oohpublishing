@@ -116,13 +116,13 @@ xtype:'textfield',
 		{
 			xtype:'button',
 		    text:'Save',
-		    x:450,
+		    x:300,
 		    width:100,
-	        y:580,
+	        y:570,
 	        handler:function(){
 	        	
 	        	 var val = Ext.getCmp('receive1').getValue();
-	        	 alert(val);
+	        	
 	        	 if(val==1)
 	        	 {
 	        	var job_code=Ext.getCmp('job_code').getValue();
