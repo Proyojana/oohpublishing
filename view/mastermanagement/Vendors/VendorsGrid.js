@@ -55,7 +55,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
                 	type: 'string'
            		}
 				},
-			/*	{
+				{
 					dataIndex: 'phone',
 					text: 'Phone',
 					align: 'center',
@@ -63,8 +63,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 					filter: {
                 	type: 'string'
            		}
-				},*/
-				{
+				},
+			/*	{
 					dataIndex: 'services',
 					text: 'Services',
 					align: 'center',
@@ -72,7 +72,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 					filter: {
                 	type: 'string'
            		}
-				},
+				},*/
 				
 				
 				{
@@ -111,7 +111,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 						Ext.getCmp('basicstate').setReadOnly(true);
 						Ext.getCmp('basiccountry').setReadOnly(true);
 						
-						Ext.getCmp('basicpin').setReadOnly(true);
+						//Ext.getCmp('basicpin').setReadOnly(true);
 						Ext.getCmp('basicphone').setReadOnly(true);
 						
 						Ext.getCmp('basicfax').setReadOnly(true);
@@ -189,7 +189,7 @@ Ext.getCmp('basicname').setReadOnly(false);
 						Ext.getCmp('basicstate').setReadOnly(false);
 						Ext.getCmp('basiccountry').setReadOnly(false);
 						
-						Ext.getCmp('basicpin').setReadOnly(false);
+						//Ext.getCmp('basicpin').setReadOnly(false);
 						Ext.getCmp('basicphone').setReadOnly(false);
 						
 						Ext.getCmp('basicfax').setReadOnly(false);

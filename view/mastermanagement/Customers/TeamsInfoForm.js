@@ -32,7 +32,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamsInfoForm' , {
 		y:10,
 		//margin:'-25 0 0 400',
 		width:250,
-		afterLabelTextTpl: required,allowBlank: false,
+		
 	},
 		
      {
@@ -41,7 +41,6 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamsInfoForm' , {
 		x:150,
 		y:50,
 		width:250,
-		afterLabelTextTpl: required,allowBlank: false,
 		
 		name: 'division',
 	//	margin:'-20 0 0 400',
@@ -54,8 +53,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamsInfoForm' , {
 		name: 'teamemail',
 		vtype:'email',
 		width:250,
-		afterLabelTextTpl: required,allowBlank: false,
-		//margin:'5 0 0 0'
+		
       },
       {
       	id:'custteamphone',
@@ -66,8 +64,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamsInfoForm' , {
 		x:150,
 		y:130,
 		name: 'teamphone',
-		afterLabelTextTpl: required,
-		allowBlank: false,
+		
 		//margin:'5 0 0 0'
 		
       },
@@ -79,8 +76,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamsInfoForm' , {
 		x:150,
 		y:170,
 		name: 'teamphone',
-		afterLabelTextTpl: required,allowBlank: false,
-		//margin:'5 0 0 0'
+		
 		
       },
       

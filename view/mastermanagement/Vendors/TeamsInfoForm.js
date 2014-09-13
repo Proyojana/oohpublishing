@@ -24,8 +24,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 		id:'teamname',
 		fieldLabel: 'Team Name',
 		name: 'teamname',
-		afterLabelTextTpl: required,
-		allowBlank: false,
+		
 		x:150,
 		y:10,
 		//margin:'-25 0 0 400',
@@ -35,8 +34,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
      {
       	id:'division',
 		fieldLabel: 'Division',
-		afterLabelTextTpl: required,
-		allowBlank: false,
+		
 		x:150,
 		y:50,
 		width:250,
@@ -47,8 +45,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
       {
       	id:'teamemail',
 		fieldLabel: 'Email',	
-		afterLabelTextTpl: required,	
-		allowBlank: false,	
+		
 		x:150,
 		y:90,
 		name: 'teamemail',
@@ -63,8 +60,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
       	id:'teamphone',
 		fieldLabel: 'Phone',
 		width:250,
-		afterLabelTextTpl: required,
-		allowBlank: false,
+		
 		x:150,
 		y:130,
 		name: 'teamphone',

@@ -67,8 +67,8 @@ var ci = Ext.create('MyDesktop.store.Customers');
            		}
 				},*/
 				{
-					dataIndex: 'services',
-					text: 'Services',
+					dataIndex: 'phone',
+					text: 'Phone',
 					align: 'center',
 					flex:2,
 					filter: {
@@ -110,7 +110,7 @@ var ci = Ext.create('MyDesktop.store.Customers');
 						Ext.getCmp('custbasicstate').setReadOnly(true);
 						Ext.getCmp('custbasiccountry').setReadOnly(true);
 						
-						Ext.getCmp('custbasicpin').setReadOnly(true);
+						//Ext.getCmp('custbasicpin').setReadOnly(true);
 						Ext.getCmp('custbasicphone').setReadOnly(true);
 						
 						Ext.getCmp('custbasicfax').setReadOnly(true);
@@ -171,7 +171,7 @@ var ci = Ext.create('MyDesktop.store.Customers');
 						Ext.getCmp('custbasicstate').setReadOnly(false);
 						Ext.getCmp('custbasiccountry').setReadOnly(false);
 						
-						Ext.getCmp('custbasicpin').setReadOnly(false);
+						//Ext.getCmp('custbasicpin').setReadOnly(false);
 						Ext.getCmp('custbasicphone').setReadOnly(false);
 						
 						Ext.getCmp('custbasicfax').setReadOnly(false);

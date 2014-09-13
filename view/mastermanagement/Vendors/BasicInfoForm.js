@@ -121,8 +121,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		displayField: 'service_name',
 	    valueField: 'service_id',
 	    ddReorder: true,
-		afterLabelTextTpl: required,
-		allowBlank: false,							           		         
+							           		         
 				
 	},
      {
@@ -162,7 +161,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		//margin:'5 0 0 0'
 		
       },
-      {
+      /*{
       	id:'basicpin',
 		fieldLabel: 'Pin',
 		width:250,
@@ -174,7 +173,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		allowBlank: false,
 		//margin:'5 0 0 0'
 		
-      },
+      },*/
       { 
       	xtype:'numberfield',
 		hideTrigger:true,
@@ -208,7 +207,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		vtype:'email',
 		msgTarget : 'side',
 		x:10,
-		y:180,
+		y:150,
 		name: 'basicemail',
 		afterLabelTextTpl: required,
 		allowBlank: false,
@@ -232,7 +231,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		fieldLabel: 'Description',
 		name: 'basicdescription',
 		x:10,
-		y:210,
+		y:180,
 		//margin:'-25 0 0 400',
 		height:70,
 		width:250
@@ -256,7 +255,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 						var basiccity=Ext.getCmp('basiccity').getValue();
 						var basicstate=Ext.getCmp('basicstate').getValue();
 						var basiccountry=Ext.getCmp('basiccountry').getValue();
-						var basicpin=Ext.getCmp('basicpin').getValue();
+						//var basicpin=Ext.getCmp('basicpin').getValue();
 						var basicphone=Ext.getCmp('basicphone').getValue();
 						var basicfax=Ext.getCmp('basicfax').getValue();
 						var basicemail=Ext.getCmp('basicemail').getValue();
@@ -268,7 +267,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 					    conn.request({
 						url: 'service/vendors.php',
 						method: 'POST',
-						params : {action:5,basiccode:basiccode,basicname:basicname,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicpin:basicpin,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
+						params : {action:5,basiccode:basiccode,basicname:basicname,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -309,7 +308,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 						var basiccity=Ext.getCmp('basiccity').getValue();
 						var basicstate=Ext.getCmp('basicstate').getValue();
 						var basiccountry=Ext.getCmp('basiccountry').getValue();
-						var basicpin=Ext.getCmp('basicpin').getValue();
+						//var basicpin=Ext.getCmp('basicpin').getValue();
 						var basicphone=Ext.getCmp('basicphone').getValue();
 						var basicfax=Ext.getCmp('basicfax').getValue();
 						var basicemail=Ext.getCmp('basicemail').getValue();
@@ -321,7 +320,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 					    conn.request({
 						url: 'service/vendors.php',
 						method: 'POST',
-						params : {action:4,basicid:basicid,basiccode:basiccode,basicname:basicname,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicpin:basicpin,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
+						params : {action:4,basicid:basicid,basiccode:basiccode,basicname:basicname,basicdescription:basicdescription,basicaddress1:basicaddress1,basicaddress2:basicaddress2,basicservice:basicservice,basiccity:basiccity,basicstate:basicstate,basiccountry:basiccountry,basicphone:basicphone,basicfax:basicfax,basicemail:basicemail,basicwebsite:basicwebsite},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
