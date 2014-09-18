@@ -167,6 +167,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			width:320,
 			hideTrigger:true,
 			xtype:'numberfield',
+			hideTrigger:true,
 			minValue: 0,
 			 listeners: {
       'blur': function(t, ev, b)
@@ -258,7 +259,7 @@ t.setValue(value1);
         items :[{
     		xtype:'numberfield',
     		minValue: 0,
-    		
+    		hideTrigger:true,
     		id:'edit_word_count',
 			fieldLabel: 'Word count',
 			x:0,
@@ -269,7 +270,7 @@ t.setValue(value1);
     	{
     		xtype:'numberfield',
     		minValue: 0,
-    		
+    		hideTrigger:true,
     		id:'edit_word_count_indexing',
 			fieldLabel: 'Word count for indexing',
 			x:350,
@@ -280,6 +281,7 @@ t.setValue(value1);
     	
 		{  
 			xtype:'numberfield',
+			hideTrigger:true,
 			id:'edit_manuscript',
 			//margin:'0 0 0 28',
 			minValue: 0,
@@ -293,6 +295,7 @@ t.setValue(value1);
     	{  
     		xtype:'numberfield',
     		allowNegative : false,
+    		hideTrigger:true,
     		minValue: 0,
     		//margin:'0 0 0 36',
 			id:'edit_index_extent',
@@ -352,6 +355,7 @@ t.setValue(value1);
     	
 		{  
 			xtype:'numberfield',
+			hideTrigger:true,
 			id:'edit_print_run',
 			minValue: 0,
 			fieldLabel: 'Print run',

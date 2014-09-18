@@ -81,7 +81,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Edit Project Details',
 						width : 1100,
-						height : 500,
+						height : 520,
 						items : [{
 							xtype : 'editprojectaddform',
 							x : 0,

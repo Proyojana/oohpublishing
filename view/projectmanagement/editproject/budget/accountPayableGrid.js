@@ -139,6 +139,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					text: 'Stage',
 					flex: 2,
 					align:'center',
+					hidden:true,
 					editor: { 
 						xtype:'textfield',
 						
@@ -197,6 +198,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					text: 'Unit',
 					flex: 2,
 					align:'center',
+					hidden:true,
 					
 				},
 				{	
