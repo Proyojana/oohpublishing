@@ -87,7 +87,19 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							x : 0,
 							y : 0
 
-						}]
+						},
+						 {
+							xtype:'button',
+							text:'Cancel',
+							iconCls : 'cancelClass',
+							width:100,
+							x:600,
+							y:445,
+							handler:function(){
+							win.close();
+							}
+							}
+							]
 					});
 					win.show();
 
@@ -166,7 +178,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				    h=h+rec.get('see_proof')+',';
 				    i=i+rec.get('no_proof')+',';
 				    });
-				
+				if(d.length>1||f.lenght>1)
+                 {
 					var conn = new Ext.data.Connection();
 					conn.request({
 						url: 'service/Author.php',
@@ -177,7 +190,10 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							Ext.Msg.alert('Message', obj.message); 
 						}
 					});
-					
+					}
+					else{
+						Ext.Msg.alert("Please fill authour name and email"); 
+					}
 					/** For Contrib Grid Save**/
 				    var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
 					var c='';var d='';

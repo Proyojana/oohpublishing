@@ -95,6 +95,8 @@ i=i+rec.get('no_proof')+',';
 // alert(b);
 //alert(tid);
 // alert(secid);
+if(d.length>1||f.lenght>1)
+ {
 var conn = new Ext.data.Connection();
 conn.request({
 url: 'service/Author.php',
@@ -105,6 +107,11 @@ obj = Ext.JSON.decode(response.responseText);
 //Ext.Msg.alert('Message', obj.message);
 }
 });
+}
+else
+{
+	Ext.Msg.alert("Please fill Authour name and email");
+}
 var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
 /***load data in header form****/
 

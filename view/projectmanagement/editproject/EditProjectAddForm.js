@@ -466,7 +466,7 @@ t.setValue(value1);
 			align:'center',
 			x:450,
 			y:440,
-			width:75,
+			width:100,
 			handler: function ()
 			   {
 			                 
