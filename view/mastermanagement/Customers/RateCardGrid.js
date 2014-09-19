@@ -57,7 +57,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.RateCardGrid', {
 		this.tbar = Ext.create('Ext.Toolbar', {  
 							   items:[{
                                xtype : 'button',
-                               id : 'addnewrowcust',
+                               id : 'addnewrowcust1',
                                text : 'Insert New Row',
                                pressed:true,
                                x : 500,

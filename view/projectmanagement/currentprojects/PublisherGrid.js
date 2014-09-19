@@ -123,7 +123,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							myGrid.setSource(obj);
 						},
 					});
-					var conn = new Ext.data.Connection();
+					/*var conn = new Ext.data.Connection();
 					conn.request({
 						url: 'service/projects.php',
 						method: 'POST',
@@ -137,6 +137,14 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							var myGrid = Ext.getCmp('teamgrid');
 							myGrid.setSource(obj);
 						},
+					});*/
+					
+					var gridTeam=Ext.getCmp('teamgrid');
+					gridTeam.getStore().load({
+						params: {
+							action:12,
+							project_id:project_id
+						}
 					});
 					var gridAuthor=Ext.getCmp('author');
 					gridAuthor.getStore().load({
