@@ -51,7 +51,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 			fieldLabel: 'Activity Code',
 			Name: 'product_code',
 			align:'center',
-			x:330,
+			x:130,
 			readOnly: true,
 			y:10,
 			width:320,
@@ -62,8 +62,8 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 			id:'product_name',
 			fieldLabel: 'Activity Name',
 			name: 'product_name',
-			x:330,
-			y:40,
+			x:530,
+			y:10,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -73,8 +73,17 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 			id:'product_description',
 			fieldLabel: ' Description',
 			name: 'product_description',
-			x:330,
-			y:70,
+			x:130,
+			y:40,
+			width:320,
+				
+    	},
+    	{   xtype: 'textareafield',
+			id:'product_template',
+			fieldLabel: ' Mail Template',
+			name: 'product_template',
+			x:530,
+			y:40,
 			width:320,
 				
     	},
@@ -83,7 +92,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
     	    text:'Add',
     	    iconCls: 'button_add',
     	   id:'Add_production',
-			x:350,
+			x:400,
 			y:140,
 			width:75,
 			handler: function (){				
@@ -91,6 +100,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 				var product_code = Ext.getCmp('product_code').getValue();
 				var product_name = Ext.getCmp('product_name').getValue();
 				var product_description= Ext.getCmp('product_description').getValue();
+				var product_template= Ext.getCmp('product_template').getValue();
 				
 				if(currentForm.getForm().isValid() == true)
 				{
@@ -98,7 +108,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 					conn.request({
 						url: 'service/activity.php',
 						method: 'POST',
-						params : {action:5,product_code:product_code,product_name:product_name,product_description:product_description},
+						params : {action:5,product_code:product_code,product_name:product_name,product_description:product_description,product_template:product_template},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -124,7 +134,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 		  	iconCls: 'editClass',
 		  	id:'edit_production',
 			align:'center',
-			x:450,
+			x:500,
 			y:140,
 			width:75,
 			handler: function ()
@@ -134,6 +144,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 				var product_id = Ext.getCmp('product_id').getValue();
 				var product_name = Ext.getCmp('product_name').getValue();
 				var product_description = Ext.getCmp('product_description').getValue();
+				var product_template= Ext.getCmp('product_template').getValue();
 				
 				if(currentForm.getForm().isValid() == true)
 				{
@@ -141,14 +152,13 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 					conn.request({
 						url: 'service/activity.php',
 						method: 'POST',
-						params : {action:4,product_id:product_id,product_code:product_code,product_name:product_name,product_description:product_description},
+						params : {action:4,product_id:product_id,product_code:product_code,product_name:product_name,product_description:product_description,product_template:product_template},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('productiongrid').getStore().reload();
 							Ext.getCmp('productiontab').layout.setActiveItem('productiongrid');
-										
 						}
 					});
 				}
@@ -165,7 +175,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 		  	text: 'Reset',
 		  	iconCls: 'button_reset',
 		   id:'reset_production',
-			x:550,
+			x:600,
 			y:140,
 			width:75,
 			handler: function (){

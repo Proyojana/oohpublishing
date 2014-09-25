@@ -36,38 +36,7 @@ initComponent: function() {//load activity combo
 		
 		ci.loadPage(1);
 		this.store = ci,
-	/*	this.tbar = Ext.create('Ext.Toolbar', {  
-							   items:[{
-                               xtype : 'button',
-                               text : 'Insert New Row',
-                               pressed:true,
-                               x : 500,
-                               y : 10,
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-               						var r = Ext.create('MyDesktop.model.Schedule', {
-               						schedule_id:'',
-                    				stageorder: '',
-                    				activity: '',
-                 					activityid: '',
-                    				stage: '',
-                    				estimated_daysperstage:'',
-                    				actual_daysperstage: '',
-                    				estimated_start_date: '',
-                 					actual_start_date: '',
-                    				estimated_end_date: '',
-                    				actual_end_date:'',
-                    				bufferday: '',
-                    				
-                				});
-                				//store.getCount()-1
-                		       ci.insert(ci.getCount(), r);
-            				 }                           
-        },
-        
-        ]
-        });*/
+	
 		this.columns = [{
 			dataIndex: 'schedule_id',
 			hidden:true
@@ -113,7 +82,7 @@ initComponent: function() {//load activity combo
 			editor: { 
 						xtype:'textfield',
 						
-						}
+					}
 		},{
 			text:'Days per stage',
 			
@@ -458,6 +427,13 @@ initComponent: function() {//load activity combo
 			align:'center',
 		
 		
+		},
+		{
+			dataIndex: 'status',
+				text: 'Status',
+				align:'center',
+				flex:1
+			
 		},{
 		 xtype:'actioncolumn',
 		 align: 'center',
@@ -540,87 +516,7 @@ initComponent: function() {//load activity combo
                 				//store.getCount()-1
                 		       ci.insert(ci.getCount(), r);
             				 }                           
-        },/*{
-				xtype:'button',
-				text:'Save',
-				pressed:true,
-				width:100,
-				//	margin:'0 0 0 100',
-				handler: function() {
-
-					var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
-					var workflow=Ext.getCmp('edit_scheduleHeader_workflow').getValue();
-					var job_code=Ext.getCmp('edit_scheduleHeader_Job').getValue();
-					var stage='';
-					var stageorder='';
-					var estimated_daysperstage='';
-					var actual_daysperstage='';
-					var estimated_start_date='';
-					var actual_start_date='';
-					var estimated_end_date='';
-					var actual_end_date='';
-					var bufferday='';
-					var activity='';
-					var schedule_id='';
-					var grid=Ext.getCmp('editprojectSchedulegrid');
-
-					var myStore = Ext.getCmp('editprojectSchedulegrid').getStore();
-					//items = [];
-
-					myStore.each( function(rec) {
-						stage=stage+rec.get('stage')+',';
-						estimated_daysperstage=estimated_daysperstage+rec.get('estimated_daysperstage')+',';
-						actual_daysperstage=actual_daysperstage+rec.get('actual_daysperstage')+',';
-						estimated_start_date=estimated_start_date+rec.get('estimated_start_date')+',';
-						actual_start_date=actual_start_date+rec.get('actual_start_date')+',';
-						estimated_end_date=estimated_end_date+rec.get('estimated_end_date')+',';
-						actual_end_date=actual_end_date+rec.get('actual_end_date')+',';
-						bufferday=bufferday+rec.get('bufferday')+',';
-						activity=activity+rec.get('activityid')+',';
-						stageorder=stageorder+rec.get('stageorder')+',';
-						schedule_id=schedule_id+rec.get('schedule_id')+',';
-
-					});
-					var conn = new Ext.data.Connection();
-					conn.request({
-						url: 'service/schedule.php',
-						method: 'POST',
-						params : {
-							action:3,
-							projectid:projectid,
-							stageorder:stageorder,
-							scheduleid:schedule_id,
-							workflow:workflow,
-							activity:activity,
-							stage:stage,
-							estimated_daysperstage:estimated_daysperstage,
-							actual_daysperstage:actual_daysperstage,
-							estimated_start_date:estimated_start_date,
-							actual_start_date:actual_start_date,
-							estimated_end_date:estimated_end_date,
-							actual_end_date:actual_end_date,
-							bufferday:bufferday
-
-						},
-						success: function(response) {
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message);
-
-
-							//refresh grid
-							var grid3=Ext.getCmp('editprojectSchedulegrid');
-							grid3.getStore().load({
-								params: {
-									action:4,
-									projectid:projectid
-								}
-							});
-
-						}
-					});
-				
-				}
-			},*/
+        },
 			]
 
 		}),

@@ -14,10 +14,10 @@
 			deleteproductionMasterById($_POST["product_id"]);	
 			break;
 		case 4:
-		  updateProductionMaster($_POST["product_id"],$_POST['product_code'],$_POST['product_name'],$_POST['product_description']);	
+		  updateProductionMaster($_POST["product_id"],$_POST['product_code'],$_POST['product_name'],$_POST['product_description'],$_POST['product_template']);	
 			break;
 		case 5:
-			insertProduction($_POST['product_code'],$_POST['product_name'],$_POST['product_description']);
+			insertProduction($_POST['product_code'],$_POST['product_name'],$_POST['product_description'],$_POST['product_template']);
 			break;
 		case 6: 
 			autoRequestCode($id);
@@ -65,7 +65,8 @@
 		activity.id as product_id,
   			activity.code as product_code,
 			  activity.name as product_name,
-			  activity.description as product_description
+			  activity.description as product_description,
+			  activity.template as product_template
 From
   activity
 Where
@@ -90,14 +91,14 @@ Where
       	echo(json_encode($result));
     }
   
-     function updateProductionMaster($product_id,$product_code,$product_name,$product_description)
+     function updateProductionMaster($product_id,$product_code,$product_name,$product_description,$product_template)
     {
 		$checkquery="SELECT id FROM activity WHERE id ='".$product_id."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==1){
-			$result1= mysql_query("UPDATE activity set name='".$product_name."',description='".$product_description."' WHERE id ='".$product_id."'");
+			$result1= mysql_query("UPDATE activity set name='".$product_name."', template='".$product_template."',description='".$product_description."' WHERE id ='".$product_id."'");
 				
 		if(!$result1)
 			{
@@ -149,7 +150,7 @@ Where
 		echo json_encode($result);
 	}
 	
-	function insertProduction($product_code,$product_name,$product_description)
+	function insertProduction($product_code,$product_name,$product_description,$product_template)
     {
 		$checkquery="SELECT code FROM  activity WHERE code='".$product_code."'";
 		$result1=mysql_query($checkquery);
@@ -157,7 +158,7 @@ Where
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO  activity(id,code,name,description,created_on,created_by,modified_on,modified_by,flag) VALUES('','".$product_code."','".$product_name."','".$product_description."','','','','','')");
+			$result1 = mysql_query ("INSERT INTO  activity(id,code,name,template,description,created_on,created_by,modified_on,modified_by,flag) VALUES('','".$product_code."','".$product_name."','".$product_template."','".$product_description."','','','','','')");
 			if(!$result1)
 			{
 				$result["failure"] = true;

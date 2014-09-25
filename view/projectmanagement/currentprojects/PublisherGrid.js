@@ -16,7 +16,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 	requires:['MyDesktop.view.projectmanagement.currentprojects.productionreport','MyDesktop.view.projectmanagement.currentprojects.typesetterform','MyDesktop.store.Projects','MyDesktop.view.projectmanagement.currentprojects.TitleInfoGrid',
 	'MyDesktop.view.projectmanagement.currentprojects.Author','MyDesktop.view.projectmanagement.currentprojects.ContribGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionTitleInfoGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionScheduleGrid',
 	'MyDesktop.view.projectmanagement.currentprojects.ProductionTeamGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGrid','MyDesktop.view.projectmanagement.currentprojects.TypesetterInfoGrid',
-	'MyDesktop.view.projectmanagement.currentprojects.TypesetterAuthorGrid', 'MyDesktop.view.projectmanagement.currentproject.scheduleGrid','MyDesktop.view.projectmanagement.currentprojects.NotesGrid'],
+	'MyDesktop.view.projectmanagement.currentprojects.TypesetterAuthorGrid', 'MyDesktop.view.projectmanagement.currentproject.scheduleGrid','MyDesktop.view.projectmanagement.currentprojects.NotesGrid','MyDesktop.view.projectmanagement.currentprojects.Production_html_form',
+	'MyDesktop.view.projectmanagement.currentprojects.Production_pdf_form','MyDesktop.view.projectmanagement.currentprojects.Typesetting_html_form','MyDesktop.view.projectmanagement.currentprojects.Typesetting_pdf_form' ],
 	id:'publishergrid',
 	initComponent: function() {
 		var customers = Ext.create('MyDesktop.store.Reports');
@@ -123,22 +124,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							myGrid.setSource(obj);
 						},
 					});
-					/*var conn = new Ext.data.Connection();
-					conn.request({
-						url: 'service/projects.php',
-						method: 'POST',
-						params : {
-							action:10,
-							project_id:project_id
-						},
-						success: function(response) {
-							obj = Ext.JSON.decode(response.responseText);
-							//	Ext.Msg.alert(obj.message);
-							var myGrid = Ext.getCmp('teamgrid');
-							myGrid.setSource(obj);
-						},
-					});*/
-					
+										
 					var gridTeam=Ext.getCmp('teamgrid');
 					gridTeam.getStore().load({
 						params: {
@@ -186,44 +172,12 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						}
 					});
 
-					/*    var currentForm = Ext.getCmp('usersform');
-					 var rec = grid.getStore().getAt(rowIndex);
-					 var userid1=rec.get('userid');
-					 currentForm.getForm().load({
-					 url: 'service/Users.php',
-					 params: {
-					 action:2,userid1:userid1
-					 },
-					 failure: function(form, action){
-					 Ext.Msg.alert("Load failed", action.result.errorMessage);
-					 }
-					 });
-
-					 Ext.getCmp('usercode').setReadOnly(true);
-					 Ext.getCmp('userdescription').setReadOnly(true);
-					 Ext.getCmp('username').setReadOnly(true);
-
-					 Ext.getCmp('add_users').getEl().hide();
-					 Ext.getCmp('edit_users').getEl().hide();
-					 Ext.getCmp('reset_users').getEl().hide();
-
-					 Ext.getCmp('usersaddform').setTitle('View User');*/
-
-				}
+					}
 			},{
 				iconCls : 'control_rewindClass',
 				tooltip : 'Production Report',
 				handler : function(grid, rowIndex, colIndex) {
-					/**
-				//calculate and set value for total in budget 
-					var actual_amt_USD=0;
-					var myStore = Ext.getCmp('pbudgetgrid').getStore();
-					myStore.each(function(rec) {
-					actual_amt_USD=actual_amt_USD+parseInt(rec.get('actual_amount_USD'));	
-				      alert(actual_amt_USD); 					
-				});
-				Ext.getCmp('productionreport_BudgetTotal').setValue(actual_amt_USD);		
-					**/
+		
 					//report window
 					var win = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
@@ -258,75 +212,30 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 										if(btn=='yes') {
 					var rec = grid.getStore().getAt(rowIndex);
 					var project_id = rec.get('id');
-										//	alert(project_id);											
-											//create send message window
-					var messagewin = Ext.create('Ext.Window', {
+																			
+				var Production_win1 = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
-						id:'message_sendHtml',
-						modal:true,
 						layout : {
 							type : 'absolute'
 						},
 						autoScroll : true,
 						title : 'Message',
-						width : 400,
-						height :400,
+						width : 800,
+						height : 400,
 						items : [{
-							xtype : 'textfield',
-							x : 10,
-							y : 10,
-							fieldLabel:'From',
-							id:'html_from',
-							width:320
-						},{
-							xtype:'combo',
-							fieldLabel:'To',
-							multiSelect:true,
-							id:'html_to',
-							x:10,
-							y:40,
-							store:customers,
-							//typeAhead:true,
-							triggerAction:'all',
-							displayField:'mail',
-							width:320,
-							allowBlank: false,
-							queryMode: 'local',
-						    afterLabelTextTpl: required,
-						},
-						{
-							xtype:'combo',
-							fieldLabel:'Cc',
-							multiSelect:true,
-							id:'html_cc',
-							x:10,
-							y:70,
-							store:customers,
-							ddReorder: true,
-							//typeAhead:true,
-							triggerAction:'all',
-							displayField:'mail',
-							width:320
-						},
-						{
-							xtype:'textarea',
-							fieldLabel:'Message',
-							id:'html_message',
-							x:10,
-							y:100,
-							width:320,
-							height:200
-						}
-						],
+							xtype : 'production_html_form',
+							x : 0,
+							y : 0
+
+						}],
 						buttons:[{
 							text:'Send Email',
 							handler: function() {
-								//var html=win.body.dom.innerHTML;
-								var from=Ext.getCmp('html_from').getValue();
-								var html_to=Ext.getCmp('html_to').getValue().toString();
-								var html_cc=Ext.getCmp('html_cc').getValue().toString();
-								var message=Ext.getCmp('html_message').getValue();
-										//send data to php
+								var from=Ext.getCmp('production_html_from').getValue();
+								var html_to=Ext.getCmp('production_html_to').getValue().toString();
+								var html_cc=Ext.getCmp('production_html_cc').getValue().toString();
+								var message=Ext.getCmp('production_html_message').getValue();
+								
 								var conn = new Ext.data.Connection();
 								conn.request({
 									url : 'service/Reports.php',
@@ -344,82 +253,51 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 										Ext.Msg.alert('Message', obj.message); 
 										messagewin.close();
 									},
-								});
-										
-									
-																
-							}						
-							}]
+								});								
+														
+							}
+						}]
 					});
-				Ext.getCmp('html_from').setValue(mail);
-											messagewin.show();
+					Production_win1.show();
+					var currentForm = Ext.getCmp('production_html_form');
+					currentForm.getForm().load({
+   								 url: 'service/Users.php',
+							     params: {
+        						 	action:13,project_id:project_id
+							    },
+							    failure: function(form, action){
+						       
+    							}
+						});
+				Ext.getCmp('production_html_form').setValue(mail);
+				
 											
 											
 										} 
-										else if(btn=='no'){
-											var rec = grid.getStore().getAt(rowIndex);
+					else if(btn=='no'){
+					var rec = grid.getStore().getAt(rowIndex);
 					var project_id = rec.get('id');
 											//create send message window
-					var messagewin1 = Ext.create('Ext.Window', {
+					var Production_win2 = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
-						id:'message_sendPdf',
-						modal:true,
 						layout : {
 							type : 'absolute'
 						},
 						autoScroll : true,
 						title : 'Message',
-						width : 400,
+						width : 800,
 						height : 400,
 						items : [{
-							xtype : 'textfield',
-							x : 10,
-							y : 10,
-							fieldLabel:'From',
-							id:'pdf_from',
-							width:320
-						},{
-							xtype:'combo',
-							fieldLabel:'To',
-							id:'pdf_to',
-							x:10,
-							y:40,
-							store:customers,
-							typeAhead:true,
-							triggerAction:'all',
-							displayField:'mail',
-							width:320
-						},
-						{
-							xtype:'combo',
-							fieldLabel:'Cc',
-							multiSelect:true,
-							id:'pdf_cc',
-							x:10,
-							y:70,
-							store:customers,
-							//typeAhead:true,
-							triggerAction:'all',
-							displayField:'mail',
-							width:320
-						},{
-							xtype:'textarea',
-							fieldLabel:'Message',
-							id:'pdf_message',
-							x:10,
-							y:100,
-							width:320,
-							height:200,
-						}
+							xtype : 'production_pdf_form'}
 						],
 						buttons:[{
 							text:'Send Email',
 							handler: function() {
 							//	var html=win.body.dom.innerHTML;
-								var from=Ext.getCmp('pdf_from').getValue();
-								var pdf_to=Ext.getCmp('pdf_to').getValue().toString();
-								var pdf_cc=Ext.getCmp('pdf_cc').getValue().toString();
-								var message=Ext.getCmp('pdf_message').getValue();
+								var from=Ext.getCmp('production_pdf_from').getValue();
+								var pdf_to=Ext.getCmp('production_pdf_to').getValue().toString();
+								var pdf_cc=Ext.getCmp('production_pdf_cc').getValue().toString();
+								var message=Ext.getCmp('production_pdf_message').getValue();
 								
 								var conn = new Ext.data.Connection();
 								conn.request({
@@ -445,9 +323,10 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							}
 						}]
 					});
-				Ext.getCmp('pdf_from').setValue(mail);
-											messagewin1.show();
-										}
+				
+				Production_win2.show();
+				Ext.getCmp('production_pdf_form').setValue(mail);
+							   }
 
 										
 									}
@@ -477,8 +356,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					win.show();
 					
 					//  end of report window
-					
-					
+								
 					
 					//load form and grids of report window
 					var rec = grid.getStore().getAt(rowIndex);
@@ -500,16 +378,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							job_code:job_code
 						}
 					});
-					/*
-					  //calculate and set value for total in budget 
-					var actual_amt_USD=0;
-					var myStore = Ext.getCmp('pbudgetgrid').getStore();
-					myStore.each(function(rec) {
-					actual_amt_USD=actual_amt_USD+parseInt(rec.get('actual_amount_USD'));	
-				      alert(actual_amt_USD); 					
-				});
-				Ext.getCmp('productionreport_BudgetTotal').setValue(actual_amt_USD);*/
-					
+										
 					var currentForm = Ext.getCmp('productionreport');
 					currentForm.getForm().load({
 						url : 'service/Reports.php',
@@ -522,10 +391,6 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						}
 					});
 					
-					
-					
-					
-
 					var conn = new Ext.data.Connection();
 					conn.request({
 						url : 'service/projects.php',
@@ -571,9 +436,9 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							type : 'absolute'
 						},
 						autoScroll : true,
-						title : 'Typesetting Report',
-						width : 650,
-						height : 600,
+						title : 'Message',
+						width : 800,
+						height : 400,
 						items : [{
 							xtype : 'typesetterform',
 							x : 0,
@@ -601,72 +466,27 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					var job_code = rec.get('code');
 											//alert(project_id);											
 											//create send message window
-					var messagewin = Ext.create('Ext.Window', {
+					var typesetting_win1 = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
-						id:'message_sendHtml1',
-						modal:true,
 						layout : {
 							type : 'absolute'
 						},
 						autoScroll : true,
 						title : 'Message',
-						width : 400,
-						height :400,
+						width : 800,
+						height : 400,
 						items : [{
-							xtype : 'textfield',
-							x : 10,
-							y : 10,
-							fieldLabel:'From',
-							id:'html_from1',
-							width:320
-						},{
-							xtype:'combo',
-							fieldLabel:'To',
-							multiSelect:true,
-							id:'html_to1',
-							x:10,
-							y:40,
-							store:customers,
-							//typeAhead:true,
-							triggerAction:'all',
-							displayField:'mail',
-							width:320,
-							allowBlank: false,
-							queryMode: 'local',
-						    afterLabelTextTpl: required,
-						},
-						{
-							xtype:'combo',
-							fieldLabel:'Cc',
-							multiSelect:true,
-							id:'html_cc1',
-							x:10,
-							y:70,
-							store:customers,
-							ddReorder: true,
-							//typeAhead:true,
-							triggerAction:'all',
-							displayField:'mail',
-							width:320
-						},
-						{
-							xtype:'textarea',
-							fieldLabel:'Message',
-							id:'html_message1',
-							x:10,
-							y:100,
-							width:320,
-							height:200
-						}
+							xtype : 'typesetting_html_form',
+				       }
 						],
 						buttons:[{
 							text:'Send Email',
 							handler: function() {
 								//var html=win.body.dom.innerHTML;
-								var from=Ext.getCmp('html_from1').getValue();
-								var html_to=Ext.getCmp('html_to1').getValue().toString();
-								var html_cc=Ext.getCmp('html_cc1').getValue().toString();
-								var message=Ext.getCmp('html_message1').getValue()    ;
+								var from=Ext.getCmp('typesetting_html_from').getValue();
+								var html_to=Ext.getCmp('typesetting_html_to').getValue().toString();
+								var html_cc=Ext.getCmp('typesetting_html_cc').getValue().toString();
+								var message=Ext.getCmp('typesetting_html_message').getValue()    ;
 										//send data to php
 								var conn = new Ext.data.Connection();
 								conn.request({
@@ -692,8 +512,9 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							}						
 							}]
 					});
-				Ext.getCmp('html_from1').setValue(mail);
-											messagewin.show();
+				
+											typesetting_win1.show();
+											Ext.getCmp('typesetting_html_form').setValue(mail);
 											
 											
 										} 
@@ -702,66 +523,28 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					var project_id = rec.get('id');
 					var job_code = rec.get('code');
 											//create send message window
-					var messagewin1 = Ext.create('Ext.Window', {
+					var typesetting_win2 = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
-						id:'message_sendPdf1',
-						modal:true,
 						layout : {
 							type : 'absolute'
 						},
 						autoScroll : true,
 						title : 'Message',
-						width : 400,
+						width : 800,
 						height : 400,
-						items : [{
-							xtype : 'textfield',
-							x : 10,
-							y : 10,
-							fieldLabel:'From',
-							id:'pdf_from1',
-							width:320
-						},{
-							xtype:'combo',
-							fieldLabel:'To',
-							id:'pdf_to1',
-							x:10,
-							y:40,
-							store:customers,
-							typeAhead:true,
-							triggerAction:'all',
-							displayField:'mail',
-							width:320
-						},
+						items : [
 						{
-							xtype:'combo',
-							fieldLabel:'Cc',
-							multiSelect:true,
-							id:'pdf_cc1',
-							x:10,
-							y:70,
-							store:customers,
-							//typeAhead:true,
-							triggerAction:'all',
-							displayField:'mail',
-							width:320
-						},{
-							xtype:'textarea',
-							fieldLabel:'Message',
-							id:'pdf_message1',
-							x:10,
-							y:100,
-							width:320,
-							height:200,
+							xtype : 'typesetting_pdf_form',
 						}
 						],
 						buttons:[{
 							text:'Send Email',
 							handler: function() {
 								//var html=win.body.dom.innerHTML;
-								var from=Ext.getCmp('pdf_from1').getValue();
-								var pdf_to=Ext.getCmp('pdf_to1').getValue().toString();
-								var pdf_cc=Ext.getCmp('pdf_cc1').getValue().toString();
-								var message=Ext.getCmp('pdf_message1').getValue();
+								var from=Ext.getCmp('typesetting_pdf_from').getValue();
+								var pdf_to=Ext.getCmp('typesetting_pdf_to').getValue().toString();
+								var pdf_cc=Ext.getCmp('typesetting_pdf_cc').getValue().toString();
+								var message=Ext.getCmp('typesetting_pdf_message').getValue();
 								
 								var conn = new Ext.data.Connection();
 								conn.request({
@@ -787,8 +570,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							}
 						}]
 					});
-				Ext.getCmp('pdf_from1').setValue(mail);
-											messagewin1.show();
+											typesetting_win2.show();
+											Ext.getCmp('typesetting_pdf_form').setValue(mail);
 										}
 
 										

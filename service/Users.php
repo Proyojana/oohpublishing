@@ -42,6 +42,9 @@ session_start();
 	   case 12:
 			getTeam($_POST['project_id']);
 	        break;
+		case 13:
+			getEmail($_POST['project_id']);
+	        break;
 		default: 
 			break;
 	}
@@ -466,4 +469,31 @@ From
 		}
 	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
 	}
+	
+	function getEmail($project_id)
+ 	{
+	$result1 = mysql_query ("Select 
+Group_Concat(project_team.email) as production_html_to
+From
+ project_team 
+    Where project_team.project_id='".$project_id."' and project_team.flag=0");
+			
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+			$result ["data"] = $row;
+	  	}
+		
+		
+      	echo(json_encode($result));
+    }
 ?>
