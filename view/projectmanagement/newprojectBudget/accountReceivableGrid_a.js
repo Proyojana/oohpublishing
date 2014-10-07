@@ -5,7 +5,7 @@ var encode = false;
 
 Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableGrid_a', {
 	extend:'Ext.grid.Panel',
-	title:'Budget Accounts Receivables',
+	title:'Fee offered from client (Receivables)',
 	alias:'widget.accountReceiveGrid_a',
 	closeAction: 'hide',
 	width:1050,
@@ -41,59 +41,14 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 		});
 		budget.loadPage(1);
 		this.store = budget,
-		this.tbar = Ext.create('Ext.Toolbar', {  
-							   items:[{
-                               xtype : 'button',
-                              // id : 'addnewrowcust',
-                               text : 'Insert New Row',
-                               pressed:true,
-                               x : 500,
-                               y : 10,
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-               						var r = Ext.create('MyDesktop.model.Receive_a', {
-               						budgetReceive_id:'',
-               						activity_name:'',
-               						uom:'',
-               						rate_USD: '',
-               						rate_GBP: '',
-               						actual_unit:'',
-               						amt_USD:'',
-               						amt_GBP:''
-                				});
-                		       budget.insert(0, r);
-            				 }                           
-        },
-        
-        ]
-        });
-
+		
 		this.columns = [
 		
 		{
 			dataIndex: 'budgetReceive_id',
 			hidden:true,
 		},
-			 /*  {
-					dataIndex: 'edit_cast_off_extent',
-					text: 'Cast Off Extent',
-					flex: 1,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					}
-				},
-				 {
-					dataIndex: 'edit_confirmed_extent',
-					text: 'Confirmed Extent',
-					flex: 1,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					}
-				},*/
-				 {
+		 {
 					dataIndex: 'activity_name',
 					text: 'Activity',
 					flex: 1,
@@ -113,16 +68,89 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 					return value;
 					}
 				},
+			
 				{
-					dataIndex: 'uom',
-					text: 'Unit Of Measurement',
+					text:'Rate / Unit',
+					
+		columns: [{
+					dataIndex: 'rate_USD',
+					text: '$',
+		        	align:'center',
+		        	textStyle:'font-size:13px;',
+		        	editor: { 
+						xtype:'textfield',
+					}
+									
+				},
+				{
+					dataIndex: 'rate_GBP',
+					text: '£',
+		        	align:'center',
+		        	editor: { 
+						xtype:'textfield',
+					}
+				}
+				]
+				},
+					{
+					dataIndex: 'no_of_unit',
+					text: 'No Of Units',
 					flex: 1,
 					align:'center',
 					editor: { 
 						xtype:'textfield',
+						listeners:{ 
+						change: function(field, newValue, oldValue){
+		                	 var grid = this.up().up();
+		                	 var selModel = grid.getSelectionModel();
+		                	 var rate=selModel.getSelection()[0].data.rate_USD;
+		                	 var rate1=selModel.getSelection()[0].data.rate_GBP;
+		                	 var actual=newValue*rate;
+		                	 var actual1=newValue*rate1;
+		                	 selModel.getSelection()[0].set('budgeted_amount_USD', actual);
+		                	 selModel.getSelection()[0].set('budgeted_amount_GBP', actual1);
+		                	  selModel.getSelection()[0].set('actual_amount_USD', actual);
+		                	 selModel.getSelection()[0].set('actual_amount_GBP', actual1);
+		                	}
+		                }
 					}
 				},
-				 {
+				{
+					text:'Budgeted Amount',
+		columns: [
+				{
+					dataIndex: 'budgeted_amount_USD',
+					text: '$',
+		        	align:'center',
+		        	
+					
+			    },
+			    {
+			    	dataIndex: 'budgeted_amount_GBP',
+					text: '£',
+		        	align:'center',
+			    }
+			    ]
+			    },
+		       {
+					text:'Actual Amount',
+		columns: [
+				{
+					dataIndex: 'actual_amount_USD',
+					text: '$',
+		        	align:'center',
+		        	
+					
+			    },
+			    {
+			    	dataIndex: 'actual_amount_GBP',
+					text: '£',
+		        	align:'center',
+			    }
+			    ]
+			    },
+		       
+				/* {
 					dataIndex: 'rate_USD',
 					text: 'Rate/Unit in $',
 					flex: 1,
@@ -178,7 +206,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 					editor: { 
 						xtype:'textfield',
 					}
-				},
+				},*/
 				
 		{
 			xtype:'actioncolumn',
@@ -197,66 +225,37 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 				},
 				]
 		}
-		       
-		        
-			
-				
+		  	
 		];
 		 
 			this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
-			items:[
-			/**{
-				xtype:'button',
-				text:'Save',
-				pressed:true,
-				width:100,
-			//	margin:'0 0 0 100',
-				handler:function(){
-					 var job_code=Ext.getCmp('job_code').getValue();
-					 var projectID=Ext.getCmp('budgetHeader_projectID').getValue();  
-					 var activity_name = '';
-					 var uom = '';
-				     var rate_USD = '';
-				     var rate_GBP= '';
-				     var actual_unit= '';
-				     var amt_USD = '';
-				     var amt_GBP = '';
-				     var grid=Ext.getCmp('accountReceiveGrid_a');
-				     
-					var total_USD=0;
-					var total_GBP=0;
-					
-					
-				     var myStore = Ext.getCmp('accountReceiveGrid_a').getStore();
-					 myStore.each(function(rec) {
-						total_USD=total_USD+parseInt(rec.get('amt_USD'));
-						total_GBP=total_GBP+parseInt(rec.get('amt_GBP'));
-						type=1;
-						activity_name=activity_name+rec.get('activity_name')+',';
-						uom=uom+rec.get('uom')+',';
-						rate_USD=rate_USD+rec.get('rate_USD')+',';
-						rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
-						actual_unit=actual_unit+rec.get('actual_unit')+',';
-						amt_USD=amt_USD+rec.get('amt_USD')+',';
-						amt_GBP=amt_GBP+rec.get('amt_GBP')+',';
-					});
-					
-					 var conn = new Ext.data.Connection();
-					 conn.request({
-						url: 'service/budget.php',
-						method: 'POST',
-						params : {action:11,job_code:job_code,projectID:projectID,activity_name:activity_name,uom:uom,rate_USD:rate_USD,rate_GBP:rate_GBP,actual_unit:actual_unit,amt_USD:amt_USD,amt_GBP:amt_GBP},
-						success:function(response){
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-						}
-					});
-					 Ext.getCmp('total_receive_USD').setValue(total_USD);
-					 Ext.getCmp('total_receive_GDP').setValue(total_GBP);
-										}
-			}**/
-			]
+			 items:[{
+                               xtype : 'button',
+                              // id : 'addnewrowcust',
+                               text : 'Insert New Row',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+               						var r = Ext.create('MyDesktop.model.Receive_a', {
+               						budgetReceive_id:'',
+               						activity_name:'',
+               						uom:'',
+               						rate_USD: '',
+               						rate_GBP: '',
+               						budgeted_amount_USD:'',
+               						budgeted_amount_GBP:'',
+               						actual_amount_USD:'',
+               						actual_amount_GBP:''
+                				});
+                		       budget.insert(budget.getCount(), r);
+            				 }                           
+        },
+        
+        ]
 		});
 		
 		

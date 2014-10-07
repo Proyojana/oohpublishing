@@ -22,6 +22,9 @@ switch($_POST["action"]) /*Read action sent from front-end */ {
 	case 6:
 		sendEmailPdf1($_POST['from'], $_POST['to'], $_POST['cc'],$_POST['message'],$_POST['job_code']);
 		break;
+	case 7:
+		getProjectReport();
+		break;
 	default :
 		break;
 }
@@ -991,5 +994,58 @@ Where
 			
 			echo(json_encode($result));
 			}
+
+function getProjectReport()
+	{
+ 		$num_result = mysql_query ("Select Distinct
+ oohpublishing.project_title.job_code as code,
+ oohpublishing.project_title.title as title,
+ oohpublishing.project_title.castoff_extent as coe,
+ oohpublishing.project_title.confirmed_extent as ce,
+ oohpublishing.author.name as author,
+ oohpublishing.project_title.agreed_deadline as adeadline,
+ oohpublishing.users.username as pm
+From
+ oohpublishing.project_title Inner Join
+ oohpublishing.author On oohpublishing.project_title.job_code =
+   oohpublishing.author.job_code Inner Join
+ oohpublishing.project_team On oohpublishing.project_title.id =
+   oohpublishing.project_team.project_id Inner Join
+ oohpublishing.users On oohpublishing.project_team.user =
+   oohpublishing.users.id
+Where
+ oohpublishing.project_team.role = 'Project Manager' And
+ oohpublishing.author.author = 'Main Contact'
+  ")or die(mysql_error());
+		
+		$totaldata = mysql_num_rows($num_result);
+
+		$result = mysql_query("Select Distinct
+		 oohpublishing.project_title.job_code as code,
+ oohpublishing.project_title.title as title,
+ oohpublishing.project_title.castoff_extent as coe,
+ oohpublishing.project_title.confirmed_extent as ce,
+ oohpublishing.author.name as author,
+ oohpublishing.project_title.agreed_deadline as adeadline,
+ oohpublishing.users.username as pm
+From
+ oohpublishing.project_title Inner Join
+ oohpublishing.author On oohpublishing.project_title.job_code =
+   oohpublishing.author.job_code Inner Join
+ oohpublishing.project_team On oohpublishing.project_title.id =
+   oohpublishing.project_team.project_id Inner Join
+ oohpublishing.users On oohpublishing.project_team.user =
+   oohpublishing.users.id
+Where
+ oohpublishing.project_team.role = 'Project Manager' And
+ oohpublishing.author.author = 'Main Contact'
+  LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
+	}
 
 ?>

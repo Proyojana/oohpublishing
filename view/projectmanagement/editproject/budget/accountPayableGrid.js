@@ -98,8 +98,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
         ]
         });
 		this.columns = [
-		
-		{
+				{
 			dataIndex: 'budgetExpense_id',
 			hidden:true,
 		},
@@ -134,19 +133,16 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 						
 					
 				},
-				{
+				/*{
 					dataIndex: 'stage',
 					text: 'Stage',
 					flex: 2,
 					align:'center',
-					hidden:true,
 					editor: { 
 						xtype:'textfield',
 						
 						}
-					
-					
-				},
+				},*/
 				 {
 				 	dataIndex: 'vendor',
 		        	text: 'Vendor',
@@ -172,11 +168,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					 success:function(response){
 					 obj1 = Ext.JSON.decode(response.responseText);
 					 
-					 var unit=obj1.data.uom;
+					 
 					 var rate=obj1.data.rate_USD;
 					 var rate1=obj1.data.rate_GBP; 
                         //NOTE: 'control' here is the value set in the dataIndex property of the Control combobox  
-                         selModel.getSelection()[0].set('unit', unit);
+                         //selModel.getSelection()[0].set('unit', unit);
                          selModel.getSelection()[0].set('rate_USD', rate);
                          selModel.getSelection()[0].set('rate_GBP', rate1);
 					 }
@@ -193,15 +189,51 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					}
 		        	
 		       },
+		       	{
+					text:'Rate / Unit',
+					
+		columns: [{
+					dataIndex: 'rate_USD',
+					text: '$',
+		        	align:'center',
+		        	textStyle:'font-size:13px;'
+									
+				},
 				{
-					dataIndex: 'unit',
-					text: 'Unit',
+					dataIndex: 'rate_GBP',
+					text: '£',
+		        	align:'center',
+				}
+				]
+				},
+				{
+					dataIndex: 'no_of_unit',
+					text: 'No of Units',
 					flex: 2,
 					align:'center',
-					hidden:true,
+					editor: { 
+						xtype:'textfield',
+					listeners:{ 
+						change: function(field, newValue, oldValue){
+		                	 var grid = this.up().up();
+		                     // get selection model of the grid  
+		                     var selModel = grid.getSelectionModel();
+		                	 var rate=selModel.getSelection()[0].data.rate_USD;
+		                	  var rate1=selModel.getSelection()[0].data.rate_GBP;
+		                	//calculate budgeted amount
+		                	 var budget=newValue*rate;
+		                	 var budget1=newValue*rate1;
+		                	 selModel.getSelection()[0].set('budgeted_amount_USD', budget);
+		                	 selModel.getSelection()[0].set('budgeted_amount_GBP', budget1);
+		                	 selModel.getSelection()[0].set('actual_amount_USD', budget);
+		                	 selModel.getSelection()[0].set('actual_amount_GBP', budget1);
+					
+                               }
+                              } 
+                             }
 					
 				},
-				{	
+				/*{	
 			
 					dataIndex: 'num_units_budgeted',
 					text: 'No.of Units <br/>Budgeted',
@@ -227,24 +259,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
                               }
            
 					
-				},	
-				{
-					text:'Rate / Unit',
-					
-		columns: [{
-					dataIndex: 'rate_USD',
-					text: '$',
-		        	align:'center',
-		        	textStyle:'font-size:13px;'
-									
-				},
-				{
-					dataIndex: 'rate_GBP',
-					text: '£',
-		        	align:'center',
-				}
-				]
-				},
+				},	*/
+			
 				
 				{
 					text:'Budgeted Amount',
@@ -265,7 +281,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 			    },
 		       
 		       
-	     	   {
+	     	 /*  {
 	     			dataIndex:'actual_unit',
 		        	text: 'No. of Units<br/> Actual',
 		        	editor: { xtype:'textfield',
@@ -291,8 +307,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					flex: 2,
 					align:'center',
 		        	
-		        }
-		         ,
+		        },*/
+		    
 		        {
 		        	text:'Actual Amount',
 		        	
@@ -325,8 +341,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 						
 						var grid = this.up('grid');
 					if (grid) {
-						var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue(); 
-					var workflow=Ext.getCmp('editbudgetHeader_workflow').getValue(); 
+						var projectID=Ext.getCmp('budgetHeader_projectID').getValue(); 
+					var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); 
 						       	var rec = grid.getStore().getAt(rowIndex);
 						Ext.Msg.confirm('Remove Record '+rec.get('stage')+' ?',+rec.get('stage'), function (button) {
 							if (button == 'yes') {
@@ -358,6 +374,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 				]
 		}
 		       
+		       
+
+		       
 		        
 			
 				
@@ -365,249 +384,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 		 
 			this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
-			//displayInfo: false,
-			//displayMsg: 'Displaying topics {0} - {1} of {2}',
-			//emptyMsg: "No topics to display",
-			items:[
-			{
-				xtype:'button',
-				text:'Save',
-				pressed:true,
-				width:100,
-			//	margin:'0 0 0 100',
-				handler:function(){
-					var actual_amt_USD=0;
-					var actual_amt_GBP=0;
-					var type=2;
-					var job_code=Ext.getCmp('edit_Job_code').getValue(); 
-					//alert(job_code);
-					//alert("save");
-					var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue(); 
-					/*var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); */
-					
-							var activity='';
-							var stage='';
-							var vendor='';
-							var unit='';
-							var budgeted_unit='';
-							var rate_USD='';
-							var rate_GBP='';
-							var budgeted_amount_USD='';
-							var budgeted_amount_GBP='';
-							var actual_unit='';
-							var actual_amount_USD='';
-							var actual_amount_GBP='';
-							var budget_id='';
-							var grid=Ext.getCmp('editaccountPayableGrid');
-							
-					var myStore = Ext.getCmp('editaccountPayableGrid').getStore();
-					myStore.each(function(rec) {
-					actual_amt_USD=actual_amt_USD+parseInt(rec.get('actual_amount_USD'));
-				    actual_amt_GBP=actual_amt_GBP+parseInt(rec.get('actual_amount_GBP'));	
-				    activity=activity+rec.get('activityid')+',';
-				    stage=stage+rec.get('stage')+',';
-				    vendor=vendor+rec.get('vendor')+',';
-				    unit=unit+rec.get('unit')+',';
-				    budgeted_unit=budgeted_unit+rec.get('num_units_budgeted')+',';
-				    rate_USD=rate_USD+rec.get('rate_USD')+',';
-				    rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
-				    budgeted_amount_USD=budgeted_amount_USD+rec.get('budgeted_amount_USD')+',';
-				    budgeted_amount_GBP=budgeted_amount_GBP+rec.get('budgeted_amount_GBP')+',';
-				    actual_unit=actual_unit+rec.get('actual_unit')+',';
-				    actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
-				    actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
-				    budget_id=budget_id+rec.get('budgetExpense_id')+',';
-				   					
-				});
-							
-					var conn = new Ext.data.Connection();
-					 conn.request({
-						url: 'service/budget.php',
-						method: 'POST',
-						params : {action:4,job_code:job_code,budget_id:budget_id,activity:activity,stage:stage,vendor:vendor,unit:unit,budgeted_unit:budgeted_unit,rate_USD:rate_USD,rate_GBP:rate_GBP,
-							budgeted_amount_USD:budgeted_amount_USD,budgeted_amount_GBP:budgeted_amount_GBP,actual_unit:actual_unit,actual_amount_USD:actual_amount_USD,actual_amount_GBP:actual_amount_GBP},
-						success:function(response){
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-							
-							
-								/*var currentHeaderForm = Ext.getCmp('newprojectScheduleHeaderForm');
-                	 /****load data in header form*****/
-                	
-						
-						/*currentHeaderForm.getForm().load({
-   								 url: 'service/schedule.php',
-							     params: {
-        						 	action:1,job_code:job_code
-							    },
-							      failure: function(form, action){
-						        Ext.Msg.alert("Load failed", action.result.errorMessage);
-    							}
-							   
-							   
-						});
-								Ext.getCmp('newprojectscheduleformTab').setDisabled(false);	*/
-								
-								//refresh grid
-							var grid3=Ext.getCmp('editaccountPayableGrid');
-							grid3.getStore().load({params:{action:1,job_code:job_code}});
-							
-
-					
-						}
-					});
-					 Ext.getCmp('edit_total_pay_USD').setValue(actual_amt_USD);
-					 Ext.getCmp('edit_total_pay_GBP').setValue(actual_amt_GBP);
-
-					
-				}
-			},
 			
-		/*	{
-				xtype:'button',
-				text:'Show total',
-				pressed:true,
-				width:100,
-				margin:'0 0 0 50',
-				handler:function(){
-					
-					/**variable declaration
-					var budgeted_amount_USD=0;
-					var budgeted_amount_GBP=0;
-					var actual_amount_USD=0;
-					var actual_amount_GBP=0;
-					/*** get value from store
-					var myStore = Ext.getCmp('accountPayableGrid').getStore();
-					myStore.each(function(rec) {
-					alert(rec.get('budgeted_amount_USD'));
-				    budgeted_amount_USD=budgeted_amount_USD+parseInt(rec.get('budgeted_amount_USD'));
-				    alert(budgeted_amount_USD);
-				    budgeted_amount_GBP=budgeted_amount_GBP+parseInt(rec.get('budgeted_amount_GBP'));
-				   
-				    actual_amount_USD=actual_amount_USD+parseInt(rec.get('actual_amount_USD'));
-				    actual_amount_GBP=actual_amount_GBP+parseInt(rec.get('actual_amount_GBP'));
-				    
-				   					
-				});
-				
-				var diff_usd=budgeted_amount_USD-actual_amount_USD;
-				var diff_gbp=budgeted_amount_GBP-actual_amount_GBP;
-					
-					var win = Ext.create('Ext.Window', {
-					extend : 'Ext.form.Panel',
-					layout : {
-						type : 'absolute'
-					},
-					maximizable : false,
-					//title : 'Resubmission Reason',
-					frame : true,
-					width : 700,
-					height : 173,
-					modal:true,
-				    defaults: {
-						labelWidth: 165,
-						
-					},
-					
-					defaultType: 'textfield',
-	
-					items : [
-					{
-						
-						fieldLabel:'Total Budgeted Amount in $',
-						x:10,
-						y:10,
-						id:'total_budgeted_amount_usd',
-						listeners: {
-                            afterrender: function() {
-                                Ext.getCmp('total_budgeted_amount_usd').setValue(budgeted_amount_USD);
-                            } 
-                        }
-						
-					},
-					{
-						
-						fieldLabel:'Total Budgeted Amount in £',
-						x:320,
-						y:10,
-					    id:'total_budgeted_amount_gbp',
-					    listeners: {
-                            afterrender: function() {
-                                Ext.getCmp('total_budgeted_amount_gbp').setValue(budgeted_amount_GBP);
-                            } 
-                        }
-						
-						
-					},
-					{
-						
-						fieldLabel:'Total Actual Amount in $',
-						x:10,
-						y:60,
-						id:'total_actual_amount_usd',
-						listeners: {
-                            afterrender: function() {
-                                Ext.getCmp('total_actual_amount_usd').setValue(actual_amount_USD);
-                            } 
-                        }
-						
-						
-					},
-					
-					{
-						
-						fieldLabel:'Total Actual Amount in £',
-						x:320,
-						y:60,
-						id:'total_actual_amount_gbp',
-						listeners: {
-                            afterrender: function() {
-                                Ext.getCmp('total_actual_amount_gbp').setValue(actual_amount_GBP);
-                            } 
-                        }
-						
-						
-					},
-					
-					{
-						
-						fieldLabel:'Difference in $',
-						x:10,
-						y:110,
-						id:'difference_usd',
-						listeners: {
-                            afterrender: function() {
-                                Ext.getCmp('difference_usd').setValue(diff_usd);
-                            } 
-                        }
-						
-						
-					},
-					{
-						
-						fieldLabel:'Difference in £',
-						x:320,
-						y:110,
-						id:'difference_gbp',
-						listeners: {
-                            afterrender: function() {
-                                Ext.getCmp('difference_gbp').setValue(diff_gbp);
-                            } 
-                        }
-						
-						
-					},
-					
-					]
-					});
-					win.show();
-					
-					
-				}
-			},*/
-			
-			
-			]
 		});
 		
 		

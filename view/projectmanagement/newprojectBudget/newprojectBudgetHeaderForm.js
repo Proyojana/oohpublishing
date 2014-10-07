@@ -22,7 +22,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 	defaults: {
 		labelWidth: 100,
 	},
-	// collapsible: true,
+	
 	defaultType: 'textfield',
 	
 	initComponent:function(){
@@ -67,49 +67,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 		x:510,
 		y:10,
 		width:220,
-		listeners: {
-             /* specialkey: function(f,e){
-                if (e.getKey() == e.ENTER) {
-               
-                	var project_code = Ext.getCmp("budgetHeader_Job").getValue();
-                	
-                	//alert(project_code);
-                	var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
-                	 /****load data in header form*****/
-                	
-						
-						/*currentForm.getForm().load({
-   								 url: 'service/budget.php',
-							     params: {
-        						 	action:2,project_code:project_code
-							    },
-							    success: function(form, action){
-					                 var workflow = Ext.getCmp("budgetHeader_workflow").getValue();
-					                 var project = Ext.getCmp("budgetHeader_projectID").getValue();
-								//load activities in budget grid
-									 var grid3=Ext.getCmp('accountPayableGrid');
-									grid3.getStore().load({params:{action:1,workflowid:workflow,projectid:project}});
-                                },
-							    failure: function(form, action){
-							    	
-						        Ext.Msg.alert("Job Code is not Valid", action.result.errorMessage);
-						        currentForm.getForm().reset();
-						        var workflow = Ext.getCmp("budgetHeader_workflow").getValue();
-								//load activities in budget grid
-									 var grid3=Ext.getCmp('accountPayableGrid');
-									grid3.getStore().load({params:{action:1,workflowid:workflow}});
-    							
-    							}
-						});
-						
-						
-						
-					
-            
-                }
-              }*/
-            }
-		//labelWidth: 60,
+		
 	},
 	{
 		id:'budgetHeader_ProjectName',
@@ -139,43 +97,19 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 		width:220,
 		
 	},
-	/**{
-		id:'budgetHeader_Currency',
-		xtype:'combo',
-		fieldLabel: 'Currency',
-		x:310,
-		//readOnly: true,
+	{
+		id:'budgetHeader_ponumber1',
+		fieldLabel: 'PO Numbers',
+		x:510,
 		y:40,
-		width:220,
-		store:times,
-		displayField:'unit',
-		listeners : {
-				change : function() {
-					var currentForm = this.up('newprojectBudgetHeaderForm');
-					var currency = Ext.getCmp('budgetHeader_Currency').getValue();
-					//change budget grid header
-					  if(currency.indexOf("USD")!= -1)
-					  {
-					  	var grid = Ext.getCmp( 'accountPayableGrid' );
-					 grid.getView().getHeaderAtIndex(6).setText('Rate/Unit in USD');
-					 grid.getView().getHeaderAtIndex(7).setText('Budgeted Amount in USD');
-					 grid.getView().getHeaderAtIndex(9).setText('Actual Amount in USD');
-					  }
-					  else if(currency.indexOf("GBP")!= -1)
-					  {
-					  	var grid = Ext.getCmp( 'accountPayableGrid' );
-					  grid.getView().getHeaderAtIndex(6).setText('Rate/Unit in GBP');
-					 grid.getView().getHeaderAtIndex(7).setText('Budgeted Amount in GBP');
-					 grid.getView().getHeaderAtIndex(9).setText('Actual Amount in GBP');
-					  }
-					 
-					
-					
-				}
-			}
 		
-		
-	},***/
+	},
+	{
+		id:'budgetHeader_ponumber2',
+		x:760,
+		y:40,
+	},
+	
 	]
 	
 	this.callParent();
