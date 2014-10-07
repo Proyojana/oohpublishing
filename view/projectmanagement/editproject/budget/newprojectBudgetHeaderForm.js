@@ -120,6 +120,18 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHe
 		width:320,
 		
 	},
+		{
+		id:'budgetHeader_ponumber1',
+		fieldLabel: 'PO Numbers',
+		x:510,
+		y:40,
+		
+	},
+	{
+		id:'budgetHeader_ponumber2',
+		x:760,
+		y:40,
+	},
 	/**{
 		id:'budgetHeader_Currency',
 		xtype:'combo',

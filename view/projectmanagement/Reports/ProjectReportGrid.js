@@ -1,12 +1,4 @@
 
-   /* var available = Ext.create('Ext.data.Store', {
-   fields: ['Id', 'Activity','Level','Page_rate1','Page_rate2','Sub_total','Sub_total1'],
-   data : [
-        {"Activity":"Project Manager", "Level":"tbc","Page_rate1":"$2.00","Page_rate2":"3","Sub_total":"4","Sub_total1":"8"},
-         {"Activity":"Typesetting", "Level":"tbc","Page_rate1":"$20.00","Page_rate2":"3","Sub_total":"4","Sub_total1":"8"},  
-         {"Activity":"Copyediting", "Level":"tbc","Page_rate1":"$20.00","Page_rate2":"3","Sub_total":"4","Sub_total1":"8"},  
-       ]
-   });*/
 Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
 	extend:'Ext.grid.Panel',
 	alias:'widget.projectreportgrid',
@@ -14,41 +6,26 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
 	
 	
 	height:200,
-	//requires : ['MyDesktop.store.freelancer'],
+	requires : ['MyDesktop.store.ProjectReport'],
 	title:'Project Reports',
 	id:'projectreportgrid',
 	
 	initComponent: function() {
 		
-		this.tbar = Ext.create('Ext.Toolbar', {  
-
-				items:[
-			{
-				xtype:'combo',
-				store:['Ahead of Schedule','On Schedule','Behind Schedule'],
-				fieldLabel:'Projects'
-			},
-			{
-				xtype:'button',				
-				 text : 'Search'
-			}
-			]
-			
-		}),
-		
-	/*	var ci = Ext.create('MyDesktop.store.freelancer');
-		ci.load({
+		var Report = Ext.create('MyDesktop.store.ProjectReport');
+		Report.load({
 			params: {
 				start: 0,
 				limit: 8
 			}
 		});
-		ci.loadPage(1);*/
-		//this.store = available,
+		Report.loadPage(1);
+		
+		this.store = Report,
 			this.columns = [
 				
 				{
-					//dataIndex: 'Activity',
+					dataIndex: 'code',
 					text: 'Project Code',
 					align: 'center',
 					flex:1,
@@ -57,7 +34,7 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
            		}
 				},
 				{
-					//dataIndex: 'Level',
+					dataIndex: 'title',
 					text: 'Title',
 					align: 'center',
 					flex:1,
@@ -66,8 +43,8 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
            		}
 				},
 				{
-					//dataIndex: 'Level',
-					text: 'Author',
+					dataIndex: 'status',
+					text: 'Status',
 					align: 'center',
 					flex:1,
 					filter: {
@@ -75,34 +52,7 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
            		}
 				},
 				{
-					//dataIndex: 'Level',
-					text: 'HB ISDN',
-					align: 'center',
-					flex:1,
-					filter: {
-                	type: 'string'
-           		}
-				},
-				{
-					//dataIndex: 'Level',
-					text: 'PB ISDN',
-					align: 'center',
-					flex:1,
-					filter: {
-                	type: 'string'
-           		}
-				},
-				{
-					//dataIndex: 'Level',
-					text: 'Format',
-					align: 'center',
-					flex:1,
-					filter: {
-                	type: 'string'
-           		}
-				},
-				{
-					//dataIndex: 'Level',
+					dataIndex: 'adeadline',
 					text: 'Agreed Deadline',
 					align: 'center',
 					flex:1,
@@ -111,8 +61,35 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
            		}
 				},
 				{
-					//dataIndex: 'Level',
-					text: 'Word Count',
+					dataIndex: 'coe',
+					text: 'Cast Off Extend',
+					align: 'center',
+					flex:1,
+					filter: {
+                	type: 'string'
+           		}
+				},
+				{
+					dataIndex: 'ce',
+					text: 'Current Extend',
+					align: 'center',
+					flex:1,
+					filter: {
+                	type: 'string'
+           		}
+				},
+				{
+					dataIndex: 'Level',
+					text: 'Production Editor',
+					align: 'center',
+					flex:1,
+					filter: {
+                	type: 'string'
+           		}
+				},
+				{
+					dataIndex: 'pm',
+					text: 'Project Manager',
 					align: 'center',
 					flex:1,
 					filter: {
@@ -130,8 +107,7 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
-			items:[
-			]
+			
 			
 		}),
 		this.callParent(arguments);
