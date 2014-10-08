@@ -117,6 +117,34 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetFo
 		  x:5,
 		  y:660,
 		  labelWidth: 180,
+		  	    listeners:{ 
+						"blur": function(field, newValue, oldValue){
+							var receive_usd = Ext.getCmp('edit_total_receive_USD').getValue();
+							var pay_usd = Ext.getCmp('edit_total_pay_USD').getValue();
+							var bal=receive_usd-pay_usd;
+							 
+					 var conn = new Ext.data.Connection();
+					 conn.request({
+					 url: 'service/budget.php',
+					 method: 'POST',
+					 params : {action:15},
+					 success:function(response){
+					 obj1 = Ext.JSON.decode(response.responseText);
+					 if(obj1.data!=null)
+					 {
+					 var obj=obj1.data.rate;
+					 var val = obj*bal;
+					 Ext.getCmp('edit_profit_GBP').setValue(val);
+					 }
+					 else
+					 {
+					 	Ext.getCmp('edit_profit_GBP').setValue();
+					 }
+					 }
+					 });
+							
+						}
+						}
 		},
 		{
 		xtype:'textfield',
@@ -125,6 +153,18 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetFo
 		  x:500,
 		  y:660,
 		 labelWidth: 180,
+		 	  listeners:{ 
+						"blur": function(field, newValue, oldValue){
+							var receive_gdp = Ext.getCmp('edit_total_receive_GBP').getValue();
+							var pay_gdp = Ext.getCmp('edit_total_pay_GBP').getValue();
+							var bal=receive_gdp-pay_gdp;
+							if(bal!=0){
+							Ext.getCmp('edit_profit_GBP').setValue(bal);
+							}
+							
+							
+						}
+						}
 		},
 		//budget total save starts
 		{

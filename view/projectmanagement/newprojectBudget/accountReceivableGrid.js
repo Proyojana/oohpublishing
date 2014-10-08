@@ -79,6 +79,16 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 		                	 selModel.getSelection()[0].set('budgeted_amount_GBP', actual1);
 		                	 selModel.getSelection()[0].set('actual_amount_USD', actual);
 		                	 selModel.getSelection()[0].set('actual_amount_GBP', actual1);
+		                	 
+		                	 var total_USD=0;
+					         var total_GBP=0;
+					         var myStore = Ext.getCmp('accountReceiveGrid').getStore();
+					 myStore.each(function(rec) {
+					 	total_USD=total_USD+parseInt(rec.get('actual_amount_USD'));
+						total_GBP=total_GBP+parseInt(rec.get('actual_amount_GBP'));
+					 	});
+		                Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
+					    Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
 		                	}
 		                }
 					}

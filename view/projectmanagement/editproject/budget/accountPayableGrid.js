@@ -102,15 +102,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 			dataIndex: 'budgetExpense_id',
 			hidden:true,
 		},
-		/*{
-			dataIndex: 'activityid',
-			hidden:true,
-		},
-		{
-			dataIndex: 'stageid',
-			hidden:true,
-		},*/
-		        {				
+		    {				
 					dataIndex: 'activityid',
 					text: 'Activity',
 					 flex: 2,
@@ -133,17 +125,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 						
 					
 				},
-				/*{
-					dataIndex: 'stage',
-					text: 'Stage',
-					flex: 2,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-						
-						}
-				},*/
-				 {
+				{
 				 	dataIndex: 'vendor',
 		        	text: 'Vendor',
 		        	flex: 2,
@@ -227,6 +209,29 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 		                	 selModel.getSelection()[0].set('budgeted_amount_GBP', budget1);
 		                	 selModel.getSelection()[0].set('actual_amount_USD', budget);
 		                	 selModel.getSelection()[0].set('actual_amount_GBP', budget1);
+		                	 
+				            var actual_amt_USD=0;
+							var actual_amt_GBP=0;
+							
+							
+							var actual_amount_USD='';
+							var actual_amount_GBP='';
+							
+							
+							var myStore = Ext.getCmp('editaccountPayableGrid').getStore();
+							myStore.each(function(rec) {
+							actual_amt_USD=actual_amt_USD+parseInt(rec.get('actual_amount_USD'));
+							actual_amt_GBP=actual_amt_GBP+parseInt(rec.get('actual_amount_GBP'));	
+							
+							actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
+							actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
+							
+							
+							});
+							
+							Ext.getCmp('edit_total_pay_USD').setValue(actual_amt_USD);
+							Ext.getCmp('edit_total_pay_GBP').setValue(actual_amt_GBP);
+							
 					
                                }
                               } 

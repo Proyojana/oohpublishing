@@ -89,6 +89,18 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		width:220,
 		
 	},
+	{
+		id:'edit_budgetHeader_ponumber1',
+		fieldLabel: 'PO Numbers',
+		x:510,
+		y:30,
+		
+	},
+	{
+		id:'edit_budgetHeader_ponumber2',
+		x:760,
+		y:30,
+	},
 	]
 	this.callParent();
 }

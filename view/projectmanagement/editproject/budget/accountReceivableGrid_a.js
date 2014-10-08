@@ -102,7 +102,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 						xtype:'textfield',
 						listeners:{ 
 						change: function(field, newValue, oldValue){
-							alert("actual_amt_USD");
+							
 		                	 var grid = this.up().up();
 		                	 var selModel = grid.getSelectionModel();
 		                	 var rate=selModel.getSelection()[0].data.rate_USD;
@@ -114,9 +114,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 		                	 selModel.getSelection()[0].set('actual_amount_USD', actual);
 		                	 selModel.getSelection()[0].set('actual_amount_GBP', actual1);
 		                	 
-		             actual_amt_USD=rec.get('actual_amount_USD');
-				    actual_amt_GBP=actual_amt_GBP+parseInt(rec.get('actual_amount_GBP'));	
-				    alert("actual_amt_USD");
+		                	 var total_USD=0;
+					         var total_GBP=0;
+					          var myStore = Ext.getCmp('editaccountReceiveGrid_a').getStore();
+					 myStore.each(function(rec) {
+					 	total_USD=total_USD+parseInt(rec.get('actual_amount_USD'));
+						total_GBP=total_GBP+parseInt(rec.get('actual_amount_GBP'));
+					 	});
+		                Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
+					    Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
 		                	 
 		                	}
 		                }

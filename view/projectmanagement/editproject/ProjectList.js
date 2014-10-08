@@ -282,6 +282,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Edit Budget',
 						width : 1145,
+						id:'editbudgetform',
+						alias : 'widget.editbudgetform',
 						height : 600,
 						items : [
 						{
@@ -363,6 +365,34 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								  y:610,
 								 // width:400,
 								  labelWidth: 180,
+								    listeners:{ 
+						"blur": function(field, newValue, oldValue){
+							var receive_usd = Ext.getCmp('edit_total_receive_USD').getValue();
+							var pay_usd = Ext.getCmp('edit_total_pay_USD').getValue();
+							var bal=receive_usd-pay_usd;
+							 
+					 var conn = new Ext.data.Connection();
+					 conn.request({
+					 url: 'service/budget.php',
+					 method: 'POST',
+					 params : {action:15},
+					 success:function(response){
+					 obj1 = Ext.JSON.decode(response.responseText);
+					 if(obj1.data!=null)
+					 {
+					 var obj=obj1.data.rate;
+					 var val = obj*bal;
+					 Ext.getCmp('edit_profit_GBP').setValue(val);
+					 }
+					 else
+					 {
+					 	Ext.getCmp('edit_profit_GBP').setValue();
+					 }
+					 }
+					 });
+							
+						}
+						}
 								},
 								{
 								xtype:'textfield',
@@ -372,14 +402,27 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								  y:610,
 								  //width:400,
 								  labelWidth: 180,
+								  listeners:{ 
+						"blur": function(field, newValue, oldValue){
+							var receive_gdp = Ext.getCmp('edit_total_receive_GBP').getValue();
+							var pay_gdp = Ext.getCmp('edit_total_pay_GBP').getValue();
+							var bal=receive_gdp-pay_gdp;
+							if(bal!=0){
+							Ext.getCmp('edit_profit_GBP').setValue(bal);
+							}
+							
+							
+						}
+						}
 								},
 								{
 						xtype:'textfield',
-						  id:'edit_profit_GDP',
+						  id:'edit_profit_GBP',
 						  fieldLabel: 'Project profit £',
 						  x:5,
 						  y:640,
 						  labelWidth: 180,
+						
 						},
 						{
 						xtype:'textfield',
@@ -449,15 +492,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				     var actual_amount_USD = '';
 				      var actual_amount_GBP = '';
 				     var grid=Ext.getCmp('editaccountReceiveGrid_a');
-				     /**variable declaration**/
-					var total_USD=0;
-					var total_GBP=0;
+				    
 					
 					
 				     var myStore = Ext.getCmp('editaccountReceiveGrid_a').getStore();
 					 myStore.each(function(rec) {
-						total_USD=total_USD+parseInt(rec.get('actual_amount_USD'));
-						total_GBP=total_GBP+parseInt(rec.get('actual_amount_GBP'));
+						
 						type=1;
 						activity_name=activity_name+rec.get('activity_name')+',';
 						no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
@@ -479,29 +519,25 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							Ext.Msg.alert('Message', obj.message); 
 						}
 					});
-					 Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
-					 Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
+					
 												
 						
 					}
 					
 					//Payable
-					var actual_amt_USD=0;
-					var actual_amt_GBP=0;
+					
 					var type=2;
 					var job_code=Ext.getCmp('edit_Job_code').getValue(); 
 					var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue(); 
 					
 						var activity='';
-							var stage='';
+							
 							var vendor='';
-							var unit='';
-							var budgeted_unit='';
+							var no_of_unit='';
 							var rate_USD='';
 							var rate_GBP='';
 							var budgeted_amount_USD='';
 							var budgeted_amount_GBP='';
-							var actual_unit='';
 							var actual_amount_USD='';
 							var actual_amount_GBP='';
 							var budget_id='';
@@ -509,35 +545,30 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							
 					var myStore = Ext.getCmp('editaccountPayableGrid').getStore();
 					myStore.each(function(rec) {
-					actual_amt_USD=actual_amt_USD+parseInt(rec.get('actual_amount_USD'));
-				    actual_amt_GBP=actual_amt_GBP+parseInt(rec.get('actual_amount_GBP'));	
-				    activity=activity+rec.get('activityid')+',';
-				    stage=stage+rec.get('stage')+',';
+					activity=activity+rec.get('activityid')+',';
 				    vendor=vendor+rec.get('vendor')+',';
-				    unit=unit+rec.get('unit')+',';
-				    budgeted_unit=budgeted_unit+rec.get('num_units_budgeted')+',';
+				    no_of_unit=unit+rec.get('no_of_unit')+',';
 				    rate_USD=rate_USD+rec.get('rate_USD')+',';
 				    rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
 				    budgeted_amount_USD=budgeted_amount_USD+rec.get('budgeted_amount_USD')+',';
 				    budgeted_amount_GBP=budgeted_amount_GBP+rec.get('budgeted_amount_GBP')+',';
-				    actual_unit=actual_unit+rec.get('actual_unit')+',';
 				    actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
 				    actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
 				    budget_id=budget_id+rec.get('budgetExpense_id')+',';
 				   					
 				});
 							
-				/*	var conn = new Ext.data.Connection();
+					var conn = new Ext.data.Connection();
 					 conn.request({
 						url: 'service/budget.php',
 						method: 'POST',
-						params : {action:4,job_code:job_code,budget_id:budget_id,activity:activity,stage:stage,vendor:vendor,unit:unit,budgeted_unit:budgeted_unit,rate_USD:rate_USD,rate_GBP:rate_GBP,
-							budgeted_amount_USD:budgeted_amount_USD,budgeted_amount_GBP:budgeted_amount_GBP,actual_unit:actual_unit,actual_amount_USD:actual_amount_USD,actual_amount_GBP:actual_amount_GBP},
+						params : {action:4,job_code:job_code,budget_id:budget_id,activity:activity,vendor:vendor,no_of_unit:no_of_unit,rate_USD:rate_USD,rate_GBP:rate_GBP,
+							budgeted_amount_USD:budgeted_amount_USD,budgeted_amount_GBP:budgeted_amount_GBP,actual_amount_USD:actual_amount_USD,actual_amount_GBP:actual_amount_GBP},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 								
-                	 /****load data in header form*****
+                	 /****load data in header form*****/
                 		currentHeaderForm.getForm().load({
    								 url: 'service/schedule.php',
 							     params: {
@@ -558,9 +589,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 
 					
 						}
-					});*/
-					 Ext.getCmp('edit_total_pay_USD').setValue(actual_amt_USD);
-					 Ext.getCmp('edit_total_pay_GBP').setValue(actual_amt_GBP);
+					});
+					 
 
 					
 				}
@@ -584,13 +614,24 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							Ext.Msg.alert("Load failed", action.result.errorMessage);
 						}
 					});
+				
 					var grid1 = Ext.getCmp('editaccountPayableGrid');
 					grid1.getStore().load({	params : {action : 1,job_code : job_code,}});
 					var grid4=Ext.getCmp('editaccountReceiveGrid_a');
 					grid4.getStore().load({params:{action:13,job_code:job_code}});
 					var grid4=Ext.getCmp('editaccountReceiveGrid');
 					grid4.getStore().load({params:{action:12,job_code:job_code}});
-			
+				var currentForm = Ext.getCmp('editbudgetform');
+					currentForm.getForm().load({
+						url : 'service/budget.php',
+						params : {
+							action : 16,
+							project_id:project_id,
+							},
+						failure : function(form, action) {
+							Ext.Msg.alert("Load failed", action.result.errorMessage);
+						}
+					});
 					
 				}
 			}, 

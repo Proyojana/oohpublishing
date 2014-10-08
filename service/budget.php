@@ -47,6 +47,12 @@ include("../inc/php/encryptDecrypt.php");
 	   case 14:
 			insertBudgetDetails($_POST['projectID'],$_POST['ponumber1'],$_POST['ponumber2'],$_POST['total_receive_USD'],$_POST['total_receive_GDP'],$_POST['total_pay_USD'],$_POST['total_pay_GDP'],$_POST['profit_GDP'],$_POST['profit_percentage']);
 			break;
+       case 15:
+		    getCurrencyRate();
+		    break; 
+	   case 16:
+		    getTotal($_POST['project_id']);
+		    break; 
 		default: 
 			break;
 	}
@@ -676,4 +682,69 @@ $checkquery="SELECT id FROM budget_total_detail WHERE project_id='".$projectid."
 				}
 			}
 			}
+			
+function getCurrencyRate()
+	{
+		$now   = new DateTime();
+        $month = (int)$now->format("m");
+		
+		$result1 = mysql_query("Select
+  		rate As rate
+		From
+  		currency 
+		Where
+  		month = '".$month."'")or die(mysql_error());
+		
+		if(!$result1)
+		{
+			$result["failure"] = true;
+			$result["message"] =  'Invalid query:'. mysql_error();
+		}
+		else
+		{
+			$result["success"] = true;
+			$result["message"] =  'rate:'. mysql_error();
+		}
+  
+		while($row=mysql_fetch_object($result1))
+	   	{
+	   		
+			$result ["data"] = $row;
+	  	}
+		
+      	echo(json_encode($result));
+      //echo '({"results":'.json_encode($data).'})';
+	  
+    }
+	function getTotal($project_id)
+ 	{
+		$result1 = mysql_query ("Select
+ oohpublishing.budget_total_detail.ponumber2 as budgetHeader_ponumber2,
+ oohpublishing.budget_total_detail.ponumber1 as budgetHeader_ponumber1,
+ oohpublishing.budget_total_detail.total_receive_usd as edit_total_receive_USD,
+ oohpublishing.budget_total_detail.total_receive_gdp as edit_total_receive_GBP,
+ oohpublishing.budget_total_detail.total_pay_gdp as edit_total_pay_USD,
+ oohpublishing.budget_total_detail.total_pay_usd as edit_total_pay_GBP,
+ oohpublishing.budget_total_detail.project_profit_gdp as edit_profit_GBP,
+ oohpublishing.budget_total_detail.project_profit_per as edit_profit_percentage
+From
+ oohpublishing.budget_total_detail
+	Where
+	  project_id = '".$project_id."'");
+			
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;				
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+			$result ["data"] = $row;
+	  	}
+      	echo(json_encode($result));
+    }
 	?>
