@@ -370,7 +370,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							var receive_usd = Ext.getCmp('edit_total_receive_USD').getValue();
 							var pay_usd = Ext.getCmp('edit_total_pay_USD').getValue();
 							var bal=receive_usd-pay_usd;
-							 
+							var per=(bal/receive_usd)*100;
+							Ext.getCmp('edit_profit_percentage').setValue(per);
 					 var conn = new Ext.data.Connection();
 					 conn.request({
 					 url: 'service/budget.php',
@@ -407,6 +408,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							var receive_gdp = Ext.getCmp('edit_total_receive_GBP').getValue();
 							var pay_gdp = Ext.getCmp('edit_total_pay_GBP').getValue();
 							var bal=receive_gdp-pay_gdp;
+							var per=(bal/receive_gdp)*100;
+							Ext.getCmp('edit_profit_percentage').setValue(per);
 							if(bal!=0){
 							Ext.getCmp('edit_profit_GBP').setValue(bal);
 							}

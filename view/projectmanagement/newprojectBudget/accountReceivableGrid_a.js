@@ -119,8 +119,8 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 					 	total_USD=total_USD+parseInt(rec.get('actual_amount_USD'));
 						total_GBP=total_GBP+parseInt(rec.get('actual_amount_GBP'));
 					 	});
-		                Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
-					    Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
+		                Ext.getCmp('total_receive_USD').setValue(total_USD);
+					    Ext.getCmp('total_receive_GDP').setValue(total_GBP);
 		                	}
 		                }
 					}

@@ -214,8 +214,8 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountPayableGrid
 							
 							});
 							
-							Ext.getCmp('edit_total_pay_USD').setValue(actual_amt_USD);
-							Ext.getCmp('edit_total_pay_GBP').setValue(actual_amt_GBP);
+							Ext.getCmp('total_pay_USD').setValue(actual_amt_USD);
+							Ext.getCmp('total_pay_GDP').setValue(actual_amt_GBP);
                                }
                               } 
                              }

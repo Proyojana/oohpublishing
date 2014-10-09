@@ -101,28 +101,13 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetFo
 		  x:5,
 		  y:610,
 		  labelWidth: 180,
-		},
-		{
-		xtype:'textfield',
-		  id:'total_pay_GDP',
-		  fieldLabel: 'Total Payable amount in £',
-		  x:500,
-		  y:610,
-		 labelWidth: 180,
-		},
-		{
-		xtype:'textfield',
-		  id:'profit_GDP',
-		  fieldLabel: 'Project profit £',
-		  x:5,
-		  y:660,
-		  labelWidth: 180,
-		  	    listeners:{ 
+		      listeners:{ 
 						"blur": function(field, newValue, oldValue){
-							var receive_usd = Ext.getCmp('edit_total_receive_USD').getValue();
-							var pay_usd = Ext.getCmp('edit_total_pay_USD').getValue();
+							var receive_usd = Ext.getCmp('total_receive_USD').getValue();
+							var pay_usd = Ext.getCmp('total_pay_USD').getValue();
 							var bal=receive_usd-pay_usd;
-							 
+							 var per=(bal/receive_usd)*100;
+							Ext.getCmp('profit_percentage').setValue(per);
 					 var conn = new Ext.data.Connection();
 					 conn.request({
 					 url: 'service/budget.php',
@@ -134,11 +119,11 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetFo
 					 {
 					 var obj=obj1.data.rate;
 					 var val = obj*bal;
-					 Ext.getCmp('edit_profit_GBP').setValue(val);
+					 Ext.getCmp('profit_GDP').setValue(val);
 					 }
 					 else
 					 {
-					 	Ext.getCmp('edit_profit_GBP').setValue();
+					 	Ext.getCmp('profit_GDP').setValue();
 					 }
 					 }
 					 });
@@ -148,23 +133,43 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetFo
 		},
 		{
 		xtype:'textfield',
-		  id:'profit_percentage',
-		  fieldLabel: 'Project profit %',
+		  id:'total_pay_GDP',
+		  fieldLabel: 'Total Payable amount in £',
 		  x:500,
-		  y:660,
+		  y:610,
 		 labelWidth: 180,
-		 	  listeners:{ 
+		  	  listeners:{ 
 						"blur": function(field, newValue, oldValue){
-							var receive_gdp = Ext.getCmp('edit_total_receive_GBP').getValue();
-							var pay_gdp = Ext.getCmp('edit_total_pay_GBP').getValue();
+							var receive_gdp = Ext.getCmp('total_receive_GBP').getValue();
+							var pay_gdp = Ext.getCmp('total_pay_GBP').getValue();
 							var bal=receive_gdp-pay_gdp;
+							var per=(bal/receive_usd)*100;
+							Ext.getCmp('profit_percentage').setValue(per);
 							if(bal!=0){
-							Ext.getCmp('edit_profit_GBP').setValue(bal);
+							Ext.getCmp('profit_GDP').setValue(bal);
 							}
 							
 							
 						}
 						}
+		},
+		{
+		xtype:'textfield',
+		  id:'profit_GDP',
+		  fieldLabel: 'Project profit £',
+		  x:5,
+		  y:660,
+		  labelWidth: 180,
+		  	
+		},
+		{
+		xtype:'textfield',
+		  id:'profit_percentage',
+		  fieldLabel: 'Project profit %',
+		  x:500,
+		  y:660,
+		 labelWidth: 180,
+		
 		},
 		//budget total save starts
 		{
@@ -277,8 +282,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetFo
 							Ext.Msg.alert('Message', obj.message); 
 						}
 					});
-					 Ext.getCmp('total_receive_USD').setValue(total_USD);
-					 Ext.getCmp('total_receive_GDP').setValue(total_GBP);
+					 
 												
 						
 					}

@@ -87,8 +87,8 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 					 	total_USD=total_USD+parseInt(rec.get('actual_amount_USD'));
 						total_GBP=total_GBP+parseInt(rec.get('actual_amount_GBP'));
 					 	});
-		                Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
-					    Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
+		                Ext.getCmp('total_receive_USD').setValue(total_USD);
+					    Ext.getCmp('total_receive_GDP').setValue(total_GBP);
 		                	}
 		                }
 					}
@@ -127,56 +127,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 			    }
 			    ]
 			    },
-			    /*
-				 {
-					dataIndex: 'rate_GBP',
-					text: 'Rate/Unit in £',
-					flex: 1,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					}
-				},
-				{
-					dataIndex: 'actual_unit',
-					text: 'Actuall Billable Units',
-					flex: 2,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-						listeners:{ 
-						change: function(field, newValue, oldValue){
-		                	 var grid = this.up().up();
-		                	  var selModel = grid.getSelectionModel();
-		                	 var rate=selModel.getSelection()[0].data.rate_USD;
-		                	  var rate1=selModel.getSelection()[0].data.rate_GBP;
-		                	   var actual=newValue*rate;
-		                	 var actual1=newValue*rate1;
-		                	 selModel.getSelection()[0].set('amt_USD', actual);
-		                	 selModel.getSelection()[0].set('amt_GBP', actual1);
-		                	}
-		                }
-					}
-				},
-				{
-					dataIndex: 'amt_USD',
-					text: 'Actual Billable Amount in $',
-					flex: 2,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					}
-				},
-				{
-					dataIndex: 'amt_GBP',
-					text: 'Actual Billable Amount in £',
-					flex: 2,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					}
-				},
-				*/
+			   
 				{
 					xtype:'actioncolumn',
 					align: 'center',
