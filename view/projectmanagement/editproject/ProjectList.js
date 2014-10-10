@@ -21,7 +21,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 	'MyDesktop.view.projectmanagement.editproject.author.AuthorHeaderForm','MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm','MyDesktop.view.projectmanagement.editproject.team.TeamHeaderForm',
 	'MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleGrid','MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleHeaderForm',
 	'MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid','MyDesktop.view.projectmanagement.editproject.notes.NotesHeaderForm','MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkHeaderForm',
-	'MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkgrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid_a'],
+	'MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkgrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid_a',
+	'MyDesktop.view.projectmanagement.editproject.schedule.emailVendor','MyDesktop.view.projectmanagement.editproject.schedule.emailAuthor'],
 
 	id : 'projectlist',
 	initComponent : function() {
@@ -371,7 +372,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							var pay_usd = Ext.getCmp('edit_total_pay_USD').getValue();
 							var bal=receive_usd-pay_usd;
 							var per=(bal/receive_usd)*100;
-							Ext.getCmp('edit_profit_percentage').setValue(per);
+							Ext.getCmp('edit_profit_percentage').setValue();
 					 var conn = new Ext.data.Connection();
 					 conn.request({
 					 url: 'service/budget.php',
@@ -408,8 +409,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							var receive_gdp = Ext.getCmp('edit_total_receive_GBP').getValue();
 							var pay_gdp = Ext.getCmp('edit_total_pay_GBP').getValue();
 							var bal=receive_gdp-pay_gdp;
-							var per=(bal/receive_gdp)*100;
-							Ext.getCmp('edit_profit_percentage').setValue(per);
+							var per=(bal/receive_usd)*100;
+							Ext.getCmp('edit_profit_percentage').setValue();
 							if(bal!=0){
 							Ext.getCmp('edit_profit_GBP').setValue(bal);
 							}
@@ -650,7 +651,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Edit Schedule',
 						width : 1125,
-						height : 550,
+						height : 600,
 						items : [
 						{
 							xtype:'editprojectScheduleHeaderForm',
@@ -760,6 +761,140 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				//	margin:'0 0 0 100',
 				handler: function() {
 					win.close();
+					}
+					},
+					{
+				xtype:'button',
+				text:'Email to Vendor',
+				iconCls : 'emailClass',
+				pressed:true,
+				x:250,
+				y:500,
+				handler: function() {
+						var email_vendor = Ext.create('Ext.Window', {
+						extend : 'Ext.form.Panel',
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Message',
+						width : 800,
+						height : 400,
+						items : [
+						{
+							xtype : 'emailVendor',
+						}
+						],
+						buttons:[{
+							text:'Send Email',
+							handler: function() {
+								
+							/*	var from=Ext.getCmp('typesetting_pdf_from').getValue();
+								var pdf_to=Ext.getCmp('typesetting_pdf_to').getValue().toString();
+								var pdf_cc=Ext.getCmp('typesetting_pdf_cc').getValue().toString();
+								var message=Ext.getCmp('typesetting_pdf_message').getValue();
+								
+								var conn = new Ext.data.Connection();
+								conn.request({
+									url : 'service/Reports.php',
+									method : 'POST',
+									params : {
+										action : 6,
+										//html : html,
+										from:from,
+										to:pdf_to,
+										cc:pdf_cc,
+										message:message,
+										job_code:job_code
+									},
+									success : function(response) {
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Message', obj.message);
+										messagewin1.close(); 
+									},
+								});
+									*/
+														
+							}
+						}]
+					});
+					email_vendor.show();
+					var job_code=Ext.getCmp('edit_scheduleHeader_Job').getValue();
+					var currentForm = Ext.getCmp('emailVendor');
+					currentForm.getForm().load({
+					url : 'service/emailTemplate.php',
+					params : {
+					action : 1,
+					job_code:job_code
+					}
+					});
+					}
+					},
+						{
+				xtype:'button',
+				text:'Email to Author',
+				iconCls : 'emailClass',
+				pressed:true,
+				x:400,
+				y:500,
+				handler: function() {
+						var email_author = Ext.create('Ext.Window', {
+						extend : 'Ext.form.Panel',
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Message',
+						width : 800,
+						height : 400,
+						items : [
+						{
+							xtype : 'emailAuthor',
+						}
+						],
+						buttons:[{
+							text:'Send Email',
+							handler: function() {
+								
+							/*	var from=Ext.getCmp('typesetting_pdf_from').getValue();
+								var pdf_to=Ext.getCmp('typesetting_pdf_to').getValue().toString();
+								var pdf_cc=Ext.getCmp('typesetting_pdf_cc').getValue().toString();
+								var message=Ext.getCmp('typesetting_pdf_message').getValue();
+								
+								var conn = new Ext.data.Connection();
+								conn.request({
+									url : 'service/Reports.php',
+									method : 'POST',
+									params : {
+										action : 6,
+										//html : html,
+										from:from,
+										to:pdf_to,
+										cc:pdf_cc,
+										message:message,
+										job_code:job_code
+									},
+									success : function(response) {
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Message', obj.message);
+										messagewin1.close(); 
+									},
+								});
+									*/
+														
+							}
+						}]
+					});
+					email_author.show();
+					var job_code=Ext.getCmp('edit_scheduleHeader_Job').getValue();
+					var currentForm = Ext.getCmp('emailAuthor');
+					currentForm.getForm().load({
+					url : 'service/emailTemplate.php',
+					params : {
+					action : 2,
+					job_code:job_code
+					}
+					});
 					}
 					}]
 					});

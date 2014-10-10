@@ -261,9 +261,9 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					Production_win1.show();
 					var currentForm = Ext.getCmp('production_html_form');
 					currentForm.getForm().load({
-   								 url: 'service/Users.php',
+   								 url: 'service/teamEmail.php',
 							     params: {
-        						 	action:13,project_id:project_id
+        						 	action:1,project_id:project_id
 							    },
 							    failure: function(form, action){
 						       
@@ -325,6 +325,16 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					});
 				
 				Production_win2.show();
+				var currentForm = Ext.getCmp('production_pdf_form');
+					currentForm.getForm().load({
+   								 url: 'service/teamEmail.php',
+							     params: {
+        						 	action:2,project_id:project_id
+							    },
+							    failure: function(form, action){
+						       
+    							}
+						});
 				Ext.getCmp('production_pdf_form').setValue(mail);
 							   }
 
@@ -514,6 +524,16 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					});
 				
 											typesetting_win1.show();
+											var currentForm = Ext.getCmp('typesetting_html_form');
+											currentForm.getForm().load({
+						   								 url: 'service/teamEmail.php',
+													     params: {
+						        						 	action:3,project_id:project_id
+													    },
+													    failure: function(form, action){
+												       
+						    							}
+												});
 											Ext.getCmp('typesetting_html_form').setValue(mail);
 											
 											
@@ -571,6 +591,16 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						}]
 					});
 											typesetting_win2.show();
+											var currentForm = Ext.getCmp('typesetting_pdf_form');
+											currentForm.getForm().load({
+						   								 url: 'service/teamEmail.php',
+													     params: {
+						        						 	action:4,project_id:project_id
+													    },
+													    failure: function(form, action){
+												       
+						    							}
+												});
 											Ext.getCmp('typesetting_pdf_form').setValue(mail);
 										}
 
