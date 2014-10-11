@@ -52,6 +52,9 @@ include("../inc/php/encryptDecrypt.php");
 		    break; 
 	   case 16:
 		    getTotal($_POST['project_id']);
+		    break;
+	  case 17:
+		    getExtent($_POST['project_id']);
 		    break; 
 		default: 
 			break;
@@ -508,14 +511,20 @@ function deleteBudgetactivity($budgetid)
 		}
 		$result = mysql_query("
 		 Select distinct
-activity.id as activity_name
+activity.id as activity_name,
+stages.ratecard_USD as rate_USD,
+stages.ratecard_GBP as rate_GBP,
+project_title.confirmed_extent as no_of_unit,
+project_title.castoff_extent as cast
  From
  stages Inner Join
  activity On stages.activity =
-   activity.id
+   activity.id,
+   project_title
 Where
  stages.workflow_id = '".$workflowid."' And
- stages.flag = 0
+ stages.flag = 0 And
+ project_title.id = '".$projectid."'
 ")or die(mysql_error());
 		while($row=mysql_fetch_object($result))
 		{
@@ -719,8 +728,6 @@ function getCurrencyRate()
 	function getTotal($project_id)
  	{
 		$result1 = mysql_query ("Select
- oohpublishing.budget_total_detail.ponumber2 as budgetHeader_ponumber2,
- oohpublishing.budget_total_detail.ponumber1 as budgetHeader_ponumber1,
  oohpublishing.budget_total_detail.total_receive_usd as edit_total_receive_USD,
  oohpublishing.budget_total_detail.total_receive_gdp as edit_total_receive_GBP,
  oohpublishing.budget_total_detail.total_pay_gdp as edit_total_pay_USD,
@@ -746,5 +753,39 @@ From
 			$result ["data"] = $row;
 	  	}
       	echo(json_encode($result));
+    }
+function getExtent($project_id)
+	{
+		$now   = new DateTime();
+        $month = (int)$now->format("m");
+		
+		$result1 = mysql_query("Select
+  		confirmed_extent As confirmed_extent,
+  		castoff_extent As castoff_extent
+		From
+  		project_title 
+		Where
+  		id = '".$project_id."'")or die(mysql_error());
+		
+		if(!$result1)
+		{
+			$result["failure"] = true;
+			$result["message"] =  'Invalid query:'. mysql_error();
+		}
+		else
+		{
+			$result["success"] = true;
+			$result["message"] =  'rate:'. mysql_error();
+		}
+  
+		while($row=mysql_fetch_object($result1))
+	   	{
+	   		
+			$result ["data"] = $row;
+	  	}
+		
+      	echo(json_encode($result));
+      //echo '({"results":'.json_encode($data).'})';
+	  
     }
 	?>

@@ -62,41 +62,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 		vendor.loadPage(1);
 		
 		this.store = budget,
-		this.tbar = Ext.create('Ext.Toolbar', {  
-							   items:[{
-                               xtype : 'button',
-                              //id : 'addnewrowcust',
-                               text : 'Insert New Row',
-                               pressed:true,
-                               x : 500,
-                               y : 10,
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-               						var r = Ext.create('MyDesktop.model.budget', {
-               						budgetExpense_id:'',
-                    				activityid: '',
-                    				activity: '',
-                 					stageid: '',
-                    				stage: '',
-                    				vendor:'',
-                    				unit: '',
-                    				num_units_budgeted: '',
-                 					rate_USD: '',
-                    				rate_GBP: '',
-                    				budgeted_amount_USD:'',
-                    				budgeted_amount_GBP: '',
-                    				actual_unit: '',
-                 					actual_amount_USD: '',
-                    				actual_amount_GBP: '',
-                    				
-                				});
-                		       budget.insert(0, r);
-            				 }                           
-        },
-        
-        ]
-        });
+		
 		this.columns = [
 				{
 			dataIndex: 'budgetExpense_id',
@@ -122,8 +88,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					}
 					return value;
 					}
-						
-					
 				},
 				{
 				 	dataIndex: 'vendor',
@@ -153,8 +117,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					 
 					 var rate=obj1.data.rate_USD;
 					 var rate1=obj1.data.rate_GBP; 
-                        //NOTE: 'control' here is the value set in the dataIndex property of the Control combobox  
-                         //selModel.getSelection()[0].set('unit', unit);
                          selModel.getSelection()[0].set('rate_USD', rate);
                          selModel.getSelection()[0].set('rate_GBP', rate1);
 					 }
@@ -225,48 +187,53 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 							
 							actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
 							actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
-							
-							
 							});
 							
 							Ext.getCmp('edit_total_pay_USD').setValue(actual_amt_USD);
 							Ext.getCmp('edit_total_pay_GBP').setValue(actual_amt_GBP);
 							
-					
-                               }
-                              } 
+							var receive_usd = Ext.getCmp('edit_total_receive_USD').getValue();
+							var pay_usd = Ext.getCmp('edit_total_pay_USD').getValue();
+							if(receive_usd!=0&&pay_usd!=0)
+							{
+							var bal=receive_usd-pay_usd;
+							var per=(bal/receive_usd)*100;
+							Ext.getCmp('edit_profit_percentage').setValue(per);
+					 var conn = new Ext.data.Connection();
+					 conn.request({
+					 url: 'service/budget.php',
+					 method: 'POST',
+					 params : {action:15},
+					 success:function(response){
+					 obj1 = Ext.JSON.decode(response.responseText);
+					 if(obj1.data!=null)
+					 {
+					 var obj=obj1.data.rate;
+					 var val = obj*bal;
+					 Ext.getCmp('edit_profit_GBP').setValue(val);
+					 }
+					 else
+					 {
+					 	Ext.getCmp('edit_profit_GBP').setValue();
+					 }
+					 }
+					 });
+					 }
+					 else{
+					 	var receive_gdp = Ext.getCmp('edit_total_receive_GBP').getValue();
+							var pay_gdp = Ext.getCmp('edit_total_pay_GBP').getValue();
+							var bal=receive_gdp-pay_gdp;
+							var per=(bal/receive_gdp)*100;
+							Ext.getCmp('edit_profit_percentage').setValue(per);
+							if(bal!=0){
+							Ext.getCmp('edit_profit_GBP').setValue(bal);
+							}
+					 }
+					     }
+                             } 
                              }
 					
 				},
-				/*{	
-			
-					dataIndex: 'num_units_budgeted',
-					text: 'No.of Units <br/>Budgeted',
-					flex: 2,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					listeners:{ 
-						change: function(field, newValue, oldValue){
-		                	 var grid = this.up().up();
-		                     // get selection model of the grid  
-		                     var selModel = grid.getSelectionModel();
-		                	 var rate=selModel.getSelection()[0].data.rate_USD;
-		                	  var rate1=selModel.getSelection()[0].data.rate_GBP;
-		                	//calculate budgeted amount
-		                	 var budget=newValue*rate;
-		                	 var budget1=newValue*rate1;
-		                	 selModel.getSelection()[0].set('budgeted_amount_USD', budget);
-		                	 selModel.getSelection()[0].set('budgeted_amount_GBP', budget1);
-					
-                                                                   }
-                              } 
-                              }
-           
-					
-				},	*/
-			
-				
 				{
 					text:'Budgeted Amount',
 		columns: [
@@ -284,37 +251,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 			    }
 			    ]
 			    },
-		       
-		       
-	     	 /*  {
-	     			dataIndex:'actual_unit',
-		        	text: 'No. of Units<br/> Actual',
-		        	editor: { xtype:'textfield',
-		        	listeners:{ 
-						change: function(field, newValue, oldValue){
-							
-							var grid = this.up().up();
-                       		// get selection model of the grid  
-                     		var selModel = grid.getSelectionModel();
-		                	//var num_units=selModel.getSelection()[0].data.actual_unit;
-		                	var rate=selModel.getSelection()[0].data.rate_USD;
-		                	var rate1=selModel.getSelection()[0].data.rate_GBP;
-		                	//calculate actual amount
-		                	var budget=newValue*rate;
-		                	var budget1=newValue*rate1;
-		                	//set actual amount value
-		                	selModel.getSelection()[0].set('actual_amount_USD', budget);
-		                	selModel.getSelection()[0].set('actual_amount_GBP', budget1);
-								}
-						},
-		        	
-					},
-					flex: 2,
-					align:'center',
-		        	
-		        },*/
-		    
-		        {
+              {
 		        	text:'Actual Amount',
 		        	
 		columns: [
@@ -378,17 +315,73 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 				},
 				]
 		}
-		       
-		       
-
-		       
-		        
-			
-				
+		  
 		];
 		 
 			this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
+			items:[{
+                               xtype : 'button',
+                               text : 'Insert New Row',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                               	var project_id=22;
+                               	   	 var conn = new Ext.data.Connection();
+					 conn.request({
+					 url: 'service/budget.php',
+					 method: 'POST',
+					 params : {action:17,project_id:project_id},
+					 success:function(response){
+					 obj1 = Ext.JSON.decode(response.responseText);
+					 var confirm=obj1.data.confirmed_extent;
+					 var cast=obj1.data.castoff_extent;
+					 if(confirm.data!=null)
+					 {
+					var r = Ext.create('MyDesktop.model.budget', {
+               						budgetExpense_id:'',
+                    				activityid: '',
+                    				activity: '',
+                 					vendor:'',
+                    				no_of_unit: confirm,
+                    				rate_USD: '',
+                    				rate_GBP: '',
+                    				budgeted_amount_USD:'',
+                    				budgeted_amount_GBP: '',
+                    				actual_amount_USD: '',
+                    				actual_amount_GBP: '',
+                    				
+                				});
+                		       budget.insert(budget.getCount(), r);
+					 }
+					 else
+					 {
+					 		var r = Ext.create('MyDesktop.model.budget', {
+               						budgetExpense_id:'',
+                    				activityid: '',
+                    				activity: '',
+                 					vendor:'',
+                    				no_of_unit: cast,
+                    				rate_USD: '',
+                    				rate_GBP: '',
+                    				budgeted_amount_USD:'',
+                    				budgeted_amount_GBP: '',
+                    				actual_amount_USD: '',
+                    				actual_amount_GBP: '',
+                    				
+                				});
+                		       budget.insert(budget.getCount(), r);
+					 }
+					 }
+					 });
+               						
+            				 }                           
+        },
+        
+        ]
 			
 		});
 		

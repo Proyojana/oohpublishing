@@ -162,64 +162,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 			    }
 			    ]
 			    },
-		       
-				/* {
-					dataIndex: 'rate_USD',
-					text: 'Rate/Unit in $',
-					flex: 1,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					}
-				},
-				 {
-					dataIndex: 'rate_GBP',
-					text: 'Rate/Unit in £',
-					flex: 1,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					}
-				},
-				{
-					dataIndex: 'actual_unit',
-					text: 'Actuall Billable Units',
-					flex: 1,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-						listeners:{ 
-						change: function(field, newValue, oldValue){
-		                	 var grid = this.up().up();
-		                	 var selModel = grid.getSelectionModel();
-		                	 var rate=selModel.getSelection()[0].data.rate_USD;
-		                	 var rate1=selModel.getSelection()[0].data.rate_GBP;
-		                	 var actual=newValue*rate;
-		                	 var actual1=newValue*rate1;
-		                	 selModel.getSelection()[0].set('amt_USD', actual);
-		                	 selModel.getSelection()[0].set('amt_GBP', actual1);
-		                	}
-		                }
-					}
-				},
-				{
-					dataIndex: 'amt_USD',
-					text: 'Actual Billable Amount in $',
-					flex: 1.5,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					}
-				},
-				{
-					dataIndex: 'amt_GBP',
-					text: 'Actual Billable Amount in £',
-					flex: 1.5,
-					align:'center',
-					editor: { 
-						xtype:'textfield',
-					}
-				},*/
+	
 				
 		{
 			xtype:'actioncolumn',
@@ -248,7 +191,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 			items:[
 			{
                                xtype : 'button',
-                              // id : 'addnewrowcust',
                                text : 'Insert New Row',
                                pressed:true,
                                x : 500,
@@ -256,17 +198,45 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                                width : 100,
                                height : 25,
                                handler : function() {
-               						var r = Ext.create('MyDesktop.model.Receive_a', {
+                               		var project_id=22;
+                               	   	 var conn = new Ext.data.Connection();
+					 conn.request({
+					 url: 'service/budget.php',
+					 method: 'POST',
+					 params : {action:17,project_id:project_id},
+					 success:function(response){
+					 obj1 = Ext.JSON.decode(response.responseText);
+					 var confirm=obj1.data.confirmed_extent;
+					 var cast=obj1.data.castoff_extent;
+					 if(confirm.data!=null)
+					 {
+					var r = Ext.create('MyDesktop.model.Receive_a', {
                						budgetReceive_id:'',
                						activity_name:'',
-               						uom:'',
+               						no_of_unit:confirm,
                						rate_USD: '',
                						rate_GBP: '',
-               						actual_unit:'',
                						amt_USD:'',
                						amt_GBP:''
                 				});
                 		       budget.insert(budget.getCount(), r);
+					 }
+					 else
+					 {
+					 		var r = Ext.create('MyDesktop.model.Receive_a', {
+               						budgetReceive_id:'',
+               						activity_name:'',
+               						no_of_unit:cast,
+               						rate_USD: '',
+               						rate_GBP: '',
+               						amt_USD:'',
+               						amt_GBP:''
+                				});
+                		       budget.insert(budget.getCount(), r);
+					 }
+					 }
+					 });
+               			 
             				 }                           
         },
         

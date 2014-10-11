@@ -1,13 +1,7 @@
 var sm = Ext.create('Ext.selection.CheckboxModel', {
 	checkOnly : true
 });
-var type = Ext.create('Ext.data.Store', {
-        fields: ['id', 'name'],
-        data : [
-         {"id":"1", "name":"by Project"},
-            {"id":"2", "name":"by Activity"}
-        ]
-    });
+
 Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.projectlist',
@@ -22,7 +16,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 	'MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleGrid','MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleHeaderForm',
 	'MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid','MyDesktop.view.projectmanagement.editproject.notes.NotesHeaderForm','MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkHeaderForm',
 	'MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkgrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid_a',
-	'MyDesktop.view.projectmanagement.editproject.schedule.emailVendor','MyDesktop.view.projectmanagement.editproject.schedule.emailAuthor'],
+	'MyDesktop.view.projectmanagement.editproject.schedule.emailVendor','MyDesktop.view.projectmanagement.editproject.schedule.emailAuthor','MyDesktop.view.projectmanagement.editproject.budget.newprojectBudgetForm'],
 
 	id : 'projectlist',
 	initComponent : function() {
@@ -283,8 +277,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Edit Budget',
 						width : 1145,
-						id:'editbudgetform',
-						alias : 'widget.editbudgetform',
+						
 						height : 600,
 						items : [
 						{
@@ -293,156 +286,20 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							y:0,
 							margin:'5 5 5 5'
 						},
-							{
-							xtype:'combo',
-							x:10,
+						{
+							xtype:'editBudgetForm',
+							x:0,
 							y:120,
-							fieldLabel:'Receivable type',
-							store: type,
-							id:'receive2',
-					        queryMode: 'local',
-					        displayField: 'name',
-					        valueField: 'id',
-					        	listeners: {
-					        		afterrender: function(combo){
-					        	var recordSelected = combo.getStore().getAt(0);                     
-                                combo.setValue(recordSelected.get('id'));
-                             },
-                            change: function(combo) {
-                                var val = Ext.getCmp('receive2').getValue();
-                                if(val==1){
-                                	Ext.getCmp('editaccountReceiveGrid_a').hide();
-                                	Ext.getCmp('editaccountReceiveGrid').show();
-                                }
-                                else{
-                                		Ext.getCmp('editaccountReceiveGrid').hide();
-                                		Ext.getCmp('editaccountReceiveGrid_a').show();
-                                }
-                               } 
-                        }
-							
-					},
-					{
-							xtype:'editaccountReceiveGrid',
-							x:5,
-							y:150,
-							height:200,
+							margin:'5 5 5 5'
 						},
+					
 						{
-							xtype:'editaccountReceiveGrid_a',
-							x:5,
-							y:150,
-							height:200,
-						},
-								{
-								xtype:'textfield',
-								  id:'edit_total_receive_USD',
-								  fieldLabel: 'Total Receivable amount in $',
-								  x:5,
-								  y:360,
-								 // width:400,
-								  labelWidth: 180,
-								},
-								{
-								xtype:'textfield',
-								  id:'edit_total_receive_GBP',
-								  fieldLabel: 'Total Receivable amount in £',
-								  x:500,
-								  y:360,
-								  //width:400,
-								  labelWidth: 180,
-								},
-								{
-							xtype : 'editaccountPayableGrid',
-							x:5,
-							y:400,
-							height:200,
-							},
-									{
-								xtype:'textfield',
-								  id:'edit_total_pay_USD',
-								  fieldLabel: 'Total Payable amount in $',
-								  x:5,
-								  y:610,
-								 // width:400,
-								  labelWidth: 180,
-								    listeners:{ 
-						"blur": function(field, newValue, oldValue){
-							var receive_usd = Ext.getCmp('edit_total_receive_USD').getValue();
-							var pay_usd = Ext.getCmp('edit_total_pay_USD').getValue();
-							var bal=receive_usd-pay_usd;
-							var per=(bal/receive_usd)*100;
-							Ext.getCmp('edit_profit_percentage').setValue();
-					 var conn = new Ext.data.Connection();
-					 conn.request({
-					 url: 'service/budget.php',
-					 method: 'POST',
-					 params : {action:15},
-					 success:function(response){
-					 obj1 = Ext.JSON.decode(response.responseText);
-					 if(obj1.data!=null)
-					 {
-					 var obj=obj1.data.rate;
-					 var val = obj*bal;
-					 Ext.getCmp('edit_profit_GBP').setValue(val);
-					 }
-					 else
-					 {
-					 	Ext.getCmp('edit_profit_GBP').setValue();
-					 }
-					 }
-					 });
-							
-						}
-						}
-								},
-								{
-								xtype:'textfield',
-								  id:'edit_total_pay_GBP',
-								  fieldLabel: 'Total Payable amount in £',
-								  x:500,
-								  y:610,
-								  //width:400,
-								  labelWidth: 180,
-								  listeners:{ 
-						"blur": function(field, newValue, oldValue){
-							var receive_gdp = Ext.getCmp('edit_total_receive_GBP').getValue();
-							var pay_gdp = Ext.getCmp('edit_total_pay_GBP').getValue();
-							var bal=receive_gdp-pay_gdp;
-							var per=(bal/receive_usd)*100;
-							Ext.getCmp('edit_profit_percentage').setValue();
-							if(bal!=0){
-							Ext.getCmp('edit_profit_GBP').setValue(bal);
-							}
-							
-							
-						}
-						}
-								},
-								{
-						xtype:'textfield',
-						  id:'edit_profit_GBP',
-						  fieldLabel: 'Project profit £',
-						  x:5,
-						  y:640,
-						  labelWidth: 180,
-						
-						},
-						{
-						xtype:'textfield',
-						  id:'edit_profit_percentage',
-						  fieldLabel: 'Project profit %',
-						  x:500,
-						  y:640,
-						 labelWidth: 180,
-						},
-							{
 				xtype:'button',
 				text:'Update',
 				pressed:true,
 				width:100,
 			     x:400,
-				 y:690,
+				 y:730,
 				handler:function(){
 				 var val = Ext.getCmp('receive2').getValue();
 	        	
@@ -551,7 +408,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					myStore.each(function(rec) {
 					activity=activity+rec.get('activityid')+',';
 				    vendor=vendor+rec.get('vendor')+',';
-				    no_of_unit=unit+rec.get('no_of_unit')+',';
+				    no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
 				    rate_USD=rate_USD+rec.get('rate_USD')+',';
 				    rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
 				    budgeted_amount_USD=budgeted_amount_USD+rec.get('budgeted_amount_USD')+',';
@@ -572,7 +429,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 								
-                	 /****load data in header form*****/
+                	 /****load data in header form of schedule tab*****/
                 		currentHeaderForm.getForm().load({
    								 url: 'service/schedule.php',
 							     params: {
@@ -584,18 +441,14 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							   
 							   
 						});
-								Ext.getCmp('newprojectscheduleformTab').setDisabled(false);
-								
+							Ext.getCmp('newprojectscheduleformTab').setDisabled(false);
+
 							//refresh grid
 							var grid3=Ext.getCmp('editaccountPayableGrid');
 							grid3.getStore().load({params:{action:1,job_code:job_code}});
 							
-
-					
 						}
 					});
-					 
-
 					
 				}
 			},]
@@ -607,6 +460,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					var job_code = rec.get('pro_code');
 					var workflow=rec.get('workflow');
 					
+					 /****load data in header form of budget tab*****/					
 					var currentForm = Ext.getCmp('BudgetHeaderForm');
 					currentForm.getForm().load({
 						url : 'service/budget.php',
@@ -618,14 +472,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							Ext.Msg.alert("Load failed", action.result.errorMessage);
 						}
 					});
-				
-					var grid1 = Ext.getCmp('editaccountPayableGrid');
-					grid1.getStore().load({	params : {action : 1,job_code : job_code,}});
-					var grid4=Ext.getCmp('editaccountReceiveGrid_a');
-					grid4.getStore().load({params:{action:13,job_code:job_code}});
-					var grid4=Ext.getCmp('editaccountReceiveGrid');
-					grid4.getStore().load({params:{action:12,job_code:job_code}});
-				var currentForm = Ext.getCmp('editbudgetform');
+				   	/****load data in budget form*****/	
+				  var currentForm = Ext.getCmp('editBudgetForm');
 					currentForm.getForm().load({
 						url : 'service/budget.php',
 						params : {
@@ -636,6 +484,14 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							Ext.Msg.alert("Load failed", action.result.errorMessage);
 						}
 					});
+					var grid1 = Ext.getCmp('editaccountPayableGrid');
+					grid1.getStore().load({	params : {action : 1,job_code : job_code,}});
+					var grid4=Ext.getCmp('editaccountReceiveGrid_a');
+					grid4.getStore().load({params:{action:13,job_code:job_code}});
+					var grid4=Ext.getCmp('editaccountReceiveGrid');
+					grid4.getStore().load({params:{action:12,job_code:job_code}});
+					
+				
 					
 				}
 			}, 
