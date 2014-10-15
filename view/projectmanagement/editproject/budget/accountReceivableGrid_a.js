@@ -60,7 +60,69 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 						queryMode: 'local',
 						displayField: 'product_name',
 						valueField: 'product_id',
+						listeners:{ 
+						change: function(field, newValue, oldValue){
+								var grid = this.up().up();
+                        // get selection model of the grid  
+                    var selModel = grid.getSelectionModel();
+                	
+                	var job_code=Ext.getCmp('edit_Job_code').getValue();
+                	
+					 var conn = new Ext.data.Connection();
+					 conn.request({
+					 url: 'service/budget.php',
+					 method: 'POST',
+					 params : {action:18,job_code:job_code,activity:newValue},
+					 success:function(response){
+					 obj1 = Ext.JSON.decode(response.responseText);
+					
+					 var rate=obj1.data.rate_USD;
+					  var rate1=obj1.data.rate_GBP;
+					
+					  selModel.getSelection()[0].set('rate_USD', rate);
+                      selModel.getSelection()[0].set('rate_GBP', rate1);
+                      
+                             var rate=selModel.getSelection()[0].data.rate_USD;
+		                	  var rate1=selModel.getSelection()[0].data.rate_GBP;
+		                	 var unit=selModel.getSelection()[0].data.no_of_unit;
+		                	//calculate budgeted amount
+		                	 var budget=unit*rate;
+		                	 var budget1=unit*rate1;
+		                	 selModel.getSelection()[0].set('budgeted_amount_USD', budget);
+		                	 selModel.getSelection()[0].set('budgeted_amount_GBP', budget1);
+		                	 selModel.getSelection()[0].set('actual_amount_USD', budget);
+		                	 selModel.getSelection()[0].set('actual_amount_GBP', budget1);
+		                	 
+		                	 		       var actual_amt_USD=0;
+							var actual_amt_GBP=0;
+							
+							
+							var actual_amount_USD='';
+							var actual_amount_GBP='';
+							
+							
+							var myStore = Ext.getCmp('editaccountReceiveGrid_a').getStore();
+							myStore.each(function(rec) {
+							actual_amt_USD=actual_amt_USD+parseInt(rec.get('actual_amount_USD'));
+							actual_amt_GBP=actual_amt_GBP+parseInt(rec.get('actual_amount_GBP'));	
+							
+							actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
+							actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
+							
+							
+							});
+							
+							Ext.getCmp('edit_total_receive_USD').setValue(actual_amt_USD);
+							Ext.getCmp('edit_total_receive_GBP').setValue(actual_amt_GBP);
+							
+						
+						
+					 }
+					 });
+						}
+						}
 						},
+						
 				    renderer: function(value) {
 					var index = activity.find('product_id', value);
 					if (index != -1) {
@@ -78,18 +140,14 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 					text: '$',
 		        	align:'center',
 		        	textStyle:'font-size:13px;',
-		        	editor: { 
-						xtype:'textfield',
-					}
+		        	
 									
 				},
 				{
 					dataIndex: 'rate_GBP',
 					text: '£',
 		        	align:'center',
-		        	editor: { 
-						xtype:'textfield',
-					}
+		        	
 				}
 				]
 				},
@@ -198,7 +256,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                                width : 100,
                                height : 25,
                                handler : function() {
-                               		var project_id=22;
+                              var project_id=Ext.getCmp('editbudgetHeader_projectID').getValue();
                                	   	 var conn = new Ext.data.Connection();
 					 conn.request({
 					 url: 'service/budget.php',

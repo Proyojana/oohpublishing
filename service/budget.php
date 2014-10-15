@@ -55,7 +55,10 @@ include("../inc/php/encryptDecrypt.php");
 		    break;
 	  case 17:
 		    getExtent($_POST['project_id']);
-		    break; 
+		    break;
+	  case 18:
+			getActivity_edit($_POST['job_code'],$_POST['activity']);
+			break;
 		default: 
 			break;
 	}
@@ -475,12 +478,15 @@ function deleteBudgetactivity($budgetid)
 	  project_title.job_code as edit_Job_code,
 	  project_title.id as editbudgetHeader_projectID,
 	  project_title.castoff_extent as editbudgetHeader_castoffextent,
-	  project_title.confirmed_extent as editbudgetHeader_confirmedextent
+	  project_title.confirmed_extent as editbudgetHeader_confirmedextent,
+	  budget_total_detail.ponumber1 as edit_budgetHeader_ponumber1,
+	  budget_total_detail.ponumber2 as edit_budgetHeader_ponumber2
 	  
 	From
 	  project_title Inner Join
 	  customers On project_title.client =
-	  customers.id
+	  customers.id Inner Join budget_total_detail On
+	  budget_total_detail.project_id = project_title.id
 	Where
 	  project_title.job_code = '".$job_code."'");
 			
@@ -515,7 +521,11 @@ activity.id as activity_name,
 stages.ratecard_USD as rate_USD,
 stages.ratecard_GBP as rate_GBP,
 project_title.confirmed_extent as no_of_unit,
-project_title.castoff_extent as cast
+project_title.castoff_extent as cast,
+(ratecard_USD*confirmed_extent) as budgeted_amount_USD,
+(ratecard_GBP*confirmed_extent) as budgeted_amount_GBP,
+(ratecard_USD*confirmed_extent) as actual_amount_USD,
+(ratecard_GBP*confirmed_extent) as actual_amount_GBP
  From
  stages Inner Join
  activity On stages.activity =
@@ -786,6 +796,45 @@ function getExtent($project_id)
 		
       	echo(json_encode($result));
       //echo '({"results":'.json_encode($data).'})';
+	  
+    }
+
+function getActivity_edit($job_code,$activity)
+	{
+		$workflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($workflow)) {
+				
+			$workflowid = $row['workflow'];
+			$projectid = $row['id'];
+			
+		}
+			$result1 = mysql_query("Select
+ oohpublishing.stages.ratecard_USD as rate_USD,
+ oohpublishing.stages.ratecard_GBP as rate_GBP
+From
+ oohpublishing.stages
+Where
+ oohpublishing.stages.workflow_id = 20 And
+ oohpublishing.stages.activity = 8")or die(mysql_error());
+			
+			if(!$result1)
+			{
+			$result["failure"] = true;
+			$result["message"] =  'Invalid query:'. mysql_error();
+		}
+		else
+		{
+			$result["success"] = true;
+			$result["message"] =  'reportto:'. mysql_error();
+		}
+  
+		while($row=mysql_fetch_object($result1))
+	   	{
+	   		
+			$result ["data"] = $row;
+	  	}
+		
+      	echo(json_encode($result));
 	  
     }
 	?>

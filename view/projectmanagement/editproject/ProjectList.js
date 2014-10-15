@@ -289,7 +289,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						{
 							xtype:'editBudgetForm',
 							x:0,
-							y:120,
+							y:160,
 							margin:'5 5 5 5'
 						},
 					
@@ -299,7 +299,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				pressed:true,
 				width:100,
 			     x:400,
-				 y:730,
+				 y:760,
 				handler:function(){
 				 var val = Ext.getCmp('receive2').getValue();
 	        	
@@ -429,19 +429,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 								
-                	 /****load data in header form of schedule tab*****/
-                		currentHeaderForm.getForm().load({
-   								 url: 'service/schedule.php',
-							     params: {
-        						 	action:1,job_code:job_code
-							    },
-							      failure: function(form, action){
-						        Ext.Msg.alert("Load failed", action.result.errorMessage);
-    							}
-							   
-							   
-						});
-							Ext.getCmp('newprojectscheduleformTab').setDisabled(false);
+               
+							
 
 							//refresh grid
 							var grid3=Ext.getCmp('editaccountPayableGrid');

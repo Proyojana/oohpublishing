@@ -16,6 +16,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
                   clicksToEdit: 1
              })        
     ],
+     
 	initComponent: function() {
 		//load receive store
 		var receive = Ext.create('MyDesktop.store.Receivable');
@@ -59,6 +60,31 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
 						queryMode: 'local',
 						displayField: 'product_name',
 						valueField: 'product_id',
+						listeners:{ 
+						change: function(field, newValue, oldValue){
+								var grid = this.up().up();
+                        // get selection model of the grid  
+                    var selModel = grid.getSelectionModel();
+                	var activity=selModel.getSelection()[0].data.activity_name;
+                	var job_code=Ext.getCmp('budgetHeader_Job').getValue();
+                	alert(job_code);
+					 var conn = new Ext.data.Connection();
+					 conn.request({
+					 url: 'service/budget.php',
+					 method: 'POST',
+					 params : {action:18,job_code:job_code,activity:activity},
+					 success:function(response){
+					 obj1 = Ext.JSON.decode(response.responseText);
+					
+					 var rate=obj1.data.rate_USD;
+					  var rate1=obj1.data.rate_GBP;
+					
+					 Ext.getCmp('rate_USD').setValue(rate);
+					 Ext.getCmp('rate_GBP').setValue(rate1);
+					 }
+					 });
+						}
+						}
 						},
 				    renderer: function(value) {
 					var index = activity.find('product_id', value);

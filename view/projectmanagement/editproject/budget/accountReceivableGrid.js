@@ -26,7 +26,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 			}
 		});
 	
-		
 		this.store = receive,
 	
 
@@ -162,7 +161,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                                width : 100,
                                height : 25,
                                handler : function() {
-                               	 		var project_id=22;
+                            var project_id=Ext.getCmp('editbudgetHeader_projectID').getValue();
                                	   	 var conn = new Ext.data.Connection();
 					 conn.request({
 					 url: 'service/budget.php',
@@ -198,7 +197,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 					 }
 					 }
 					 });
-               						
+               				
             				 }                           
         },
 			]

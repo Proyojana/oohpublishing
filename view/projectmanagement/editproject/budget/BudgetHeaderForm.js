@@ -10,7 +10,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	frame:true,
 	
 	width:1100,
-	height:100,
+	height:140,
 	title:'Header Data',
 	defaults: {
 		labelWidth: 90,
@@ -66,7 +66,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		x:760,
 		readOnly: true,
 		y:0,
-		width:220,
+		width:300,
 		
 	},
 		
@@ -100,6 +100,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		id:'edit_budgetHeader_ponumber2',
 		x:760,
 		y:30,
+	},
+	{
+		fieldLabel: 'Invoice Date',
+		xtype:'datefield',
+		x:10,
+		y:70,
+		
 	},
 	]
 	this.callParent();

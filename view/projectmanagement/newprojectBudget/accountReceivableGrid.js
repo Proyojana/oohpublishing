@@ -16,6 +16,7 @@ Ext.define('MyDesktop.view.projectmanagement.newprojectBudget.accountReceivableG
                   clicksToEdit: 1
              })        
     ],
+     
 	initComponent: function() {
 		//load receive store
 		var receive = Ext.create('MyDesktop.store.Receivable');

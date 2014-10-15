@@ -71,8 +71,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
      	 afterrender: function(){
      	 //	alert("listen");
      	 	autoReload();
-     	    Ext.getCmp('newprojectauthorformTab').setDisabled(true);
-			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
+     	   // Ext.getCmp('newprojectauthorformTab').setDisabled(true);
+			//Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
 			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
 			Ext.getCmp('newprojectteamformTab').setDisabled(true);
 			Ext.getCmp('newprojectnotesformTab').setDisabled(true);
