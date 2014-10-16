@@ -153,6 +153,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 						}
 					});
 					Ext.getCmp('newprojectteamformTab').setDisabled(false);
+					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectteamformTab');
 				}
 			},
 		

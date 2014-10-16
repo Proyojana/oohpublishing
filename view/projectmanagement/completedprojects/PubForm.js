@@ -36,7 +36,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PubForm' ,{
 		id:'tabCP',
 		plain:true,
 		x:5,
-		y:265,
+		y:300,
 		activeTab: 0,
 		height:235,
 		

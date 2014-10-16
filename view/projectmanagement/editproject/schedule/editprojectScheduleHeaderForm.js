@@ -10,12 +10,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 	frame:true,
 	
 	width:1100,
-	height:65,
+	height:95,
 	title:'Header Data',
 	defaults: {
 		labelWidth: 80,
 	},
-	// collapsible: true,
 	defaultType: 'textfield',
 	
 	initComponent:function(){
@@ -55,13 +54,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 	{
 		id:'edit_scheduleHeader_Job',
 		fieldLabel: 'Job #',
-		//emptyText:'Example: JOB001',
 		readOnly: true,
 		x:510,
 		y:0,
 		width:220,
 	
-		//labelWidth: 60,
 	},
 	{
 		id:'edit_scheduleHeader_ProjectName',
@@ -69,6 +66,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 		x:760,
 		readOnly: true,
 		y:0,
+		width:220,
+		
+	},
+	{
+		id:'edit_scheduleHeader_AuthorName',
+		fieldLabel: 'Author Name',
+		x:10,
+		readOnly: true,
+		y:30,
 		width:220,
 		
 	},

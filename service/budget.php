@@ -145,14 +145,16 @@ include("../inc/php/encryptDecrypt.php");
 		  activity.id as activityid,
 		  activity.name As activity,
 		  stages.stage_name As stage,
-		  stages.id As stageid
+		  stages.id As stageid,
+		  project_title.confirmed_extent as no_of_unit
 		From
 		  stages Inner Join
 		  activity On stages.activity =
-		    activity.id
+		    activity.id,
+		    project_title
 		Where
 		  stages.workflow_id = '".$workflowid."'  And
-		  stages.flag = 0
+		  stages.flag = 0 And project_title.id='".$projectid."'
 		")or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
@@ -479,16 +481,19 @@ function deleteBudgetactivity($budgetid)
 	  project_title.id as editbudgetHeader_projectID,
 	  project_title.castoff_extent as editbudgetHeader_castoffextent,
 	  project_title.confirmed_extent as editbudgetHeader_confirmedextent,
+	  author.name as editbudgetHeader_author_name,
 	  budget_total_detail.ponumber1 as edit_budgetHeader_ponumber1,
 	  budget_total_detail.ponumber2 as edit_budgetHeader_ponumber2
+	  
 	  
 	From
 	  project_title Inner Join
 	  customers On project_title.client =
 	  customers.id Inner Join budget_total_detail On
-	  budget_total_detail.project_id = project_title.id
+	  budget_total_detail.project_id = project_title.id Inner Join
+	  author On project_title.job_code=author.job_code
 	Where
-	  project_title.job_code = '".$job_code."'");
+	  project_title.job_code = '".$job_code."' And author.author='Author'");
 			
 		if(!$result1)
 			{

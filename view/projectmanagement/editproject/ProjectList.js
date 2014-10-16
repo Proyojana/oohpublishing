@@ -271,6 +271,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				handler : function(grid, rowIndex, colIndex) {
 					var win = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
+						draggable   : false,
 						layout : {
 							type : 'absolute'
 						},
@@ -507,7 +508,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						{
 							xtype:'editprojectSchedulegrid',
 							x : 5,
-							y : 80,
+							y : 100,
 							width:1100,
 							margin:'5 5 5 5',
 						},
@@ -788,7 +789,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						},{
 							xtype : 'editteamgrid',
 							x : 0,
-							y :80,
+							y :100,
 							margin:'5 5 5 5'
 							
 						},
@@ -798,7 +799,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				iconCls : 'updateClass',
 				pressed:true,
 				x:450,
-				y:350,
+				y:370,
 				width:100,
 				handler:function(){
 					var project_id=Ext.getCmp('editteamHeader_projectID').getValue(); 
@@ -830,7 +831,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				iconCls : 'cancelClass',
 				pressed:true,
 				x:600,
-				y:350,
+				y:370,
 				width:100,
 				handler:function(){
 					win.close();
@@ -888,7 +889,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						},{
 							xtype : 'editnotesgrid',
 							x : 0,
-							y :80,
+							y :100,
 							margin:'5 5 5 5',
 							height:250,
 							
@@ -899,7 +900,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				iconCls : 'updateClass',
 				pressed:true,
 				x:450,
-				y:350,
+				y:370,
 				width:100,
 				handler:function(){
 							var job_code=Ext.getCmp('job_code').getValue();
@@ -955,7 +956,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				iconCls : 'cancelClass',
 				pressed:true,
 				x:600,
-				y:350,
+				y:370,
 				width:100,
 				handler:function(){
 					win.close();
@@ -1013,7 +1014,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						{
 							xtype:'editprojectArtworkgrid',
 							x : 5,
-							y : 80,
+							y : 100,
 							width:1150,
 							margin:'5 5 5 5',
 						},

@@ -69,6 +69,7 @@ $id=$_SESSION['id'];
 		  activity.id as activityid,
 		  activity.name As activity,
 		  stages.stage_name As stage,
+		  stages.no_of_days As estimated_daysperstage,
 		  stages.stage_order As stageorder,
 		  stages.id As stageid
 		From
@@ -244,14 +245,16 @@ Where
 	  project_title.title as edit_scheduleHeader_ProjectName,
 	  project_title.workflow as edit_scheduleHeader_workflow,
 	  project_title.job_code as edit_scheduleHeader_Job,
-	  project_title.id as edit_scheduleHeader_projectID
+	  project_title.id as edit_scheduleHeader_projectID,
+	 author.name as edit_scheduleHeader_AuthorName
 	  
 	From
 	  project_title Inner Join
 	  customers On project_title.client =
-	    customers.id
+	    customers.id Inner Join
+	  author On project_title.job_code=author.job_code
 	Where
-	  project_title.job_code = '".$job_code."'");
+	  project_title.job_code = '".$job_code."' And author.author='Author'");
 			
 		if(!$result1)
 			{

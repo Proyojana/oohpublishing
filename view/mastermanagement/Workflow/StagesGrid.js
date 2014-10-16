@@ -155,6 +155,38 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 
 		           
 				},
+				{
+					dataIndex: 'no_of_days',
+					text: 'No of days Per Stage',
+					align:'center',
+					flex:1,
+					editor:{
+						xtype:'textfield'
+					}
+					
+				},
+				{
+					text:'Rate Card',
+					
+		columns: [{
+					dataIndex: 'ratecard_USD',
+					text: 'Dollars(USD)',
+		        	align:'center',
+		        	editor:{
+						xtype:'textfield'
+					}
+									
+				},
+				{
+					dataIndex: 'ratecard_GBP',
+					text: 'Pounds(GBP)',
+		        	align:'center',
+		        	editor:{
+						xtype:'textfield'
+					}
+				}
+				]
+				},
 			
 								
 		{
@@ -176,12 +208,14 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 								var stage_name=rec.get('stage_name');
 								var stage_id=rec.get('stage_id');
 								var activity=rec.get('activity');
-															
+								var no_of_days=rec.get('no_of_days_perstage');
+								var ratecard_USD=rec.get('ratecard_USD');
+								var ratecard_GBP=rec.get('ratecard_GBP');							
 								var conn = new Ext.data.Connection();
 								conn.request({
 									url: 'service/stages.php',
 									method: 'POST',
-									params : {action:4,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order},
+									params : {action:4,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 

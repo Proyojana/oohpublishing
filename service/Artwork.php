@@ -12,11 +12,11 @@ include("../inc/php/encryptDecrypt.php");
 			insertArtwork($_POST['artwork_id'],$_POST['project_id'],$_POST['figurenumber'],$_POST['inputformat'],$_POST['resolution'],$_POST['colourmode'],$_POST['vendorassessment'],$_POST['cnvrt'],$_POST['redrawsimple'],$_POST['redrawcomplex'],$_POST['relabel'],$_POST['finalartwrk'],$_POST['cost'],$_POST['comments']);
 			break;
 		case 3 :
-		     selectArtwork($_POST['project_id']);
-		       break;
+		    selectArtwork($_POST['project_id']);
+		    break;
 	    case 4:
-		       deleteArtwork($_POST['id']);
-		       break;
+		    deleteArtwork($_POST['id']);
+		    break;
 	   	case 5:
 			getAddArtworkDetails($_POST['job_code']);
 			break;	
@@ -32,14 +32,16 @@ function getArtworkDetails($job_code)
 	  project_title.title as edit_ArtworkHeader_ProjectName,
 	  project_title.workflow as edit_ArtworkHeader_workflow,
 	  project_title.job_code as edit_ArtworkHeader_Job,
-	  project_title.id as edit_ArtworkHeader_projectID
+	  project_title.id as edit_ArtworkHeader_projectID,
+	  author.name as edit_ArtworkHeader_AuthorName
 	  
 	From
 	  project_title Inner Join
 	  customers On project_title.client =
-	    customers.id
+	    customers.id Inner Join
+	  author On project_title.job_code=author.job_code
 	Where
-	  project_title.job_code = '".$job_code."'");
+	  project_title.job_code = '".$job_code."' And author.author='Author'");
 			
 		if(!$result1)
 			{

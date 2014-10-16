@@ -104,7 +104,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	{
 		fieldLabel: 'Invoice Date',
 		xtype:'datefield',
+		width:200,
 		x:10,
+		y:70,
+		
+	},
+	{
+		fieldLabel: 'Author Name',
+		id:'editbudgetHeader_author_name',
+		x:260,
 		y:70,
 		
 	},

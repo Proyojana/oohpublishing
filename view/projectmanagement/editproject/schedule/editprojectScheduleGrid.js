@@ -84,13 +84,10 @@ initComponent: function() {//load activity combo
 						
 					}
 		},{
-			text:'Days per stage',
 			
-			columns: [{
-				dataIndex: 'estimated_daysperstage',
-				text: 'Estimate',
-				align:'center',
-		
+			dataIndex: 'estimated_daysperstage',
+			text:'Days per stage Estimate',
+				align:'center',		
 				editor: {
 					xtype:'numberfield',
 					hideTrigger:true,
@@ -152,52 +149,7 @@ initComponent: function() {//load activity combo
 
 				textStyle:'font-size:13px;'
 
-			},{
-				dataIndex: 'actual_daysperstage',
-				text: 'Actuals',
-				
-				editor: {
-					xtype:'numberfield',
-					hideTrigger:true,
-						listeners: {
-						change: function(field, newValue, oldValue) {
-										
-							var grid = this.up().up();
-							//get rowIndex
-							var selectedRecord = grid.getSelectionModel().getSelection()[0];
-							var rowIndex = grid.store.indexOf(selectedRecord);
-							
-							// get selection model of the grid							
-							var selModel = grid.getSelectionModel();
-							//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
-							
-							if(rowIndex!=0){
-							//	var aDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
-							var aEndDate=grid.getStore().getAt(rowIndex-1).data.actual_end_date;
-							/*var val=Ext.Date.add(aEndDate,Ext.Date.DAY,aDay);*/
-							selModel.getSelection()[0].set('actual_start_date', aEndDate);
-							var sdate=selModel.getSelection()[0].data.actual_start_date;
-							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
-							selModel.getSelection()[0].set('actual_end_date', val1);
-							}
-							
-							else
-							{
-								
-									//selModel.getSelection()[0].set('estimated_start_date', startDate);
-									var sdate=selModel.getSelection()[0].data.actual_start_date;	
-									var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
-									selModel.getSelection()[0].set('actual_end_date', val1);
-								
-							}
-					} 
-
-				}
-				},
-	
-				align:'center',
-			}
-			]
+			
 		},{
 			text:'Start Date',
 			
@@ -255,19 +207,25 @@ initComponent: function() {//load activity combo
 				align:'center',
 				editor: {
 					xtype:'datefield',
-					listeners: {
+					/*listeners: {
 						change: function(field, newValue, oldValue) {
+							var ONE_DAY = 1000 * 60 * 60 * 24;
 							var grid = this.up().up();
 							// get selection model of the grid
 							var selModel = grid.getSelectionModel();
-							var days=selModel.getSelection()[0].data.actual_daysperstage;
+							var est_start_day=selModel.getSelection()[0].data.estimated_start_date;
+alert(est_start_day);
+                          var estimated_end_date=selModel.getSelection()[0].data.estimated_end_date;
+                          alert(estimated_end_date);
+                         var diff= Math.abs(estimated_end_date - est_start_day)
+                      alert( Math.round(diff/ONE_DAY));
+                    
+							//var val=Ext.Date.add(newValue,Ext.Date.DAY,days);
 
-							var val=Ext.Date.add(newValue,Ext.Date.DAY,days);
-
-							selModel.getSelection()[0].set('actual_end_date', val);
+							//selModel.getSelection()[0].set('actual_end_date', val);
 
 						},
-					} ,
+					} ,*/
 				},
 				renderer: function(value){
 						//alert(value);
@@ -385,7 +343,51 @@ initComponent: function() {//load activity combo
 					},
 			}
 			]
-		},{
+		},
+		{
+				dataIndex: 'actual_daysperstage',
+				text: 'Days per Stage Actuals',				
+				editor: {
+					xtype:'numberfield',
+					hideTrigger:true,
+						listeners: {
+						change: function(field, newValue, oldValue) {
+										
+							var grid = this.up().up();
+							//get rowIndex
+							var selectedRecord = grid.getSelectionModel().getSelection()[0];
+							var rowIndex = grid.store.indexOf(selectedRecord);
+							
+							// get selection model of the grid							
+							var selModel = grid.getSelectionModel();
+							//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
+							
+							if(rowIndex!=0){
+							//	var aDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
+							var aEndDate=grid.getStore().getAt(rowIndex-1).data.actual_end_date;
+							/*var val=Ext.Date.add(aEndDate,Ext.Date.DAY,aDay);*/
+							selModel.getSelection()[0].set('actual_start_date', aEndDate);
+							var sdate=selModel.getSelection()[0].data.actual_start_date;
+							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+							selModel.getSelection()[0].set('actual_end_date', val1);
+							}
+							
+							else
+							{
+								
+									//selModel.getSelection()[0].set('estimated_start_date', startDate);
+									var sdate=selModel.getSelection()[0].data.actual_start_date;	
+									var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+									selModel.getSelection()[0].set('actual_end_date', val1);
+								
+							}
+					} 
+
+				}
+				},
+	
+				align:'center',
+			},{
 
 		dataIndex: 'bufferday',
 			text: 'Buffer Days',
