@@ -15,7 +15,7 @@ $id=$_SESSION['id'];
 			deleteStageById($_POST["stage_id"]);	
 			break;
 		case 4:
-			saveStageMaster($_POST['stage_id'],$_POST['stage_order'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name']);
+			saveStageMaster($_POST['stage_id'],$_POST['stage_order'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name'],$_POST['no_of_days'],$_POST['ratecard_USD'],$_POST['ratecard_GBP']);
 			break;	
 		default: 
 			break;
@@ -25,6 +25,9 @@ $id=$_SESSION['id'];
  		$num_result = mysql_query ("Select
   stages.stage_order As stage_order,
   stages.stage_name As stage_name,
+  stages.no_of_days As no_of_days,
+  stages.ratecard_USD As ratecard_USD,
+  stages.ratecard_GBP As ratecard_GBP,
   activity.id As activity,
   stages.id As stage_id
 From
@@ -39,6 +42,9 @@ Where
 		$result = mysql_query("Select
   stages.stage_order As stage_order,
   stages.stage_name As stage_name,
+  stages.no_of_days As no_of_days,
+  stages.ratecard_USD As ratecard_USD,
+  stages.ratecard_GBP As ratecard_GBP,
   activity.id As activity,
   stages.id As stage_id
 From
@@ -148,7 +154,7 @@ Where
 		echo json_encode($result);
 	}
 	
-	function saveStageMaster($stage_id,$stage_order,$workflow_id,$activity,$stage_name)
+	function saveStageMaster($stage_id,$stage_order,$workflow_id,$activity,$stage_name,$no_of_days,$ratecard_USD,$ratecard_GBP)
     {
 		$checkquery="SELECT id FROM stages WHERE id='".$stage_id."' ";
 		$result1=mysql_query($checkquery);
@@ -156,7 +162,7 @@ Where
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,flag) VALUES('','".$workflow_id."','".$stage_order."','".$stage_name."','".$activity."','')");
+			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,no_of_days,ratecard_USD,ratecard_GBP,flag) VALUES('','".$workflow_id."','".$stage_order."','".$stage_name."','".$activity."','".$no_of_days."','".$ratecard_USD."','".$ratecard_GBP."','')");
 			if(!$result1)
 			{
 				$result["failure"] = true;
@@ -171,7 +177,7 @@ Where
 		else if($num_rows==1)
 		{
 			
-			$result1 = mysql_query ("Update stages set stage_name='".$stage_name."',activity='".$activity."' where id='".$stage_id."'");
+			$result1 = mysql_query ("Update stages set stage_name='".$stage_name."',activity='".$activity."',no_of_days='".$no_of_days."',ratecard_USD='".$ratecard_USD."',ratecard_GBP='".$ratecard_GBP."' where id='".$stage_id."'");
 			if(!$result1)
 			{
 				$result["failure"] = true;

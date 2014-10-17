@@ -202,11 +202,15 @@ Ext.getCmp('basicname').setReadOnly(false);
 						 Ext.getCmp('venreset').setVisible(true);
 						 var grid1=Ext.getCmp('vendorsteamgrid');
 						grid1.getStore().load({params:{action:3,basicvendorid:id}});
+						var grid2=Ext.getCmp('Vendors_currentprojectsgridTab');
+						grid2.getStore().load({params:{action:1,vendorid:id}});	
+						var history=Ext.getCmp('Vendors_histryprojectsgridTab');
+						history.getStore().load({params:{action:2,vendorid:id}});							
 						 var grid1=Ext.getCmp('vendorscontactgrid');
 						grid1.getStore().load({params:{action:1,vendorid:id}});
 						var grid1=Ext.getCmp('Vendors_ratecardgridTab');
 						grid1.getStore().load({params:{action:1,vendorid:id}});
-						
+					
 						
 						
 				}

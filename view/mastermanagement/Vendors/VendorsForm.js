@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsForm' ,{
               type: 'absolute'
             },
 	frame:true,
-	requires:['MyDesktop.view.mastermanagement.Vendors.VendorsGrid','MyDesktop.view.mastermanagement.Vendors.BasicInfoForm','MyDesktop.view.mastermanagement.Vendors.ContactInfoForm','MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm','MyDesktop.view.mastermanagement.Vendors.RateCardGrid'],
+	requires:['MyDesktop.view.mastermanagement.Vendors.VendorsGrid','MyDesktop.view.mastermanagement.Vendors.BasicInfoForm','MyDesktop.view.mastermanagement.Vendors.ContactInfoForm','MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm','MyDesktop.view.mastermanagement.Vendors.RateCardGrid','MyDesktop.view.mastermanagement.Vendors.CurrentProjects','MyDesktop.view.mastermanagement.Vendors.HistoryProjects'],
     title:'List Of Vendors',
     defaults: {
         labelWidth: 140,
@@ -65,7 +65,20 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsForm' ,{
 			xtype:'ratecardgrid',
 		//	width:500,
 			//height:450,
-		}
+		},
+		{
+			id:'Vendors_currentprojectsgridTab',
+			xtype:'vendorcurrentprojects',
+		//	width:500,
+			//height:450,
+		},
+			{
+			id:'Vendors_histryprojectsgridTab',
+			xtype:'vendorhistryprojects',
+		//	width:500,
+			//height:450,
+		},
+		
 		
 		]
 	}
