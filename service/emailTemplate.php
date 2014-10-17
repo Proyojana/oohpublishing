@@ -13,10 +13,10 @@ $id=$_SESSION['id'];
 			authorEmail($_POST['job_code'],$id);
 			break;
 		case 3:
-			sendEmailVendor($_POST['from'],$_POST['vendor_to'],$_POST['vendor_cc'],$_POST['vendor_message'],$_POST['job_code']);
+			sendEmailVendor($_POST['vendor_to'],$_POST['vendor_message']);
 		    break;
         case 4:
-			sendEmailAuthor($_POST['author_to'],$_POST['author_cc'],$_POST['author_message']);
+			sendEmailAuthor($_POST['author_to'],$_POST['author_message']);
 		    break;
 		default: 
 			break;
@@ -232,7 +232,7 @@ oohpublishing.author.job_code='".$job_code."' || oohpublishing.user_masters.user
     }
     
 	
-	function sendEmailVendor($vendor_to,$vendor_cc,$vendor_message) {
+	function sendEmailVendor($vendor_to,$vendor_message) {
 									
 			require_once("dompdf/dompdf_config.inc.php");					
 				$dat=date("d/m/Y");
@@ -284,7 +284,7 @@ oohpublishing.author.job_code='".$job_code."' || oohpublishing.user_masters.user
 			echo(json_encode($result));
 			}
 	
-	function sendEmailAuthor($author_to,$author_cc,$author_message) {
+	function sendEmailAuthor($author_to,$author_message) {
 									
 			require_once("dompdf/dompdf_config.inc.php");					
 				$dat=date("d/m/Y");

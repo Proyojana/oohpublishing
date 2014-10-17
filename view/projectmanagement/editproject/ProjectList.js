@@ -637,7 +637,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								
 							
 								var vendor_to=Ext.getCmp('vendorEmail').getValue().toString();
-								var vendor_cc=Ext.getCmp('vendorCC').getValue().toString();
+								
 								var vendor_message=Ext.getCmp('vendorMessage').getValue().toString();
 								
 								var conn = new Ext.data.Connection();
@@ -648,7 +648,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										action : 3,
 										
 										vendor_to:vendor_to,
-										vendor_cc:vendor_cc,
+										
 										vendor_message:vendor_message
 										
 									},
@@ -702,7 +702,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								
 							
 								var author_to=Ext.getCmp('authorEmail').getValue().toString();
-								var author_cc=Ext.getCmp('authorCc').getValue().toString();
+								
 								var author_message=Ext.getCmp('authorMessage').getValue().toString();
 								
 								var conn = new Ext.data.Connection();
@@ -713,7 +713,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										action : 4,
 										//html : html,
 										author_to:author_to,
-										author_cc:author_cc,
+										
 										author_message:author_message
 										
 									},
