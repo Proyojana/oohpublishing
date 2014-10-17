@@ -442,7 +442,7 @@ Where
  		$num_result = mysql_query ("Select
   project_team.id as id,
  project_team.role as role,
- users.id as name,
+ project_team.user as name,
  project_team.email as email
 From
  project_team Left Join
@@ -455,7 +455,7 @@ From
 		$result = mysql_query("Select
 		project_team.id as id,
  project_team.role as role,
- users.id as name,
+ project_team.user as name,
  project_team.email as email
 From
  project_team Left Join

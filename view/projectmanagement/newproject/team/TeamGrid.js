@@ -62,7 +62,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 					align: 'center',
                     flex:1,
 					editor:{
-					 	xtype:'combo',
+						xtype:'textfield'
+					 /*	xtype:'combo',
 					 	store: productioneditor,
 						queryMode: 'local',
 						displayField: 'username',
@@ -71,7 +72,6 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
                 change: function (field, newValue, oldValue) {
                 	var grid = this.up().up();
                         // get selection model of the grid  
-                     
                     var selModel = grid.getSelectionModel();
                 		var conn = new Ext.data.Connection();
 					 conn.request({
@@ -86,7 +86,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 					 });
                     
 			            }
-			              }	
+			              }	*/
                         },
                          renderer: function(value) {
 					var index = productioneditor.find('userid', value);

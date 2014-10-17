@@ -635,23 +635,22 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Send Email',
 							handler: function() {
 								
-							/*	var from=Ext.getCmp('typesetting_pdf_from').getValue();
-								var pdf_to=Ext.getCmp('typesetting_pdf_to').getValue().toString();
-								var pdf_cc=Ext.getCmp('typesetting_pdf_cc').getValue().toString();
-								var message=Ext.getCmp('typesetting_pdf_message').getValue();
+							
+								var vendor_to=Ext.getCmp('vendorEmail').getValue().toString();
+								var vendor_cc=Ext.getCmp('vendorCC').getValue().toString();
+								var vendor_message=Ext.getCmp('vendorMessage').getValue().toString();
 								
 								var conn = new Ext.data.Connection();
 								conn.request({
-									url : 'service/Reports.php',
+									url : 'service/emailTemplate.php',
 									method : 'POST',
 									params : {
-										action : 6,
-										//html : html,
-										from:from,
-										to:pdf_to,
-										cc:pdf_cc,
-										message:message,
-										job_code:job_code
+										action : 3,
+										
+										vendor_to:vendor_to,
+										vendor_cc:vendor_cc,
+										vendor_message:vendor_message
+										
 									},
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);
@@ -659,7 +658,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										messagewin1.close(); 
 									},
 								});
-									*/
 														
 							}
 						}]
@@ -702,23 +700,22 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Send Email',
 							handler: function() {
 								
-							/*	var from=Ext.getCmp('typesetting_pdf_from').getValue();
-								var pdf_to=Ext.getCmp('typesetting_pdf_to').getValue().toString();
-								var pdf_cc=Ext.getCmp('typesetting_pdf_cc').getValue().toString();
-								var message=Ext.getCmp('typesetting_pdf_message').getValue();
+							
+								var author_to=Ext.getCmp('authorEmail').getValue().toString();
+								var author_cc=Ext.getCmp('authorCc').getValue().toString();
+								var author_message=Ext.getCmp('authorMessage').getValue().toString();
 								
 								var conn = new Ext.data.Connection();
 								conn.request({
-									url : 'service/Reports.php',
+									url : 'service/emailTemplate.php',
 									method : 'POST',
 									params : {
-										action : 6,
+										action : 4,
 										//html : html,
-										from:from,
-										to:pdf_to,
-										cc:pdf_cc,
-										message:message,
-										job_code:job_code
+										author_to:author_to,
+										author_cc:author_cc,
+										author_message:author_message
+										
 									},
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);
@@ -726,7 +723,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										messagewin1.close(); 
 									},
 								});
-									*/
 														
 							}
 						}]

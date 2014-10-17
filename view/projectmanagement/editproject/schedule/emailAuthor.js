@@ -35,7 +35,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.emailAuthor' ,
 						},
 						{
 							xtype:'textfield',
-							fieldLabel:'Cc',
+							fieldLabel:'authorCc',
 							x:10,
 							y:70,
 							width:700

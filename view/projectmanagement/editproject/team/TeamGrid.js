@@ -40,31 +40,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 		var team = Ext.create('MyDesktop.store.Team');
 		team.load({params:{action: 12}});
 		this.store = team,
-			/*	this.tbar = Ext.create('Ext.Toolbar', {  
-							   items:[{
-                               xtype : 'button',
-                               text : 'Insert New Row',
-                               pressed:true,
-                               x : 500,
-                               y : 10,
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-               						var r = Ext.create('MyDesktop.model.Team', {
-               						id:'',
-                    				role: '',
-                    				name: '',
-                 					email: '',
-                    				
-                    				
-                				});
-                				//store.getCount()-1
-                		       team.insert(team.getCount(), r);
-            				 }                           
-        },
-        
-        ]
-        });*/
+			
 			this.columns = [
 				{
 					dataIndex: 'id',
@@ -92,7 +68,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					align: 'center',
                     flex:1,
 					editor:{
-					 	xtype:'combo',
+						xtype:'textfield'
+					 	/*xtype:'combo',
 					 	store: users,
 						queryMode: 'local',
 						displayField: 'username',
@@ -114,7 +91,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					 });
                     
 			            }
-			              }	
+			              }	*/
                         },
                         renderer: function(value) {
 					var index = users.find('userid', value);
