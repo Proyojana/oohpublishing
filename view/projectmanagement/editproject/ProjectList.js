@@ -655,7 +655,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Message', obj.message);
-										messagewin1.close(); 
+										email_vendor.close(); 
 									},
 								});
 														
@@ -720,7 +720,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									success : function(response) {
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Message', obj.message);
-										messagewin1.close(); 
+										email_author.close(); 
 									},
 								});
 														

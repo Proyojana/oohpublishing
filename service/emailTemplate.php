@@ -242,12 +242,7 @@ ob_start();
 $variable = ob_get_clean();
 
 
-// $subject = "Report";
-$dompdf = new DOMPDF();
-$dompdf->load_html($variable);
-$dompdf->render();
-$output = $dompdf->output();
-//file_put_contents('Report.pdf', $output);
+
 
 $variable = ob_get_clean();
 
