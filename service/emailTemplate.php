@@ -233,106 +233,82 @@ oohpublishing.author.job_code='".$job_code."' || oohpublishing.user_masters.user
     
 	
 	function sendEmailVendor($vendor_to,$vendor_message) {
-									
-			require_once("dompdf/dompdf_config.inc.php");					
-				$dat=date("d/m/Y");
-				$subject = "Check".' '.$dat;
-			ob_start();
+	$dat=date("d/m/Y");
+$subject = "Check".' '.$dat;
+ob_start();
 
 
-	
-	 $variable = ob_get_clean();
-				
-				
-		//	$subject = "Report";
-			$dompdf = new DOMPDF();
-			$dompdf->load_html($variable);
-			$dompdf->render();
-			$output = $dompdf->output();
-			//file_put_contents('Report.pdf', $output);
-			
+
+$variable = ob_get_clean();
+
+
+// $subject = "Report";
+$dompdf = new DOMPDF();
+$dompdf->load_html($variable);
+$dompdf->render();
+$output = $dompdf->output();
+//file_put_contents('Report.pdf', $output);
+
+$variable = ob_get_clean();
+
+
+
+// Always set content-type when sending HTML email
+$headers = "MIME-Version: 1.0" . "\r\n";
+$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+$headers .= 'Cc:'.$cc . "\r\n";
+$headers .= "From:".$from."\r\n";
+$headers .= "Reply-To:".$from."\r\n";
+$retval=mail($vendor_to,$subject,$vendor_message,$headers);
+if(!$retval) {
+$result["failure"] = true;
+$result["message"] = 'Invalid query: ' . mysql_error();
+} else {
+$result["success"] = true;
+$result["message"] = 'Message send sucessfully';
+}
+
+echo(json_encode($result));	
 		
-		$separator = md5(time());
-        $eol = PHP_EOL;
-        $filename = "Report.pdf";
-        $pdfdoc = $output;
-        $attachment = chunk_split(base64_encode($pdfdoc));
-        $headers = "From: " . $from . $eol;
-        $headers .= "MIME-Version: 1.0" . $eol;
-	    $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol . $eol;
-	    $body .= "Content-Transfer-Encoding: 7bit" . $eol;
-	    $body .= "This is a MIME encoded message." . $eol; 
-        $body .= "--" . $separator . $eol;
-        $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
-        $body .= "Content-Transfer-Encoding: 8bit" . $eol . $eol;
-        $body .= $message . $eol;
-        $body .= "--" . $separator . $eol;
-        $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
-        $body .= "Content-Transfer-Encoding: base64" . $eol;
-        $body .= "Content-Disposition: attachment" . $eol . $eol;
-        $body .= $attachment . $eol;
-        $body .= "--" . $separator . "--";
-       $retval=mail($vendor_to, $subject, $vendor_message, $headers);
-		 if(!$retval) {
-				$result["failure"] = true;
-				$result["message"] = 'Invalid query: ' . mysql_error();
-			} else {
-				$result["success"] = true;
-				$result["message"] = 'Message send sucessfully';
-			}
-			
-			echo(json_encode($result));
 			}
 	
 	function sendEmailAuthor($author_to,$author_message) {
 									
-			require_once("dompdf/dompdf_config.inc.php");					
-				$dat=date("d/m/Y");
-				$subject = "Check".' '.$dat;
-			ob_start();
+			$dat=date("d/m/Y");
+$subject = "Check".' '.$dat;
+ob_start();
 
 
-	
-	 $variable = ob_get_clean();
-				
-				
-		//	$subject = "Report";
-			$dompdf = new DOMPDF();
-			$dompdf->load_html($variable);
-			$dompdf->render();
-			$output = $dompdf->output();
-			//file_put_contents('Report.pdf', $output);
-			
-		
-		$separator = md5(time());
-        $eol = PHP_EOL;
-        $filename = "Report.pdf";
-        $pdfdoc = $output;
-        $attachment = chunk_split(base64_encode($pdfdoc));
-        $headers = "From: " . $from . $eol;
-        $headers .= "MIME-Version: 1.0" . $eol;
-	    $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol . $eol;
-	    $body .= "Content-Transfer-Encoding: 7bit" . $eol;
-	    $body .= "This is a MIME encoded message." . $eol; 
-        $body .= "--" . $separator . $eol;
-        $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
-        $body .= "Content-Transfer-Encoding: 8bit" . $eol . $eol;
-        $body .= $message . $eol;
-        $body .= "--" . $separator . $eol;
-        $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
-        $body .= "Content-Transfer-Encoding: base64" . $eol;
-        $body .= "Content-Disposition: attachment" . $eol . $eol;
-        $body .= $attachment . $eol;
-        $body .= "--" . $separator . "--";
-       $retval=mail($author_to, $subject, $author_message, $headers);
-		 if(!$retval) {
-				$result["failure"] = true;
-				$result["message"] = 'Invalid query: ' . mysql_error();
-			} else {
-				$result["success"] = true;
-				$result["message"] = 'Message send sucessfully';
-			}
-			
-			echo(json_encode($result));
+
+$variable = ob_get_clean();
+
+
+// $subject = "Report";
+$dompdf = new DOMPDF();
+$dompdf->load_html($variable);
+$dompdf->render();
+$output = $dompdf->output();
+//file_put_contents('Report.pdf', $output);
+
+$variable = ob_get_clean();
+
+
+
+// Always set content-type when sending HTML email
+$headers = "MIME-Version: 1.0" . "\r\n";
+$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+$headers .= 'Cc:'.$cc . "\r\n";
+$headers .= "From:".$from."\r\n";
+$headers .= "Reply-To:".$from."\r\n";
+$retval=mail($author_to,$subject,$author_message,$headers);
+if(!$retval) {
+$result["failure"] = true;
+$result["message"] = 'Invalid query: ' . mysql_error();
+} else {
+$result["success"] = true;
+$result["message"] = 'Message send sucessfully';
+}
+
+echo(json_encode($result));
 			}
     ?>
