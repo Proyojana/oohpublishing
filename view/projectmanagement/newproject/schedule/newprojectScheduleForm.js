@@ -30,7 +30,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 			id:'schedule_projectStartDate',
 			xtype:'datefield',
 			x:15,
-			y:80,
+			y:100,
 			width:260,	
 			afterLabelTextTpl: required,
 				},
@@ -38,7 +38,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 	{
 			xtype:'newprojectSchedulegrid',
 			x:0,
-			y:120
+			y:140
 			//xtype:'cityaddform',
 						
 		},
@@ -67,7 +67,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 				pressed:true,
 				width:100,
 				x:400,
-				y:480,
+				y:520,
 				//	margin:'0 0 0 100',
 				handler: function() {
 

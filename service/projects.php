@@ -742,14 +742,16 @@ Where
 	  project_title.title as teamHeader_ProjectName,
 	  project_title.workflow as teamHeader_workflow,
 	  project_title.job_code as teamHeader_Job,
-	  project_title.id as teamHeader_projectID
+	  project_title.id as teamHeader_projectID,
+	  author.name as teamHeader_AuthorName
 	  
 	From
 	  project_title Inner Join
 	  customers On project_title.client =
-	    customers.id
+	    customers.id Inner Join
+  author On project_title.job_code=author.job_code
 	Where
-	  project_title.job_code = '".$job_code."'");
+	  project_title.job_code = '".$job_code."' And author.author='Author'");
 			
 		if(!$result1)
 			{

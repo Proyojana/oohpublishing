@@ -38,7 +38,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.notes.newprojectNotesFor
 	{
 			xtype:'newprojectNotesgrid',
 			x:0,
-			y:120
+			y:130
 			//xtype:'cityaddform',
 						
 		},
@@ -66,7 +66,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.notes.newprojectNotesFor
 				xtype:'button',
 				text:'Save + Next',
                 x:450,
-                y:350,
+                y:380,
 				pressed:true,
 				width:100,
 				//	margin:'0 0 0 100',

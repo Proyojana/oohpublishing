@@ -25,48 +25,22 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.artwork.newprojectArtwor
 		
 			
 		},
-		/*{
-			fieldLabel:'Project Start Date',
-			id:'schedule_projectStartDate',
-			xtype:'datefield',
-			x:15,
-			y:80,
-			width:260,	
-			afterLabelTextTpl: required,
-				},*/
+	
 		
 	{
 			xtype:'createprojectArtworkgrid',
 			x:0,
-			y:120
+			y:130
 			//xtype:'cityaddform',
 						
 		},
-		/*{
-		xtype:'fieldset',
-		id:'city_tab',
-		plain:true,
-		x:0,
-		y:260,
-		activeTab: 0,
-		height:270,
-		defaults: {
-			bodyStyle:'padding:10px'
-		},
-		items:[
-		{
-			xtype:'newprojectScheduleAddform',
-			x:1,
-			y:270,
-			height:260
-		}
-		*/
+
 		
 		{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
-				x:450,y:450,
+				x:450,y:380,
 				width:100,
 				//	margin:'0 0 0 100',
 				handler: function() {

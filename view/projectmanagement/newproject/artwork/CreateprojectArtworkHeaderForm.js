@@ -10,7 +10,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.artwork.CreateprojectArt
 	frame:true,
 	
 	width:1100,
-	height:65,
+	height:90,
 	title:'Header Data',
 	defaults: {
 		labelWidth: 80,
@@ -69,6 +69,15 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.artwork.CreateprojectArt
 		x:760,
 		readOnly: true,
 		y:0,
+		width:220,
+		
+	},
+	{
+		id:'add_ArtworkHeader_AuthorName',
+		fieldLabel: 'Author Name',
+		x:10,
+		readOnly: true,
+		y:30,
 		width:220,
 		
 	},

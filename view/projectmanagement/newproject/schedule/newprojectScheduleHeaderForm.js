@@ -10,7 +10,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 	frame:true,
 	
 	width:1100,
-	height:65,
+	height:90,
 	title:'Header Data',
 	defaults: {
 		labelWidth: 115,
@@ -69,6 +69,15 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		x:820,
 		readOnly: true,
 		y:0,
+		width:260,
+		
+	},
+		{
+		id:'scheduleHeader_AuthorName',
+		fieldLabel: 'Author Name',
+		x:10,
+		readOnly: true,
+		y:30,
 		width:260,
 		
 	},

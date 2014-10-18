@@ -23,6 +23,9 @@ switch($_POST["action"]) /*Read action sent from front-end */ {
 	case 5:
 		getHeaderData($_POST['job_code']);
 		break;
+	case 6:
+			test($_POST['author_to'],$_POST['author_message']);
+		    break;
 	default :
 		break;
 }
@@ -210,14 +213,16 @@ function getHeaderData($job_code) {
 				  project_title.title as addnotesHeader_ProjectName,
 				  project_title.workflow as addnotesHeader_workflow,
 				  project_title.job_code as addnotesHeader_Job,
-				  project_title.id as addnotesHeader_projectID
+				  project_title.id as addnotesHeader_projectID,
+				  author.name as addnotesHeader_AuthorName
 				  
 				From
 				  project_title Inner Join
 				  customers On project_title.client =
-				    customers.id
+				    customers.id Inner Join
+                  author On project_title.job_code=author.job_code
 				Where
-				  project_title.job_code = '" . $job_code . "'");
+				  project_title.job_code = '" . $job_code . "' And author.author='Author'");
 			
 				if(!$result1) {
 					$result[failure] = true;
@@ -229,5 +234,18 @@ function getHeaderData($job_code) {
 					$result["data"] = $row;
 				}
 				echo(json_encode($result));
+			}
+	
+	function test($author_to,$author_message) {
+		
+		    $result2 = mysql_query("INSERT INTO temp (id,message)
+		                               VALUES ('' ,'" . $author_message . "')");
+					if(!$result2) {
+						$result["failure"] = true;
+						$result["message"] = "Invalid query: " . mysql_error();
+					} else {
+						$result["success"] = true;
+						$result["message"] = "Notes saved successfully";
+					}
 			}
 ?>

@@ -25,8 +25,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.newprojectTeamForm'
 		{
 			xtype:'newteamgrid',
 			x:0,
-			y:80,
-			height:260
+			y:100,
+			height:290
 		},
 		
 		{
@@ -35,9 +35,10 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.newprojectTeamForm'
 				pressed:true,
 				width:100,
 				x:450,
-				y:350,
+				y:410,
 				handler:function(){
-					var project_id=Ext.getCmp('teamHeader_projectID').getValue(); 
+					//var project_id=Ext.getCmp('teamHeader_projectID').getValue(); 
+					var project_id=90;
 					var job_code=Ext.getCmp('teamHeader_Job').getValue(); 
 					var role='';
 					var name='';
