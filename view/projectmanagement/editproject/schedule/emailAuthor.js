@@ -68,7 +68,8 @@ tinymce.init({
 						},
 						{
 							xtype:'textfield',
-							fieldLabel:'authorCc',
+							fieldLabel:'Cc',
+							id:'authorCc',
 							x:10,
 							y:70,
 							width:700
@@ -81,7 +82,7 @@ tinymce.init({
 							x:10,
 							y:100,
 							width:700,
-							height:200
+							height:300
 						},
 
 						]
