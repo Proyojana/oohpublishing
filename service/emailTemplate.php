@@ -277,22 +277,7 @@ ob_start();
 
 $variable = ob_get_clean();
 
-$result1 = "Dear 
 
-The proofs for your forthcoming book  have been dispatched from our typesetter and should be with you shortly.
-
-You will receive two copies of the proofs – one is for your own records, the other should be marked with any essential corrections. I have also uploaded the PDFs to our ftp site:
-
-Address:
-Username:
-Password:
-Filename:
-
-Please mark only essential corrections, and ensure that your corrections are clearly marked. A table of mark-up symbols is attached to this message for your reference. Let me know as soon as possible if you wish to make any changes to the page numbering in the index.
-
-Please aim to return the proofs to arrive with me at the address below no later than date.
-
-Please confirm receipt of this email. I hope you are pleased with the proofs – do let me know if you have any queries or problems at any time.";
 
 
 $variable = ob_get_clean();
@@ -305,7 +290,7 @@ $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 $headers .= 'Cc:'.$cc . "\r\n";
 $headers .= "From:".$from."\r\n";
 $headers .= "Reply-To:".$from."\r\n";
-$retval=mail($author_to,$subject,$result1,$headers);
+$retval=mail($author_to,$subject,$author_message,$headers);
 if(!$retval) {
 $result["failure"] = true;
 $result["message"] = 'Invalid query: ' . mysql_error();

@@ -41,6 +41,8 @@
 		<script type="text/javascript" src="inc/ext/src/ux/util/PDF/TextLayerBuilder.js"></script>
 
 		<script type="text/javascript" src="inc/ext/src/ux/grid/Printer.js"></script>
+		<script type="text/javascript" src="tinymce/TinyMCETextArea.js"></script>
+        <script type="text/javascript" src="tinymce/tiny_mce_src.js"></script>
 
 		<!-- </x-bootstrap> -->
 		<script type="text/javascript">Ext.Loader.setPath({

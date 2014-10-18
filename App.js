@@ -20,6 +20,7 @@ Ext.define('MyDesktop.App', {
         'Ext.ux.desktop.ShortcutModel',
 		'Ext.ux.LiveSearchGridPanel',
 		'Ext.ux.form.MultiSelect',
+		'Ext.ux.form.TinyMCETextArea',
         /*'MyDesktop.view.SystemStatus',
         'MyDesktop.view.VideoWindow',
         'MyDesktop.view.GridWindow',*/
