@@ -876,6 +876,14 @@ background:url(../shared/icons/fam/cross.png);height:16px;width:16px;margin-righ
 {
 		background:url(../shared/icons/fam/accept.png);height:16px;width:16px;margin-right:5px;
 }
+.gmailClass
+{
+		background:url(../shared/icons/fam/gmail.png);height:16px;width:16px;margin-right:5px;
+}
+.emailClass
+{
+		background:url(../shared/icons/fam/email.png);height:16px;width:16px;margin-right:5px;
+}
 .resubmitClass
 {
 		background:url(../shared/icons/fam/Redo-icon.png);height:16px;width:16px;margin-right:5px;

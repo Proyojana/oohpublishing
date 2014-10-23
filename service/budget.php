@@ -177,16 +177,14 @@ include("../inc/php/encryptDecrypt.php");
 	  project_title.job_code as budgetHeader_Job,
 	  project_title.id as budgetHeader_projectID,
 	  project_title.castoff_extent as budgetHeader_castoffextent,
-	  project_title.confirmed_extent as budgetHeader_confirmedextent,
-	  author.name as editbudgetHeader_author_name,
+	  project_title.confirmed_extent as budgetHeader_confirmedextent
 	  
 	From
 	  project_title Inner Join
 	  customers On project_title.client =
-	    customers.id Inner Join
-  author On project_title.job_code=author.job_code
+	    customers.id
 	Where
-	  project_title.job_code = '".$job_code."' And author.author='Author'");
+	  project_title.job_code = '".$job_code."' ");
 			
 		if(!$result1)
 			{

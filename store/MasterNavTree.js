@@ -32,27 +32,10 @@ Ext.define('MyDesktop.store.MasterNavTree', {
 			   
         		{ id:'users', text: "Users",iconCls:'users', leaf: true },
         		]
-        	}
+        },
+          { id:'template', text: "Email Templates",iconCls:'gmailClass', leaf: true },
         		
-        		/*{ id:'teams', text: "Teams",iconCls:'group_clients', leaf: true },*/
         		
-        	 /*  */
-        	
-		/*	{
-        		//text:"Masters",
-				//expanded: false,
-				children: [
-        		{ id:'', text: "Team Roles",iconCls:'', leaf: true },
-        		{ id:'', text: "Users",iconCls:'', leaf: true },
-        		{ id:'', text: "Teams",iconCls:'', leaf: true },
-        		{ id:'', text: "Vendors",iconCls:'', leaf: true },
-        		{ id:'', text: "Production Stages",iconCls:'', leaf: true },
-        		
-				]
-			},
-			{
-        		id:'', text: "Reports",iconCls:'smallReports', leaf: true 
-			},*/
 			
 			]
     		}

@@ -50,6 +50,7 @@ Ext.define('MyDesktop.view.MasterWindow', {
 	var customer = Ext.create('MyDesktop.view.mastermanagement.Customers.CustomersTabPanel');
 var servicetab = Ext.create('MyDesktop.view.mastermanagement.Services.ServiceTabPanel');
 	var workflow = Ext.create('MyDesktop.view.mastermanagement.Workflow.WorkflowTabPanel');
+	var template = Ext.create('MyDesktop.view.mastermanagement.EmailTemplate.TemplateTabPanel');
 	//var setting = Ext.create('MyDesktop.view.settings.SettingTabPanel');
 //var troles= Ext.create('MyDesktop.view.mastermanagement.TeamRoles.TeamRolesTabPanel');
 	
@@ -61,7 +62,7 @@ var servicetab = Ext.create('MyDesktop.view.mastermanagement.Services.ServiceTab
 			margins: '2 5 5 0',
 			activeItem: 0,
 			border: false,
-			items: [customer,tab1,servicetab,userstab,production,vendors,workflow]
+			items: [customer,tab1,servicetab,userstab,production,vendors,workflow,template]
 		};
 
 		var desktop = this.app.getDesktop();

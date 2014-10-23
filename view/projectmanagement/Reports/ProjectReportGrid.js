@@ -43,6 +43,15 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
            		}
 				},
 				{
+					dataIndex: 'author',
+					text: 'Author',
+					align: 'center',
+					flex:1,
+					filter: {
+                	type: 'string'
+           		}
+				},
+				{
 					dataIndex: 'status',
 					text: 'Status',
 					align: 'center',
@@ -79,22 +88,45 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
            		}
 				},
 				{
-					dataIndex: 'Level',
-					text: 'Production Editor',
-					align: 'center',
-					flex:1,
-					filter: {
-                	type: 'string'
-           		}
-				},
-				{
 					dataIndex: 'pm',
 					text: 'Project Manager',
 					align: 'center',
 					flex:1,
-					filter: {
-                	type: 'string'
-           		}
+					
+				},
+				{
+					dataIndex: 'pe',
+					text: 'Production Editor',
+					align: 'center',
+					flex:1,
+				},
+				{
+					dataIndex: 'stage1',
+					text: 'First proofs due',
+					align: 'center',
+					flex:1,
+					
+				},
+				{
+					dataIndex: 'stage2',
+					text: 'Revised proofs due',
+					align: 'center',
+					flex:1,
+					
+				},
+				{
+					dataIndex: 'stage3',
+					text: 'Send for typesetting',
+					align: 'center',
+					flex:1,
+					
+				},
+				{
+					dataIndex: 'stage4',
+					text: 'PDF due',
+					align: 'center',
+					flex:1,
+					
 				},
 				
 				

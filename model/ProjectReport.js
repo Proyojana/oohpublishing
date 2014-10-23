@@ -2,7 +2,7 @@
         extend: 'Ext.data.Model',
         fields: [
             
-             'code','title','status','adeadline','coe','ce','pe','pm'  
+             'code','title','status','author','adeadline','coe','ce','pe','pm','stage1','stage2','stage3','stage4'  
         ],
        //idProperty: 'statename'
     });

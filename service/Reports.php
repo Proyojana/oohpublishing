@@ -998,47 +998,61 @@ Where
 function getProjectReport()
 	{
  		$num_result = mysql_query ("Select Distinct
- oohpublishing.project_title.job_code as code,
+     oohpublishing.project_title.job_code as code,
  oohpublishing.project_title.title as title,
  oohpublishing.project_title.castoff_extent as coe,
  oohpublishing.project_title.confirmed_extent as ce,
  oohpublishing.author.name as author,
- oohpublishing.project_title.agreed_deadline as adeadline,
- oohpublishing.users.username as pm
-From
+ oohpublishing.project_title.agreed_deadline as adeadline, 
+ max(case when oohpublishing.project_team.role='Project Manager' then oohpublishing.users.username end) pm,
+ max(case when oohpublishing.project_team.role='Production Editor' then oohpublishing.users.username end) pe,
+ max(case when oohpublishing.schedule.stage = 'First proofs due' then oohpublishing.schedule.actual_start_date end) stage1,
+ max(case when oohpublishing.schedule.stage = 'Revised proofs due' then oohpublishing.schedule.actual_start_date end) stage2,
+ max(case when oohpublishing.schedule.stage = 'Send for typesetting' then oohpublishing.schedule.actual_start_date end) stage3,
+ max(case when oohpublishing.schedule.stage = 'PDF due' then oohpublishing.schedule.actual_start_date end) stage4
+ From
  oohpublishing.project_title Inner Join
  oohpublishing.author On oohpublishing.project_title.job_code =
    oohpublishing.author.job_code Inner Join
  oohpublishing.project_team On oohpublishing.project_title.id =
    oohpublishing.project_team.project_id Inner Join
  oohpublishing.users On oohpublishing.project_team.user =
-   oohpublishing.users.id
+   oohpublishing.users.id Inner Join
+ oohpublishing.schedule On oohpublishing.project_title.id =
+   oohpublishing.schedule.project_id
 Where
- oohpublishing.project_team.role = 'Project Manager' And
- oohpublishing.author.author = 'Main Contact'
+  oohpublishing.author.author = 'Main Contact'
+  GROUP BY schedule.project_id
   ")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select Distinct
-		 oohpublishing.project_title.job_code as code,
+     oohpublishing.project_title.job_code as code,
  oohpublishing.project_title.title as title,
  oohpublishing.project_title.castoff_extent as coe,
  oohpublishing.project_title.confirmed_extent as ce,
  oohpublishing.author.name as author,
- oohpublishing.project_title.agreed_deadline as adeadline,
- oohpublishing.users.username as pm
-From
+ oohpublishing.project_title.agreed_deadline as adeadline, 
+ max(case when oohpublishing.project_team.role='Project Manager' then oohpublishing.users.username end) pm,
+ max(case when oohpublishing.project_team.role='Production Editor' then oohpublishing.users.username end) pe,
+ max(case when oohpublishing.schedule.stage = 'First proofs due' then oohpublishing.schedule.actual_start_date end) stage1,
+ max(case when oohpublishing.schedule.stage = 'Revised proofs due' then oohpublishing.schedule.actual_start_date end) stage2,
+ max(case when oohpublishing.schedule.stage = 'Send for typesetting' then oohpublishing.schedule.actual_start_date end) stage3,
+ max(case when oohpublishing.schedule.stage = 'PDF due' then oohpublishing.schedule.actual_start_date end) stage4
+ From
  oohpublishing.project_title Inner Join
  oohpublishing.author On oohpublishing.project_title.job_code =
    oohpublishing.author.job_code Inner Join
  oohpublishing.project_team On oohpublishing.project_title.id =
    oohpublishing.project_team.project_id Inner Join
  oohpublishing.users On oohpublishing.project_team.user =
-   oohpublishing.users.id
+   oohpublishing.users.id Inner Join
+ oohpublishing.schedule On oohpublishing.project_title.id =
+   oohpublishing.schedule.project_id
 Where
- oohpublishing.project_team.role = 'Project Manager' And
- oohpublishing.author.author = 'Main Contact'
+  oohpublishing.author.author = 'Main Contact'
+  GROUP BY schedule.project_id
   LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))

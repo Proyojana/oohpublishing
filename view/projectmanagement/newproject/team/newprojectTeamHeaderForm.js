@@ -72,15 +72,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.newprojectTeamHeade
 		width:220,
 		
 	},
-	{
-		id:'teamHeader_AuthorName',
-		fieldLabel: 'Author Name',
-		x:10,
-		readOnly: true,
-		y:30,
-		width:220,
-		
-	},
+	
 	]
 	
 	this.callParent();

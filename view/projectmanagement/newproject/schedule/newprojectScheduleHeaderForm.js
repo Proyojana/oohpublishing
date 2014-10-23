@@ -72,15 +72,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		width:260,
 		
 	},
-		{
-		id:'scheduleHeader_AuthorName',
-		fieldLabel: 'Author Name',
-		x:10,
-		readOnly: true,
-		y:30,
-		width:260,
 		
-	},
 	]
 	
 	this.callParent();

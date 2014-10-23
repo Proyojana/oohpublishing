@@ -77,6 +77,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						title : 'Edit Project Details',
 						width : 1100,
 						height : 520,
+						modal: true,
+						closable: false,
 						items : [{
 							xtype : 'editprojectaddform',
 							x : 0,
@@ -125,6 +127,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						title : 'Edit Author/Contributor Info',
 						width : 1125,
 						height : 550,
+						modal: true,
+						closable: false,
 						items : [
 						{
 							xtype : 'AuthorHeaderForm',
@@ -272,6 +276,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					var win = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
 						draggable   : false,
+						modal: true,
+						closable: false,
 						layout : {
 							type : 'absolute'
 						},
@@ -441,7 +447,18 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					});
 					
 				}
-			},]
+			},
+			{
+					 xtype:'button',
+                       text:'Cancel',
+                       iconCls : 'cancelClass',
+                      width:100,
+						x:600,
+						y:760,
+						handler:function(){
+							win.close();
+						}
+				}]
 					});
 					win.show();
 
@@ -498,6 +515,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						title : 'Edit Schedule',
 						width : 1125,
 						height : 600,
+						modal: true,
+						closable: false,
 						items : [
 						{
 							xtype:'editprojectScheduleHeaderForm',
@@ -518,8 +537,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				iconCls : 'updateClass',
 				pressed:true,
 				width:100,
-				x:450,
-				y:460,
+				x:560,
+				y:500,
 				//	margin:'0 0 0 100',
 				handler: function() {
 
@@ -602,8 +621,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				iconCls : 'cancelClass',
 				pressed:true,
 				width:100,
-				x:600,
-				y:460,
+				x:700,
+				y:500,
 				//	margin:'0 0 0 100',
 				handler: function() {
 					win.close();
@@ -625,7 +644,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Message',
 						width : 800,
-						height : 400,
+						height : 550,
 						items : [
 						{
 							xtype : 'emailVendor',
@@ -635,9 +654,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Send Email',
 							handler: function() {
 								
-							
+							    var vendor_from=Ext.getCmp('vendorFrom').getValue().toString();
 								var vendor_to=Ext.getCmp('vendorEmail').getValue().toString();
-								
+								var vendor_cc=Ext.getCmp('vendorCc').getValue().toString();
 								var vendor_message=Ext.getCmp('vendorMessage').getValue().toString();
 								
 								var conn = new Ext.data.Connection();
@@ -646,9 +665,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									method : 'POST',
 									params : {
 										action : 3,
-										
+										vendor_from:vendor_from,
 										vendor_to:vendor_to,
-										
+										vendor_cc:vendor_cc,
 										vendor_message:vendor_message
 										
 									},
@@ -690,7 +709,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						autoScroll : true,
 						title : 'Message',
 						width : 800,
-						height : 400,
+						height : 550,
 						items : [
 						{
 							xtype : 'emailAuthor',
@@ -700,9 +719,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Send Email',
 							handler: function() {
 								
-							
+							    var author_from=Ext.getCmp('authorFrom').getValue().toString();
 								var author_to=Ext.getCmp('authorEmail').getValue().toString();
-								
+								var author_cc=Ext.getCmp('authorCc').getValue().toString();
 								var author_message=Ext.getCmp('authorMessage').getValue().toString();
 								
 								var conn = new Ext.data.Connection();
@@ -711,9 +730,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									method : 'POST',
 									params : {
 										action : 4,
-										//html : html,
+										author_from:author_from,
 										author_to:author_to,
-										
+										author_cc:author_cc,
 										author_message:author_message
 										
 									},
@@ -776,6 +795,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						title : 'Edit Team',
 						width : 1125,
 						height : 450,
+						modal: true,
+						closable: false,
 						items : [
 						{
 							xtype:'TeamHeaderForm',
@@ -876,6 +897,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						title : 'Add Notes & Remainders',
 						width : 1125,
 						height : 450,
+						modal: true,
+						closable: false,
 						items : [
 						{
 							xtype:'NotesHeaderForm',
@@ -999,6 +1022,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						title : 'Edit Artwork',
 						width : 1200,
 						height : 450,
+						modal: true,
+						closable: false,
 						items : [
 						{
 							xtype:'editprojectArtworkHeaderForm',

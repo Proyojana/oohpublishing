@@ -18,6 +18,15 @@ $id=$_SESSION['id'];
         case 4:
 			sendEmailAuthor($_POST['author_from'],$_POST['author_to'],$_POST['author_cc'],$_POST['author_message']);
 		    break;
+		case 5:
+		    getTemplateMaster();
+		    break;
+		case 6:
+			getTemplateMasterById($_POST["templateid"]);	
+			break;
+		case 7:
+			updateTemplateMaster($_POST["templateid"],$_POST['templatecode'],$_POST['templatename'],$_POST['templaterole'],$_POST['templatemain'],$_POST['templatefooter']);	
+			break;
 		default: 
 			break;
 	}
@@ -29,38 +38,33 @@ function authorEmail($job_code,$id)
 		/** insert into temp**/
  		$selectworkflow = mysql_query("Select
  		 project_title.title as title, 
- 		 author.name as name
+ 		 project_title.client_deadline as client_deadline,
+ 		 author.name as name,
+ 		 email_template.main as main,
+ 		 email_template.footer as footer
  		 from 
  		 project_title Inner Join
- 		 author On project_title.job_code=author.job_code
+ 		 author On project_title.job_code=author.job_code,
+ 		 email_template
  		 where 
  		 project_title.job_code = '".$job_code."'
- 		 And author.author='Main contact' ");
+ 		 And author.author='Main contact' And email_template.role=1 ");
 		while($row = mysql_fetch_array($selectworkflow)) {
 				
 			$title = $row['title'];
+			$date = $row['client_deadline'];
 			$name = $row['name'];
+			$main = $row['main'];
+			$footer = $row['footer'];
 		}
 		
 		$result1 = "<p>Dear ".$name.",<p>
-		</br>
 		
-
 <p>The proofs for your forthcoming book ".$title." have been dispatched from our typesetter and should be with you shortly.</p>
-
-<p>You will receive two copies of the proofs – one is for your own records, the other should be marked with any essential corrections. I have also uploaded the PDFs to our ftp site:</p>
-
-<p>Address:</p>
-<p>Username:</p>
-<p>Password:</p>
-<p>Filename:</p>
-
-<p>Please mark only essential corrections, and ensure that your corrections are clearly marked. A table of mark-up symbols is attached to this message for your reference. Let me know as soon as possible if you wish to make any changes to the page numbering in the index.</p>
-
-<p>Please aim to return the proofs to arrive with me at the address below no later than date.</p>
-
-<p>Please confirm receipt of this email. I hope you are pleased with the proofs – do let me know if you have any queries or problems at any time.</p>";
-		
+".$main."
+<p>Please aim to return the proofs to arrive with me at the address below no later than date ".$date."</p>
+".$footer." ";
+	
      $result2 = mysql_query("INSERT INTO temp (id,message)
 		                               VALUES ('' ,'" . $result1 . "')");
 					if(!$result2) {
@@ -68,19 +72,21 @@ function authorEmail($job_code,$id)
 						$result["message"] = "Invalid query: " . mysql_error();
 					} else {
 						$result["success"] = true;
-						$result["message"] = "Notes saved successfully";
+						$result["message"] = "Saved successfully";
 					}
 		/** Get message from temp **/			
-	$result3 = mysql_query ("Select distinct
-oohpublishing.author.email as authorEmail,
-oohpublishing.temp.message as authorMessage,
-oohpublishing.user_masters.user_email as authorFrom
+	$result3 = mysql_query ("Select Distinct
+ oohpublishing.author.email As authorEmail,
+  oohpublishing.user_masters.user_email As authorFrom,
+  oohpublishing.temp.message As authorMessage
 From
-oohpublishing.author,
-oohpublishing.temp,
-oohpublishing.user_masters
+ oohpublishing.author,
+ oohpublishing.temp,
+ oohpublishing.user_masters
 Where
-oohpublishing.author.job_code='".$job_code."' || oohpublishing.user_masters.user_id='".$id."'");
+ (oohpublishing.author.job_code = '".$job_code."' And
+ oohpublishing.author.author = 'Main Contact') And
+ oohpublishing.user_masters.user_id = 1 ");
 			
 		if(!$result3)
 			{
@@ -97,7 +103,7 @@ oohpublishing.author.job_code='".$job_code."' || oohpublishing.user_masters.user
 	  	}
       	echo(json_encode($result));
 		
-		/** Delete the temp**/
+		/**Delete the temp**/
 		$result1= mysql_query("DELETE FROM temp");
 				
 				if(!$result1)
@@ -109,7 +115,7 @@ oohpublishing.author.job_code='".$job_code."' || oohpublishing.user_masters.user
 				{
 					$result["success"] = true;
 					$result["message"] = 'Deleted successfully';
-				}			
+				}	
     }
 	
 function vendorEmail($job_code,$id)
@@ -120,14 +126,17 @@ function vendorEmail($job_code,$id)
  		 author.name as name,
  		 author.email as email,
  		 author.phone as phone,
- 		 author.address as address
+ 		 author.address as address,
+ 		 email_template.main as main,
+ 		 email_template.footer as footer
  		 from 
  		 project_title Inner Join
  		 customers On project_title.client=customers.id Inner Join
- 		 author On project_title.job_code=author.job_code
+ 		 author On project_title.job_code=author.job_code,
+ 		 email_template
  		 where 
  		 project_title.job_code = '".$job_code."'
- 		 And author.author='Main contact' ");
+ 		 And author.author='Main contact' And email_template.role=2");
 		while($row = mysql_fetch_array($selectworkflow)) {
 				
 			$client = $row['client'];
@@ -135,6 +144,8 @@ function vendorEmail($job_code,$id)
 			$email = $row['email'];
 			$phone = $row['phone'];
 			$address = $row['address'];
+			$main = $row['main'];
+			$footer = $row['footer'];
 		}
 		
 		$result1 = "<p>Dear ".$client.",</p>
@@ -159,28 +170,9 @@ function vendorEmail($job_code,$id)
 <p>".$phone." </p>
 <p>".$address."</p>
 
+".$main."
 
-<p>Please contact the author as soon as possible to introduce yourself and to confirm their availability for answering queries. It would also be helpful if you could outline how your queries will be presented to them so they know what to expect. Note that the pagination of the document the author views onscreen may differ to yours. Please clearly refer to specific points in the text without using page and line numbers, perhaps pasting the relevant passages into an email or inserting your queries directly into the Word document.
-
-Note that this title is to follow the Cambridge University Press global workflow, so the author will review the Manuscript and be sent the majority of queries once the edit is complete – please allow time for this in your schedule. If you do not have the guidelines for the global workflow then please let me know.
-
-As soon as it is ready we will send through the index list for editing – this is <<>> in the fee.</p>
-
-<p>The fee for this project is <<£***>>. The OOH job number for this title is <<***>>- please quote this when invoicing OOH. Invoices should be submitted to accounts@oohpublishing.co.uk. Payment terms: 45 days.
-
-Please return the copy-edited files to me no later than <<schedule completion date>>. Files should be returned via the Out of House FTP site (details above). We suggest that you switch 
-
-off TC before editing anything to do with automated numbers, e.g. adding/removing footnotes.</p>
-
-<p>When you are ready to return the completed script please include:</p>
-
-<p>• the copy-edited files (one with changes tracked and one clean file with all changes accepted)</p>
-
-<p>• list of running heads – see copy-eds brief for hat is required, or query if youre unsure</p>
-
-<p>• any pertinent style points (we have supplied a Production information form for you to fill in)</p>
-
-<p>Please note that this is an onscreen copy-edit. Please refer to the detailed instructions in our guide to onscreen editing</p>";
+".$footer." ";
 		
      $result2 = mysql_query("INSERT INTO temp (id,message)
 		                               VALUES ('' ,'" . $result1 . "')");
@@ -303,4 +295,97 @@ $result["message"] = 'Message send sucessfully';
 
 echo(json_encode($result));
 			}
+
+function getTemplateMaster()
+				{
+			 		$num_result = mysql_query ("Select
+			  email_template.id as template_id,
+			  email_template.code as template_code,
+			  email_template.name as template_name,
+			  email_template.role as template_role,
+			  email_template.main as template_main,
+			  email_template.footer as template_footer
+			From
+			  email_template
+			")or die(mysql_error());
+					
+					$totaldata = mysql_num_rows($num_result);
+			
+					$result = mysql_query("Select
+			  email_template.id as template_id,
+			  email_template.code as template_code,
+			  email_template.name as template_name,
+			  email_template.role as template_role,
+			  email_template.main as template_main,
+			  email_template.footer as template_footer
+			From
+			  email_template LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
+	}
+	function getTemplateMasterById($templateid)
+ 	{
+	$result1 = mysql_query ("Select
+  email_template.id as template_id,
+  email_template.name as template_name,
+  email_template.code as template_code,
+  email_template.role as template_role,
+  email_template.main as template_main,
+  email_template.footer as template_footer
+From
+  email_template 
+			Where
+		  	email_template.id=".$templateid."");
+			
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+			$result ["data"] = $row;
+	  	}
+		
+		
+      	echo(json_encode($result));
+    }
+    function updateTemplateMaster($templateid,$templatecode,$templatename,$templaterole,$templatemain,$templatefooter)
+    {
+		$checkquery="SELECT id FROM email_template WHERE id='".$templateid."'";
+		$result1=mysql_query($checkquery);
+		$num_rows=mysql_num_rows($result1);
+		
+		if($num_rows==1){
+			$result1= mysql_query("UPDATE email_template set code='".$templatecode."', name='".$templatename."',role='".$templaterole."',main='".$templatemain."',footer='".$templatefooter."' WHERE id=".$templateid."");
+				
+		if(!$result1)
+			{
+				$result["failure"] = true;
+				$result["message"] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				$result["message"] = 'Updated successfully';
+			}
+		}
+		else
+		{
+			$result["failure"] = true;
+			$result["message"] =  'User does not exist';
+		}
+		
+
+		echo json_encode($result);
+    }
     ?>

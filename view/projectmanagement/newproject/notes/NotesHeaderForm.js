@@ -67,15 +67,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.notes.NotesHeaderForm' ,
 		width:220,
 		
 	},
-	{
-		id:'addnotesHeader_AuthorName',
-		fieldLabel: 'Author Name',
-		x:10,
-		readOnly: true,
-		y:30,
-		width:220,
-		
-	},
+	
 	]
 	
 	this.callParent();

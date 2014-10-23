@@ -80,7 +80,7 @@ tinymce.init({
 							x:10,
 							y:100,
 							width:700,
-							height:300
+							height:355
 						},
 
 						]

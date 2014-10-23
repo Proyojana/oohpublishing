@@ -72,15 +72,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.artwork.CreateprojectArt
 		width:220,
 		
 	},
-	{
-		id:'add_ArtworkHeader_AuthorName',
-		fieldLabel: 'Author Name',
-		x:10,
-		readOnly: true,
-		y:30,
-		width:220,
-		
-	},
+
 	]
 	
 	this.callParent();
