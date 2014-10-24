@@ -1,20 +1,7 @@
 var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
-			/* var available = Ext.create('Ext.data.Store', {
-        fields: ['period1', 'name1'],
-        data : [
-         {"period1":"Month", "name1":"Month"},
-            {"period1":"Year", "name1":"Year"}
-        ]
-    });
-     var available1 = Ext.create('Ext.data.Store', {
-        fields: ['period1', 'name1'],
-        data : [
-         {"period1":"Fixed", "name1":"Fixed"},
-            {"period1":"Variable", "name1":"Variable"}
-        ]
-    });*/
+			
    var ratecard = Ext.create('Ext.data.JsonStore', {
    fields: ['Activity','Name', 'Email','Phone'],
    });
@@ -50,47 +37,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.CurrentProjects', {
 			}
 		});
 		service.loadPage(1);
-		/*var activity = Ext.create('MyDesktop.store.ProductionStages');
-		activity.load({
-			params: {
-				start: 0,
-				limit: 50
-			}
-		});
-			activity.loadPage(1);
-			
-		var ratecard = Ext.create('MyDesktop.store.RateCardGrid');
-		ratecard.load({
-			params: {
-				start: 0,
-				limit: 50
-			}
-		});*/
-	
+		
 		this.store = service,
-		this.tbar = Ext.create('Ext.Toolbar', {  
-							   items:[
-							   /*{
-                               xtype : 'button',
-                               id : 'addnewrow',
-                               text : 'Insert New Row',
-                               pressed:true,
-                               x : 500,
-                               y : 10,
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-               						 var r = Ext.create('MyDesktop.model.RateCardGrid', {
-                    				activity: '',
-                    				uom: '',
-                 					dollars: '',
-                    				pound: ''
-                				});
-                		       ratecard.insert(0, r);
-            				 }                           
-        },    */  
-        ]
-        });
+		
 		this.columns = [
 				/*{
 					dataIndex: 'ratecardid',
@@ -117,24 +66,21 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.CurrentProjects', {
 		           
 				},
 				{
-					dataIndex: 'cur_proj_authors',
-					id:'cur_proj_authors',
-					text: 'Author',
-					//width:100,
-					align:'center',
-					flex:1,
-				
-				},
-				/*{
-					dataIndex: 'cur_proj_client',
-					id:'cur_proj_client',
-					text: 'Client',
+					dataIndex: 'cur_proj_hbisbn',
+					text: 'HB ISBN',
 					//width:100,
 					flex:1,
 					align:'center',
-				
 				},
-				*/{
+				{
+					dataIndex: 'cur_proj_pbisbn',
+					text: 'PB ISBN',
+					//width:100,
+					flex:1,
+					align:'center',
+				},
+				
+				{
 					dataIndex: 'cur_proj_deadline',
 					text: 'Agreed Deadline',
 					//width:100,

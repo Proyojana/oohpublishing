@@ -102,6 +102,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 						Ext.getCmp('Vendors_teamformTab').setDisabled(false);
 							Ext.getCmp('Vendors_contactTab').setDisabled(false);
 							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(false);
+							Ext.getCmp('Vendors_currentprojectsgridTab').setDisabled(false);
+							Ext.getCmp('Vendors_histryprojectsgridTab').setDisabled(false);
 						
 						Ext.getCmp('basicname').setReadOnly(true);
 						Ext.getCmp('basicaddress1').setReadOnly(true);
@@ -119,24 +121,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 						Ext.getCmp('basicwebsite').setReadOnly(true);
 						Ext.getCmp('basicdescription').setReadOnly(true);
 						
-						/*	Ext.getCmp('contctname').setReadOnly(true);
-						Ext.getCmp('contctphone').setReadOnly(true);
-						Ext.getCmp('cntctemail').setReadOnly(true);
-						Ext.getCmp('cntctdesignation').setReadOnly(true);
-						Ext.getCmp('cntctaddven').setVisible(false); 
-						Ext.getCmp('cntcteditven').setVisible(false); 
-						Ext.getCmp('cntctrstven').setVisible(false);
-						
-						Ext.getCmp('teamaddven').setVisible(false); 
-						Ext.getCmp('teameditven').setVisible(false); 
-						Ext.getCmp('teamresetvendor').setVisible(false);
-						 
-						Ext.getCmp('teamname').setReadOnly(true);
-						Ext.getCmp('division').setReadOnly(true);
-						Ext.getCmp('teamemail').setReadOnly(true);
-						Ext.getCmp('teamphone').setReadOnly(true);
-						Ext.getCmp('teampoc').setReadOnly(true);*/
-						
+							
 						
 						//hide add,edit and reset buttons
 						Ext.getCmp('venadd').setVisible(false); 
@@ -149,12 +134,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 						grid1.getStore().load({params:{action:1,vendorid:id}});
 						var grid1=Ext.getCmp('Vendors_ratecardgridTab');
 						grid1.getStore().load({params:{action:1,vendorid:id}});
-						 //show inner panel
-					/*	Ext.getCmp('customercontactsformTab').setDisabled(false);
-							Ext.getCmp('customerteamsformTab').setDisabled(false);
-							Ext.getCmp('customerratecardformTab').setDisabled(false);
-						Ext.getCmp('customerstab').layout.setActiveItem('custbasicinfoform');*/
-						
+								
 						
 						
 				}
@@ -179,6 +159,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 						Ext.getCmp('Vendors_teamformTab').setDisabled(false);
 							Ext.getCmp('Vendors_contactTab').setDisabled(false);
 							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(false);
+							Ext.getCmp('Vendors_currentprojectsgridTab').setDisabled(false);
+							Ext.getCmp('Vendors_histryprojectsgridTab').setDisabled(false);
 
 Ext.getCmp('basiccode').setReadOnly(false);
 Ext.getCmp('basicname').setReadOnly(false);

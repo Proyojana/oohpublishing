@@ -16,6 +16,9 @@ $id=$_SESSION['id'];
 			break;
 		case 4:
 			saveStageMaster($_POST['stage_id'],$_POST['stage_order'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name'],$_POST['no_of_days'],$_POST['ratecard_USD'],$_POST['ratecard_GBP']);
+			break;
+		case 5:
+			getDefaultStages();
 			break;	
 		default: 
 			break;
@@ -196,5 +199,29 @@ Where
 			}
 		
 		echo json_encode($result);
+	}
+
+	function getDefaultStages()
+	{
+ 		$num_result = mysql_query ("Select
+  default_stages.stage_order As stage_order,
+  default_stages.stage_name As stage_name
+From
+  default_stages")or die(mysql_error());
+		
+		$totaldata = mysql_num_rows($num_result);
+
+		$result = mysql_query("Select
+  default_stages.stage_order As stage_order,
+  default_stages.stage_name As stage_name
+From
+  default_stages 
+ LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
 	}
 ?>

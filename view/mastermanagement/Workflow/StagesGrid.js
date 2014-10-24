@@ -78,28 +78,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 }
 
 		this.store = ratecard,
-		this.tbar = Ext.create('Ext.Toolbar', {  
-							   items:[{
-                               xtype : 'button',
-                               id : 'addnewrowactivity',
-                               text : 'Insert New Row',
-                               pressed:true,
-                               x : 500,
-                               y : 10,
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-               						 var r = Ext.create('MyDesktop.model.Stages', {
-               						 stage_id:'',
-                    				stage_name: '',
-                    				activity: ''
-                				});
-                		       ratecard.insert(0, r);
-            				 }                           
-        },
-        
-        ]
-        });
+
 		this.columns = [
 				{
 					dataIndex: 'stage_id',
@@ -277,6 +256,24 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
 				items:[
+				{
+                               xtype : 'button',
+                               id : 'addnewrowactivity',
+                               text : 'Insert New Row',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+               						 var r = Ext.create('MyDesktop.model.Stages', {
+               						 stage_id:'',
+                    				stage_name: '',
+                    				activity: ''
+                				});
+                		       ratecard.insert(ratecard.getCount(), r);
+            				 }                           
+        },
 				{
 				xtype:'button',
 				text:'Save',

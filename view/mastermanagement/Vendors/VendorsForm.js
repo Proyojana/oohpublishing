@@ -44,6 +44,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsForm' ,{
 							Ext.getCmp('Vendors_teamformTab').setDisabled(true);
 							Ext.getCmp('Vendors_contactTab').setDisabled(true);
 							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(true);
+							Ext.getCmp('Vendors_currentprojectsgridTab').setDisabled(true);
+							Ext.getCmp('Vendors_histryprojectsgridTab').setDisabled(true);
 						}
 					},
 		items:[{

@@ -50,52 +50,12 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.HistoryProjects', {
 			}
 		});
 		service.loadPage(1);
-		/*var activity = Ext.create('MyDesktop.store.ProductionStages');
-		activity.load({
-			params: {
-				start: 0,
-				limit: 50
-			}
-		});
-			activity.loadPage(1);
-			
-		var ratecard = Ext.create('MyDesktop.store.RateCardGrid');
-		ratecard.load({
-			params: {
-				start: 0,
-				limit: 50
-			}
-		});*/
+		
 	
 		this.store = service,
-		this.tbar = Ext.create('Ext.Toolbar', {  
-							   items:[
-							   /*{
-                               xtype : 'button',
-                               id : 'addnewrow',
-                               text : 'Insert New Row',
-                               pressed:true,
-                               x : 500,
-                               y : 10,
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-               						 var r = Ext.create('MyDesktop.model.RateCardGrid', {
-                    				activity: '',
-                    				uom: '',
-                 					dollars: '',
-                    				pound: ''
-                				});
-                		       ratecard.insert(0, r);
-            				 }                           
-        },    */  
-        ]
-        });
+
 		this.columns = [
-				/*{
-					dataIndex: 'ratecardid',
-					hidden:true
-				},*/
+				
 				
 				{
 					dataIndex: 'histry_proj_code',
@@ -116,15 +76,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.HistoryProjects', {
 			
 		           
 				},
-				{
-					dataIndex: 'histry_proj_authors',
-					id:'histry_proj_authors',
-					text: 'Author',
-					//width:100,
-					align:'center',
-					flex:1,
 				
-				},
 				{
 					dataIndex: 'histry_proj_hbisbn',
 					id:'histry_proj_hbisbn',
