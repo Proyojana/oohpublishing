@@ -35,12 +35,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
              })        
              ],
 	initComponent: function() {
-		var users = Ext.create('MyDesktop.store.Users');
+		/*var users = Ext.create('MyDesktop.store.Users');
+		users.load({params:{action: 1}});*/
+		var users = Ext.create('MyDesktop.store.Vendors');
 		users.load({params:{action: 1}});
 		var team = Ext.create('MyDesktop.store.Team');
 		team.load({params:{action: 12}});
 		this.store = team,
-			
 			this.columns = [
 				{
 					dataIndex: 'id',
@@ -68,13 +69,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					align: 'center',
                     flex:1,
 					editor:{
-						xtype:'textfield'
-					 	/*xtype:'combo',
+						//xtype:'textfield'
+					 	xtype:'combo',
 					 	store: users,
 						queryMode: 'local',
-						displayField: 'username',
-						valueField: 'userid',
-						listeners: {
+						displayField: 'name',
+						valueField: 'id',
+						/*listeners: {
                 change: function (field, newValue, oldValue) {
                 	 var grid = this.up().up();
                      var selModel = grid.getSelectionModel();
