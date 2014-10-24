@@ -187,7 +187,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 								var stage_name=rec.get('stage_name');
 								var stage_id=rec.get('stage_id');
 								var activity=rec.get('activity');
-								var no_of_days=rec.get('no_of_days_perstage');
+								var no_of_days=rec.get('no_of_days');
 								var ratecard_USD=rec.get('ratecard_USD');
 								var ratecard_GBP=rec.get('ratecard_GBP');							
 								var conn = new Ext.data.Connection();
@@ -269,7 +269,11 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
                						 var r = Ext.create('MyDesktop.model.Stages', {
                						 stage_id:'',
                     				stage_name: '',
-                    				activity: ''
+                    				activity: '',
+                    				no_of_days:'',
+                    				ratecard_USD:'',
+                    				ratecard_GBP:''
+                    				
                 				});
                 		       ratecard.insert(ratecard.getCount(), r);
             				 }                           
@@ -287,6 +291,9 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 								var stage_name='';
 								var stage_id='';
 								var activity='';
+								var no_of_days='';
+								var ratecard_USD='';
+								var ratecard_GBP='';
 							var grid=Ext.getCmp('stagesgrid');
 							
 					var myStore = Ext.getCmp('stagesgrid').getStore();
@@ -296,16 +303,17 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 				    stage_name=stage_name+rec.get('stage_name')+',';
 				    stage_id=stage_id+rec.get('stage_id')+',';
 				    activity=activity+rec.get('activity')+',';
-				   
-				    
-				   					
+				    no_of_days=no_of_days+rec.get('no_of_days')+',';
+				    ratecard_USD=ratecard_USD+rec.get('ratecard_USD')+',';
+				    ratecard_GBP=ratecard_GBP+rec.get('ratecard_GBP')+',';
+				    			
 				});
 				      
 				var conn = new Ext.data.Connection();
 					conn.request({
 									url: 'service/stages.php',
 									method: 'POST',
-									params : {action:2,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order},
+									params : {action:2,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 
