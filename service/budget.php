@@ -617,13 +617,13 @@ function getReceivable_p($job_code)
 		$result = mysql_query("
 		 Select
   oohpublishing.budget_receivable_project.id as budgetReceive_id,
-  oohpublishing.budget_receivable_project.rate_gbp as rate_GBP,
+  oohpublishing.budget_receivable_project.rate_gdp as rate_GBP,
   oohpublishing.budget_receivable_project.rate_usd as rate_USD,
   oohpublishing.budget_receivable_project.no_of_unit as no_of_unit,
   oohpublishing.budget_receivable_project.actual_usd as actual_amount_USD,
-  oohpublishing.budget_receivable_project.actual_gbp as actual_amount_GBP,
+  oohpublishing.budget_receivable_project.actual_gdp as actual_amount_GBP,
   oohpublishing.budget_receivable_project.budgeted_usd as budgeted_amount_USD,
-  oohpublishing.budget_receivable_project.budgeted_gbp as budgeted_amount_GBP
+  oohpublishing.budget_receivable_project.budgeted_gdp as budgeted_amount_GBP
   
 From
   oohpublishing.budget_receivable_project
