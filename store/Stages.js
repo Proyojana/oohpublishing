@@ -8,7 +8,7 @@
 			actionMethods: {
 		     read: 'POST'
     		},
-    			extraParams:{action:1},
+    			extraParams:{action:5},
     		reader: {
 				type:'json',
 	        	root: 'results',
