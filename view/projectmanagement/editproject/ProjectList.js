@@ -70,7 +70,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				handler : function(grid, rowIndex, colIndex) {
 					var win = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
-						 trackResetOnLoad: true,
 						layout : {
 							type : 'absolute'
 						},
@@ -94,15 +93,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							x:600,
 							y:445,
 							handler:function(){
-								var currentForm = Ext.getCmp('editprojectaddform');
-								if(currentForm.isDirty())
-								{
-									alert(dirty);
-								}
-								else{
-									win.close();
-								}
-							
+							win.close();
 							}
 							}
 							]
@@ -728,13 +719,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Send Email',
 							handler: function() {
 								
-						        var author_from=Ext.getCmp('authorFrom').getValue().toString();
+							    var author_from=Ext.getCmp('authorFrom').getValue().toString();
 								var author_to=Ext.getCmp('authorEmail').getValue().toString();
 								var author_cc=Ext.getCmp('authorCc').getValue().toString();
 								var author_message=Ext.getCmp('authorMessage').getValue().toString();
 								
 								var conn = new Ext.data.Connection();
-							 form.submit({    
+								conn.request({
 									url : 'service/emailTemplate.php',
 									method : 'POST',
 									params : {

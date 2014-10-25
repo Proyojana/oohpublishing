@@ -7,7 +7,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.emailAuthor' ,
 	layout: {
               type: 'absolute'
            },
-	height:520,
+	
 	frame:true,
 	defaults: {
         labelWidth: 90,
@@ -82,63 +82,9 @@ tinymce.init({
 							x:10,
 							y:100,
 							width:700,
-							height:300
+							height:355
 						},
-						
-							{
-      	 xtype: 'filefield',
-      	 //vtype:'filei', 
-         x:10,
-        // msgTarget: 'under',
-         //acceptSize: 1024,
-         y:410,
-         width:280,
-         name: 'file',
-         id:'file',
-        // anchor: '27%',
-        fieldLabel: 'Attach Files',
-        buttonText: 'Select a File...'},
-							
-					
-					{
-            xtype:'button', 
-            id:'save'  ,        
-            text: 'Send Email',  
-                 
-            x:310,
-		    y:440,
-		    width:100,
-            handler: function(){ 
-            	 var form = this.up('emailAuthor').getForm();               	
-                                var author_from=Ext.getCmp('authorFrom').getValue().toString();
-								var author_to=Ext.getCmp('authorEmail').getValue().toString();
-								var author_cc=Ext.getCmp('authorCc').getValue().toString();
-								var author_message=Ext.getCmp('authorMessage').getValue().toString();
-								
-								var conn = new Ext.data.Connection();
-							 form.submit({    
-									url : 'service/emailTemplate.php',
-									method : 'POST',
-									params : {
-										action : 4,
-										author_from:author_from,
-										author_to:author_to,
-										author_cc:author_cc,
-										author_message:author_message
-										
-									},
-									success : function(response) {
-										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Message', obj.message);
-										email_author.close(); 
-									},
-								});
-               
-            },
-       
-       
-    
-      },
+
 						]
 					
 		this.callParent();

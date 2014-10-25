@@ -38,8 +38,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 		var projectmanager = Ext.create('MyDesktop.store.ProjectManagers');
 		projectmanager.load({params:{action: 8}});
 		
-		var vendor = Ext.create('MyDesktop.store.Vendors');
-		vendor.load({params:{action: 1}});
+		var productioneditor = Ext.create('MyDesktop.store.ProductionEditor');
+		productioneditor.load({params:{action: 9}});
 	
 		this.store = store1,
 			this.columns = [
@@ -62,35 +62,36 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 					align: 'center',
                     flex:1,
 					editor:{
-						//xtype:'textfield'
-					 	xtype:'combo',
-					 	store: vendor,
+						xtype:'textfield'
+					 /*	xtype:'combo',
+					 	store: productioneditor,
 						queryMode: 'local',
-						displayField: 'name',
-						valueField: 'name',
+						displayField: 'username',
+						valueField: 'userid',
 						listeners: {
-                    /*change: function (field, newValue, oldValue) {
+                change: function (field, newValue, oldValue) {
                 	var grid = this.up().up();
                         // get selection model of the grid  
-                     var selModel = grid.getSelectionModel();
-                	 var conn = new Ext.data.Connection();
+                    var selModel = grid.getSelectionModel();
+                		var conn = new Ext.data.Connection();
 					 conn.request({
-					 url: 'service/vendors.php',
+					 url: 'service/Users.php',
 					 method: 'POST',
-					 params : {action:2,id:newValue},
+					 params : {action:2,userid1:newValue},
 					 success:function(response){
 					 obj1 = Ext.JSON.decode(response.responseText);
-					 var email=obj1.data.basicemail;
+					 var email=obj1.data.useremail;
 					selModel.getSelection()[0].set('email', email);                         
 					 }
 					 });
-			            }*/
-			              }	
+                    
+			            }
+			              }	*/
                         },
                          renderer: function(value) {
-					var index = vendor.find('id', value);
+					var index = productioneditor.find('userid', value);
 					if (index != -1) {
-					return vendor.getAt(index).data.name;
+					return productioneditor.getAt(index).data.username;
 					}
 					return value;
 					}
@@ -113,6 +114,57 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
+			items:[
+			/*{
+				xtype:'button',
+				text:'Save + Next',
+				pressed:true,
+				width:100,
+				handler:function(){
+					var project_id=Ext.getCmp('teamHeader_projectID').getValue(); 
+					var job_code=Ext.getCmp('teamHeader_Job').getValue(); 
+					var role='';
+					var name='';
+					var email='';
+					var myStore = Ext.getCmp('newteamgrid').getStore();
+					myStore.each(function(rec) {
+						role=role+rec.get('role')+',';
+						name=name+rec.get('name')+',';
+						email=email+rec.get('email')+',';
+						});
+						
+					var conn = new Ext.data.Connection();
+					 conn.request({
+						url: 'service/Users.php',
+						method: 'POST',
+						params : {action:11,project_id:project_id,role:role,name:name,email:email},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message);
+							//Ext.getCmp('newprojectnotesformTab').setDisabled(false);
+							
+						}
+					});
+					var currentHeaderForm = Ext.getCmp('newprojectNotesHeaderForm');
+                	
+                	
+						
+						currentHeaderForm.getForm().load({
+   								 url: 'service/notes.php',
+							     params: {
+        						 	action:5,job_code:job_code
+							    },
+							      failure: function(form, action){
+						        Ext.Msg.alert("Load failed", action.result.errorMessage);
+    							}
+							   
+							   
+						});
+					Ext.getCmp('newprojectnotesformTab').setDisabled(false);
+						Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectnotesformTab');
+				}
+			}*/
+			]
 			
 						
 		}),
