@@ -440,28 +440,32 @@ Where
 	function getTeam($project_id)
 	{
  		$num_result = mysql_query ("Select
-  project_team.id as id,
- project_team.role as role,
- project_team.user as name,
- project_team.email as email
+  oohpublishing.project_team.id As id,
+  oohpublishing.project_team.role As role,
+  oohpublishing.project_team.email As email,
+  oohpublishing.vendors.name As name
 From
- project_team Left Join
- users On project_team.user =
-   users.id
-    Where project_team.project_id='".$project_id."' and project_team.flag=0")or die(mysql_error());
+  oohpublishing.project_team Inner Join
+  oohpublishing.vendors On oohpublishing.project_team.user =
+    oohpublishing.vendors.id
+Where
+  oohpublishing.project_team.project_id = '".$project_id."' And
+  oohpublishing.project_team.flag = 0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-		project_team.id as id,
- project_team.role as role,
- project_team.user as name,
- project_team.email as email
+  oohpublishing.project_team.id As id,
+  oohpublishing.project_team.role As role,
+  oohpublishing.project_team.email As email,
+  oohpublishing.vendors.name As name
 From
- project_team Left Join
- users On project_team.user =
-   users.id
-    Where  project_team.project_id='".$project_id."' and project_team.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  oohpublishing.project_team Inner Join
+  oohpublishing.vendors On oohpublishing.project_team.user =
+    oohpublishing.vendors.id
+Where
+  oohpublishing.project_team.project_id = '".$project_id."' And
+  oohpublishing.project_team.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
