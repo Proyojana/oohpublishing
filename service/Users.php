@@ -439,7 +439,7 @@ Where
 	}
 	function getTeam($project_id)
 	{
- 		$num_result = mysql_query ("Select
+ 		/*$num_result = mysql_query ("Select
   oohpublishing.project_team.id As id,
   oohpublishing.project_team.role As role,
   oohpublishing.project_team.email As email,
@@ -452,17 +452,28 @@ Where
   oohpublishing.project_team.project_id = '".$project_id."' And
   oohpublishing.project_team.flag = 0")or die(mysql_error());
 		
+		$totaldata = mysql_num_rows($num_result);*/
+		
+		$num_result = mysql_query ("Select
+  oohpublishing.project_team.id As id,
+  oohpublishing.project_team.role As role,
+  oohpublishing.project_team.email As email,
+  oohpublishing.project_team.user As name
+From
+  oohpublishing.project_team 
+Where
+  oohpublishing.project_team.project_id = '".$project_id."' And
+  oohpublishing.project_team.flag = 0")or die(mysql_error());
+		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
   oohpublishing.project_team.id As id,
   oohpublishing.project_team.role As role,
   oohpublishing.project_team.email As email,
-  oohpublishing.vendors.name As name
+  oohpublishing.project_team.user As name
 From
-  oohpublishing.project_team Inner Join
-  oohpublishing.vendors On oohpublishing.project_team.user =
-    oohpublishing.vendors.id
+  oohpublishing.project_team 
 Where
   oohpublishing.project_team.project_id = '".$project_id."' And
   oohpublishing.project_team.flag = 0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());

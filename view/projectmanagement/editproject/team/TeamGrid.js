@@ -74,7 +74,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					 	store: users,
 						queryMode: 'local',
 						displayField: 'name',
-						valueField: 'id',
+						valueField: 'name',
 						/*listeners: {
                 change: function (field, newValue, oldValue) {
                 	 var grid = this.up().up();
