@@ -83,7 +83,7 @@ Where
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,no_of_days,ratecard_USD,ratecard_GBP,flag) VALUES('','".$workflow_id."','".$stage_order1[$i]."','".$stage_name1[$i]."','".$activity1[$i]."','".$no_of_days1[$i]."','".$ratecard_USD1[$i]."','".$ratecard_GBP1[$i]."''')");
+			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,no_of_days,ratecard_USD,ratecard_GBP,flag) VALUES('','".$workflow_id."','".$stage_order1[$i]."','".$stage_name1[$i]."','".$activity1[$i]."','".$no_of_days1[$i]."','".$ratecard_USD1[$i]."','".$ratecard_GBP1[$i]."','')");
 			if(!$result1)
 			{
 				$result["failure"] = true;
