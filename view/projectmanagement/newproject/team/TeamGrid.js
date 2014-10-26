@@ -38,8 +38,8 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 		var projectmanager = Ext.create('MyDesktop.store.ProjectManagers');
 		projectmanager.load({params:{action: 8}});
 		
-		var productioneditor = Ext.create('MyDesktop.store.ProductionEditor');
-		productioneditor.load({params:{action: 9}});
+		var vendor = Ext.create('MyDesktop.store.Vendors');
+		vendor.load({params:{action: 1}});
 	
 		this.store = store1,
 			this.columns = [
@@ -62,14 +62,14 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 					align: 'center',
                     flex:1,
 					editor:{
-						xtype:'textfield'
-					 /*	xtype:'combo',
-					 	store: productioneditor,
+						//xtype:'textfield'
+					 	xtype:'combo',
+					 	store: vendor,
 						queryMode: 'local',
-						displayField: 'username',
-						valueField: 'userid',
+						displayField: 'name',
+						valueField: 'name',
 						listeners: {
-                change: function (field, newValue, oldValue) {
+                /*change: function (field, newValue, oldValue) {
                 	var grid = this.up().up();
                         // get selection model of the grid  
                     var selModel = grid.getSelectionModel();
@@ -85,13 +85,13 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 					 }
 					 });
                     
-			            }
-			              }	*/
+			            }*/
+			              }	
                         },
                          renderer: function(value) {
-					var index = productioneditor.find('userid', value);
+					var index = productioneditor.find('id', value);
 					if (index != -1) {
-					return productioneditor.getAt(index).data.username;
+					return productioneditor.getAt(index).data.name;
 					}
 					return value;
 					}
