@@ -18,7 +18,7 @@ $id=$_SESSION['id'];
         case 4:
 			sendEmailAuthor($_POST['author_from'],$_POST['author_to'],$_POST['author_cc'],$_POST['author_message']);
 		    break;
-		case 5:
+			case 5:
 		    getTemplateMaster();
 		    break;
 		case 6:
@@ -31,7 +31,6 @@ $id=$_SESSION['id'];
 			break;
 	}
 	
-
 function authorEmail($job_code,$id)
  	{
  		
@@ -60,9 +59,9 @@ function authorEmail($job_code,$id)
 		
 		$result1 = "<p>Dear ".$name.",<p>
 		
-<p>The proofs for your forthcoming book <b>".$title."</b> have been dispatched from our typesetter and should be with you shortly.</p>
+<p>The proofs for your forthcoming book ".$title." have been dispatched from our typesetter and should be with you shortly.</p>
 ".$main."
-<p>Please aim to return the proofs to arrive with me at the address below no later than date <b>".$date."</b></p>
+<p>Please aim to return the proofs to arrive with me at the address below no later than date ".$date."</p>
 ".$footer." ";
 	
      $result2 = mysql_query("INSERT INTO temp (id,message)
@@ -165,10 +164,10 @@ function vendorEmail($job_code,$id)
 
 
 <p>The author’s contact information is as follows:</p>
-<p>Name:".$name." </p>
-<p>Email:".$email."  </p>
-<p>Phone:".$phone." </p>
-<p>Address:".$address."</p>
+<p>".$name." </p>
+<p>".$email."  </p>
+<p>".$phone." </p>
+<p>".$address."</p>
 
 ".$main."
 
@@ -262,6 +261,9 @@ echo(json_encode($result));
 			}
 	
 	function sendEmailAuthor($author_from,$author_to,$author_cc,$author_message) {
+		
+  
+		
 									
 			$dat=date("d/m/Y");
 $subject = "Check".' '.$dat;
@@ -270,6 +272,9 @@ ob_start();
 
 
 $variable = ob_get_clean();
+
+
+
 
 $variable = ob_get_clean();
 
@@ -352,9 +357,7 @@ $result["message"] = 'Message send sucessfully';
 }
 
 echo(json_encode($result));
-			
-	
-	}
+			}
 
 function getTemplateMaster()
 				{
