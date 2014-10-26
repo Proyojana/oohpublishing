@@ -60,9 +60,9 @@ function authorEmail($job_code,$id)
 		
 		$result1 = "<p>Dear ".$name.",<p>
 		
-<p>The proofs for your forthcoming book ".$title." have been dispatched from our typesetter and should be with you shortly.</p>
+<p>The proofs for your forthcoming book <b>".$title."</b> have been dispatched from our typesetter and should be with you shortly.</p>
 ".$main."
-<p>Please aim to return the proofs to arrive with me at the address below no later than date ".$date."</p>
+<p>Please aim to return the proofs to arrive with me at the address below no later than date <b>".$date."</b></p>
 ".$footer." ";
 	
      $result2 = mysql_query("INSERT INTO temp (id,message)
@@ -165,10 +165,10 @@ function vendorEmail($job_code,$id)
 
 
 <p>The author’s contact information is as follows:</p>
-<p>".$name." </p>
-<p>".$email."  </p>
-<p>".$phone." </p>
-<p>".$address."</p>
+<p>Name:".$name." </p>
+<p>Email:".$email."  </p>
+<p>Phone:".$phone." </p>
+<p>Address:".$address."</p>
 
 ".$main."
 
