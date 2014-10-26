@@ -89,9 +89,9 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 			              }	
                         },
                          renderer: function(value) {
-					var index = productioneditor.find('id', value);
+					var index = vendor.find('id', value);
 					if (index != -1) {
-					return productioneditor.getAt(index).data.name;
+					return vendor.getAt(index).data.name;
 					}
 					return value;
 					}
