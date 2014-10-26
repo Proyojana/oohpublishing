@@ -271,20 +271,78 @@ ob_start();
 
 $variable = ob_get_clean();
 
-
-
-
 $variable = ob_get_clean();
 
+    $upload_name=$_FILES["file"]["name"];
+    $upload_type=$_FILES["file"]["type"];
+    $upload_size=$_FILES["file"]["size"];
+    $upload_temp=$_FILES["file"]["tmp_name"];
+    
+	$message="msg";
+    $subject = "subject";
+    
+		
+ 
 
+	/*************/
+	$fp = fopen($upload_temp, "r");
+    $file = fread($fp, $upload_size);
+
+    $file = chunk_split(base64_encode($file));
+    $num = md5(time());
+
+        //Normal headers
+
+   
+       $headers  .= "MIME-Version: 1.0\r\n";
+       $headers  .= "Content-Type: multipart/mixed; ";
+       $headers  .= "boundary=".$num."\r\n";
+       $headers  .= "--$num\r\n";
+
+        // This two steps to help avoid spam
+
+    $headers .= "Message-ID: <".gettimeofday()." TheSystem@".$_SERVER['SERVER_NAME'].">\r\n";
+    $headers .= "X-Mailer: PHP v".phpversion()."\r\n";
+
+        // With message
+
+    $headers .= "Content-Type: text/html; charset=iso-8859-1\r\n";
+       $headers .= "Content-Transfer-Encoding: 8bit\r\n";
+	   $headers .= 'Cc:'.$author_cc . "\r\n";
+       $headers .= "From:".$author_from."\r\n";
+       $headers .= "Reply-To:".$author_from."\r\n";
+       $headers .= "".$author_message."\n";
+       $headers .= "--".$num."\n";
+
+        // Attachment headers
+
+    $headers  .= "Content-Type:".$upload_type." ";
+       $headers  .= "name=\"".$upload_name."\"r\n";
+       $headers  .= "Content-Transfer-Encoding: base64\r\n";
+       $headers  .= "Content-Disposition: attachment; ";
+       $headers  .= "filename=\"".$upload_name."\"\r\n\n";
+       $headers  .= "".$file."\r\n";
+       $headers  .= "--".$num."--";
+
+
+
+    // SEND MAIL
+
+    $retval=  @mail($author_to, $subject, $message, $headers);
+
+
+    
+	/*************/
+	
+	
+	
 
 // Always set content-type when sending HTML email
 $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-$headers .= 'Cc:'.$author_cc . "\r\n";
-$headers .= "From:".$author_from."\r\n";
-$headers .= "Reply-To:".$author_from."\r\n";
-$retval=mail($author_to,$subject,$author_message,$headers);
+
+//$retval=mail($author_to,$subject,$author_message,$headers);
+ fclose($fp);
 if(!$retval) {
 $result["failure"] = true;
 $result["message"] = 'Invalid query: ' . mysql_error();
@@ -294,7 +352,9 @@ $result["message"] = 'Message send sucessfully';
 }
 
 echo(json_encode($result));
-			}
+			
+	
+	}
 
 function getTemplateMaster()
 				{
