@@ -68,7 +68,7 @@ Where
 ".$main."
 <p>Please aim to return the proofs to arrive with me at the address below no later than date <b>".$date."</b></p>
 ".$footer."
-<p>Thanks,</p> 
+Thanks, 
 ".$user." ";
 	
      $result2 = mysql_query("INSERT INTO temp (id,message)
@@ -154,6 +154,7 @@ function vendorEmail($job_code,$id)
 			$address = $row['address'];
 			$main = $row['main'];
 			$footer = $row['footer'];
+			$user = $row['user'];
 		}
 		
 		$result1 = "<p>Dear <b>".$client."</b>,</p>
@@ -182,7 +183,7 @@ function vendorEmail($job_code,$id)
 
 ".$footer." 
 
-<p>Thanks,</p> 
+Thanks,
 ".$user."
 
 ";
