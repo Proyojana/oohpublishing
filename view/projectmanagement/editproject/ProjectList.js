@@ -93,7 +93,69 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							x:600,
 							y:445,
 							handler:function(){
-							win.close();
+							    Ext.Array.each(Ext.ComponentQuery.query('editprojectaddform'), function (editprojectaddform) {
+            if (editprojectaddform.getForm().isDirty()) {
+             Ext.Msg.show({
+   title:'Save Changes?',
+   msg: 'Your are closing a form that has unsaved changes. Would you like to save your changes?',
+   buttons: Ext.Msg.YESNO,
+   fn: function(btn) {
+				if(btn=='yes') {
+				var project_id = Ext.getCmp("edit_project_id").getValue();
+				var job_code = Ext.getCmp('edit_job_code').getValue();
+				var project_title = Ext.getCmp('edit_project_title').getValue();
+				//var project_author= Ext.getCmp('edit_project_author').getValue();
+				var hb_isbn= Ext.getCmp('edit_hb_isbn').getValue();
+				var pb_isbn= Ext.getCmp('edit_pb_isbn').getValue();
+				var ebook_isbn= Ext.getCmp('edit_ebook_isbn').getValue();
+				
+				var project_series = Ext.getCmp('edit_project_series').getValue();
+				var project_format = Ext.getCmp('edit_project_format').getValue();
+				var project_design= Ext.getCmp('edit_project_design').getValue();
+				var castoff_extent= Ext.getCmp('edit_castoff_extent').getValue();
+				var confirmed_extent= Ext.getCmp('edit_confirmed_extent').getValue();
+				
+				var client_deadline = Ext.getCmp('edit_client_deadline').getValue();
+				var agreed_deadline = Ext.getCmp('edit_agreed_deadline').getValue();
+				var word_count= Ext.getCmp('edit_word_count').getValue();
+				var manuscript= Ext.getCmp('edit_manuscript').getValue();
+				var index_extent= Ext.getCmp('edit_index_extent').getValue();
+				var project_note= Ext.getCmp('edit_project_note').getValue();
+				var chapter_footer = Ext.getCmp('edit_chapter_footer').getValue();
+				var contain_colour = Ext.getCmp('edit_contain_colour').getValue();
+				var project_client= Ext.getCmp('edit_project_client').getValue();
+				var project_team= Ext.getCmp('edit_project_team').getValue();
+				var project_workflow= Ext.getCmp('edit_project_workflow').getValue();
+                
+                if(currentForm.getForm().isValid() == true)
+				{
+					var conn = new Ext.data.Connection();
+					conn.request({
+					url: 'service/EditProjects.php',
+					method: 'POST',
+					params : {action:3,project_id:project_id,job_code:job_code,project_title:project_title,hb_isbn:hb_isbn,pb_isbn:pb_isbn,
+						project_series:project_series,project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,
+						client_deadline:client_deadline,agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,
+						chapter_footer:chapter_footer,contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,project_note:project_note,ebook_isbn:ebook_isbn},
+					success:function(response){
+					obj = Ext.JSON.decode(response.responseText);
+					Ext.Msg.alert('Message', obj.message); 
+						win.close();		
+					}
+					});
+				}
+				}
+				else if(btn=='no'){
+					win.close();
+				}
+			}
+   
+});
+            }
+            else{
+            	win.close();
+            }
+        });
 							}
 							}
 							]
@@ -234,9 +296,73 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						x:600,
 						y:460,
 						handler:function(){
+							var myStore = Ext.getCmp('edit_author_grid').getStore();
+							var records = myStore.getRange();
+						    for(var i =0; i < records.length; i++){
+						       var rec = records[i];
+						       var count=0;
+						       if(rec.dirty == true){
+						         count++;
+						       }
+						       
+						    }
+							if(count==0)
+							{
+								win.close();
+							}	
+							else{
+								 Ext.Msg.show({
+			   title:'Save Changes?',
+			   msg: 'Your are closing a form that has unsaved changes. Would you like to save your changes?',
+			   buttons: Ext.Msg.YESNO,
+			   fn: function(btn) {
+			if(btn=='yes') {
+				/** For Author Grid Save**/
+				var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
+					var c='';var d='';
+					var e=''; var f='';
+					var g=''; var h='';
+					var i=''; var b=''; 
+					var grid=Ext.getCmp('new_author_grid');
+							
+					var myStore = Ext.getCmp('edit_author_grid').getStore();
+					myStore.each(function(rec) {
+					b=b+rec.get('id')+',';
+					c=c+rec.get('author')+',';
+				    d=d+rec.get('name')+',';
+				    e=e+rec.get('address')+'_';
+				    f=f+rec.get('email')+',';
+				    g=g+rec.get('phone')+',';
+				    h=h+rec.get('see_proof')+',';
+				    i=i+rec.get('no_proof')+',';
+				    });
+				if(d.length>1||f.lenght>1)
+                 {
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/Author.php',
+						method: 'POST',
+						params : {action:1,id:b,job_code:job_code,author:c,name:d,address:e,email:f,phone:g,see_proof:h,no_proof:i},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message); 
 							win.close();
 						}
+					});
+					}
+					else{
+						Ext.Msg.alert("Please fill authour name and email"); 
+					}
 				}
+				else if(btn=='no'){
+				win.close();
+				 }
+				}
+				   
+				});
+					}
+					}
+					}
 						]
 					});
 					win.show();
@@ -435,10 +561,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-								
-               
-							
-
 							//refresh grid
 							var grid3=Ext.getCmp('editaccountPayableGrid');
 							grid3.getStore().load({params:{action:1,job_code:job_code}});
@@ -456,7 +578,81 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						x:600,
 						y:760,
 						handler:function(){
+										var myStore = Ext.getCmp('editaccountPayableGrid').getStore();
+							var records = myStore.getRange();
+						    for(var i =0; i < records.length; i++){
+						       var rec = records[i];
+						       var count=0;
+						       if(rec.dirty == true){
+						         count++;
+						       }
+						       
+						    }
+							if(count==0)
+							{
+								win.close();
+							}	
+							else{
+								 Ext.Msg.show({
+			   title:'Save Changes?',
+			   msg: 'Your are closing a form that has unsaved changes. Would you like to save your changes?',
+			   buttons: Ext.Msg.YESNO,
+			   fn: function(btn) {
+			if(btn=='yes') {
+	           
+					var type=2;
+					var job_code=Ext.getCmp('edit_Job_code').getValue(); 
+					var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue(); 
+					
+						var activity='';
+							
+							var vendor='';
+							var no_of_unit='';
+							var rate_USD='';
+							var rate_GBP='';
+							var budgeted_amount_USD='';
+							var budgeted_amount_GBP='';
+							var actual_amount_USD='';
+							var actual_amount_GBP='';
+							var budget_id='';
+							var grid=Ext.getCmp('editaccountPayableGrid');
+							
+					var myStore = Ext.getCmp('editaccountPayableGrid').getStore();
+					myStore.each(function(rec) {
+					activity=activity+rec.get('activityid')+',';
+				    vendor=vendor+rec.get('vendor')+',';
+				    no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
+				    rate_USD=rate_USD+rec.get('rate_USD')+',';
+				    rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
+				    budgeted_amount_USD=budgeted_amount_USD+rec.get('budgeted_amount_USD')+',';
+				    budgeted_amount_GBP=budgeted_amount_GBP+rec.get('budgeted_amount_GBP')+',';
+				    actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
+				    actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
+				    budget_id=budget_id+rec.get('budgetExpense_id')+',';
+				   					
+				});
+							
+					var conn = new Ext.data.Connection();
+					 conn.request({
+						url: 'service/budget.php',
+						method: 'POST',
+						params : {action:4,job_code:job_code,budget_id:budget_id,activity:activity,vendor:vendor,no_of_unit:no_of_unit,rate_USD:rate_USD,rate_GBP:rate_GBP,
+							budgeted_amount_USD:budgeted_amount_USD,budgeted_amount_GBP:budgeted_amount_GBP,actual_amount_USD:actual_amount_USD,actual_amount_GBP:actual_amount_GBP},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message); 
 							win.close();
+							
+						}
+					});
+				}
+				else if(btn=='no'){
+				win.close();
+				 }
+				}
+				   
+				});
+					}
 						}
 				}]
 					});
@@ -623,9 +819,96 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				width:100,
 				x:700,
 				y:500,
-				//	margin:'0 0 0 100',
 				handler: function() {
-					win.close();
+								var myStore = Ext.getCmp('editprojectSchedulegrid').getStore();
+							var records = myStore.getRange();
+						    for(var i =0; i < records.length; i++){
+						       var rec = records[i];
+						       var count=0;
+						       if(rec.dirty == true){
+						         count++;
+						       }
+						       
+						    }
+							if(count==0)
+							{
+								win.close();
+							}	
+							else{
+								 Ext.Msg.show({
+			   title:'Save Changes?',
+			   msg: 'Your are closing a form that has unsaved changes. Would you like to save your changes?',
+			   buttons: Ext.Msg.YESNO,
+			   fn: function(btn) {
+			if(btn=='yes') {
+	               	var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
+					var workflow=Ext.getCmp('edit_scheduleHeader_workflow').getValue();
+					var job_code=Ext.getCmp('edit_scheduleHeader_Job').getValue();
+					var stage='';
+					var stageorder='';
+					var estimated_daysperstage='';
+					var actual_daysperstage='';
+					var estimated_start_date='';
+					var actual_start_date='';
+					var estimated_end_date='';
+					var actual_end_date='';
+					var bufferday='';
+					var activity='';
+					var schedule_id='';
+					var grid=Ext.getCmp('editprojectSchedulegrid');
+
+					var myStore = Ext.getCmp('editprojectSchedulegrid').getStore();
+					//items = [];
+
+					myStore.each( function(rec) {
+						stage=stage+rec.get('stage')+',';
+						estimated_daysperstage=estimated_daysperstage+rec.get('estimated_daysperstage')+',';
+						actual_daysperstage=actual_daysperstage+rec.get('actual_daysperstage')+',';
+						estimated_start_date=estimated_start_date+rec.get('estimated_start_date')+',';
+						actual_start_date=actual_start_date+rec.get('actual_start_date')+',';
+						estimated_end_date=estimated_end_date+rec.get('estimated_end_date')+',';
+						actual_end_date=actual_end_date+rec.get('actual_end_date')+',';
+						bufferday=bufferday+rec.get('bufferday')+',';
+						activity=activity+rec.get('activityid')+',';
+						stageorder=stageorder+rec.get('stageorder')+',';
+						schedule_id=schedule_id+rec.get('schedule_id')+',';
+
+					});
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/schedule.php',
+						method: 'POST',
+						params : {
+							action:3,
+							projectid:projectid,
+							stageorder:stageorder,
+							scheduleid:schedule_id,
+							workflow:workflow,
+							activity:activity,
+							stage:stage,
+							estimated_daysperstage:estimated_daysperstage,
+							actual_daysperstage:actual_daysperstage,
+							estimated_start_date:estimated_start_date,
+							actual_start_date:actual_start_date,
+							estimated_end_date:estimated_end_date,
+							actual_end_date:actual_end_date,
+							bufferday:bufferday
+
+						},
+						success: function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message);
+							win.close();
+						}
+					});
+				}
+				else if(btn=='no'){
+				win.close();
+				 }
+				}
+				   
+				});
+					}
 					}
 					},
 					{
@@ -851,7 +1134,56 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				y:370,
 				width:100,
 				handler:function(){
-					win.close();
+								var myStore = Ext.getCmp('editteamgrid').getStore();
+							var records = myStore.getRange();
+						    for(var i =0; i < records.length; i++){
+						       var rec = records[i];
+						       var count=0;
+						       if(rec.dirty == true){
+						         count++;
+						       }
+						       
+						    }
+							if(count==0)
+							{
+								win.close();
+							}	
+							else{
+								 Ext.Msg.show({
+			   title:'Save Changes?',
+			   msg: 'Your are closing a form that has unsaved changes. Would you like to save your changes?',
+			   buttons: Ext.Msg.YESNO,
+			   fn: function(btn) {
+			if(btn=='yes') {
+	             var project_id=Ext.getCmp('editteamHeader_projectID').getValue(); 
+					var role='';
+					var name='';
+					var email='';
+					var myStore = Ext.getCmp('editteamgrid').getStore();
+					myStore.each(function(rec) {
+						role=role+rec.get('role')+',';
+						name=name+rec.get('name')+',';
+						email=email+rec.get('email')+',';
+						});
+					var conn = new Ext.data.Connection();
+					 conn.request({
+						url: 'service/Users.php',
+						method: 'POST',
+						params : {action:11,project_id:project_id,role:role,name:name,email:email},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message); 
+							win.close();
+						}
+					});
+				}
+				else if(btn=='no'){
+				win.close();
+				 }
+				}
+				   
+				});
+					}
 				}
 			}
 			
@@ -978,7 +1310,72 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				y:370,
 				width:100,
 				handler:function(){
+								var myStore = Ext.getCmp('editnotesgrid').getStore();
+							var records = myStore.getRange();
+						    for(var i =0; i < records.length; i++){
+						       var rec = records[i];
+						       var count=0;
+						       if(rec.dirty == true){
+						         count++;
+						       }
+						       
+						    }
+							if(count==0)
+							{
+								win.close();
+							}	
+							else{
+								 Ext.Msg.show({
+			   title:'Save Changes?',
+			   msg: 'Your are closing a form that has unsaved changes. Would you like to save your changes?',
+			   buttons: Ext.Msg.YESNO,
+			   fn: function(btn) {
+			if(btn=='yes') {
+	          					var job_code=Ext.getCmp('job_code').getValue();
+					var project_id=Ext.getCmp('editnotesHeader_projectID').getValue();
+
+					var dateresolved='';
+					var narrative='';
+					var dateraised='';
+					var notes_id='';
+					var grid=Ext.getCmp('editnotesgrid');
+
+					var myStore = Ext.getCmp('editnotesgrid').getStore();
+					myStore.each( function(rec) {
+
+						dateresolved=dateresolved+rec.get('dateresolved')+',';
+						narrative=narrative+rec.get('narrative')+',';
+						dateraised=dateraised+rec.get('dateraised')+',';
+						notes_id=notes_id+rec.get('id')+',';
+
+					});
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/notes.php',
+						method: 'POST',
+						params : {
+							action:2,
+							project_id:project_id,
+							dateresolved:dateresolved,
+							narrative:narrative,
+							dateraised:dateraised,
+							notes_id:notes_id
+						},
+						success: function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message);
 					win.close();
+
+						}
+					});
+				}
+				else if(btn=='no'){
+				win.close();
+				 }
+				}
+				   
+				});
+					}
 				}
 			}
 			]
