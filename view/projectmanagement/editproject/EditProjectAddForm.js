@@ -39,7 +39,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 	frame:true,
 	
 	requires:['MyDesktop.store.Customers','MyDesktop.store.Workflow','MyDesktop.store.Customers_team'],
-  
+    trackResetOnLoad: true,
     defaults: {
         labelWidth: 140,
     },
