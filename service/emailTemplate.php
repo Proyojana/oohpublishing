@@ -36,18 +36,22 @@ function authorEmail($job_code,$id)
  		
 		/** insert into temp**/
  		$selectworkflow = mysql_query("Select
- 		 project_title.title as title, 
- 		 project_title.client_deadline as client_deadline,
- 		 author.name as name,
- 		 email_template.main as main,
- 		 email_template.footer as footer
- 		 from 
- 		 project_title Inner Join
- 		 author On project_title.job_code=author.job_code,
- 		 email_template
- 		 where 
- 		 project_title.job_code = '".$job_code."'
- 		 And author.author='Main contact' And email_template.role=1 ");
+ oohpublishing.project_title.title As title,
+ oohpublishing.project_title.client_deadline As client_deadline,
+ oohpublishing.author.name As name,
+ oohpublishing.email_template.main As main,
+ oohpublishing.email_template.footer As footer,
+ oohpublishing.user_masters.user_mas_name As user
+From
+ oohpublishing.project_title Inner Join
+ oohpublishing.author On oohpublishing.project_title.job_code =
+   oohpublishing.author.job_code,
+ oohpublishing.email_template,
+ oohpublishing.user_masters
+Where
+ oohpublishing.project_title.job_code = 'JB015' And
+ oohpublishing.author.author = 'Main contact' And
+ oohpublishing.email_template.role = 1 And oohpublishing.user_masters.user_id=1 ");
 		while($row = mysql_fetch_array($selectworkflow)) {
 				
 			$title = $row['title'];
@@ -55,6 +59,7 @@ function authorEmail($job_code,$id)
 			$name = $row['name'];
 			$main = $row['main'];
 			$footer = $row['footer'];
+			$user = $row['user'];
 		}
 		
 		$result1 = "<p>Dear <b>".$name."</b>,<p>
@@ -62,7 +67,9 @@ function authorEmail($job_code,$id)
 <p>The proofs for your forthcoming book <b>".$title."</b> have been dispatched from our typesetter and should be with you shortly.</p>
 ".$main."
 <p>Please aim to return the proofs to arrive with me at the address below no later than date <b>".$date."</b></p>
-".$footer." ";
+".$footer."
+<p>Thanks,</p> 
+".$user." ";
 	
      $result2 = mysql_query("INSERT INTO temp (id,message)
 		                               VALUES ('' ,'" . $result1 . "')");
@@ -127,15 +134,17 @@ function vendorEmail($job_code,$id)
  		 author.phone as phone,
  		 author.address as address,
  		 email_template.main as main,
- 		 email_template.footer as footer
+ 		 email_template.footer as footer,
+		 user_masters.user_mas_name As user
  		 from 
  		 project_title Inner Join
  		 customers On project_title.client=customers.id Inner Join
  		 author On project_title.job_code=author.job_code,
- 		 email_template
+ 		 email_template,
+		 user_masters
  		 where 
  		 project_title.job_code = '".$job_code."'
- 		 And author.author='Main contact' And email_template.role=2");
+ 		 And author.author='Main contact' And email_template.role=2 And user_masters.user_id=1");
 		while($row = mysql_fetch_array($selectworkflow)) {
 				
 			$client = $row['client'];
@@ -171,7 +180,12 @@ function vendorEmail($job_code,$id)
 
 ".$main."
 
-".$footer." ";
+".$footer." 
+
+<p>Thanks,</p> 
+".$user."
+
+";
 		
      $result2 = mysql_query("INSERT INTO temp (id,message)
 		                               VALUES ('' ,'" . $result1 . "')");
