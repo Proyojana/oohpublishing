@@ -24,8 +24,8 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateForm' ,{
 		{
 			xtype:'templateaddform',
 			x:1,
-			y:270,
-			height:260
+			y:200,
+			height:300
 		}
 		]
 	  	this.callParent();

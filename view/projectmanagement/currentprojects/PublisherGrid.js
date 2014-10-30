@@ -220,8 +220,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						},
 						autoScroll : true,
 						title : 'Message',
-						width : 800,
-						height : 400,
+						width : 900,
+						height : 600,
 						items : [{
 							xtype : 'production_html_form',
 							x : 0,
@@ -269,7 +269,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						       
     							}
 						});
-				Ext.getCmp('production_html_form').setValue(mail);
+				//Ext.getCmp('production_html_form').setValue(mail);
 				
 											
 											
@@ -285,8 +285,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						},
 						autoScroll : true,
 						title : 'Message',
-						width : 800,
-						height : 400,
+						width : 900,
+						height : 600,
 						items : [{
 							xtype : 'production_pdf_form'}
 						],
@@ -483,8 +483,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						},
 						autoScroll : true,
 						title : 'Message',
-						width : 800,
-						height : 400,
+						width : 900,
+						height : 600,
 						items : [{
 							xtype : 'typesetting_html_form',
 				       }
@@ -516,8 +516,6 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 										messagewin.close(); 
 									},
 								});
-										
-									
 																
 							}						
 							}]
@@ -550,8 +548,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 						},
 						autoScroll : true,
 						title : 'Message',
-						width : 800,
-						height : 400,
+						width : 900,
+						height : 600,
 						items : [
 						{
 							xtype : 'typesetting_pdf_form',

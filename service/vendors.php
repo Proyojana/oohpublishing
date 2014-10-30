@@ -36,26 +36,28 @@
 	
 		function getVendorMaster()
 	{
- 		$num_result = mysql_query ("Select
+ 		$num_result = mysql_query ("Select 
   vendors.code as code,
   vendors.name As name,
   vendors.email as email,
   vendors.phone as phone,
-  vendors.id as id
+  vendors.id as id,
+  vendors_contacts.firstname
 From
-  vendors 
+  vendors ,vendors_contacts
 WHERE vendors.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
-		$result = mysql_query("Select
+		$result = mysql_query("Select 
   vendors.code as code,
   vendors.name As name,
   vendors.email as email,
   vendors.phone as phone,
-  vendors.id as id
+  vendors.id as id,
+  vendors_contacts.firstname
 From
-  vendors 
+  vendors,vendors_contacts
 WHERE vendors.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))

@@ -2,7 +2,7 @@
         extend: 'Ext.data.Model',
         fields: [
             
-             'id','code','name','email' ,'phone',  'basicid','services'      
+             'id','code','name','email' ,'phone',  'basicid','services' ,'firstname'      
         ],
         idProperty: 'cityname'
     });

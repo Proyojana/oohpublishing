@@ -7,7 +7,7 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateGrid', {
 	alias:'widget.templategrid',
 	closeAction: 'hide',
 	selModel:sm,
-	height:250,
+	height:200,
 	id:'templategrid',
 	initComponent: function() {
 		var ci = Ext.create('MyDesktop.store.Template');
@@ -93,6 +93,7 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateGrid', {
 						Ext.getCmp('template_role').setReadOnly(true);
 						Ext.getCmp('template_main').setReadOnly(true);
 						Ext.getCmp('template_footer').setReadOnly(true);
+						Ext.getCmp('template_header').setReadOnly(true);
 						
 						
 						Ext.getCmp('edit_template').getEl().hide();
@@ -124,9 +125,8 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateGrid', {
 						Ext.getCmp('template_code').setReadOnly(true);
 						Ext.getCmp('template_name').setReadOnly(false);
 						Ext.getCmp('template_role').setReadOnly(false);
-						
-						
-						
+						Ext.getCmp('template_footer').setReadOnly(false);
+						Ext.getCmp('template_header').setReadOnly(true);
 						Ext.getCmp('edit_template').getEl().show();
 						Ext.getCmp('templateaddform').setTitle('View Template');
 						

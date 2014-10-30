@@ -1,4 +1,10 @@
-
+ var type = Ext.create('Ext.data.Store', {
+       fields: ['id', 'name'],
+       data : [
+        {"id":"1", "name":"Current"},
+           {"id":"2", "name":"Completed"}
+       ]
+   });
 Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm' , {
 	 extend: 'Ext.form.Panel',
 	alias : 'widget.BudgetHeaderForm',
@@ -116,6 +122,19 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		y:70,
 		
 	},
+	 {
+                xtype:'combo',
+                x:520,
+                y:70,
+                fieldLabel:'Status',
+                store: type,
+                id:'prostatus',
+                queryMode: 'local',
+                labelWidth: 80,
+                displayField: 'name',
+                valueField: 'id',                                                
+                                                       
+                                       },
 	]
 	this.callParent();
 }

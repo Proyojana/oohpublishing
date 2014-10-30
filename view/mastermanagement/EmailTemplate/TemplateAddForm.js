@@ -4,7 +4,8 @@ var per = Ext.create('Ext.data.Store', {
         data : [
          {"name":"Author","id":"1"},
             {"name":"Vendor","id":"2"},
-            {"name":"Publisher","id":"3"}
+            {"name":"Production Report","id":"3"},
+            {"name":"Typesetting Report","id":"4"}
         ]
     });
 /* function autoLoadCode()
@@ -42,7 +43,7 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
     defaults: {
         labelWidth: 140,
     },
-    defaultType: 'textfield',
+   // defaultType: 'textfield',
     
   
    /* listeners: {
@@ -66,25 +67,28 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
 			
 		{
 			id:'template_code',
+			xtype:'textfield',
 			fieldLabel: 'Template Code',
-			x:100,
+			x:30,
 			y:10,
-			width:350,
+			width:400,
 			readOnly:true,
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},
     	{
 			id:'template_name',
+			xtype:'textfield',
 			fieldLabel: 'Template Name',
 			align:'center',
-			x:100,
+			x:30,
 			y:40,
-			width:350,
+			width:400,
 			
 			},
 			{
 			id:'template_role',
+			xtype:'textfield',
 			fieldLabel: 'Template For',
 			xtype:'combo',
 			store: per,
@@ -92,33 +96,66 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
 	        displayField: 'name',
 	        valueField: 'id',
 			align:'center',
-			x:100,
+			x:30,
 			y:70,
-			width:350,
+			width:400,
 			
 			},
     	{
     		xtype:'textareafield',
     		id:'template_main',
 			fieldLabel: 'Main Content',
-			x:480,
+			labelWidth: 90,
+			x:450,
 			y:10,
-			width:400,
+			width:600,
 			height:200,
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},
     	{
     		xtype:'textareafield',
-    		id:'template_footer',
-			fieldLabel: 'Footer Content',
-			x:100,
+    		id:'template_header',
+			fieldLabel: 'Header Content',
+			x:30,
 			y:100,
-			width:350,
+			width:400,
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},
-    		
+    	/*{ iconCls:'informationClass',
+            
+            x:130,
+            y:105,
+            width:30,
+            tooltip: 'I\'m a custom tooltip'
+                               //margin:'0 0 0 40'
+                       },*/
+    	{
+    		xtype:'textareafield',
+    		id:'template_footer',
+			fieldLabel: 'Footer Content',
+			x:30,
+			y:170,
+			width:400,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+    	},
+    	{
+xtype:'label',
+text:'Note:',
+
+x:30,
+y:240,
+},
+
+{
+xtype:'label',
+text:'Header is not editable fields in both view and update',
+x:60,
+y:240,
+
+},	
     		
 		/*{
 			xtype:'button',
@@ -162,8 +199,8 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
 		  	iconCls: 'editClass',
 		  	id:'edit_template',
 		    align:'center',
-			x:300,
-			y:180,
+			x:500,
+			y:235,
 			width:75,
 			handler: function ()
 			   {

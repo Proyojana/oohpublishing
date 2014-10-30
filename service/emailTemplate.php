@@ -413,7 +413,8 @@ function getTemplateMaster()
   email_template.code as template_code,
   email_template.role as template_role,
   email_template.main as template_main,
-  email_template.footer as template_footer
+  email_template.footer as template_footer,
+  email_template.header as template_header
 From
   email_template 
 			Where

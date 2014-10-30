@@ -22,6 +22,37 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.Production_pdf_form
 	initComponent:function(){
 		//var heads = Ext.create('MyDesktop.store.HeadedBy');
 		//heads.load({params:{action: 5}});
+		   	var tinyCfg1 = {
+		// General options
+		theme : "advanced",
+
+		skin: "extjs",
+    inlinepopups_skin: "extjs",
+		
+    // Original value is 23, hard coded.
+    // with 23 the editor calculates the height wrong.
+    // With these settings, you can do the fine tuning of the height
+    // by the initialization.
+    theme_advanced_row_height: 27,
+    delta_height: 1,
+    
+    schema: "html5",
+    
+    plugins : "autolink,lists,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,wordcount,advlist,spellchecker,mysave",
+   
+		spellchecker_languages : "+English=en",
+		tools:"inserttable",
+		extended_valid_elements : "iframe[src|frameborder|style|scrolling|class|width|height|name|align]",
+		
+    
+		// Example content CSS (should be your site CSS)
+		content_css : "contents.css"
+		};
+		tinymce.init({
+		    plugins: "table",
+		    tools: "inserttable",
+		             
+		});
 		this.items = [
 			           {
 							xtype : 'textfield',
@@ -57,13 +88,14 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.Production_pdf_form
 							width:700
 						},
 						{
-							xtype:'textarea',
+							xtype:'tinymce_textarea',
+							tinyMCEConfig: tinyCfg1,
 							fieldLabel:'Message',
 							id:'production_pdf_message',
 							x:10,
 							y:100,
 							width:700,
-							height:200
+							height:400
 						},
 
 						]
