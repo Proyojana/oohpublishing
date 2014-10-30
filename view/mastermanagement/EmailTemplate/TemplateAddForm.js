@@ -110,8 +110,7 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
 			y:10,
 			width:600,
 			height:200,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
     	{
     		xtype:'textareafield',
@@ -120,8 +119,7 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
 			x:30,
 			y:100,
 			width:400,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
     	/*{ iconCls:'informationClass',
             
@@ -138,8 +136,7 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
 			x:30,
 			y:170,
 			width:400,
-			allowBlank: false,
-			afterLabelTextTpl: required,
+			
     	},
     	{
 xtype:'label',
