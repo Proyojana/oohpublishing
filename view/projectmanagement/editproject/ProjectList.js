@@ -568,6 +568,34 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						}
 					});
 					
+					//Insert budget total details
+					var project_id=Ext.getCmp('editbudgetHeader_projectID').getValue();
+					var ponumber1 = Ext.getCmp("edit_budgetHeader_ponumber1").getValue();
+					var ponumber2 = Ext.getCmp("edit_budgetHeader_ponumber2").getValue();
+					var invoice_date = Ext.getCmp("invoice_date").getValue();
+					var prostatus = Ext.getCmp("prostatus").getValue();
+					var total_receive_USD = Ext.getCmp("edit_total_receive_USD").getValue();
+					var total_receive_GDP = Ext.getCmp("edit_total_receive_GBP").getValue();
+					var total_pay_USD = Ext.getCmp("edit_total_pay_USD").getValue();
+					var total_pay_GDP = Ext.getCmp("edit_total_pay_GBP").getValue();
+					var profit_GDP = Ext.getCmp("edit_profit_GBP").getValue();
+					var profit_percentage = Ext.getCmp("edit_profit_percentage").getValue();
+					
+					var conn = new Ext.data.Connection();
+					
+					conn.request({
+					url: 'service/budget.php',
+					method: 'POST',
+					params : {action:14,projectID:project_id,ponumber1:ponumber1,ponumber2:ponumber2,total_receive_USD:total_receive_USD,total_receive_GDP:total_receive_GDP,
+								total_pay_USD:total_pay_USD,total_pay_GDP:total_pay_GDP,profit_GDP:profit_GDP,profit_percentage:profit_percentage,
+								invoice_date:invoice_date,prostatus:prostatus},
+					success:function(response){
+					obj = Ext.JSON.decode(response.responseText);
+					Ext.Msg.alert('Message', obj.message); 
+						win.close();		
+					}
+					});
+					
 				}
 			},
 			{

@@ -45,7 +45,7 @@ include("../inc/php/encryptDecrypt.php");
 			getReceivable_a($_POST['job_code']);
 			break;
 	   case 14:
-			insertBudgetDetails($_POST['projectID'],$_POST['ponumber1'],$_POST['ponumber2'],$_POST['total_receive_USD'],$_POST['total_receive_GDP'],$_POST['total_pay_USD'],$_POST['total_pay_GDP'],$_POST['profit_GDP'],$_POST['profit_percentage']);
+			insertBudgetDetails($_POST['projectID'],$_POST['ponumber1'],$_POST['ponumber2'],$_POST['total_receive_USD'],$_POST['total_receive_GDP'],$_POST['total_pay_USD'],$_POST['total_pay_GDP'],$_POST['profit_GDP'],$_POST['profit_percentage'],$_POST['invoice_date'],$_POST['prostatus']);
 			break;
        case 15:
 		    getCurrencyRate();
@@ -670,14 +670,17 @@ Where
 	   	echo'({"results":'.json_encode($data).'})';
 	}
 
-function insertBudgetDetails($projectid,$ponumber1,$ponumber2,$total_receive_USD,$total_receive_GDP,$total_pay_USD,$total_pay_GDP,$profit_GDP,$profit_percentage){
+function insertBudgetDetails($projectid,$ponumber1,$ponumber2,$total_receive_USD,$total_receive_GDP,$total_pay_USD,$total_pay_GDP,$profit_GDP,$profit_percentage,$invoice_date,$prostatus){
 $checkquery="SELECT id FROM budget_total_detail WHERE project_id='".$projectid."' ";
        		$result2=mysql_query($checkquery);
        		$num_rows=mysql_num_rows($result2);
 			if($num_rows == 1)
 			{
+					
 				
-				$result1 = mysql_query("UPDATE budget_total_detail SET  ponumber1='".$ponumber1."',ponumber1 = '".$ponumber2."', total_receive_usd = '".$total_receive_USD."', total_receive_gdp = '".$total_receive_GDP."', total_pay_usd = '".$total_pay_USD."', total_pay_gdp = '".$total_pay_GDP."', project_profit_gdp='".$profit_GDP."', project_profit_per='".$profit_percentage."'  WHERE project_id = '".$projectid."'");
+				$result1 = mysql_query("UPDATE budget_total_detail SET  ponumber1='".$ponumber1."',ponumber2 = '".$ponumber2."', total_receive_usd = '".$total_receive_USD."', total_receive_gdp = '".$total_receive_GDP."', total_pay_usd = '".$total_pay_USD."', total_pay_gdp = '".$total_pay_GDP."', project_profit_gdp='".$profit_GDP."', project_profit_per='".$profit_percentage."', invoice_date='".$invoice_date."', status='".$prostatus."'  WHERE project_id = '".$projectid."'");
+				
+				
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -692,8 +695,8 @@ $checkquery="SELECT id FROM budget_total_detail WHERE project_id='".$projectid."
 			
 			else
 			{
-				$result1 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,total_receive_gdp,total_pay_usd,total_pay_gdp,project_profit_gdp,project_profit_per)
-                                VALUES ('' ,'".$projectid."', '".$ponumber1."','".$ponumber2."','".$total_receive_USD."',  '".$total_receive_GDP."', '".$total_pay_USD."', '".$total_pay_GDP."', '".$profit_GDP."', '".$profit_percentage."')");
+				$result1 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,total_receive_gdp,total_pay_usd,total_pay_gdp,project_profit_gdp,project_profit_per,invoice_date,status)
+                                VALUES ('' ,'".$projectid."', '".$ponumber1."','".$ponumber2."','".$total_receive_USD."',  '".$total_receive_GDP."', '".$total_pay_USD."', '".$total_pay_GDP."', '".$profit_GDP."', '".$profit_percentage."', '', 'Current')");
 				if(!$result1)
 				{
 					$result["failure"] = true;

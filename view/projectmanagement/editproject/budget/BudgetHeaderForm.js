@@ -1,4 +1,5 @@
  var type = Ext.create('Ext.data.Store', {
+       autoLoad: true,
        fields: ['id', 'name'],
        data : [
         {"id":"1", "name":"Current"},
@@ -111,8 +112,27 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		fieldLabel: 'Invoice Date',
 		xtype:'datefield',
 		width:200,
+		id:"invoice_date",
 		x:10,
 		y:70,
+		listeners:
+		{
+          	// public event change - when selection1 dropdown is changed
+           	change:    function(field, newValue, oldValue)
+           	{
+           		     		
+           		var combo = Ext.getCmp('prostatus');
+
+        		if(newValue==null)
+   				{
+   					combo.setValue("Current");	
+   				}
+   				else
+   				{
+   					combo.setValue("Completed");
+   				}
+	   		}
+    	}
 		
 	},
 	{
@@ -132,9 +152,17 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
                 queryMode: 'local',
                 labelWidth: 80,
                 displayField: 'name',
-                valueField: 'id',                                                
+                valueField: 'id', 
+                listeners: 
+                {
+                	afterrender: function(combo)
+                	{
+					   	var recordSelected = combo.getStore().getAt(0);                     
+                        combo.setValue(recordSelected.get('id'));
+                    },  
+               }                                             
                                                        
-                                       },
+    },
 	]
 	this.callParent();
 }
