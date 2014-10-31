@@ -483,7 +483,9 @@ function deleteBudgetactivity($budgetid)
 	  project_title.confirmed_extent as editbudgetHeader_confirmedextent,
 	  author.name as editbudgetHeader_author_name,
 	  budget_total_detail.ponumber1 as edit_budgetHeader_ponumber1,
-	  budget_total_detail.ponumber2 as edit_budgetHeader_ponumber2
+	  budget_total_detail.ponumber2 as edit_budgetHeader_ponumber2,
+	  budget_total_detail.invoice_date as invoice_date,
+	  budget_total_detail.status as prostatus
 	  
 	  
 	From
