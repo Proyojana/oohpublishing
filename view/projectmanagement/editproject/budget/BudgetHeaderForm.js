@@ -157,7 +157,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
                 {
                 	afterrender: function(combo)
                 	{
-					   	var recordSelected = combo.getStore().getAt(0);                     
+					   	var recordSelected = combo.getStore().getAt(1);                     
                         combo.setValue(recordSelected.get('id'));
                     },  
                }                                             

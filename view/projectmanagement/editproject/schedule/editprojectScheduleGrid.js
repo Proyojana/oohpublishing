@@ -159,7 +159,7 @@ initComponent: function() {//load activity combo
 				align:'center',
 				editor: {
 					xtype:'datefield',
-
+                    format: 'd/m/Y',
 					listeners: {
 						change: function(field, newValue, oldValue) {
 							var grid = this.up().up();
@@ -207,6 +207,7 @@ initComponent: function() {//load activity combo
 				align:'center',
 				editor: {
 					xtype:'datefield',
+					format: 'd/m/Y',
 					/*listeners: {
 						change: function(field, newValue, oldValue) {
 							var ONE_DAY = 1000 * 60 * 60 * 24;
@@ -257,6 +258,7 @@ alert(est_start_day);
 				align:'center',
 				editor: {
 					xtype:'datefield',
+					format: 'd/m/Y',
 					listeners: {
 						change: function(field, newValue, oldValue) {
 							var grid = this.up().up();
@@ -303,6 +305,7 @@ alert(est_start_day);
 				align:'center',
 				editor: {
 					xtype:'datefield',
+					format: 'd/m/Y',
 					listeners: {
 						change: function(field, newValue, oldValue) {
 							var grid = this.up().up();

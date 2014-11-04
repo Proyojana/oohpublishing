@@ -87,7 +87,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						},
 						 {
 							xtype:'button',
-							text:'Cancel',
+							text:'Close',
 							iconCls : 'cancelClass',
 							width:100,
 							x:600,
@@ -290,7 +290,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				},
 				{
 					 xtype:'button',
-                       text:'Cancel',
+                       text:'Close',
                        iconCls : 'cancelClass',
                       width:100,
 						x:600,
@@ -600,7 +600,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 			},
 			{
 					 xtype:'button',
-                       text:'Cancel',
+                       text:'Close',
                        iconCls : 'cancelClass',
                       width:100,
 						x:600,
@@ -841,7 +841,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 			},
 			{
 				xtype:'button',
-				text:'Cancel',
+				text:'Close',
 				iconCls : 'cancelClass',
 				pressed:true,
 				width:100,
@@ -1155,7 +1155,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 			},
 			{
 				xtype:'button',
-				text:'Cancel',
+				text:'Close',
 				iconCls : 'cancelClass',
 				pressed:true,
 				x:600,
@@ -1331,7 +1331,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 			},
 			{
 				xtype:'button',
-				text:'Cancel',
+				text:'Close',
 				iconCls : 'cancelClass',
 				pressed:true,
 				x:600,
@@ -1575,7 +1575,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 			},
 			{
 				xtype:'button',
-				text:'Cancel',
+				text:'Close',
 				pressed:true,
 				iconCls : 'cancelClass',
 				x:600,
