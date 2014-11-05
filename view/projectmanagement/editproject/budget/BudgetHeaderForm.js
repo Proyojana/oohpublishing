@@ -6,6 +6,9 @@
            {"id":"2", "name":"Completed"}
        ]
    });
+  //var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+var require_one = '<span style="color:blue;font-weight:bold" data-qtip="Required">*</span>';
+
 Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm' , {
 	 extend: 'Ext.form.Panel',
 	alias : 'widget.BudgetHeaderForm',
@@ -17,12 +20,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	frame:true,
 	
 	width:1100,
-	height:140,
+	height:153,
 	title:'Header Data',
 	defaults: {
 		labelWidth: 90,
 	},
-	defaultType: 'textfield',
+	//defaultType: 'textfield',
 	
 	initComponent:function(){
 		
@@ -41,14 +44,17 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		
 		{
 		id:'editbudgetHeader_ClientCode',
+		xtype: 'textfield',
 		fieldLabel: 'Client Code',
 		readOnly: true,
 		x:10,
 		y:0,
 		width:220,
+		
 	},
 	{
 		id:'editbudgetHeader_ClientName',
+		xtype: 'textfield',
 		fieldLabel: 'Client Name',
 		margin:'0 0 0 0',
 		labelWidth: 98,
@@ -59,6 +65,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	},
 	{
 		id:'edit_Job_code',
+		xtype: 'textfield',
 		fieldLabel: 'Job #',
 		//emptyText:'Example: JOB001',
 		readOnly: true,
@@ -69,6 +76,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	},
 	{
 		id:'editbudgetHeader_ProjectName',
+		xtype: 'textfield',
 		fieldLabel: 'Project Name',
 		x:760,
 		readOnly: true,
@@ -79,6 +87,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		
 	{
 		id:'editbudgetHeader_castoffextent',
+		xtype: 'textfield',
 		fieldLabel: 'Cast Off Extent',
 		x:10,
 		readOnly: true,
@@ -88,6 +97,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	},
 	{
 		id:'editbudgetHeader_confirmedextent',
+		xtype: 'textfield',
 		fieldLabel: 'Confirmed Extent',
 		x:260,
 		labelWidth: 98,
@@ -98,6 +108,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	},
 	{
 		id:'edit_budgetHeader_ponumber1',
+		xtype: 'textfield',
 		fieldLabel: 'PO Numbers',
 		x:510,
 		y:30,
@@ -105,6 +116,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	},
 	{
 		id:'edit_budgetHeader_ponumber2',
+		xtype: 'textfield',
 		x:760,
 		y:30,
 	},
@@ -113,8 +125,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 		xtype:'datefield',
 		width:200,
 		id:"invoice_date",
-		x:10,
-		y:70,
+		x:260,
+		y:67,
+		afterLabelTextTpl: require_one,
+		
+		
 		listeners:
 		{
           	// public event change - when selection1 dropdown is changed
@@ -137,15 +152,16 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	},
 	{
 		fieldLabel: 'Author Name',
+		xtype: 'textfield',
 		id:'editbudgetHeader_author_name',
-		x:260,
-		y:70,
+		x:10,
+		y:67,
 		
 	},
 	 {
                 xtype:'combo',
                 x:520,
-                y:70,
+                y:67,
                 fieldLabel:'Status',
                 store: type,
                 id:'prostatus',
@@ -163,6 +179,31 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
                }                                             
                                                        
     },
+    
+    
+   	{
+xtype:'label',
+text:'Note:',
+
+x:260,
+y:95,
+},
+{
+
+html:'<span style="background-color:#dfe8f5; color:blue;font-weight:bold">*</span>',
+border:false,
+x:315,
+y:95,
+width:8,
+
+},
+{
+xtype:'label',
+text:'Choose Invoice Date makes the status from Current to Complete',
+x:325,
+y:95,
+
+},
 	]
 	this.callParent();
 }
