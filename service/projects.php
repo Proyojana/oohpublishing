@@ -109,7 +109,7 @@ From
   customers On project_title.client =
     customers.id Inner Join
   workflow On project_title.workflow =
-    workflow.id Inner Join
+    workflow.id Left Join
   customers_teams On project_title.client_team =
     customers_teams.id
 Where

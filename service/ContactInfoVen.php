@@ -159,7 +159,7 @@ From
 	
 	function insertContactVendor($vendorid,$pername,$firstname,$middlename,$lastname,$contctphone,$cntctemail,$cntctdesignation)
     {
-		$checkquery="SELECT name FROM vendors_contacts WHERE firstname='".$firstname."' and phone = '".$contctphone."'" ;
+		$checkquery="SELECT firstname FROM vendors_contacts WHERE firstname='".$firstname."' and phone = '".$contctphone."'" ;
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		

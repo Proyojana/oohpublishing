@@ -37,8 +37,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 	initComponent: function() {
 		/*var users = Ext.create('MyDesktop.store.Users');
 		users.load({params:{action: 1}});*/
-		var users = Ext.create('MyDesktop.store.Vendors');
-		users.load({params:{action: 1}});
+		//var users = Ext.create('MyDesktop.store.GetVenCntct');
+	//	users.load({params:{action: 1}});
+			var users = Ext.create('MyDesktop.store.GetVenCntct');
+		users.load({
+			params: {
+				start: 0,
+				limit: 8
+			}
+		});
 		var team = Ext.create('MyDesktop.store.Team');
 		team.load({params:{action: 12}});
 		this.store = team,
@@ -72,9 +79,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 						//xtype:'textfield'
 					 	xtype:'combo',
 					 	store: users,
-						queryMode: 'local',
+					 	// autoLoad:true,
+						//queryMode: 'local',
 						displayField: 'firstname',
 						valueField: 'firstname',
+						
 						/*listeners: {
                 change: function (field, newValue, oldValue) {
                 	 var grid = this.up().up();
