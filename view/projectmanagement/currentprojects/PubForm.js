@@ -3,9 +3,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PubForm' ,{
     alias : 'widget.pubform',
    		id:'pubform',
     margin: '10 10 10 10',
-	layout: {
-                                type: 'absolute'
-                            },
+	
 	
 	frame:true,
 	requires:['MyDesktop.view.projectmanagement.currentprojects.PublisherGrid','MyDesktop.view.projectmanagement.currentprojects.Author','MyDesktop.view.projectmanagement.currentprojects.budgetform','MyDesktop.view.projectmanagement.currentprojects.AddChargesGrid',
@@ -19,28 +17,45 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PubForm' ,{
     },
 
     defaultType: 'textfield',
+    layout:'border',
 	
 	initComponent:function(){
+		
 		//var heads = Ext.create('MyDesktop.store.HeadedBy');
 		//heads.load({params:{action: 5}});
 		this.items = [
+		
 		{
+	 
 		xtype : 'publishergrid',
-		width:800,
-		height:220,
+		
+		region:'west',
+		flex:5,
+		//anchor: '70%',
+	
+		width:'70%',
+		//height:120,
 		},
 		{
+			
 			xtype:'details',
-				x:850,
-			y:5,
+			
+			region:'east',
+			flex:1.5,
+			width:'26%',
+			 //margin:'0 0 50 60',
+				//x:850,
+			//    y:5,
 		},
 		{
 		xtype:'tabpanel',
 		id:'currentProjecttab',
+		region:'south',	
+	//	margin:'40 0 0 0',
 		plain:true,		
-		y:295,
+		y:315,
 		activeTab: 0,
-		height:310,
+		height:280,
 		
 		items:[{
 			//iconCls: 'personalinfo',
