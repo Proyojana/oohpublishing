@@ -199,7 +199,7 @@ width:8,
 },
 {
 xtype:'label',
-text:'Select Invoice Date to make the status from Current to Complete',
+text:'Select Invoice Date to make the status from Current to Completed',
 x:325,
 y:95,
 

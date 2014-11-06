@@ -8,7 +8,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PublisherGrid', {
 	alias:'widget.publishergridCP',
 	closeAction: 'hide',
 	selModel:sm,
-	anchor: '76% 49%',
+	//anchor: '76% 49%',
 	requires:['MyDesktop.store.Completed'],
 	id:'publishergridCP',
 	initComponent: function() {

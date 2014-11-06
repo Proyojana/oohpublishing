@@ -24,21 +24,26 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PubForm' ,{
 		this.items = [
 		{
 		xtype : 'publishergridCP',
-		width:830,
+		//width:830,
+		region:'west',
+flex:5,
+width:'70%',
+
 		},
 		{
 			xtype:'detailsCP',
-			x:850,
-			y:5,
+			region:'east',
+flex:1.5,
+width:'26%',
 		},
 		{
 		xtype:'tabpanel',
 		id:'tabCP',
-		plain:true,
-		x:5,
-		y:300,
-		activeTab: 0,
-		height:235,
+		region:'south',
+plain:true,
+y:315,
+activeTab: 0,
+height:280,
 		
 		items:[{
 			//iconCls: 'personalinfo',
