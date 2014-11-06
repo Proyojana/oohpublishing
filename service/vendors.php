@@ -41,10 +41,10 @@
   vendors.name As name,
   vendors.email as email,
   vendors.phone as phone,
-  vendors.id as id,
-  vendors_contacts.firstname
+  vendors.id as id
+  
 From
-  vendors ,vendors_contacts
+  vendors
 WHERE vendors.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
@@ -54,10 +54,10 @@ WHERE vendors.flag=0")or die(mysql_error());
   vendors.name As name,
   vendors.email as email,
   vendors.phone as phone,
-  vendors.id as id,
-  vendors_contacts.firstname
+  vendors.id as id
+ 
 From
-  vendors,vendors_contacts
+  vendors
 WHERE vendors.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
