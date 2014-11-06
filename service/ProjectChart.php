@@ -9,8 +9,8 @@ switch($_POST["action"]) {
 function BudgetVsActuals() {
 
 	$result1 = mysql_query("Select
-  oohpublishing.budget_total_detail.total_pay_usd as Estimated,
-  oohpublishing.budget_total_detail.total_pay_gdp as Actuals,
+  oohpublishing.budget_total_detail.total_receive_usd as Estimated,
+  oohpublishing.budget_total_detail.total_pay_usd as Actuals,
   oohpublishing.project_title.job_code as project
 From
   oohpublishing.budget_total_detail Inner Join
