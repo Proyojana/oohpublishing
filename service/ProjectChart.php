@@ -9,13 +9,13 @@ switch($_POST["action"]) {
 function BudgetVsActuals() {
 
 	$result1 = mysql_query("Select
-  oohpublishing.budget_total_detail.total_receive_usd as Estimated,
-  oohpublishing.budget_total_detail.total_pay_usd as Actuals,
-  oohpublishing.project_title.job_code as project
+  budget_total_detail.total_receive_usd as Estimated,
+  budget_total_detail.total_pay_usd as Actuals,
+  project_title.job_code as project
 From
-  oohpublishing.budget_total_detail Inner Join
-  oohpublishing.project_title On oohpublishing.project_title.id =
-    oohpublishing.budget_total_detail.project_id");
+  budget_total_detail Inner Join
+  project_title On project_title.id =
+    budget_total_detail.project_id");
   
   if(!$result1)
 		{
