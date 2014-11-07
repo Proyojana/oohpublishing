@@ -618,19 +618,19 @@ function getReceivable_p($job_code)
 		}
 		$result = mysql_query("
 		 Select
-  budget_receivable_project.id as budgetReceive_id,
-  budget_receivable_project.rate_gbp as rate_GBP,
-  budget_receivable_project.rate_usd as rate_USD,
-  budget_receivable_project.no_of_unit as no_of_unit,
-  budget_receivable_project.actual_usd as actual_amount_USD,
-  budget_receivable_project.actual_gbp as actual_amount_GBP,
-  budget_receivable_project.budgeted_usd as budgeted_amount_USD,
-  budget_receivable_project.budgeted_gbp as budgeted_amount_GBP
+  oohpublishing.budget_receivable_project.id as budgetReceive_id,
+  oohpublishing.budget_receivable_project.rate_gbp as rate_GBP,
+  oohpublishing.budget_receivable_project.rate_usd as rate_USD,
+  oohpublishing.budget_receivable_project.no_of_unit as no_of_unit,
+  oohpublishing.budget_receivable_project.actual_usd as actual_amount_USD,
+  oohpublishing.budget_receivable_project.actual_gbp as actual_amount_GBP,
+  oohpublishing.budget_receivable_project.budgeted_usd as budgeted_amount_USD,
+  oohpublishing.budget_receivable_project.budgeted_gbp as budgeted_amount_GBP
   
 From
-  budget_receivable_project
+  oohpublishing.budget_receivable_project
 Where
-  budget_receivable_project.project_id = '".$projectid."'
+  oohpublishing.budget_receivable_project.project_id = '".$projectid."'
 ")or die(mysql_error());
 		while($row=mysql_fetch_object($result))
 		{
@@ -649,21 +649,21 @@ function getReceivable_a($job_code)
 		}
 		$result = mysql_query("
 		Select
- budget_receivable.id As budgetReceive_id,
- budget_receivable.no_of_unit As no_of_unit,
- budget_receivable.rate_gbp As rate_GBP,
- budget_receivable.rate_usd As rate_USD,
- budget_receivable.budgeted_usd As budgeted_amount_USD,
-  budget_receivable.budgeted_gbp As budgeted_amount_GBP,
- budget_receivable.actual_usd As actual_amount_USD,
- budget_receivable.actual_gbp As actual_amount_GBP,
- activity.name as activity_name
+ oohpublishing.budget_receivable.id As budgetReceive_id,
+ oohpublishing.budget_receivable.no_of_unit As no_of_unit,
+ oohpublishing.budget_receivable.rate_gbp As rate_GBP,
+ oohpublishing.budget_receivable.rate_usd As rate_USD,
+ oohpublishing.budget_receivable.budgeted_usd As budgeted_amount_USD,
+  oohpublishing.budget_receivable.budgeted_gbp As budgeted_amount_GBP,
+ oohpublishing.budget_receivable.actual_usd As actual_amount_USD,
+ oohpublishing.budget_receivable.actual_gbp As actual_amount_GBP,
+ oohpublishing.activity.name as activity_name
 From
- budget_receivable Inner Join
- activity On budget_receivable.activity =
-   activity.id
+ oohpublishing.budget_receivable Inner Join
+ oohpublishing.activity On oohpublishing.budget_receivable.activity =
+   oohpublishing.activity.id
 Where
- budget_receivable.project_id ='".$projectid."'
+ oohpublishing.budget_receivable.project_id ='".$projectid."'
 ")or die(mysql_error());
 		while($row=mysql_fetch_object($result))
 		{
@@ -748,14 +748,14 @@ function getCurrencyRate()
 	function getTotal($project_id)
  	{
 		$result1 = mysql_query ("Select
- budget_total_detail.total_receive_usd as edit_total_receive_USD,
- budget_total_detail.total_receive_gdp as edit_total_receive_GBP,
- budget_total_detail.total_pay_gdp as edit_total_pay_USD,
- budget_total_detail.total_pay_usd as edit_total_pay_GBP,
- budget_total_detail.project_profit_gdp as edit_profit_GBP,
- budget_total_detail.project_profit_per as edit_profit_percentage
+ oohpublishing.budget_total_detail.total_receive_usd as edit_total_receive_USD,
+ oohpublishing.budget_total_detail.total_receive_gdp as edit_total_receive_GBP,
+ oohpublishing.budget_total_detail.total_pay_gdp as edit_total_pay_USD,
+ oohpublishing.budget_total_detail.total_pay_usd as edit_total_pay_GBP,
+ oohpublishing.budget_total_detail.project_profit_gdp as edit_profit_GBP,
+ oohpublishing.budget_total_detail.project_profit_per as edit_profit_percentage
 From
- budget_total_detail
+ oohpublishing.budget_total_detail
 	Where
 	  project_id = '".$project_id."'");
 			
@@ -819,13 +819,13 @@ function getActivity_edit($job_code,$activity)
 			
 		}
 			$result1 = mysql_query("Select
- stages.ratecard_USD as rate_USD,
- stages.ratecard_GBP as rate_GBP
+ oohpublishing.stages.ratecard_USD as rate_USD,
+ oohpublishing.stages.ratecard_GBP as rate_GBP
 From
- stages
+ oohpublishing.stages
 Where
- stages.workflow_id = 20 And
- stages.activity = 8")or die(mysql_error());
+ oohpublishing.stages.workflow_id = 20 And
+ oohpublishing.stages.activity = 8")or die(mysql_error());
 			
 			if(!$result1)
 			{

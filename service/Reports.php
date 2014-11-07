@@ -998,85 +998,85 @@ Where
 function getProjectReport()
 	{
  		$num_result = mysql_query ("Select Distinct
-  project_title.job_code As code,
-  project_title.title As title,
-  project_title.castoff_extent As coe,
-  project_title.confirmed_extent As ce,
-  author.name As author,
-  project_title.agreed_deadline As adeadline,
+  oohpublishing.project_title.job_code As code,
+  oohpublishing.project_title.title As title,
+  oohpublishing.project_title.castoff_extent As coe,
+  oohpublishing.project_title.confirmed_extent As ce,
+  oohpublishing.author.name As author,
+  oohpublishing.project_title.agreed_deadline As adeadline,
   Max(Case
-    When project_team.role = 'Project Manager' Then
-    project_team.user End) pm,
+    When oohpublishing.project_team.role = 'Project Manager' Then
+    oohpublishing.project_team.user End) pm,
   Max(Case
-    When project_team.role = 'Production Editor' Then
-    project_team.user End) pe,
+    When oohpublishing.project_team.role = 'Production Editor' Then
+    oohpublishing.project_team.user End) pe,
   Max(Case
-    When schedule.stage = 'First proofs due' Then
-    schedule.actual_start_date End) stage1,
+    When oohpublishing.schedule.stage = 'First proofs due' Then
+    oohpublishing.schedule.actual_start_date End) stage1,
   Max(Case
-    When schedule.stage = 'Revised proofs due' Then
-    schedule.actual_start_date End) stage2,
+    When oohpublishing.schedule.stage = 'Revised proofs due' Then
+    oohpublishing.schedule.actual_start_date End) stage2,
   Max(Case
-    When schedule.stage = 'Send for typesetting' Then
-    schedule.actual_start_date End) stage3,
+    When oohpublishing.schedule.stage = 'Send for typesetting' Then
+    oohpublishing.schedule.actual_start_date End) stage3,
   Max(Case
-    When schedule.stage = 'PDF due' Then
-    schedule.actual_start_date End) stage4
+    When oohpublishing.schedule.stage = 'PDF due' Then
+    oohpublishing.schedule.actual_start_date End) stage4
 From
-  project_title Inner Join
-  author On project_title.job_code =
-    author.job_code Inner Join
-  project_team On project_title.id =
-    project_team.project_id Inner Join
-  schedule On project_title.id =
-    schedule.project_id
+  oohpublishing.project_title Inner Join
+  oohpublishing.author On oohpublishing.project_title.job_code =
+    oohpublishing.author.job_code Inner Join
+  oohpublishing.project_team On oohpublishing.project_title.id =
+    oohpublishing.project_team.project_id Inner Join
+  oohpublishing.schedule On oohpublishing.project_title.id =
+    oohpublishing.schedule.project_id
 Where
-  author.author = 'Main Contact' And
-  project_title.flag = 0
+  oohpublishing.author.author = 'Main Contact' And
+  oohpublishing.project_title.flag = 0
 Group By
-  schedule.project_id
+  oohpublishing.schedule.project_id
   ")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select Distinct
-  project_title.job_code As code,
-  project_title.title As title,
-  project_title.castoff_extent As coe,
-  project_title.confirmed_extent As ce,
-  author.name As author,
-  project_title.agreed_deadline As adeadline,
+  oohpublishing.project_title.job_code As code,
+  oohpublishing.project_title.title As title,
+  oohpublishing.project_title.castoff_extent As coe,
+  oohpublishing.project_title.confirmed_extent As ce,
+  oohpublishing.author.name As author,
+  oohpublishing.project_title.agreed_deadline As adeadline,
   Max(Case
-    When project_team.role = 'Project Manager' Then
-    project_team.user End) pm,
+    When oohpublishing.project_team.role = 'Project Manager' Then
+    oohpublishing.project_team.user End) pm,
   Max(Case
-    When project_team.role = 'Production Editor' Then
-    project_team.user End) pe,
+    When oohpublishing.project_team.role = 'Production Editor' Then
+    oohpublishing.project_team.user End) pe,
   Max(Case
-    When schedule.stage = 'First proofs due' Then
-    schedule.actual_start_date End) stage1,
+    When oohpublishing.schedule.stage = 'First proofs due' Then
+    oohpublishing.schedule.actual_start_date End) stage1,
   Max(Case
-    When schedule.stage = 'Revised proofs due' Then
-    schedule.actual_start_date End) stage2,
+    When oohpublishing.schedule.stage = 'Revised proofs due' Then
+    oohpublishing.schedule.actual_start_date End) stage2,
   Max(Case
-    When schedule.stage = 'Send for typesetting' Then
-    schedule.actual_start_date End) stage3,
+    When oohpublishing.schedule.stage = 'Send for typesetting' Then
+    oohpublishing.schedule.actual_start_date End) stage3,
   Max(Case
-    When schedule.stage = 'PDF due' Then
-    schedule.actual_start_date End) stage4
+    When oohpublishing.schedule.stage = 'PDF due' Then
+    oohpublishing.schedule.actual_start_date End) stage4
 From
-  project_title Inner Join
-  author On project_title.job_code =
-    author.job_code Inner Join
-  project_team On project_title.id =
-    project_team.project_id Inner Join
-  schedule On project_title.id =
-    schedule.project_id
+  oohpublishing.project_title Inner Join
+  oohpublishing.author On oohpublishing.project_title.job_code =
+    oohpublishing.author.job_code Inner Join
+  oohpublishing.project_team On oohpublishing.project_title.id =
+    oohpublishing.project_team.project_id Inner Join
+  oohpublishing.schedule On oohpublishing.project_title.id =
+    oohpublishing.schedule.project_id
 Where
-  author.author = 'Main Contact' And
-  project_title.flag = 0
+  oohpublishing.author.author = 'Main Contact' And
+  oohpublishing.project_title.flag = 0
 Group By
-  schedule.project_id
+  oohpublishing.schedule.project_id
   LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
