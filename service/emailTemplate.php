@@ -36,22 +36,22 @@ function authorEmail($job_code,$id)
  		
 		/** insert into temp**/
  		$selectworkflow = mysql_query("Select
- oohpublishing.project_title.title As title,
- oohpublishing.project_title.client_deadline As client_deadline,
- oohpublishing.author.name As name,
- oohpublishing.email_template.main As main,
- oohpublishing.email_template.footer As footer,
- oohpublishing.user_masters.user_mas_name As user
+ project_title.title As title,
+ project_title.client_deadline As client_deadline,
+ author.name As name,
+ email_template.main As main,
+ email_template.footer As footer,
+ user_masters.user_mas_name As user
 From
- oohpublishing.project_title Inner Join
- oohpublishing.author On oohpublishing.project_title.job_code =
-   oohpublishing.author.job_code,
- oohpublishing.email_template,
- oohpublishing.user_masters
+ project_title Inner Join
+ author On project_title.job_code =
+   author.job_code,
+ email_template,
+ user_masters
 Where
- oohpublishing.project_title.job_code = 'JB015' And
- oohpublishing.author.author = 'Main contact' And
- oohpublishing.email_template.role = 1 And oohpublishing.user_masters.user_id=1 ");
+ project_title.job_code = 'JB015' And
+ author.author = 'Main contact' And
+ email_template.role = 1 And user_masters.user_id=1 ");
 		while($row = mysql_fetch_array($selectworkflow)) {
 				
 			$title = $row['title'];
@@ -82,17 +82,17 @@ Thanks,
 					}
 		/** Get message from temp **/			
 	$result3 = mysql_query ("Select Distinct
- oohpublishing.author.email As authorEmail,
-  oohpublishing.user_masters.user_email As authorFrom,
-  oohpublishing.temp.message As authorMessage
+ author.email As authorEmail,
+  user_masters.user_email As authorFrom,
+  temp.message As authorMessage
 From
- oohpublishing.author,
- oohpublishing.temp,
- oohpublishing.user_masters
+ author,
+ temp,
+ user_masters
 Where
- (oohpublishing.author.job_code = '".$job_code."' And
- oohpublishing.author.author = 'Main Contact') And
- oohpublishing.user_masters.user_id = 1 ");
+ (author.job_code = '".$job_code."' And
+ author.author = 'Main Contact') And
+ user_masters.user_id = 1 ");
 			
 		if(!$result3)
 			{
@@ -199,15 +199,15 @@ Thanks,
 					}
 			/** Get message from temp **/		
 		$result1 = mysql_query (" Select distinct
-oohpublishing.author.email as vendorEmail,
-oohpublishing.temp.message as vendorMessage,
-oohpublishing.user_masters.user_email as vendorFrom
+author.email as vendorEmail,
+temp.message as vendorMessage,
+user_masters.user_email as vendorFrom
 From
-oohpublishing.author,
-oohpublishing.temp,
-oohpublishing.user_masters
+author,
+temp,
+user_masters
 Where
-oohpublishing.author.job_code='".$job_code."' || oohpublishing.user_masters.user_id='".$id."'");
+author.job_code='".$job_code."' || user_masters.user_id='".$id."'");
 			
 		if(!$result1)
 			{
