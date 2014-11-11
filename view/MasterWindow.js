@@ -9,20 +9,6 @@ Ext.define('MyDesktop.view.MasterWindow', {
 
 	extend: 'Ext.ux.desktop.Module',
 
-	requires: [
-	'Ext.tab.*',
-	'Ext.window.*',
-	'Ext.tip.*',
-	'Ext.layout.container.Border',
-	'Ext.data.ArrayStore',
-	'Ext.util.Format',
-	'Ext.grid.*',
-	'Ext.grid.Panel',
-	'Ext.grid.RowNumberer',
-	'MyDesktop.store.MasterNavTree',
-	'Ext.tree.Panel'
-	
-	],
 	id:'master-win',
 	init : function() {
 		this.launcher = {
