@@ -8,54 +8,11 @@ $id=$_SESSION['id'];
 		case 1:
 			getProjects();
 			break;
-		case 2:
-			getProjectById($_POST["project_code"]);	
-			break;
-		case 3:
-			deleteDeptMasterById($_POST["deptid"]);	
-			break;
-		case 4:
-			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['project_author'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id);	
-			break;
-		case 5:
-			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note'],$_POST['ebook_isbn']);
-			break;
-		case 6:
-			BulkDelete($_POST['id']);
-			break;	
-		case 7: 
-			autoRequestCode($id);
-			break;
+	
 		case 8:
 			titleInfo($_POST['project_id']);
 			break;
-		case 9:
-			insertProjectTeam($_POST['job_code'],$_POST['project_id'],$_POST['project_manager'],$_POST['production_editor'],$_POST['proofreader'],$_POST['indexer'],$_POST['copy_editor'],$_POST['typesetter'],$id);
-			break;
-		case 10:
-			teamInfo($_POST['project_id']);
-			break;
-		case 11:
-			ptitleInfo($_POST['project_id']);
-			break;
-		case 12:
-			pteaminfo($_POST['project_id']);
-			break;
-		case 13:
-			pbudgetinfo($_POST['project_id']);
-			break;
-		case 14:
-			tgeneralinfo($_POST['project_id']);
-			break;
-		case 15:
-		    getTeamInfo($_POST['project_id']);
-			break;
-		case 16:
-			getProjectDetails($_POST['job_code']);
-			break;
-	   case 17:
-			tauthorinfo($_POST['job_code']);
-			break;
+		
 		default: 
 			break;
 	}
@@ -88,7 +45,7 @@ From
     budget_total_detail.project_id
 Where
   project_title.flag = 0 And
-  budget_total_detail.status = 'Current'")or die(mysql_error());
+  budget_total_detail.status = 'Completed'")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
@@ -117,7 +74,7 @@ From
     budget_total_detail.project_id
 Where
   project_title.flag = 0 And
-  budget_total_detail.status = 'Current' LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  budget_total_detail.status = 'Completed' LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
@@ -344,13 +301,13 @@ function autoRequestCode($id) {
 		}
 	//	echo $data1;
 		$data = str_split($data1, 3);
-		$remain = substr($data1,3,5);
+		$remain = substr($data1,2,5);
 	
 
 		//$data1 = substr($data1, -4);
 		$code = $remain + 1;
 		//echo $code;
-		$code = str_pad($code, 3, '00', STR_PAD_LEFT);
+		$code = str_pad($code, 2, '0', STR_PAD_LEFT);
 	//	echo $code;
 		$new_code = $data[0] . $code;
 		

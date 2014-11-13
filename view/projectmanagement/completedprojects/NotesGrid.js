@@ -1,15 +1,10 @@
+
+/*Completed project notesgrid*/
+
 var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
-			var available = Ext.create('Ext.data.Store', {
-    fields: ['sno','dateraised', 'narrative', 'dateresolved'],
-    data : [
-         { "sno":"01",    "dateraised":"02/01/14" ,    "narrative":"Changes has been made on Chapter-II header",	     "dateresolved":"21/01/14"},
-         
-        
-         
-        ]
-    });
+		
 
 Ext.define('MyDesktop.view.projectmanagement.completedprojects.NotesGrid', {
 	extend:'Ext.grid.Panel',
@@ -19,57 +14,45 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.NotesGrid', {
 	closeAction: 'hide',
 	//selModel:sm,
  	anchor: '76% 30%',
-	//requires : ['MyDesktop.store.reviewer'],
-	//requires : ['MyDesktop.store.City','MyDesktop.view.city.CityImportForm'],
+	requires : ['MyDesktop.store.Notes'],
+	
 	
 	id:'notesgridCP',
 	initComponent: function() {
-		
-		
-		this.store = available,
+		var notes = Ext.create('MyDesktop.store.Notes');
+		notes.load({
+			params: {
+				start: 0,
+				limit: 50
+			}
+		});
+		notes.loadPage(1);
+		this.store = notes,		
 			this.columns = [
-				{
-					dataIndex: 'sno',
-                                      text: 'SL No:',
-					flex:0.5,
-				},
+			
 				{
 					dataIndex: 'dateraised',
 					text: 'Date Raised',
 					align: 'center',
-					
-					store:available,
 					flex:1,
-					filter: {
-                	type: 'string'
-           		}
+					
 				},
 				{
 					dataIndex: 'narrative',
 					text: 'Narrative',
 					align: 'center',
-					store:available,
+					flex:3,
 					
-					flex:2,
-					filter: {
-                	type: 'string'
-           		}
 				},
 				
 				{
 					dataIndex: 'dateresolved',
 					text: 'Date Resolved',
 					flex:1,
-						store:available,
 					align: 'center',
-					width:270,
-					filter: {
-                	type: 'string'
-           		}
 				},
 				
-			
-				];
+			];
 		this.bbar = Ext.create('Ext.PagingToolbar', {  
 
 			store : this.store,
@@ -88,3 +71,4 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.NotesGrid', {
 
 // Load first data page
 //    employee.loadPage(1);
+

@@ -32,10 +32,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.BudgetHeaderForm
 	
 		this.items= [
 		
-		{
-			id:'editbudgetHeader_projectID',
-			hidden:true
-		},
+		{ 
+			xtype: 'textfield',
+width:150,
+id:'editbudgetHeader_projectID',
+x:750,
+y:67,
+hidden:true,
+
+},
 		
 		{
 			id:'editbudgetHeader_workflow',

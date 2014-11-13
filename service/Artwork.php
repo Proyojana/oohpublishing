@@ -41,7 +41,8 @@ function getArtworkDetails($job_code)
 	    customers.id Inner Join
 	  author On project_title.job_code=author.job_code
 	Where
-	  project_title.job_code = '".$job_code."' And author.author='Author'");
+	  project_title.job_code = '".$job_code."' And (author.author = 'Author' Or
+    author.author ='Main Contact' or author.author ='Editor' or author.author ='Others')");
 			
 		if(!$result1)
 			{

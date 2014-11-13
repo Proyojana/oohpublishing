@@ -472,30 +472,30 @@ function deleteBudgetactivity($budgetid)
 	function getHeaderData($job_code)
  	{
 		$result1 = mysql_query ("Select
-	  customers.name as editbudgetHeader_ClientName,
-	  customers.code as editbudgetHeader_ClientCode,
-	  customers.id as editbudgetHeader_clientId,
-	  project_title.title as editbudgetHeader_ProjectName,
-	  project_title.workflow as editbudgetHeader_workflow,
-	  project_title.job_code as edit_Job_code,
-	  project_title.id as editbudgetHeader_projectID,
-	  project_title.castoff_extent as editbudgetHeader_castoffextent,
-	  project_title.confirmed_extent as editbudgetHeader_confirmedextent,
-	  author.name as editbudgetHeader_author_name,
-	  budget_total_detail.ponumber1 as edit_budgetHeader_ponumber1,
-	  budget_total_detail.ponumber2 as edit_budgetHeader_ponumber2,
-	  budget_total_detail.invoice_date as invoice_date,
-	  budget_total_detail.status as prostatus
-	  
-	  
-	From
-	  project_title Inner Join
-	  customers On project_title.client =
-	  customers.id Inner Join budget_total_detail On
-	  budget_total_detail.project_id = project_title.id Inner Join
-	  author On project_title.job_code=author.job_code
-	Where
-	  project_title.job_code = '".$job_code."' And author.author='Author'");
+  customers.name As editbudgetHeader_ClientName,
+  customers.code As editbudgetHeader_ClientCode,
+  customers.id As editbudgetHeader_clientId,
+  project_title.title As editbudgetHeader_ProjectName,
+  project_title.workflow As editbudgetHeader_workflow,
+  project_title.job_code As edit_Job_code,
+  project_title.id As editbudgetHeader_projectID,
+  project_title.castoff_extent As editbudgetHeader_castoffextent,
+  project_title.confirmed_extent As editbudgetHeader_confirmedextent,
+  author.name As editbudgetHeader_author_name,
+  budget_total_detail.ponumber1 As edit_budgetHeader_ponumber1,
+  budget_total_detail.ponumber2 As edit_budgetHeader_ponumber2,
+  budget_total_detail.invoice_date As invoice_date,
+  budget_total_detail.status As prostatus
+From
+  project_title Inner Join
+  customers On project_title.client = customers.id Inner Join
+  budget_total_detail On budget_total_detail.project_id =
+    project_title.id Inner Join
+  author On project_title.job_code = author.job_code
+Where
+  project_title.job_code = '".$job_code."' And
+ (author.author = 'Author' Or
+    author.author ='Main Contact' or author.author ='Editor' or author.author ='Others')");
 			
 		if(!$result1)
 			{
@@ -748,7 +748,7 @@ function getCurrencyRate()
 	function getTotal($project_id)
  	{
 		$result1 = mysql_query ("Select
- publishing.budget_total_detail.total_receive_usd as edit_total_receive_USD,
+ budget_total_detail.total_receive_usd as edit_total_receive_USD,
  budget_total_detail.total_receive_gdp as edit_total_receive_GBP,
  budget_total_detail.total_pay_gdp as edit_total_pay_USD,
  budget_total_detail.total_pay_usd as edit_total_pay_GBP,

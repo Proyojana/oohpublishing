@@ -1,10 +1,10 @@
- Ext.define('MyDesktop.store.ProductionStages', {
+ Ext.define('MyDesktop.store.completedprojects', {
         extend:'Ext.data.Store',
-		pageSize: 50,
-        model: 'MyDesktop.model.ProductionStages',
+		pageSize: 10,
+        model: 'MyDesktop.model.completedprojects',
         proxy: {
     		type:'ajax',
-			url: 'service/activity.php',
+			url: 'service/completedprojects.php',
 			actionMethods: {
 		     read: 'POST'
     		},

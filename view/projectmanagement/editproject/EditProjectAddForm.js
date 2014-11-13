@@ -68,6 +68,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			width:320,
 			emptyText:'Ex.JOB001',
 			allowBlank: false,
+			readOnly:true,
 			afterLabelTextTpl: required,
 
     	},

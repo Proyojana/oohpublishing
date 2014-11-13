@@ -1,13 +1,11 @@
+
+
+/*Completed project author details.*/
+
 var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
-var store1 = Ext.create('Ext.data.JsonStore', {
-    fields: ['author','name','addr', 'email','tel','seeproof', 'noproof'],
-    data: [
-    { "author": "Author","name":"Henry Fielding", "addr": "Sharpham, Glastonbury, Somerset, England","email": "henry@gmail.com","tel":"2548794463","seeproof": "yes","noproof": "1"},
-   
-     ]
-});			
+		
 Ext.define('MyDesktop.view.projectmanagement.completedprojects.Author', {
 	extend:'Ext.grid.Panel',
 	title: 'Authors',
@@ -21,16 +19,14 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.Author', {
 	id:'authorCP',
 	initComponent: function() {
 		
-	/*	var journal = Ext.create('MyDesktop.store.Journal');
-		journal.load({
+	var author = Ext.create('MyDesktop.store.AuthorGrid');
+		author.load({
 			params: {
 				start: 0,
-				limit: 10,
-				
+				limit: 50
 			}
 		});
-		//journal.loadPage(1);*/
-		this.store = store1,
+	this.store = author,
 		this.columns = [
 	{
             header: 'Author/Editor',
@@ -44,7 +40,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.Author', {
 			flex : 1
         },{
             header: 'Address',
-            dataIndex: 'addr',
+            dataIndex: 'address',
             align: 'center',
             flex : 2			
         }, {
@@ -54,20 +50,23 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.Author', {
 			flex:1
         }, {
             header: 'Telephone',
-            dataIndex: 'tel',
+            dataIndex: 'phone',
             align: 'center',
             flex : 1
         }, {
             header: 'To see proofs?',
-            dataIndex: 'seeproof',
+            dataIndex: 'see_proof',
             align: 'center',
 			flex : 1
         }, {
             header: 'No of Proofs',
-            dataIndex: 'noproof',
+            dataIndex: 'no_proof',
             align: 'center',
 			flex : 1
-        },];
+        },
+		
+
+];
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
 			displayInfo: true,
@@ -80,5 +79,3 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.Author', {
 	}
 });
 
-// Load first data page
-//    employee.loadPage(1);

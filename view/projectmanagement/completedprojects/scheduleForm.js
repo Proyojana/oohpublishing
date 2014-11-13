@@ -25,7 +25,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.scheduleForm' ,{
 		{
 		xtype : 'schedulegridCP',
 		title:'Schedule for production',
-		width:725,
+		height:200,
 		},
 		
 			]

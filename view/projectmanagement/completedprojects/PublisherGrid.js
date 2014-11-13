@@ -9,11 +9,11 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PublisherGrid', {
 	closeAction: 'hide',
 	selModel:sm,
 	//anchor: '76% 49%',
-	requires:['MyDesktop.store.Completed'],
+	requires:['MyDesktop.store.completedprojects'],
 	id:'publishergridCP',
 	initComponent: function() {
 		
-		var completed = Ext.create('MyDesktop.store.Completed');
+		var completed = Ext.create('MyDesktop.store.completedprojects');
 		completed.load({
 			params: {
 				start: 0,
@@ -78,7 +78,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PublisherGrid', {
 					
 				},
 {
-					dataIndex: 'word',
+					dataIndex: 'word_count',
 					text: 'Word Count',
 					align: 'center',
 					flex:1,
@@ -96,7 +96,89 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PublisherGrid', {
 						tooltip: 'View',
 					handler: function(grid, rowIndex, colIndex) {
 					   
-						
+					   var rec = grid.getStore().getAt(rowIndex);
+					var project_id=rec.get('id');
+					var job_code=rec.get('code');
+					
+					//alert(project_id);
+					//alert(job_code);	
+					
+					
+					
+					/*Title information grid loading*/
+					
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url: 'service/completedprojects.php',
+						method: 'POST',
+						params : {
+							action:8,
+							project_id:project_id
+						},
+						success: function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							//	Ext.Msg.alert(obj.message);
+							var myGrid = Ext.getCmp('titleinfogridCP');
+							myGrid.setSource(obj);
+						},
+					});
+					
+					
+					/*Team information grid loading*/
+					
+					var gridTeam=Ext.getCmp('teamgridCP');
+					gridTeam.getStore().load({
+						params: {
+							action:12,
+							project_id:project_id
+						}
+					});
+					
+					
+					/*bottom grid loading*/
+					
+					var gridAuthor=Ext.getCmp('authorCP');
+					gridAuthor.getStore().load({
+						params: {
+							action:2,
+							job_code:job_code
+						}
+					});
+
+					var gridAuthor=Ext.getCmp('contribgridCP');
+					gridAuthor.getStore().load({
+						params: {
+							action:4,
+							job_code:job_code
+						}
+					});
+
+					var gridBudget=Ext.getCmp('budgetgridCP');
+					gridBudget.getStore().load({
+						params: {
+							action:1,
+							job_code:job_code
+						}
+					});
+
+					var gridBudget=Ext.getCmp('schedulegridCP');
+					gridBudget.getStore().load({
+						params: {
+							action:4,
+							projectid:project_id
+						}
+					});
+
+					var gridNotes=Ext.getCmp('notesgridCP');
+					gridNotes.getStore().load({
+						params: {
+							action:3,
+							project_id:project_id
+						}
+					});
+					
+					/*end*/
+					
 				}
 			},]
 		}];

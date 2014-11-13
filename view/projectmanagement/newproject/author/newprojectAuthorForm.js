@@ -42,7 +42,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.author.newprojectAuthorF
             
                 }
               }
-             }
+            } 
 
 		},*/
 		{
@@ -73,6 +73,9 @@ x:500,
 y:480,
 handler:function(){
 var job_code=Ext.getCmp('job_code').getValue();
+var project_id=Ext.getCmp('budgetHeader_projectID').getValue();
+//alert(project_id);
+
 //alert(job_code);
 var c='';var d='';
 var e=''; var f='';
@@ -112,6 +115,38 @@ else
 {
 	Ext.Msg.alert("Please fill Authour name and email");
 }
+
+
+/*for budget total data inserting*/
+
+
+var ponumber1=0;
+var ponumber2=0;
+var total_receive_USD=0;
+var total_receive_GDP=0;
+var total_pay_USD=0;
+var total_pay_GDP=0;
+var profit_GDP=0;
+var profit_percentage=0;
+
+var conn1 = new Ext.data.Connection();
+conn1.request(
+	{
+		url: 'service/budget.php',
+		method: 'POST',
+		params :
+		 {action:14,projectID:project_id,ponumber1:ponumber1,ponumber2:ponumber2,total_receive_USD:total_receive_USD,total_receive_GDP:total_receive_GDP,total_pay_USD:total_pay_USD,total_pay_GDP:total_pay_GDP,profit_GDP:profit_GDP,profit_percentage:profit_percentage},
+						success:function(response){
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message); 
+}
+});
+
+ 
+ 
+/*end*/
+
+
 var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
 /***load data in header form****/
 
