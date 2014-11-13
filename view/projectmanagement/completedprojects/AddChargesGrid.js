@@ -1,12 +1,12 @@
 
-    var available = Ext.create('Ext.data.Store', {
+   /* var available = Ext.create('Ext.data.Store', {
    fields: ['Id', 'Amount','paid','Payment','approve'],
    data : [
         {"Amount":"$40.00", "paid":"Jedidiah","Payment":"Courier Charges","approve":"Walden"},
          {"Amount":"$30.00", "paid":"Jedidiah","Payment":"For Additional copies","approve":"Walden"},
        
        ]
-   });
+   });*/
 Ext.define('MyDesktop.view.projectmanagement.completedprojects.AddChargesGrid', {
 	extend:'Ext.grid.Panel',
 	alias:'widget.addchargesgridCP',
@@ -27,7 +27,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.AddChargesGrid', 
 			}
 		});
 		ci.loadPage(1);*/
-		this.store = available,
+		//this.store = available,
 			this.columns = [
 				{
 					dataIndex: 'Id',
