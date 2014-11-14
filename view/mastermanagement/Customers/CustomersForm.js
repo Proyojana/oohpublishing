@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersForm' ,{
               type: 'absolute'
             },
 	frame:true,
-	requires:['MyDesktop.view.mastermanagement.Customers.CustomersGrid','MyDesktop.view.mastermanagement.Customers.BasicInfoForm','MyDesktop.view.mastermanagement.Customers.ContactInfoForm','MyDesktop.view.mastermanagement.Customers.TeamsInfoForm','MyDesktop.view.mastermanagement.Customers.RateCardGrid'],
+	requires:['MyDesktop.view.mastermanagement.Customers.CustomersGrid','MyDesktop.view.mastermanagement.Customers.BasicInfoForm','MyDesktop.view.mastermanagement.Customers.ContactInfoForm','MyDesktop.view.mastermanagement.Customers.TeamsInfoForm'],
     title:'List Of Customers',
     defaults: {
         labelWidth: 140,
@@ -43,7 +43,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersForm' ,{
 							
 							Ext.getCmp('customercontactsformTab').setDisabled(true);
 							Ext.getCmp('customerteamsformTab').setDisabled(true);
-							Ext.getCmp('customerratecardformTab').setDisabled(true);
+							
 						}
 					},
 		items:[{
@@ -60,11 +60,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersForm' ,{
 			id:'customerteamsformTab',
 			xtype:'custteamform'
 		},
-		{
-			id:'customerratecardformTab',
-			xtype:'ratecardcust',
-		}
-		
+
 		]
 	}
 	
