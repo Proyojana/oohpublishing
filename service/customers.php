@@ -134,7 +134,7 @@ function updateBasicInfoCustomer($basicid, $basiccode, $basicname, $basicdescrip
 		$result1 = mysql_query("UPDATE customers set code='" . $basiccode . "',name='" . $basicname . "',description='" . $basicdescription . "',address1='" . $basicaddress1 . "',address2='" . $basicaddress2 . "',services='" . $sevicesven . "',city='" . $basiccity . "',state='" . $basicstate . "',country='" . $basiccountry . "',phone='" . $basicphone . "',fax='" . $basicfax . "',email='" . $basicemail . "',website='" . $basicwebsite . "' WHERE id=" . $basicid . "");
 		
 		$delete = mysql_query("update customers_services set flag = 1 where customer_code = '" .$basiccode."'");
-		echo $sevicesven;
+		//echo $sevicesven;
 		$services = explode(',', $sevicesven);
 		for($i = 0; $i < count($services) - 1; $i++) {
 			//echo $id;

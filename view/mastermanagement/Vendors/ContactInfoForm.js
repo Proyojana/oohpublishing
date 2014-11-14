@@ -179,20 +179,24 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 		width:75,
 		handler: function (){
 			  var currentForm = Ext.getCmp('Vendors_contactTab');
-			            var contctname = Ext.getCmp('contctname').getValue();
+			  
+			            var per_name = Ext.getCmp('vendor_per').getValue();
+			          	var firstname = Ext.getCmp('vendor_first_name').getValue();
+			          	var middlename = Ext.getCmp('vendor_middle_name').getValue();
+			          	var lastname = Ext.getCmp('vendor_last_name').getValue();
 						var contctphone = Ext.getCmp('contctphone').getValue();
 						var cntctemail = Ext.getCmp('cntctemail').getValue();
 						var cntctdesignation=Ext.getCmp('cntctdesignation').getValue();
 						var vendorid=Ext.getCmp('basicid').getValue();
-						var id=Ext.getCmp('basicid').getValue();
 						var cntctvenid=Ext.getCmp('cntctvenid').getValue();
+						
 								if(currentForm.getForm().isValid()==true)
 					{
 						var conn = new Ext.data.Connection();
 					    conn.request({
 						url: 'service/ContactInfoVen.php',
 						method: 'POST',
-						params : {action:4,cntctvenid:cntctvenid,vendorid:vendorid,contctname:contctname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
+						params : {action:4,cntctvenid:cntctvenid,vendorid:vendorid,per_name:per_name,firstname:firstname,middlename:middlename,lastname:lastname,contctphone:contctphone,cntctemail:cntctemail,cntctdesignation:cntctdesignation},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -218,8 +222,12 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 		y:220,
 		//margin:'0 0 0 10',
 		width:75,
-		handler: function (){
-						var contctname = Ext.getCmp('contctname').reset();
+		handler: function ()
+		{
+						var vendor_per = Ext.getCmp('vendor_per').reset();
+						var vendor_first_name = Ext.getCmp('vendor_first_name').reset();
+						var vendor_middle_name = Ext.getCmp('vendor_middle_name').reset();
+						var vendor_last_name = Ext.getCmp('vendor_last_name').reset();
 						var contctphone = Ext.getCmp('contctphone').reset();
 						var cntctemail=Ext.getCmp('cntctemail').reset();
 						var cntctdesignation=Ext.getCmp('cntctdesignation').reset();

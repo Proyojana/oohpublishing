@@ -127,6 +127,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				var project_team= Ext.getCmp('edit_project_team').getValue();
 				var project_workflow= Ext.getCmp('edit_project_workflow').getValue();
                 
+                var edit_word_count_indexing= Ext.getCmp('edit_word_count_indexing').getValue();
+                var edit_print_run= Ext.getCmp('edit_print_run').getValue();
+				var edit_print_run_confirmed= Ext.getCmp('edit_print_run_confirmed').getValue();
+				var edit_cover_type= Ext.getCmp('edit_cover_type').getValue();
+			
                 if(currentForm.getForm().isValid() == true)
 				{
 					var conn = new Ext.data.Connection();
@@ -135,6 +140,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					method: 'POST',
 					params : {action:3,project_id:project_id,job_code:job_code,project_title:project_title,hb_isbn:hb_isbn,pb_isbn:pb_isbn,
 						project_series:project_series,project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,
+						edit_word_count_indexing:edit_word_count_indexing,edit_print_run:edit_print_run,edit_print_run_confirmed:edit_print_run_confirmed,edit_cover_type:edit_cover_type,
 						client_deadline:client_deadline,agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,
 						chapter_footer:chapter_footer,contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,project_note:project_note,ebook_isbn:ebook_isbn},
 					success:function(response){

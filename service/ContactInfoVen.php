@@ -12,7 +12,7 @@
 			deletevendorsById($_POST["id"]);	
 			break;
 		case 4:
-			updateContactVendor($_POST['cntctvenid'],$_POST['vendorid'],$_POST['contctname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);	
+			updateContactVendor($_POST['cntctvenid'],$_POST['vendorid'],$_POST['per_name'],$_POST['firstname'],$_POST['middlename'],$_POST['lastname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);	
 			break;
 		case 5:
 			insertContactVendor($_POST['vendorid'],$_POST['per_name'],$_POST['firstname'],$_POST['middlename'],$_POST['lastname'],$_POST['contctphone'],$_POST['cntctemail'],$_POST['cntctdesignation']);
@@ -69,7 +69,10 @@ From
 		$result1 = mysql_query ("Select
 		vendors_contacts.id as cntctvenid,
   vendors_contacts.vendor_id as venid,
-  vendors_contacts.name as contctname,
+	vendors_contacts.per as vendor_per,
+  vendors_contacts.firstname as vendor_first_name,
+  vendors_contacts.middlename as vendor_middle_name,
+  vendors_contacts.lastname as vendor_last_name,
   vendors_contacts.phone as contctphone,
   vendors_contacts.email as cntctemail,
   vendors_contacts.designation as cntctdesignation
@@ -98,14 +101,14 @@ From
       	echo(json_encode($result));
     }
   
-     function updateContactVendor($cntctvenid,$vendorid,$contctname,$contctphone,$cntctemail,$cntctdesignation)
+     function updateContactVendor($cntctvenid,$vendorid,$pername,$firstname,$middlename,$lastname,$contctphone,$cntctemail,$cntctdesignation)
     {
 		$checkquery="SELECT id as id FROM vendors_contacts WHERE id='".$cntctvenid."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==1){
-			$result1= mysql_query("UPDATE vendors_contacts set vendor_id='".$vendorid."',name='".$contctname."',phone='".$contctphone."',email='".$cntctemail."',designation='".$cntctdesignation."'");
+			$result1= mysql_query("UPDATE vendors_contacts set vendor_id='".$vendorid."',per='".$pername."',firstname='".$firstname."',middlename='".$middlename."',lastname='".$lastname."',phone='".$contctphone."',email='".$cntctemail."',designation='".$cntctdesignation."'");
 				
 		if(!$result1)
 			{
