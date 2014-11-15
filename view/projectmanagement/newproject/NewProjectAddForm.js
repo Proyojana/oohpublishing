@@ -302,6 +302,16 @@ t.setValue(value1);
 			//allowBlank: false,
 			//afterLabelTextTpl: required,
     	},
+    	
+    	{
+			fieldLabel:'Project Start Date',
+			id:'projectStartDate',
+			xtype:'datefield',
+			x:15,
+			y:100,
+			width:260,	
+			afterLabelTextTpl: required,
+				},
     	{
         // Fieldset in Column 1 - collapsible via toggle button
        xtype:'fieldset',

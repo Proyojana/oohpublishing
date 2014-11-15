@@ -25,7 +25,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 		
 			
 		},
-		{
+		/*{
 			fieldLabel:'Project Start Date',
 			id:'schedule_projectStartDate',
 			xtype:'datefield',
@@ -33,7 +33,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.schedule.newprojectSched
 			y:100,
 			width:260,	
 			afterLabelTextTpl: required,
-				},
+				},*/
 		
 	{
 			xtype:'newprojectSchedulegrid',
