@@ -228,7 +228,11 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 		//margin:'0 0 0 10',
 		width:75,
 		handler: function (){
-						Ext.getCmp('custcontctname').reset();
+						//Ext.getCmp('custcontctname').reset();
+						Ext.getCmp('customer_per').reset();
+						Ext.getCmp('cust_first_name').reset();
+						Ext.getCmp('cust_middle_name').reset();
+						Ext.getCmp('cust_last_name').reset();
 						Ext.getCmp('custcontctphone').reset();
 						Ext.getCmp('custcntctemail').reset();
 						Ext.getCmp('custcntctdesignation').reset();
