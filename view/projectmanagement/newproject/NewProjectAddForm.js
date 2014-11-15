@@ -302,19 +302,6 @@ t.setValue(value1);
 			//allowBlank: false,
 			//afterLabelTextTpl: required,
     	},
-    	
-    	{
-    		xtype:'datefield',
-    		format: 'd/m/y',
-    		id:'project_start_date',
-			fieldLabel: 'Project start date',
-			x:710,
-			y:130,
-			width:320,
-			allowBlank: false,
-			afterLabelTextTpl: required,
-    	},
-    	
     	{
         // Fieldset in Column 1 - collapsible via toggle button
        xtype:'fieldset',
@@ -576,7 +563,6 @@ t.setValue(value1);
 				var project_team= Ext.getCmp('project_team').getValue();
 				var project_workflow= Ext.getCmp('project_workflow').getValue();
 				
-				
 				var word_count_indexing = Ext.getCmp('word_count_indexing').getValue();
 				var cover_type= Ext.getCmp('cover_type').getValue();
 				var print_run= Ext.getCmp('print_run').getValue();
@@ -690,34 +676,6 @@ t.setValue(value1);
 										
 						}
 					});
-					
-					
-					/*project start date*/
-					
-					var project_start_date = Ext.getCmp('project_start_date').getValue();
-					var add_project_id = Ext.getCmp('add_project_id').getValue();
-					alert(add_project_id);
-					var project_workflow = Ext.getCmp('project_workflow').getValue();
-					//alert(project_workflow);
-					var conn = new Ext.data.Connection();
-					conn.request({
-						url: 'service/schedule.php',
-						method: 'POST',
-						params : {action:7,project_workflow:project_workflow,project_start_date:project_start_date,add_project_id:add_project_id},
-						/*success:function(response){
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-							currentForm.getForm().reset();
-							//Ext.getCmp('citygrid').getStore().reload();
-							//Ext.getCmp('citytab').layout.setActiveItem('citygrid');
-										
-						}*/
-					});
-					
-					/*end*/
-					
-					
-					
 					}
 					else{
 						Ext.MessageBox.alert('Please fill HB ISBN or PB ISBN.');
