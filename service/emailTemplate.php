@@ -393,15 +393,14 @@ function getTemplateMaster()
 			  email_template.id as template_id,
 			  email_template.code as template_code,
 			  email_template.name as template_name,
-			  email_template.role as template_role,
-			  email_template.main as template_main,
-			  email_template.footer as template_footer
+			  email_template.role as template_role
+			  
 			From
 			  email_template LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
 		while($row=mysql_fetch_object($result))
 		{
-			$data [] = $row;
+			$data[] = $row;
 		}
 	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
 	}

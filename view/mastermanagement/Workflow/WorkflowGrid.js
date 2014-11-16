@@ -104,6 +104,11 @@ var grid3=Ext.getCmp('stagesgrid');
 					    var currentForm = Ext.getCmp('workflowform');
 						var rec = grid.getStore().getAt(rowIndex);
 						var workflow_id=rec.get('workflow_id');
+						Ext.define('WorkflowId', {
+								singleton: true,
+								value: workflow_id
+							}); 
+						
 						var workflow_code=rec.get('workflow_code');
 						Ext.getCmp('workflow_code').setReadOnly(true);
 						

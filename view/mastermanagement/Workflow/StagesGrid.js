@@ -182,7 +182,8 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 					var grid = this.up('grid');
 					if (grid) {
 						        var rec = grid.getStore().getAt(rowIndex);
-						        var workflow_id = Ext.getCmp('workflow_id').getValue();
+								console.log(WorkflowId.value,"Global");
+								
 						        var stage_order=rec.get('stage_order');
 								var stage_name=rec.get('stage_name');
 								var stage_id=rec.get('stage_id');
@@ -194,12 +195,12 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 								conn.request({
 									url: 'service/stages.php',
 									method: 'POST',
-									params : {action:4,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP},
+									params : {action:4,stage_id:stage_id,workflow_id:WorkflowId.value,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 
 										var grid3=Ext.getCmp('stagesgrid');
-						            grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
+						            grid3.getStore().load({params:{action:1,workflowid:WorkflowId.value}});
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -215,7 +216,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 					iconCls: 'deleteClass',
 					tooltip: 'Delete',
 					handler: function(grid, rowIndex, colIndex) {
-						var workflow_id = Ext.getCmp('workflow_id').getValue();
+						//var workflow_id = Ext.getCmp('workflow_id').getValue();
 						//var teams_customerid = Ext.getCmp('basic_customerid').getValue();
 						var grid = this.up('grid');
 					if (grid) {
@@ -231,8 +232,9 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										 var grid3=Ext.getCmp('stagesgrid');
-					             	grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
+										 //var grid3=Ext.getCmp('stagesgrid');
+										 Ext.getCmp('stagesgrid').getStore().reload();
+										 
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -285,8 +287,8 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 				width:100,
 			//	margin:'0 0 0 100',
 				handler:function(){
-					
-					 var workflow_id = Ext.getCmp('workflow_id').getValue();
+						console.log(workflow_id);
+					 //var workflow_id = Ext.getCmp('workflow_id').getValue();
 						        var stage_order='';
 								var stage_name='';
 								var stage_id='';
@@ -305,7 +307,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 				    activity=activity+rec.get('activity')+',';
 				    no_of_days=no_of_days+rec.get('no_of_days')+',';
 				    ratecard_USD=ratecard_USD+rec.get('ratecard_USD')+',';
-				    ratecard_GBP=ratecard_GBP+rec.get('ratecard_GBP')+',';
+					ratecard_GBP=ratecard_GBP+rec.get('ratecard_GBP')+',';
 				    			
 				});
 				      
@@ -313,12 +315,12 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 					conn.request({
 									url: 'service/stages.php',
 									method: 'POST',
-									params : {action:2,stage_id:stage_id,workflow_id:workflow_id,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP},
+									params : {action:2,stage_id:stage_id,workflow_id:WorkflowId.value,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 
 										var grid3=Ext.getCmp('stagesgrid');
-						grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
+										grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

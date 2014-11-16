@@ -182,7 +182,9 @@ Group By
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO workflow(id,code,name,description,client,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$workflow_code."','".$workflow_name."','".$workflow_description."','".$workflow_client."','',now(),'','','')");
+			$result1 = mysql_query ("INSERT INTO workflow(id,code,name,description,client,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$workflow_code."','".$workflow_name."','".$workflow_description."','".$client."','',now(),'','','')");
+			$codegen = mysql_insert_id();
+			$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='workflow'");
 		
 			$clients=explode(',',$client);
 			for($i=0;$i<count($clients)-1;$i++){

@@ -75,66 +75,69 @@ Where
 			$ratecard_USD1= explode(',',$ratecard_USD);
 			$ratecard_GBP1= explode(',',$ratecard_GBP);
 		
-		for ($i = 0; $i < count($stage_id1)-1; $i++)
-		{
-		$checkquery="SELECT id FROM stages WHERE id='".$stage_id1[$i]."' ";
-		$result1=mysql_query($checkquery);
-		$num_rows=mysql_num_rows($result1);
-		
-		if($num_rows==0)
-		{
-			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,no_of_days,ratecard_USD,ratecard_GBP,flag) VALUES('','".$workflow_id."','".$stage_order1[$i]."','".$stage_name1[$i]."','".$activity1[$i]."','".$no_of_days1[$i]."','".$ratecard_USD1[$i]."','".$ratecard_GBP1[$i]."','')");
-			if(!$result1)
+			for ($i = 0; $i < count($stage_id1)-1; $i++)
 			{
-				$result["failure"] = true;
-				$result["message"] =  "Invalid query: " . mysql_error();
+				if($stage_order1[$i] && $stage_name1[$i] && $activity1[$i] != null)
+				{
+					$checkquery="SELECT id FROM stages WHERE id='".$stage_id1[$i]."' ";
+					$result1=mysql_query($checkquery);
+					$num_rows=mysql_num_rows($result1);
+					
+					if($num_rows==0)
+					{
+						$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,no_of_days,ratecard_USD,ratecard_GBP,flag) VALUES('','".$workflow_id."','".$stage_order1[$i]."','".$stage_name1[$i]."','".$activity1[$i]."','".$no_of_days1[$i]."','".$ratecard_USD1[$i]."','".$ratecard_GBP1[$i]."','')");
+						if(!$result1)
+						{
+							$result["failure"] = true;
+							$result["message"] =  "Invalid query: " . mysql_error();
+						}
+					else
+					{
+						$result["success"] = true;
+						$result["message"] = "Stage Inserted successfully";
+					}
+				}
 			}
-			else
+			else if($num_rows==1)
 			{
-				$result["success"] = true;
-				$result["message"] = "Stage Inserted successfully";
-			}
-		}
-		else if($num_rows==1)
-		{
 			
-			$result1 = mysql_query ("Update stages set stage_name='".$stage_name1[$i]."',activity='".$activity1[$i]."',no_of_days='".$no_of_days1[$i]."',ratecard_GBP='".$ratecard_GBP1[$i]."',ratecard_USD='".$ratecard_USD1[$i]."' where id='".$stage_id1[$i]."'");
-			if(!$result1)
-			{
-				$result["failure"] = true;
-				$result["message"] =  "Invalid query: " . mysql_error();
+				$result1 = mysql_query ("Update stages set stage_name='".$stage_name1[$i]."',activity='".$activity1[$i]."',no_of_days='".$no_of_days1[$i]."',ratecard_GBP='".$ratecard_GBP1[$i]."',ratecard_USD='".$ratecard_USD1[$i]."' where id='".$stage_id1[$i]."'");
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = "Stage Saved successfully";
+				}
 			}
 			else
-			{
-				$result["success"] = true;
-				$result["message"] = "Stage Saved successfully";
-			}
-		}
-		else
-			{
-				$result["success"] = true;
-				$result["message"] = "Stage is not exist";
-			}
-			}
+				{
+					$result["success"] = true;
+					$result["message"] = "Stage is not exist";
+				}
+				}
 		echo json_encode($result);
 	}
 	function deleteStageById($stage_id)
     {
-		$checkquery="Select ooh_publishing.stages.workflow_id From ooh_publishing.stages Where ooh_publishing.stages.id = '".$stage_id."' ";
-		$result1=mysql_query($checkquery);
-		while($row = mysql_fetch_array($result1)) {				
-			$workflow_id = $row['workflow_id'];			
-		}
-	//	echo $workflow_id;
-		$numquery = mysql_query("Select
-  ooh_publishing.stages.workflow_id
-From
-  ooh_publishing.stages Inner Join
-  ooh_publishing.budget_expense On ooh_publishing.stages.workflow_id =
-    ooh_publishing.budget_expense.workflow_id
-Where
-  ooh_publishing.stages.workflow_id = '".$workflow_id."' And
-  ooh_publishing.budget_expense.flag = 0");
+				$checkquery="Select stages.workflow_id From stages Where stages.id = '".$stage_id."' ";
+				$result1=mysql_query($checkquery);
+				while($row = mysql_fetch_array($result1)) {				
+					$workflow_id = $row['workflow_id'];			
+				}
+			//	echo $workflow_id;
+				$numquery = mysql_query("Select
+		  stages.workflow_id
+		From
+		  stages Inner Join
+		  budget_expense On stages.workflow_id =
+			budget_expense.workflow_id
+		Where
+		  stages.workflow_id = '".$workflow_id."' And
+		  budget_expense.flag = 0");
 	
 		$num_rows=mysql_num_rows($numquery);
 		if($num_rows==0){
