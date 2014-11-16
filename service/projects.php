@@ -18,13 +18,13 @@ $id=$_SESSION['id'];
 			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['project_author'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id);	
 			break;
 		case 5:
-			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note'],$_POST['ebook_isbn']);
+			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['project_start_date'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note'],$_POST['ebook_isbn']);
 			break;
 		case 6:
 			BulkDelete($_POST['id']);
 			break;	
 		case 7: 
-			autoRequestCode($id);
+			autoRequestCode();
 			break;
 		case 8:
 			titleInfo($_POST['project_id']);
@@ -236,7 +236,7 @@ Where
 		echo json_encode($result);
 	}
 	
-	function insertProjectMaster($job_code,$title,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed,$project_note,$ebook_isbn)
+	function insertProjectMaster($job_code,$title,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$project_start_date,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed,$project_note,$ebook_isbn)
 		
     {
     	
@@ -247,8 +247,14 @@ Where
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO project_title(id,job_code,title,author,hb_isbn,pb_isbn,ebook_isbn,series,format,design,castoff_extent,confirmed_extent,client_deadline,agreed_deadline,word_count,word_count_indexing,manuscript_pages,expect_index_extent,chapter_footer_req,contains_color,cover_type,print_run,print_run_confirmed,note,client,client_team,workflow,created_by,created_on,modified_by,modified_on,flag) 
-			VALUES('','".$job_code."','".$title."','','".$hb_isbn."','".$pb_isbn."','".$ebook_isbn."','".$series."','".$format."','".$design."','".$castoff_extent."','".$confirmed_extent."','".$client_deadline."','".$agreed_deadline."','".$word_count."','".$word_count_indexing."','".$manuscript."','".$index_extent."','".$footer."','".$colour."','".$cover_type."','".$print_run."','".$print_run_confirmed."','".$project_note."','".$client."','".$team."','".$workflow."','".$id."',now(),'','','')");
+			$result1 = mysql_query ("INSERT INTO project_title(id,job_code,title,author,hb_isbn,pb_isbn,ebook_isbn,series,format,design,castoff_extent,confirmed_extent,client_deadline,agreed_deadline,project_start_date,word_count,word_count_indexing,manuscript_pages,expect_index_extent,chapter_footer_req,contains_color,cover_type,print_run,print_run_confirmed,note,client,client_team,workflow,created_by,created_on,modified_by,modified_on,flag) 
+			VALUES('','".$job_code."','".$title."','','".$hb_isbn."','".$pb_isbn."','".$ebook_isbn."','".$series."','".$format."','".$design."','".$castoff_extent."','".$confirmed_extent."','".$client_deadline."','".$agreed_deadline."','".$project_start_date."','".$word_count."','".$word_count_indexing."','".$manuscript."','".$index_extent."','".$footer."','".$colour."','".$cover_type."','".$print_run."','".$print_run_confirmed."','".$project_note."','".$client."','".$team."','".$workflow."','".$id."',now(),'','','')");
+			$codegen = mysql_insert_id();
+			autoinsertschedule($codegen,$project_start_date,$workflow);			
+			$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='projects'");
+			
+			
+			
 			
 /** mail function
  			$to = "durairajgowri13@gmail.com";
@@ -264,11 +270,13 @@ Where
 			if(!$result1)
 			{
 				$result["failure"] = true;
+				//$result["schedule"] = $scherror;
 				$result["message"] =  "Invalid query: " . mysql_error();
 			}
 			else
 			{
 				$result["success"] = true;
+				//$result["schedule"] = $scherror;
 				$result["message"] = "Project Inserted successfully";
 			}
 		}
@@ -335,29 +343,18 @@ else
 } 
 
 	}
-function autoRequestCode($id) {
-	$autoRequest = mysql_query("select job_code from project_title");
+function autoRequestCode() {
+	$autoRequest = mysql_query("select value from codegen where tablename='projects'");
 	$num_rows = mysql_num_rows($autoRequest);
 	if($num_rows > 0) {
 		while($row = mysql_fetch_array($autoRequest)) {
-			$data1 = $row['job_code'];
+			$data1 = $row['value'];
 		}
-	//	echo $data1;
-		$data = str_split($data1, 3);
-		$remain = substr($data1,3,5);
-	
-
-		//$data1 = substr($data1, -4);
-		$code = $remain + 1;
-		//echo $code;
-		$code = str_pad($code, 3, '00', STR_PAD_LEFT);
-	//	echo $code;
-		$new_code = $data[0] . $code;
-		
-		//echo $new_code;
+		$code = $data1 + 1;
+		$code = str_pad($code, 3, '0', STR_PAD_LEFT);
+		$new_code = 'PROJ' . $code;
 	} else {
-		
-		$new_code = "JOB001";
+		$new_code = "PROJ001";
 	}
 
 	if(!$autoRequest) {
@@ -800,4 +797,32 @@ Where
 	  	}
       	echo(json_encode($result));
     }
+	
+	function autoinsertschedule($projectid,$project_start_date,$workflow)
+	{
+		
+		$getworkflowstages = mysql_query("SELECT stage_order, stage_name, no_of_days, activity from stages where workflow_id='".$workflow."' and flag='0' order by stage_order asc");
+		while($row = mysql_fetch_array($getworkflowstages))
+		{
+			$stage_order = $row['stage_order'];
+			$stage_name = $row['stage_name'];
+			$activity = $row['activity'];
+			$daysperstage = $row['no_of_days'];
+				
+			$date = strtotime($project_start_date);
+			$date = strtotime("+".$daysperstage." day", $date);
+			$newdate = date('Y-m-d', $date);
+			$newresult = mysql_query("Insert into schedule (id, project_id, workflow_id, activity, stage_order, stage, estimated_daysperstage, actual_daysperstage, estimated_start_date, actual_start_date, estimated_end_date, actual_end_date, bufferday, status, created_by, created_on, modified_by, modified_on, flag) 
+			VALUES (NULL, '".$projectid."', '".$workflow."', '".$activity."', '".$stage_order."', '".$stage_name."', '".$daysperstage."', '0', '".$project_start_date."', NULL, '".$newdate."', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0')");
+			
+			$date1 = strtotime($newdate);
+			$date1 = strtotime("+1 day", $date);
+			$newdate1 = date('Y-m-d', $date1);
+			
+			$project_start_date = $newdate1;
+			
+		}
+		
+		
+	}
 ?>

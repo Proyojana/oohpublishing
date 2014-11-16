@@ -563,6 +563,8 @@ t.setValue(value1);
 				
 				var client_deadline = Ext.getCmp('client_deadline').getValue();
 				var agreed_deadline = Ext.getCmp('agreed_deadline').getValue();
+				var project_start_date = Ext.getCmp('projectStartDate').getValue();
+				
 				var word_count= Ext.getCmp('word_count').getValue();
 				var manuscript= Ext.getCmp('manuscript').getValue();
 				var index_extent= Ext.getCmp('index_extent').getValue();
@@ -590,7 +592,7 @@ t.setValue(value1);
 						method: 'POST',
 						params : {action:5,job_code:job_code,project_title:project_title,/*project_author:project_author,*/hb_isbn:hb_isbn,pb_isbn:pb_isbn,project_series:project_series,
 							project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,client_deadline:client_deadline,
-							agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
+							agreed_deadline:agreed_deadline,project_start_date:project_start_date,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
 							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,word_count_indexing:word_count_indexing,
 							cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed,project_note:project_note,ebook_isbn:ebook_isbn},
 						success:function(response){
