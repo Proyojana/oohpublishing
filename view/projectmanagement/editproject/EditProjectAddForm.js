@@ -245,6 +245,16 @@ t.setValue(value1);
 			width:320,
 			
     	},
+    	
+    	{
+    		xtype:'datefield',
+    		id:'edit_agreed_deadline',
+			fieldLabel: 'Agreed deadline',
+			x:360,
+			y:130,
+			width:320,
+			
+    	},
        	{
         // Fieldset in Column 1 - collapsible via toggle button
        xtype:'fieldset',
