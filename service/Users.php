@@ -50,40 +50,25 @@ $id=$_SESSION['id'];
 	
 	function getUserMaster()
 	{
- 		$num_result = mysql_query ("Select
-  users.id as userid,
-  users.per as per,
-  users.firstname as firstname,
-  users.middlename as middlename,
-  users.lastname as lastname,
-  users.username as username,
-  users.code as usercode,
-  users.email as useremail,
-  team_roles.role_name as userrole,
-  users.description as userdescription
-  From
-  users Inner Join
-  team_roles On users.role =
-    team_roles.id Where users.flag=0")or die(mysql_error());
+ 		$num_result = mysql_query ("Select users.id as userid, 
+										  users.description as userdescription
+										  From
+										  users Where users.flag=0")or die(mysql_error());
 		
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  users.id as userid,
-  users.per as per,
-  users.firstname as firstname,
-  users.middlename as middlename,
-  users.lastname as lastname,
-  users.username as username,
-  users.code as usercode,
-  users.email as useremail,
-  team_roles.role_name as userrole,
-  users.description as userdescription
-  From
-  users Inner Join
-  team_roles On users.role =
-    team_roles.id Where users.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+								  users.id as userid,
+								  users.code as usercode,
+								  users.username as username,
+								  users.email as useremail,
+								  team_roles.role_name as userrole
+								From
+								  users Inner Join
+								  team_roles On users.role = team_roles.id
+								  Where users.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
   
+				
 		while($row=mysql_fetch_object($result))
 		{
 			$data [] = $row;
@@ -94,17 +79,17 @@ $id=$_SESSION['id'];
 	function getUserMasterById($userid1)
  	{
 	$result1 = mysql_query ("Select
-  users.id as userid,
-  users.per as user_per,
-  users.firstname as user_first_name,
-  users.middlename as user_middle_name,
-  users.lastname as user_last_name,
-  users.username as username,
-  users.code as usercode,
-  users.email as useremail,
-  team_roles.id as userrole,
-  users.description as userdescription
-From users Inner Join team_roles On users.role = team_roles.id Where users.id=".$userid1."");
+			  users.id as userid,
+			  users.per as user_per,
+			  users.firstname as user_first_name,
+			  users.middlename as user_middle_name,
+			  users.lastname as user_last_name,
+			  users.username as username,
+			  users.code as usercode,
+			  users.email as useremail,
+			  team_roles.id as userrole,
+			  users.description as userdescription
+			  From users Inner Join team_roles On users.role = team_roles.id Where users.id=".$userid1."");
 			
 		if(!$result1)
 			{

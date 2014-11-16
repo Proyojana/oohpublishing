@@ -10,7 +10,7 @@ $id=$_SESSION['id'];
 			autoRequestCode($id);
 			break;
 		case 2:
-			insertTeamRoles($_POST['trole_code'],$_POST['trole_name'],$_POST['trole_description'],$_POST['createdby'],$id);
+			insertTeamRoles($_POST['trole_code'],$_POST['trole_name'],$_POST['trole_description'],$id);
 			break;
 		case 3:
 			getTeamRoles();

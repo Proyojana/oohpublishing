@@ -1,20 +1,9 @@
 var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
-/*	var store1 = Ext.create('Ext.data.JsonStore', {
-    fields: ['trolescode','trolesname', 'description'],
-    data: [{"trolescode":"TR001","trolesname":"Project Manager","description":"Manages the project"},
-            {"trolescode":"TR002","trolesname":"Copy Editor","description":"Checks the formatting, style, and accuracy of text"},
-            {"trolescode":"TR003","trolesname":"Production Editor","description":" Focused on putting the article into its printed form"},
-            {"trolescode":"TR004","trolesname":"Proof Reader","description":"Correct typographical errors and mistakes in grammar"},
-            {"trolescode":"TR005","trolesname":"Indexer","description":"Provides an index"},
-            {"trolescode":"TR006","trolesname":"Type setter","description":"Arranging physical types or the digital equivalents"}
-    ]
-    });*/	
+
 Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesGrid', {
 	extend:'Ext.ux.LiveSearchGridPanel',
-	//features:[filters],
-	//title: 'City',
 	alias:'widget.trolesgrid',
 	closeAction: 'hide',
 	selModel:sm,

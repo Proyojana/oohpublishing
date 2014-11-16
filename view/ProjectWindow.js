@@ -9,20 +9,6 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 
 	extend: 'Ext.ux.desktop.Module',
 
-	requires: [
-	'Ext.tab.*',
-	'Ext.window.*',
-	'Ext.tip.*',
-	'Ext.layout.container.Border',
-	'Ext.data.ArrayStore',
-	'Ext.util.Format',
-	'Ext.grid.*',
-	'Ext.grid.Panel',
-	'Ext.grid.RowNumberer',
-	'MyDesktop.store.MasterNavTree',
-	'Ext.tree.Panel'
-	
-	],
 	id:'project-win',
 	
 	init : function() {

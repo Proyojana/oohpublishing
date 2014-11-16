@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 	closeAction: 'hide',
 	selModel:sm,
 	height:190,
-	requires : ['MyDesktop.store.Customers','MyDesktop.view.mastermanagement.Customers.RateCardGrid'],
+	requires : ['MyDesktop.store.Customers'],
 	
 	id:'customersgrid',
 	initComponent: function() {
@@ -125,16 +125,14 @@ var ci = Ext.create('MyDesktop.store.Customers');
 						 var grid1=Ext.getCmp('custteamgrid');
 						grid1.getStore().load({params:{action:3,customerid:id}});
 						 //load ratecard grid
-						 var grid2=Ext.getCmp('customerratecardformTab');
-						grid2.getStore().load({params:{action:1,customerid:id}});
+						 
 						 //load contacts grid
 						 var grid3=Ext.getCmp('custcontactgrid');
 						grid3.getStore().load({params:{action:1,id:id}});
 						 //show inner panel
 						Ext.getCmp('customercontactsformTab').setDisabled(false);
 							Ext.getCmp('customerteamsformTab').setDisabled(false);
-							Ext.getCmp('customerratecardformTab').setDisabled(false);
-						Ext.getCmp('customerstab').layout.setActiveItem('custbasicinfoform');
+						Ext.getCmp('customertab').layout.setActiveItem('custbasicinfoform');
 						
 						
 				}
@@ -186,16 +184,14 @@ var ci = Ext.create('MyDesktop.store.Customers');
 						 var grid1=Ext.getCmp('custteamgrid');
 						grid1.getStore().load({params:{action:3,customerid:id}});
 						//load ratecard grid
-						 var grid2=Ext.getCmp('customerratecardformTab');
-						grid2.getStore().load({params:{action:1,customerid:id}});
+						 
 						//load contacts grid
 						 var grid3=Ext.getCmp('custcontactgrid');
 						grid3.getStore().load({params:{action:1,id:id}});
 						 	//show inner panel
 						Ext.getCmp('customercontactsformTab').setDisabled(false);
 							Ext.getCmp('customerteamsformTab').setDisabled(false);
-							Ext.getCmp('customerratecardformTab').setDisabled(false);
-						Ext.getCmp('customerstab').layout.setActiveItem('custbasicinfoform');
+						//Ext.getCmp('customertab').layout.setActiveItem('custbasicinfoform');
 						
 						
 					

@@ -21,7 +21,7 @@ switch($_POST["action"]) /*Read action sent from front-end */ {
 		getClient($_POST['workflow_code']);
 		break;
 	case 7: 
-		autoRequestCode($id);
+		autoRequestCode();
 		break;
 	default :
 		break;
@@ -55,7 +55,7 @@ From
   customers 
 Where
   customers.flag = 0 LIMIT " . $_POST['start'] . ", " . $_POST['limit']) or die(mysql_error());
-
+	$data = '';
 	while($row = mysql_fetch_object($result)) {
 		$data[] = $row;
 	}
@@ -162,11 +162,17 @@ function insertBasicInfoCustomer($basiccode, $basicname, $basicdescription, $bas
 	$num_rows = mysql_num_rows($result1);
 
 	if($num_rows == 0) {
-		$result1 = mysql_query("INSERT INTO customers(id,code,name,description,address1,address2,services,city,state,country,phone,fax,email,website,flag) VALUES('','" . $basiccode . "','" . $basicname . "','" . $basicdescription . "','" . $basicaddress1 . "','" . $basicaddress2 . "','" . $sevicesven . "','" . $basiccity . "','" . $basicstate . "','" . $basiccountry . "','" . $basicphone . "','" . $basicfax . "','" . $basicemail . "','" . $email . "','" . $basicwebsite . "')");
+		$result1 = mysql_query("INSERT INTO customers(id,code,name,description,address1,address2,services,city,state,country,phone,fax,email,website) VALUES('','" . $basiccode . "','" . $basicname . "','" . $basicdescription . "','" . $basicaddress1 . "','" . $basicaddress2 . "','" . $sevicesven . "','" . $basiccity . "','" . $basicstate . "','" . $basiccountry . "','" . $basicphone . "','" . $basicfax . "','" . $basicemail . "','" . $basicwebsite . "')");
+		$codegen = mysql_insert_id();
+		
+		$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='customers'");
+		
+		
 		$services = explode(',', $sevicesven);
 		for($i = 0; $i < count($services) - 1; $i++) {
 			//echo $id;
-			$result1 = mysql_query("INSERT INTO customers_services(id,customer_code,service_id,created_by,created_on,modified_by,modified_on,flag) VALUES('','" . $basiccode . "','" . $services[$i] . "','',now(),'','','')");
+			$result2 = mysql_query("INSERT INTO customers_services(id,customer_code,service_id,created_by,created_on,modified_by,modified_on,flag) VALUES('','" . $basiccode . "','" . $services[$i] . "','',now(),'','','')");
+			
 		}
 		if(!$result1) {
 			$result["failure"] = true;
@@ -215,29 +221,18 @@ Where
 	echo '({"total":"' . $totaldata . '","results":' . json_encode($data) . '})';
 }
 
-	function autoRequestCode($id) {
-	$autoRequest = mysql_query("select code from customers");
+	function autoRequestCode() {
+	$autoRequest = mysql_query("select value from codegen where tablename='customers'");
 	$num_rows = mysql_num_rows($autoRequest);
 	if($num_rows > 0) {
 		while($row = mysql_fetch_array($autoRequest)) {
-			$data1 = $row['code'];
+			$data1 = $row['value'];
 		}
-	//	echo $data1;
-		$data = str_split($data1, 1);
-		$remain = substr($data1,1,4);
-	
-
-		//$data1 = substr($data1, -4);
-		$code = $remain + 1;
-		//echo $code;
+		$code = $data1 + 1;
 		$code = str_pad($code, 3, '0', STR_PAD_LEFT);
-	//	echo $code;
-		$new_code = $data[0] . $code;
-		
-		//echo $new_code;
+		$new_code = 'CUST' . $code;
 	} else {
-		
-		$new_code = "C001";
+		$new_code = "CUST001";
 	}
 
 	if(!$autoRequest) {

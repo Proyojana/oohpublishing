@@ -31,6 +31,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsAddForm' ,{
 			y:10,
 			width:260,
 			allowBlank: false,
+			readOnly: true,
 			afterLabelTextTpl: required,
 			},
 		{

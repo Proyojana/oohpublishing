@@ -15,27 +15,13 @@ Ext.define('MyDesktop.App', {
     extend: 'Ext.ux.desktop.App',
 
     requires: [
-         'Ext.window.MessageBox',
+        'Ext.window.MessageBox',
 		'Ext.ux.panel.PDF',
         'Ext.ux.desktop.ShortcutModel',
 		'Ext.ux.LiveSearchGridPanel',
 		'Ext.ux.form.MultiSelect',
 		'Ext.ux.form.TinyMCETextArea',
-        /*'MyDesktop.view.SystemStatus',
-        'MyDesktop.view.VideoWindow',
-        'MyDesktop.view.GridWindow',*/
-	
-		//'MyDesktop.view.CollaboratorsWindow',
-		'MyDesktop.view.MasterWindow',
-        //'MyDesktop.view.TabWindow',
-        /*'MyDesktop.view.AccordionWindow',
-        'MyDesktop.view.Notepad',
-		'MyDesktop.view.WordMark',
-        'MyDesktop.view.BogusMenuModule',
-        'MyDesktop.view.BogusModule',
-          'MyDesktop.view.Settings',*/
-     'MyDesktop.view.ProjectWindow',
-     'MyDesktop.view.BudgetsWindow'
+        
         
     ],
 
@@ -43,69 +29,13 @@ Ext.define('MyDesktop.App', {
         // custom logic before getXYZ methods get called..	.
         this.callParent();
        
-		/*if(role==3){
-		  var win = Ext.create("Ext.window.Window", {
-			title:'Welcome '+name1+' !',
-			maximizable: false,
-			minimizable: true,
-			width: 300,
-			height: 300,
-			id:'dashwin',
-		
-			items: [{
-				xtype:'dashboardform',
-				height:100,
-				},
-				{
-					xtype:'recentacc',
-					height:200,
-					y:5
-					
-				}
-				]
-		});
-
-		win.show();
-        // now ready...
-    }
-     else{
-		  var win = Ext.create("Ext.window.Window", {
-			title:'Welcome '+name1+' !',
-			maximizable: false,
-			minimizable: true,
-			width: 300,
-			height: 200,
-			id:'dashwin',
-		
-			items: [
-				{
-					xtype:'recentacc',
-					height:200,
-					y:5
-					}
-				]
-		});
-
-		win.show();
-        // now ready...
-    }*/
-        // now ready...
     },
-    //controllers:['EmployeeGroup'],
+    
     getModules : function(){
         return [
-           /* new MyDesktop.view.VideoWindow(),            
-            new MyDesktop.view.SystemStatus(),
-            new MyDesktop.view.GridWindow(),
-            new MyDesktop.view.TabWindow(),*/
-			new MyDesktop.view.MasterWindow(),
-          /*  new MyDesktop.view.AccordionWindow(),
-            new MyDesktop.view.Notepad(),
-			new MyDesktop.view.WordMark(),
-            new MyDesktop.view.BogusMenuModule(),
-            new MyDesktop.view.BogusModule(),*/
-            new MyDesktop.view.ProjectWindow(),
-            new MyDesktop.view.BudgetsWindow(),
+			Ext.create("MyDesktop.view.MasterWindow"),
+            Ext.create("MyDesktop.view.ProjectWindow"),
+            Ext.create("MyDesktop.view.BudgetsWindow"),
         ];
     },
 
@@ -115,8 +45,6 @@ Ext.define('MyDesktop.App', {
 if(role==1){
         return Ext.apply(ret, {
         	
-            //cls: 'ux-desktop-black',
-
             contextMenuItems: [
                 { text: 'Change Settings', handler: me.onSettings, scope: me }
             ],
@@ -128,28 +56,18 @@ if(role==1){
                     
                     { name: 'Masters', iconCls: 'masters-shortcut', module: 'master-win',val:'left',   setLoading:true, }, 
                       { name: 'Projects', iconCls: 'projects', module: 'project-win',val:'left', mask:"waiting",},
-                      //  { name: 'Budgets', iconCls: 'payroll-shortcut', module: 'budgets-win',val:'left' ,   waitMsg:'Sending data...',},
                    { name: 'Reports', iconCls: 'reportsmain', module: 'budgets-win',val:'left' ,   waitMsg:'Sending data...',},
                     
                   
                 ]
             }),
-            
-			
+
             wallpaper: 'wallpapers/desktop.jpg',
             wallpaperStretch: false,
              	
         });
        
     }
-    
-   
-     
- 
-  
-   
-     
-
     },
 
     // config for the start menu
@@ -185,10 +103,6 @@ if(role==1){
         var ret = this.callParent();
 
         return Ext.apply(ret, {
-            quickStart: [
-               /* { name: 'Accordion Window', iconCls: 'accordion', module: 'acc-win' },
-                { name: 'Grid Window', iconCls: 'icon-grid', module: 'grid-win' }*/
-            ],
             trayItems: [
                 { xtype: 'trayclock', flex: 1 }
             ]
@@ -203,8 +117,7 @@ if(role==1){
 			var logout = Ext.Ajax.request ({
 			url: 'service/logout.php',
 			success:function(){
-			// alert("logout");
-			var redirect = 'index.html';
+			var redirect = 'index.php';
 			window.location = redirect;
 			}
 			});

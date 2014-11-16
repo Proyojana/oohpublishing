@@ -1,14 +1,5 @@
 <?php 
-/*
-* PAGE ID		: PHP
-* CREATED ON	: 02-11-2010
-* MODIFIED ON	: 09-11-2010
-* AUTHOR ID		: 003573
-* PROJECT URL	: 
-* CLIENT NAME	: Laserwords
-* DEVELOPED BY	: Laserwords [www.laserwords.com]
-* DESCRIPTION	: 
-*/
+
 $page="loginChk";
 include("config.php");
 include("../inc/php/encryptDecrypt.php");

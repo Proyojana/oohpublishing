@@ -133,6 +133,7 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersGrid', {
 		 	handler: function(grid, rowIndex, colIndex) {
 					
 					       var currentForm = Ext.getCmp('usersform');
+						
 						var rec = grid.getStore().getAt(rowIndex);
 						var userid1=rec.get('userid');
 						currentForm.getForm().load({

@@ -68,7 +68,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		fieldLabel: 'Code',		
 		name: 'basiccode',
 		afterLabelTextTpl: required,
-		allowBlank: false,			
+		allowBlank: false,	
+		readOnly : true,
 		x:10,
 		y:10,
 		width:250
@@ -161,19 +162,20 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		//margin:'5 0 0 0'
 		
       },
-      /*{
-      	id:'basicpin',
-		fieldLabel: 'Pin',
+      {
+      	id:'basicemail',
+		fieldLabel: 'E-mail',
 		width:250,
-		
+		vtype:'email',
+		msgTarget : 'side',
 		x:10,
 		y:150,
-		name: 'basicpin',
+		name: 'basicemail',
 		afterLabelTextTpl: required,
 		allowBlank: false,
 		//margin:'5 0 0 0'
 		
-      },*/
+      },
       { 
       	xtype:'numberfield',
 		hideTrigger:true,
@@ -201,20 +203,17 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		
       },
       {
-      	id:'basicemail',
-		fieldLabel: 'E-mail',
-		width:250,
-		vtype:'email',
-		msgTarget : 'side',
+		xtype:'textarea',
+		id:'basicdescription',
+		fieldLabel: 'Description',
+		name: 'basicdescription',
 		x:10,
-		y:150,
-		name: 'basicemail',
-		afterLabelTextTpl: required,
-		allowBlank: false,
-		//margin:'5 0 0 0'
-		
-      },
-      {
+		y:180,
+		//margin:'-25 0 0 400',
+		height:70,
+		width:250
+		},
+		{
       	id:'basicwebsite',
 		fieldLabel: 'Website',
 		width:250,
@@ -225,17 +224,6 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		//margin:'5 0 0 0'
 		
       },
-      {
-		xtype:'textarea',
-		id:'basicdescription',
-		fieldLabel: 'Description',
-		name: 'basicdescription',
-		x:10,
-		y:180,
-		//margin:'-25 0 0 400',
-		height:70,
-		width:250
-	},
       {
 		xtype:'button',
 		text: 'Add',
@@ -272,6 +260,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
+							Ext.getCmp('Vendors_teamformTab').setDisabled(false);
+							Ext.getCmp('Vendors_contactTab').setDisabled(false);
+							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(false);
 							Ext.getCmp('vendorsgrid').getStore().reload();
 							 autoLoadCode();
 							}
@@ -350,6 +341,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 							Ext.getCmp('Vendors_teamformTab').setDisabled(true);
 							Ext.getCmp('Vendors_contactTab').setDisabled(true);
 							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(true);
+							Ext.getCmp('Vendors_currentprojectsgridTab').setDisabled(true);
+							Ext.getCmp('Vendors_histryprojectsgridTab').setDisabled(true);
 							var currentForm = this.up('basicinfoform');
 				currentForm.getForm().reset();
 						 autoLoadCode();

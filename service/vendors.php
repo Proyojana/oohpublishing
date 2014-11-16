@@ -27,7 +27,7 @@
 			getFreelancerMasterById($_POST["state_id"]);	
 			break;
 		case 9: 
-			autoRequestCode($id);
+			autoRequestCode();
 			break;
 		default: 
 			break;
@@ -182,7 +182,7 @@ From
 		echo json_encode($result);
 	}
 	
-	function insertBasicInfoVendor($basiccode,$basicname,$basicdescription,$basicaddress1,$basicaddress2,$sevicesven,$basiccity,$basicstate,$basiccountry,$basicphone,$basicfax,$basicemail,$basicwebsite)
+	function insertBasicInfoVendor($basiccode,$basicname,$basicdescription,$basicaddress1,$basicaddress2,$servicesven,$basiccity,$basicstate,$basiccountry,$basicphone,$basicfax,$basicemail,$basicwebsite)
     {
 		$checkquery="SELECT code FROM vendors WHERE code='".$basiccode."'";
 		$result1=mysql_query($checkquery);
@@ -190,14 +190,23 @@ From
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO vendors(id,code,name,description,address1,address2,services,city,state,country,phone,fax,email,website,flag) VALUES('','".$basiccode."','".$basicname."','".$basicdescription."','".$basicaddress1."','".$basicaddress2."','".$sevicesven."','".$basiccity."','".$basicstate."','".$basiccountry."','".$basicphone."','".$basicfax."','".$basicemail."','".$email."','".$basicwebsite."')");
-			$services = explode(',', $sevicesven);
+			$result2 = mysql_query ("INSERT INTO vendors(id,code,name,description,address1,address2,services,city,state,country,phone,fax,email,website) VALUES('','".$basiccode."','".$basicname."','".$basicdescription."','".$basicaddress1."','".$basicaddress2."','".$servicesven."','".$basiccity."','".$basicstate."','".$basiccountry."','".$basicphone."','".$basicfax."','".$basicemail."','".$basicwebsite."')");
+			$codegen = mysql_insert_id();
+			$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='vendors'");
+			if($result2)
+				$finalresult = 1;
+			
+			if($result2&&$servicesven!=null)
+			{
+			$services = explode(',', $servicesven);
 		for($i = 0; $i < count($services) - 1; $i++) {
 			//echo $id;
-			$result2 = mysql_query("INSERT INTO vendors_services(id,vendors_code,service_id,created_by,created_on,modified_by,modified_on,flag) VALUES('','" . $basiccode . "','" . $services[$i] . "','',now(),'','','')");
-
+			$result3 = mysql_query("INSERT INTO vendors_services(id,vendors_code,service_id,created_by,created_on,modified_by,modified_on,flag) VALUES('','" . $basiccode . "','" . $services[$i] . "','',now(),'','','')");
+			if(!$result3)
+				$finalresult = 0;
 		}
-			if(!$result1)
+		}
+			if(!$finalresult)
 			{
 				$result["failure"] = true;
 				$result["message"] =  "Invalid query: " . mysql_error();
@@ -299,29 +308,18 @@ function getFreelancerMasterById($id)
 	   	echo'({"results":'.json_encode($data).'})';
     }
 	
-		function autoRequestCode($id) {
-	$autoRequest = mysql_query("select code from vendors");
+	function autoRequestCode() {
+	$autoRequest = mysql_query("select value from codegen where tablename='vendors'");
 	$num_rows = mysql_num_rows($autoRequest);
 	if($num_rows > 0) {
 		while($row = mysql_fetch_array($autoRequest)) {
-			$data1 = $row['code'];
+			$data1 = $row['value'];
 		}
-	//	echo $data1;
-		$data = str_split($data1, 1);
-		$remain = substr($data1,1,4);
-	
-
-		//$data1 = substr($data1, -4);
-		$code = $remain + 1;
-		//echo $code;
+		$code = $data1 + 1;
 		$code = str_pad($code, 3, '0', STR_PAD_LEFT);
-	//	echo $code;
-		$new_code = $data[0] . $code;
-		
-		//echo $new_code;
+		$new_code = 'VEN' . $code;
 	} else {
-		
-		$new_code = "V001";
+		$new_code = "VEN001";
 	}
 
 	if(!$autoRequest) {

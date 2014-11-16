@@ -8,8 +8,9 @@
 Ext.define('MyDesktop.view.MasterWindow', {
 
 	extend: 'Ext.ux.desktop.Module',
-
+	
 	id:'master-win',
+	
 	init : function() {
 		this.launcher = {
 			text: 'Master Management',
@@ -18,38 +19,97 @@ Ext.define('MyDesktop.view.MasterWindow', {
 		this.callParent();
 	},
 	createWindow : function() {
-		
-
 		var flag=0;
-		
-		var navs = Ext.create('MyDesktop.view.mastermanagement.MasterNav');
-		navs.getSelectionModel().on('select', function(selModel, record) {
-			var selectedNode = navs.getSelectionModel().getSelection();
-			Ext.getCmp('content-panel9').layout.setActiveItem(selectedNode[0].data.id+'tab');
-		});
-		
-	var tab1 = Ext.create('MyDesktop.view.mastermanagement.mastermanagementTabPanel');
-//var teamstab = Ext.create('MyDesktop.view.mastermanagement.Teams.TeamsTabPanel');
-	var userstab = Ext.create('MyDesktop.view.mastermanagement.Users.UsersTabPanel');
-	var vendors = Ext.create('MyDesktop.view.mastermanagement.Vendors.VendorsTabPanel');
-	var production = Ext.create('MyDesktop.view.mastermanagement.ProductionStages.ProductionTabPanel');
-	var customer = Ext.create('MyDesktop.view.mastermanagement.Customers.CustomersTabPanel');
-var servicetab = Ext.create('MyDesktop.view.mastermanagement.Services.ServiceTabPanel');
-	var workflow = Ext.create('MyDesktop.view.mastermanagement.Workflow.WorkflowTabPanel');
-	var template = Ext.create('MyDesktop.view.mastermanagement.EmailTemplate.TemplateTabPanel');
-	//var setting = Ext.create('MyDesktop.view.settings.SettingTabPanel');
-//var troles= Ext.create('MyDesktop.view.mastermanagement.TeamRoles.TeamRolesTabPanel');
-	
-	
-			var contentPanel9 = {
+		var tab1 = "undefined";
+		var userstab = "undefined";
+		var vendors = "undefined";
+		var workflow = "undefined";
+		var production = "undefined";
+		var customer = Ext.create('MyDesktop.view.mastermanagement.Customers.CustomersTabPanel');
+		var servicetab = "undefined";
+		var template = "undefined";
+
+		var contentPanel9 = Ext.create('Ext.panel.Panel',{
+			
 			id: 'content-panel9',
 			region: 'center', // this is what makes this panel into a region within the containing layout
 			layout: 'card',
 			margins: '2 5 5 0',
 			activeItem: 0,
 			border: false,
-			items: [customer,tab1,servicetab,userstab,production,vendors,workflow,template]
-		};
+			items: [customer]
+		});
+		var navs = Ext.create('MyDesktop.view.mastermanagement.MasterNav');
+		navs.getSelectionModel().on('select', function(selModel, record) {
+			
+			var selectedNode = navs.getSelectionModel().getSelection();
+			console.log(selectedNode[0].data.id,'inside');
+			switch(selectedNode[0].data.id){
+				case 'vendors' :
+					console.log(selectedNode[0].data.id,'inside');
+					if (vendors == "undefined") {
+						vendors = Ext.create('MyDesktop.view.mastermanagement.Vendors.VendorsTabPanel');
+						contentPanel9.add(vendors);
+						contentPanel9.doLayout(); 
+					}
+					break;
+				case 'workflow' :
+					console.log(selectedNode[0].data.id,'inside');
+					if (workflow == "undefined") {
+						workflow= Ext.create('MyDesktop.view.mastermanagement.Workflow.WorkflowTabPanel');
+						contentPanel9.add(workflow);
+						contentPanel9.doLayout(); 
+					}
+					break;
+				case 'customers' :
+					console.log(selectedNode[0].data.id,'inside');
+					break;
+				case 'service' :
+					console.log(selectedNode[0].data.id,'inside');
+					if (servicetab == "undefined") {
+						servicetab= Ext.create('MyDesktop.view.mastermanagement.Services.ServiceTabPanel');
+						contentPanel9.add(servicetab);
+						contentPanel9.doLayout(); 
+					}
+					break;
+				case 'production' :
+					console.log(selectedNode[0].data.id,'inside');
+					if (production == "undefined") {
+						production = Ext.create('MyDesktop.view.mastermanagement.ProductionStages.ProductionTabPanel');
+						contentPanel9.add(production);
+						contentPanel9.doLayout(); 
+					}
+					break;
+				case 'troles' :
+					console.log(selectedNode[0].data.id,'inside');
+					if (tab1 == "undefined") {
+						tab1 = Ext.create('MyDesktop.view.mastermanagement.mastermanagementTabPanel');
+						contentPanel9.add(tab1);
+						contentPanel9.doLayout(); 
+					}
+					break;
+				case 'users' :
+					console.log(selectedNode[0].data.id,'inside');
+					if (userstab == "undefined") {
+						userstab = Ext.create('MyDesktop.view.mastermanagement.Users.UsersTabPanel');
+						contentPanel9.add(userstab);
+						contentPanel9.doLayout(); 
+					}
+					break;
+				case 'template' :
+					console.log(selectedNode[0].data.id,'inside');
+					if (template == "undefined") {
+						template = Ext.create('MyDesktop.view.mastermanagement.EmailTemplate.TemplateTabPanel');
+						contentPanel9.add(template);
+						contentPanel9.doLayout(); 
+					}
+					break;
+			}
+			contentPanel9.layout.setActiveItem(selectedNode[0].data.id+'tab');
+			
+		});
+		
+		
 
 		var desktop = this.app.getDesktop();
 		var win = desktop.getWindow('master-win');
@@ -62,6 +122,7 @@ var servicetab = Ext.create('MyDesktop.view.mastermanagement.Services.ServiceTab
 				animCollapse:false,
 				constrainHeader:true,
 				closable: true,
+				closeAction:'hide',
 				width: 600,
 				minWidth: 600,
 				height: 600,
@@ -82,4 +143,5 @@ var servicetab = Ext.create('MyDesktop.view.mastermanagement.Services.ServiceTab
 		}
 		return win;
 	},
+	//this.callParent(arguments);
 });

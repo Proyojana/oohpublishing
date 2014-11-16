@@ -333,7 +333,6 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		handler: function (){
 				Ext.getCmp('customercontactsformTab').setDisabled(true);
 							Ext.getCmp('customerteamsformTab').setDisabled(true);
-							Ext.getCmp('customerratecardformTab').setDisabled(true);
 					
 						var currentForm = this.up('custbasicinfoform');
 						currentForm.getForm().reset();
