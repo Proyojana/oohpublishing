@@ -202,7 +202,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							var grid1=Ext.getCmp('vendorscontactgrid');
-						    grid1.getStore().load({params:{action:1,vendorid:id}});
+						    grid1.getStore().load({params:{action:1,vendorid:vendorid}});
 						}
 					});
 					}

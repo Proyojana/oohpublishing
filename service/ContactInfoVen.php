@@ -108,7 +108,7 @@ From
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==1){
-			$result1= mysql_query("UPDATE vendors_contacts set vendor_id='".$vendorid."',per='".$pername."',firstname='".$firstname."',middlename='".$middlename."',lastname='".$lastname."',phone='".$contctphone."',email='".$cntctemail."',designation='".$cntctdesignation."'");
+			$result1= mysql_query("UPDATE vendors_contacts set vendor_id='".$vendorid."',per='".$pername."',firstname='".$firstname."',middlename='".$middlename."',lastname='".$lastname."',phone='".$contctphone."',email='".$cntctemail."',designation='".$cntctdesignation."'where id='".$cntctvenid."'");
 				
 		if(!$result1)
 			{

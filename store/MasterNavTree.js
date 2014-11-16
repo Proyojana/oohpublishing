@@ -31,6 +31,8 @@ Ext.define('MyDesktop.store.MasterNavTree', {
 			   { id:'troles', text: "Roles",iconCls:'rolesClass', leaf: true },
 			   
         		{ id:'users', text: "Users",iconCls:'users', leaf: true },
+        		
+        		{ id:'myprofile', text: "My Profile",iconCls:'users', leaf: true },
         		]
         },
           { id:'template', text: "Email Templates",iconCls:'gmailClass', leaf: true },

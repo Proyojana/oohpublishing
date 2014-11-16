@@ -8,30 +8,36 @@ var per = Ext.create('Ext.data.Store', {
             {"name":"Typesetting Report","id":"4"}
         ]
     });
-/* function autoLoadCode()
-    {
-    	var currentForm = Ext.getCmp('serviceaddform'); 
-    	 currentForm.getForm().load({
-   								 url: 'service/Service.php',
-							     params: {
-        						 	action:9
-							    },
-							    success:function(form,action){
-							    	
-							    	alert("success");
-							    	alert(action.result.message);
-							    },
-							    failure:function(form,action){	
-							    //	alert("failure");						    
-							    	Ext.getCmp('service_code').setValue(action.result.message);
-							    }
-							
-							});
-    };*/
+
+//for loading auto generate code for email template
+/*function autoLoadCode()
+{
+   	var currentForm = Ext.getCmp('templateaddform'); 
+	currentForm.getForm().load(
+	{
+   		 url: 'service/emailTemplate.php',
+	     params: 
+	     {
+         	action:8
+		 },
+		 success:function(form,action)
+		 {
+		   	alert("success");
+		   	alert(action.result.message);
+	    },
+	    failure:function(form,action)
+	    {	
+	    	//	alert("failure");						    
+			Ext.getCmp('template_code').setValue(action.result.message);
+		}
+	});
+};*/
+    
+    
 Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
     extend: 'Ext.form.Panel',
     alias : 'widget.templateaddform',
-   		id:'tmplateaddform',
+   		id:'templateaddform',
     margin: '2 10 10 10',
 	layout: {
               type: 'absolute'
@@ -46,7 +52,7 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
    // defaultType: 'textfield',
     
   
-   /* listeners: {
+   /*listeners: {
      	 afterrender: function(){
      	 //	alert("listen");
      	
@@ -61,8 +67,9 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateAddForm' ,{
 	    ci.loadPage(1);*/
 		this.items= [
 			{
-			id:'template_id',
-			hidden:true
+				xtype:'textfield',
+				id:'template_id',
+				hidden:true
 			},
 			
 		{
@@ -200,34 +207,40 @@ y:240,
 			y:235,
 			width:75,
 			handler: function ()
-			   {
-			var currentForm = this.up('templateform');
-	var templateid = Ext.getCmp('template_id').getValue();
-var templatecode = Ext.getCmp('template_code').getValue();
-var templatename = Ext.getCmp('template_name').getValue();
-var templaterole= Ext.getCmp('template_role').getValue();
-var templatemain= Ext.getCmp('template_main').getValue();
-var templatefooter= Ext.getCmp('template_footer').getValue();
-
-if(currentForm.getForm().isValid() == true)
-{
-var conn = new Ext.data.Connection();
-conn.request({
-url: 'service/emailTemplate.php',
-method: 'POST',
-params : {action:7,templateid:templateid,templatecode:templatecode,templatename:templatename,templaterole:templaterole,templatemain:templatemain,templatefooter:templatefooter},
-success:function(response){
-obj = Ext.JSON.decode(response.responseText);
-Ext.Msg.alert('Message', obj.message); 
-currentForm.getForm().reset();
-Ext.getCmp('servicegrid').getStore().reload();
-}
-});
-}
-else
-{
-Ext.MessageBox.alert('Please fill the required data.');
-}
+			{
+				var currentForm = this.up('templateform');
+				//alert("hai");
+				var templateid = Ext.getCmp('template_id').getValue();
+			
+				//alert(templateid);
+				var templatecode = Ext.getCmp('template_code').getValue();
+				var templatename = Ext.getCmp('template_name').getValue();
+				var templaterole= Ext.getCmp('template_role').getValue();
+				var templatemain= Ext.getCmp('template_main').getValue();
+				var templatefooter= Ext.getCmp('template_footer').getValue();
+		
+				if(currentForm.getForm().isValid() == true)
+				{
+					var conn = new Ext.data.Connection();
+					conn.request(
+					{
+						url: 'service/emailTemplate.php',
+						method: 'POST',
+						params : {action:7,templateid:templateid,templatecode:templatecode,templatename:templatename,templaterole:templaterole,templatemain:templatemain,templatefooter:templatefooter},
+						success:function(response)
+						{
+							obj = Ext.JSON.decode(response.responseText);
+							Ext.Msg.alert('Message', obj.message); 
+							currentForm.getForm().reset();
+							Ext.getCmp('templategrid').getStore().reload();
+							//autoLoadCode(); 	
+						}
+					});
+				}
+				else
+				{
+					Ext.MessageBox.alert('Please fill the required data.');
+				}
 			}
 	  	},
 		

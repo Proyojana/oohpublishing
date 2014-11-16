@@ -128,7 +128,7 @@ Ext.define('MyDesktop.view.mastermanagement.EmailTemplate.TemplateGrid', {
 						Ext.getCmp('template_footer').setReadOnly(false);
 						Ext.getCmp('template_header').setReadOnly(true);
 						Ext.getCmp('edit_template').getEl().show();
-						Ext.getCmp('templateaddform').setTitle('View Template');
+						Ext.getCmp('templateaddform').setTitle('Edit Template');
 						
 						
 						

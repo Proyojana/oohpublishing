@@ -20,16 +20,15 @@ Ext.define('MyDesktop.view.MasterWindow', {
 	},
 	createWindow : function() {
 		var flag=0;
-		
-		var customer = Ext.create('MyDesktop.view.mastermanagement.Customers.CustomersTabPanel');
-		var servicetab = "undefined";
 		var tab1 = "undefined";
 		var userstab = "undefined";
 		var vendors = "undefined";
 		var workflow = "undefined";
 		var production = "undefined";
-		
+		var customer = Ext.create('MyDesktop.view.mastermanagement.Customers.CustomersTabPanel');
+		var servicetab = "undefined";
 		var template = "undefined";
+		var myprofile = "undefined";
 
 		var contentPanel9 = Ext.create('Ext.panel.Panel',{
 			
@@ -97,6 +96,14 @@ Ext.define('MyDesktop.view.MasterWindow', {
 						contentPanel9.doLayout(); 
 					}
 					break;
+				case 'myprofile' :
+					if (myprofile == "undefined") {
+						myprofile = Ext.create('MyDesktop.view.mastermanagement.MyProfile.MyProfileTabPanel');
+						contentPanel9.add(myprofile);
+						contentPanel9.doLayout(); 
+					}
+					break;	
+					
 			}
 			contentPanel9.layout.setActiveItem(selectedNode[0].data.id+'tab');
 			
