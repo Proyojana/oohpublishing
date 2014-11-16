@@ -38,7 +38,17 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 				},
 				{
 					dataIndex: 'name',
-					text: 'Name',
+					text: 'First Name',
+					align: 'center',
+					flex:2,
+					filter: {
+                	type: 'string'
+           		}
+				},
+				
+				{
+					dataIndex: 'lstname',
+					text: 'Last Name',
 					align: 'center',
 					flex:2,
 					filter: {
