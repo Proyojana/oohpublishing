@@ -3,7 +3,7 @@
 session_start();    
     include("config.php");
 	include("../inc/php/encryptDecrypt.php");
-$id=$_SESSION['id'];
+	$id=$_SESSION['id'];
 	switch($_POST["action"]) /*Read action sent from front-end */
 	{
 		case 1:
@@ -16,7 +16,7 @@ $id=$_SESSION['id'];
 			deleteUserMasterById($_POST["userid"]);	
 			break;
 		case 4:
-			updateUserMaster($_POST["userid"],$_POST['usercode'],$_POST['userper'],$_POST['userfirstname'],$_POST['usermiddlename'],$_POST['userlastname'],$_POST['username'],$_POST['role'],$_POST['useremail'],$_POST['userdescription']);	
+			updateUserMaster($_POST["userid"],$_POST['usercode'],$_POST['userper'],$_POST['userfirstname'],$_POST['usermiddlename'],$_POST['userlastname'],$_POST['username'],$_POST['role'],$_POST['useremail'],$_POST['userdescription'],$_POST['password']);	
 			break;
 		case 5:
 			insertUserMaster($_POST['usercode'],$_POST['userper'],$_POST['userfirstname'],$_POST['usermiddlename'],$_POST['userlastname'],$_POST['username'],$_POST['password'],$_POST['role'],$_POST['useremail'],$_POST['userdescription'],$id);
@@ -110,30 +110,16 @@ $id=$_SESSION['id'];
       	echo(json_encode($result));
     }
   
-     function updateUserMaster($userid,$usercode,$per,$firstname,$middlename,$lastname,$username,$userrole,$useremail,$userdescription)
+     function updateUserMaster($userid,$usercode,$per,$firstname,$middlename,$lastname,$username,$userrole,$useremail,$userdescription,$password)
     {
-    /*	$autoRequest = mysql_query("Select
-  users.password
-From
-  users
-Where
-  users.name = 'Gowri'");
-	$num_rows = mysql_num_rows($autoRequest);
-	if($num_rows > 0) {
-		while($row = mysql_fetch_array($autoRequest)) {
-			$data1 = $row['password'];
-		}
-		$emp_DecryptedPassword=decrypt($data1,'key'); 
-		echo $emp_DecryptedPassword;
-		}
-		*/
+		$encryptpassword = encrypt($password);
 		
 		$checkquery="SELECT id FROM users WHERE id='".$userid."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==1){
-			$result1= mysql_query("UPDATE users set code='".$usercode."',per='".$per."',firstname='".$firstname."',middlename='".$middlename."',lastname='".$lastname."', username='".$username."', role='".$userrole."', email='".$useremail."',description='".$userdescription."',modified_by='".$userid."',modified_on=now() WHERE id=".$userid."");
+			$result1= mysql_query("UPDATE users set code='".$usercode."',per='".$per."',firstname='".$firstname."',middlename='".$middlename."',lastname='".$lastname."', username='".$username."',password='".$encryptpassword."', role='".$userrole."', email='".$useremail."',description='".$userdescription."',modified_by='".$userid."',modified_on=now() WHERE id=".$userid."");
 				
 		if(!$result1)
 			{

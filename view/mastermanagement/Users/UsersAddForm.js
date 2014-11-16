@@ -258,11 +258,11 @@ xtype:'button',
 				method: 'POST',
 				params : {action:5,usercode:usercode,userper:userper,userfirstname:userfirstname,usermiddlename:usermiddlename,userlastname:userlastname,username:username,password:password,role:role,useremail:useremail,userdescription:userdescription},
 				success:function(response){
-				obj = Ext.JSON.decode(response.responseText);
-				Ext.Msg.alert('Message', obj.message); 
-				currentForm.getForm().reset();
-				Ext.getCmp('usersgrid').getStore().reload();
-				autoLoadCode();
+					obj = Ext.JSON.decode(response.responseText);
+					Ext.Msg.alert('Message', obj.message); 
+					currentForm.getForm().reset();
+					Ext.getCmp('usersgrid').getStore().reload();
+					autoLoadCode();
 				}
 				});
 				}
@@ -292,7 +292,7 @@ xtype:'button',
 					var usermiddlename = Ext.getCmp('user_middle_name').getValue();
 					var userlastname = Ext.getCmp('user_last_name').getValue();
 					var username = Ext.getCmp('username').getValue();
-					//var password = Ext.getCmp('password').getValue();
+					var password = Ext.getCmp('password').getValue();
 					var role = Ext.getCmp('userrole').getValue();
 					var useremail = Ext.getCmp('useremail').getValue();
 					var userdescription= Ext.getCmp('userdescription').getValue();
@@ -304,7 +304,7 @@ xtype:'button',
 					conn.request({
 					url: 'service/Users.php',
 					method: 'POST',
-					params : {action:4,userid:userid,usercode:usercode,userper:userper,userfirstname:userfirstname,usermiddlename:usermiddlename,userlastname:userlastname,username:username,role:role,useremail:useremail,userdescription:userdescription},
+					params : {action:4,userid:userid,usercode:usercode,userper:userper,userfirstname:userfirstname,usermiddlename:usermiddlename,userlastname:userlastname,username:username,role:role,useremail:useremail,userdescription:userdescription,password:password},
 					success:function(response){
 					obj = Ext.JSON.decode(response.responseText);
 					Ext.Msg.alert('Message', obj.message); 

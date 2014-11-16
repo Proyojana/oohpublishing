@@ -1,16 +1,7 @@
 <?php
-/*
-* PAGE ID		: PHP
-* CREATED ON	: 01-11-2010
-* MODIFIED ON	: 
-* AUTHOR ID		: 003573
-* PROJECT URL	: 
-* CLIENT NAME	: Laserwords
-* DEVELOPED BY	: Laserwords [www.laserwords.com]
-* DESCRIPTION	: 
-*/
 
-    function encrypt($ses,$key)
+
+    function encrypt($ses)
     {
         $sesencoded = $ses;
         $num = mt_rand(2,5);

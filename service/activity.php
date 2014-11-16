@@ -20,7 +20,7 @@
 			insertProduction($_POST['product_code'],$_POST['product_name'],$_POST['product_description'],$_POST['product_template']);
 			break;
 		case 6: 
-			autoRequestCode($id);
+			autoRequestCode();
 			break;
 		
 		default: 
@@ -159,6 +159,10 @@ Where
 		if($num_rows==0)
 		{
 			$result1 = mysql_query ("INSERT INTO  activity(id,code,name,template,description,created_on,created_by,modified_on,modified_by,flag) VALUES('','".$product_code."','".$product_name."','".$product_template."','".$product_description."','','','','','')");
+			$codegen = mysql_insert_id();
+			$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='activity'");
+		
+			
 			if(!$result1)
 			{
 				$result["failure"] = true;
@@ -179,29 +183,18 @@ Where
 		echo json_encode($result);
 	}
 	
-			function autoRequestCode($id) {
-	$autoRequest = mysql_query("select code from activity");
+	function autoRequestCode() {
+	$autoRequest = mysql_query("select value from codegen where tablename='activity'");
 	$num_rows = mysql_num_rows($autoRequest);
 	if($num_rows > 0) {
 		while($row = mysql_fetch_array($autoRequest)) {
-			$data1 = $row['code'];
+			$data1 = $row['value'];
 		}
-	//	echo $data1;
-		$data = str_split($data1, 2);
-		$remain = substr($data1,1,4);
-	
-
-		//$data1 = substr($data1, -4);
-		$code = $remain + 1;
-		//echo $code;
-		$code = str_pad($code, 2, '0', STR_PAD_LEFT);
-	//	echo $code;
-		$new_code = $data[0] . $code;
-		
-		//echo $new_code;
+		$code = $data1 + 1;
+		$code = str_pad($code, 3, '0', STR_PAD_LEFT);
+		$new_code = 'ACT' . $code;
 	} else {
-		
-		$new_code = "A001";
+		$new_code = "ACT001";
 	}
 
 	if(!$autoRequest) {

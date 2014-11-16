@@ -23,7 +23,7 @@
 			insertClients($_POST['code'],$_POST['clients']);
 			break;	
 		case 7: 
-			autoRequestCode($id);
+			autoRequestCode();
 			break;
 		case 8:
 			getClientWorkflow($_POST['clientId']);
@@ -229,29 +229,18 @@ Group By
 		}
 			echo json_encode($result);
 	}
-				function autoRequestCode($id) {
-	$autoRequest = mysql_query("select code from workflow");
+	function autoRequestCode(){
+	$autoRequest = mysql_query("select value from codegen where tablename='workflow'");
 	$num_rows = mysql_num_rows($autoRequest);
 	if($num_rows > 0) {
 		while($row = mysql_fetch_array($autoRequest)) {
-			$data1 = $row['code'];
+			$data1 = $row['value'];
 		}
-	//	echo $data1;
-		$data = str_split($data1, 2);
-		$remain = substr($data1,1,4);
-	
-
-		//$data1 = substr($data1, -4);
-		$code = $remain + 1;
-		//echo $code;
-		$code = str_pad($code, 2, '0', STR_PAD_LEFT);
-	//	echo $code;
-		$new_code = $data[0] . $code;
-		
-		//echo $new_code;
+		$code = $data1 + 1;
+		$code = str_pad($code, 3, '0', STR_PAD_LEFT);
+		$new_code = 'WFL' . $code;
 	} else {
-		
-		$new_code = "A001";
+		$new_code = "WFL001";
 	}
 
 	if(!$autoRequest) {

@@ -43,10 +43,8 @@ Ext.define('MyDesktop.view.MasterWindow', {
 		navs.getSelectionModel().on('select', function(selModel, record) {
 			
 			var selectedNode = navs.getSelectionModel().getSelection();
-			console.log(selectedNode[0].data.id,'inside');
 			switch(selectedNode[0].data.id){
 				case 'vendors' :
-					console.log(selectedNode[0].data.id,'inside');
 					if (vendors == "undefined") {
 						vendors = Ext.create('MyDesktop.view.mastermanagement.Vendors.VendorsTabPanel');
 						contentPanel9.add(vendors);
@@ -54,7 +52,6 @@ Ext.define('MyDesktop.view.MasterWindow', {
 					}
 					break;
 				case 'workflow' :
-					console.log(selectedNode[0].data.id,'inside');
 					if (workflow == "undefined") {
 						workflow= Ext.create('MyDesktop.view.mastermanagement.Workflow.WorkflowTabPanel');
 						contentPanel9.add(workflow);
@@ -62,10 +59,8 @@ Ext.define('MyDesktop.view.MasterWindow', {
 					}
 					break;
 				case 'customers' :
-					console.log(selectedNode[0].data.id,'inside');
 					break;
 				case 'service' :
-					console.log(selectedNode[0].data.id,'inside');
 					if (servicetab == "undefined") {
 						servicetab= Ext.create('MyDesktop.view.mastermanagement.Services.ServiceTabPanel');
 						contentPanel9.add(servicetab);
@@ -73,7 +68,6 @@ Ext.define('MyDesktop.view.MasterWindow', {
 					}
 					break;
 				case 'production' :
-					console.log(selectedNode[0].data.id,'inside');
 					if (production == "undefined") {
 						production = Ext.create('MyDesktop.view.mastermanagement.ProductionStages.ProductionTabPanel');
 						contentPanel9.add(production);
@@ -81,7 +75,6 @@ Ext.define('MyDesktop.view.MasterWindow', {
 					}
 					break;
 				case 'troles' :
-					console.log(selectedNode[0].data.id,'inside');
 					if (tab1 == "undefined") {
 						tab1 = Ext.create('MyDesktop.view.mastermanagement.mastermanagementTabPanel');
 						contentPanel9.add(tab1);
@@ -89,7 +82,6 @@ Ext.define('MyDesktop.view.MasterWindow', {
 					}
 					break;
 				case 'users' :
-					console.log(selectedNode[0].data.id,'inside');
 					if (userstab == "undefined") {
 						userstab = Ext.create('MyDesktop.view.mastermanagement.Users.UsersTabPanel');
 						contentPanel9.add(userstab);
@@ -97,7 +89,6 @@ Ext.define('MyDesktop.view.MasterWindow', {
 					}
 					break;
 				case 'template' :
-					console.log(selectedNode[0].data.id,'inside');
 					if (template == "undefined") {
 						template = Ext.create('MyDesktop.view.mastermanagement.EmailTemplate.TemplateTabPanel');
 						contentPanel9.add(template);

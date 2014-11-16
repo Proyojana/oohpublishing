@@ -1,18 +1,7 @@
      var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
-			var store1 = Ext.create('Ext.data.JsonStore', {
-    fields: ['Code','Name', 'Email','Phone'],
-    data: [
-    { "Code":"C001","Name":"Johnson","Email":"John@gmail.com","Phone":"9034767231"},
-    { "Code":"C002","Name":"Emy","Email":"emy@gmail.com","Phone":"9566567571"},
-    { "Code":"C003","Name":"Rafe","Email":"rafe@gmail.com","Phone":"6789335667"},
-    { "Code":"C004","Name":"Liilian","Email":"lillian@gmail.com","Phone":"6767876889"},
-    { "Code":"C005","Name":"Deisy","Email":"deisy@gmail.com","Phone":"0347645456"},
-    
-     ]
-});
-     
+			
 Ext.define('MyDesktop.view.mastermanagement.Customers.CustomerGrid', {
 	extend:'Ext.grid.Panel',
 	alias:'widget.customergrid',

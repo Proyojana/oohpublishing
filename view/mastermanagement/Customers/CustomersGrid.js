@@ -57,15 +57,7 @@ var ci = Ext.create('MyDesktop.store.Customers');
                 	type: 'string'
            		}
 				},
-				/*{
-					dataIndex: 'phone',
-					text: 'Phone',
-					align: 'center',
-					flex:2,
-					filter: {
-                	type: 'string'
-           		}
-				},*/
+				
 				{
 					dataIndex: 'phone',
 					text: 'Phone',
@@ -83,7 +75,6 @@ var ci = Ext.create('MyDesktop.store.Customers');
 					text:'Actions',
 					items: [{
 						iconCls: 'viewClass',
-						//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
 						tooltip: 'View',
 					handler: function(grid, rowIndex, colIndex) {
 						var currentForm = Ext.getCmp('custbasicinfoform');
@@ -132,7 +123,6 @@ var ci = Ext.create('MyDesktop.store.Customers');
 						 //show inner panel
 						Ext.getCmp('customercontactsformTab').setDisabled(false);
 							Ext.getCmp('customerteamsformTab').setDisabled(false);
-						Ext.getCmp('customertab').layout.setActiveItem('custbasicinfoform');
 						
 						
 				}
@@ -191,7 +181,6 @@ var ci = Ext.create('MyDesktop.store.Customers');
 						 	//show inner panel
 						Ext.getCmp('customercontactsformTab').setDisabled(false);
 							Ext.getCmp('customerteamsformTab').setDisabled(false);
-						//Ext.getCmp('customertab').layout.setActiveItem('custbasicinfoform');
 						
 						
 					

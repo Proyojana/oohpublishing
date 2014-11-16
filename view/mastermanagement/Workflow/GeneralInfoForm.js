@@ -200,6 +200,8 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			handler: function (){
 				var currentForm = this.up('workflowform');
 				currentForm.getForm().reset();
+				Ext.getCmp('stagesgrid').getStore().removeAll();
+				Ext.getCmp('stagesgrid').getStore().sync();
 				autoLoadCode();
 		
 			}
