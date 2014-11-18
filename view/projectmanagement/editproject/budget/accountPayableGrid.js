@@ -209,13 +209,19 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					dataIndex: 'rate_USD',
 					text: '$',
 		        	align:'center',
-		        	textStyle:'font-size:13px;'
+		        	textStyle:'font-size:13px;',
+		        	editor: { 
+						xtype:'textfield',
+					}
 									
 				},
 				{
 					dataIndex: 'rate_GBP',
 					text: '£',
 		        	align:'center',
+		        	editor: { 
+						xtype:'textfield',
+					}
 				}
 				]
 				},
@@ -310,6 +316,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					dataIndex: 'budgeted_amount_USD',
 					text: '$',
 		        	align:'center',
+		        	editor: { 
+						xtype:'textfield',
+					}
 		        	
 					
 			    },
@@ -317,6 +326,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 			    	dataIndex: 'budgeted_amount_GBP',
 					text: '£',
 		        	align:'center',
+		        	editor: { 
+						xtype:'textfield',
+					}
 			    }
 			    ]
 			    },

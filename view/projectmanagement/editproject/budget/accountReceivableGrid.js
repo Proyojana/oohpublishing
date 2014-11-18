@@ -102,6 +102,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 					dataIndex: 'budgeted_amount_USD',
 					text: '$',
 		        	align:'center',
+		        	editor: { 
+						xtype:'textfield',
+					}
 		        	
 					
 			    },
@@ -109,6 +112,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 			    	dataIndex: 'budgeted_amount_GBP',
 					text: '£',
 		        	align:'center',
+		        	editor: { 
+						xtype:'textfield',
+					}
 			    }
 			    ]
 			    },

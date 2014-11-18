@@ -443,6 +443,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				 y:760,
 				handler:function(){
 				 var val = Ext.getCmp('receive2').getValue();
+				 
 	        	
 	        	 if(val==1)
 	        	 {
@@ -465,6 +466,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						rate_USD=rate_USD+rec.get('rate_USD')+',';
 						rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
 						budgeted_amount_USD=budgeted_amount_USD+rec.get('budgeted_amount_USD')+',';
+						
 						budgeted_amount_GBP=budgeted_amount_USD+rec.get('budgeted_amount_GBP')+',';
 						actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
 						actual_amount_GBP=actual_amount_USD+rec.get('actual_amount_GBP')+',';
@@ -489,8 +491,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					 var no_of_unit = '';
 				     var rate_USD = '';
 				     var rate_GBP= '';
-				     var budgeted_amount_USD= '';
-				     var budgeted_amount_GBP = '';
+				     var budgeted_USD= '';
+				     var budgeted_GBP = '';
 				     var actual_amount_USD = '';
 				      var actual_amount_GBP = '';
 				     var grid=Ext.getCmp('editaccountReceiveGrid_a');
@@ -505,12 +507,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
 						rate_USD=rate_USD+rec.get('rate_USD')+',';
 						rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
-						budgeted_USD=budgeted_amount_USD+rec.get('budgeted_amount_USD')+',';
-						budgeted_GBP=budgeted_amount_USD+rec.get('budgeted_amount_GBP')+',';
+						budgeted_USD=budgeted_USD+rec.get('budgeted_amount_USD')+',';						
+						budgeted_GBP=budgeted_GBP+rec.get('budgeted_amount_GBP')+',';
 						actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
 						actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
 					});
-					
+					//alert(budgeted_USD);
 					 var conn = new Ext.data.Connection();
 					 conn.request({
 						url: 'service/budget.php',
