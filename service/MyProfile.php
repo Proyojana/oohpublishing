@@ -25,7 +25,7 @@ function getMyProfileInfoById($user_name, $user_id) {
   users.username as myprofname,
   users.password as passwordmyprof,
    users.email as myprofemail,
-   oohpm.users.per as myprofper , 
+   users.per as myprofper , 
   users.id as myprofuid
 From
   users
