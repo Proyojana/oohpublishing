@@ -236,7 +236,7 @@ t.setValue(value1);
 			allowBlank: false,
 			afterLabelTextTpl: required,
 			},
-    	{
+    	/*{
     		xtype:'datefield',
     		id:'edit_agreed_deadline',
 			fieldLabel: 'Agreed deadline',
@@ -244,7 +244,7 @@ t.setValue(value1);
 			y:130,
 			width:320,
 			
-    	},
+    	},*/
     	
     	{
     		xtype:'datefield',

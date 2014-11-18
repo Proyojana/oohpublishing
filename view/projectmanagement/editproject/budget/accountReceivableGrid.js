@@ -45,7 +45,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 					text: '$',
 		        	align:'center',
 		        	textStyle:'font-size:13px;',
-		        	editor: { 
+		        	flex:1,
+					editor: { 
 						xtype:'textfield',
 					}
 									
@@ -54,6 +55,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 					dataIndex: 'rate_GBP',
 					text: '£',
 		        	align:'center',
+					flex:1,
 		        	editor: { 
 						xtype:'textfield',
 					}
@@ -117,13 +119,18 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 					dataIndex: 'actual_amount_USD',
 					text: '$',
 		        	align:'center',
-		        	
+		        	editor: { 
+						xtype:'textfield',
+					}
 					
 			    },
 			    {
 			    	dataIndex: 'actual_amount_GBP',
 					text: '£',
 		        	align:'center',
+					editor: { 
+						xtype:'textfield',
+					}
 			    }
 			    ]
 			    },
