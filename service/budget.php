@@ -571,12 +571,21 @@ Where
 		for ($i = 0; $i < count($activity_name1)-1; $i++)
 		{
 			$checkquery="SELECT id FROM budget_receivable WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."' ";
+			
+			 $workflow = mysql_query("Select id From activity Where name = '".$activity_name1[$i]."'");
+               while($row = mysql_fetch_array($workflow)) 
+               {
+                       $activity_id[] = $row['id'];
+                       
+                       
+               }
+			
        		$result2=mysql_query($checkquery);
        		$num_rows=mysql_num_rows($result2);
 			if($num_rows == 1)
 			{
 				
-				$result1 = mysql_query("UPDATE budget_receivable SET  no_of_unit='".$no_of_unit1[$i]."', rate_usd = '".$rate_USD1[$i]."', rate_gbp = '".$rate_GBP1[$i]."', budgeted_usd = '".$budgeted_USD1[$i]."', budgeted_gbp= '".$budgeted_GBP1[$i]."', actual_usd = '".$actual_amount_USD1[$i]."',actual_gbp='".$actual_amount_GBP1[$i]."' WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."'");
+				$result1 = mysql_query("UPDATE budget_receivable SET  no_of_unit='".$no_of_unit1[$i]."', rate_usd = '".$rate_USD1[$i]."', rate_gbp = '".$rate_GBP1[$i]."', budgeted_usd = '".$budgeted_USD1[$i]."', budgeted_gbp= '".$budgeted_GBP1[$i]."', actual_usd = '".$actual_amount_USD1[$i]."',actual_gbp='".$actual_amount_GBP1[$i]."' WHERE project_id='".$projectID."'And activity='".$activity_id[$i]."'");
 				if(!$result1)
 				{
 					$result["failure"] = true;
