@@ -89,8 +89,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 					 	total_USD=total_USD+parseInt(rec.get('actual_amount_USD'));
 						total_GBP=total_GBP+parseInt(rec.get('actual_amount_GBP'));
 					 	});
-		                Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
-					    Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
+		                Ext.getCmp('edit_total_receive_USD_p').setValue(total_USD);
+					    Ext.getCmp('edit_total_receive_GBP_p').setValue(total_GBP);
 		                	}
 		                }
 					}
@@ -153,6 +153,51 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 							tooltip: 'Delete',
 							handler: function(grid, rowIndex, colIndex) {
 								
+						
+					
+										var grid = this.up('grid');
+					if (grid)
+					 {
+						var edit_Job_code=Ext.getCmp('edit_Job_code').getValue();
+						
+						//alert(edit_Job_code);
+						//var workflow=Ext.getCmp('budgetHeader_workflow').getValue();
+						var rec = grid.getStore().getAt(rowIndex);
+						Ext.Msg.confirm('Remove Record '+rec.get('no_of_unit')+' ?',+rec.get('no_of_unit'), function (button)
+						 {
+							if (button == 'yes')
+							 {
+								var id=rec.get('budgetReceive_id');
+								
+								//alert(id);
+								var conn = new Ext.data.Connection();
+								conn.request(
+								 	
+								{
+									 url: 'service/budget.php',
+								 	method: 'POST',
+								 	params : {action:21,receivable_id:id},
+								 	success:function(response)
+								 	{
+								 		obj = Ext.JSON.decode(response.responseText);
+								 		Ext.Msg.alert('Successfully Deleted', obj.message);
+								 		var grid3=Ext.getCmp('editaccountReceiveGrid');
+								 		grid3.getStore().load(
+								 		{
+								 			params:{action:12,job_code:edit_Job_code}
+								 		});
+								 	},
+								 	failure:function(response)
+								 	{
+										 obj = Ext.JSON.decode(response.responseText);
+								 		Ext.Msg.alert('Deletion Failed !', obj.message);
+								 	}
+								 });
+
+							}
+						});
+					}
+						
 						
 							}
 						},

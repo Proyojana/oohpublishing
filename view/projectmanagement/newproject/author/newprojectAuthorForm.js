@@ -110,12 +110,6 @@ obj = Ext.JSON.decode(response.responseText);
 //Ext.Msg.alert('Message', obj.message);
 }
 });
-}
-else
-{
-	Ext.Msg.alert("Please fill Authour name and email");
-}
-
 
 /*for budget total data inserting*/
 
@@ -145,6 +139,16 @@ conn1.request(
  
  
 /*end*/
+
+
+}
+else
+{
+	Ext.Msg.alert("Please fill Authour name and email");
+}
+
+
+
 
 
 var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');

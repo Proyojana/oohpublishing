@@ -45,7 +45,7 @@ include("../inc/php/encryptDecrypt.php");
 			getReceivable_a($_POST['job_code']);
 			break;
 	   case 14:
-			insertBudgetDetails($_POST['projectID'],$_POST['ponumber1'],$_POST['ponumber2'],$_POST['total_receive_USD'],$_POST['total_receive_GDP'],$_POST['total_pay_USD'],$_POST['total_pay_GDP'],$_POST['profit_GDP'],$_POST['profit_percentage'],$_POST['invoice_date'],$_POST['prostatus']);
+			insertBudgetDetails($_POST['projectID'],$_POST['ponumber1'],$_POST['ponumber2'],$_POST['total_receive_USD'],$_POST['total_receive_GDP'],$_POST['total_receive_project_USD'],$_POST['total_receive_project_GDP'],$_POST['total_pay_USD'],$_POST['total_pay_GDP'],$_POST['profit_GDP'],$_POST['profit_percentage'],$_POST['invoice_date'],$_POST['prostatus']);
 			break;
        case 15:
 		    getCurrencyRate();
@@ -58,6 +58,15 @@ include("../inc/php/encryptDecrypt.php");
 		    break;
 	  case 18:
 			getActivity_edit($_POST['job_code'],$_POST['activity']);
+			break;
+	  case 19:
+			get_total_for_project($_POST['job_code']);
+			break;			
+	  case 20:
+			deleteBudgetactivityReceivables_a($_POST['receivable_id']);
+			break;
+	  case 21:
+			deleteBudgetprojectReceivables_p($_POST['receivable_id']);
 			break;
 		default: 
 			break;
@@ -571,14 +580,13 @@ Where
 		for ($i = 0; $i < count($activity_name1)-1; $i++)
 		{
 			$checkquery="SELECT id FROM budget_receivable WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."' ";
-			
-			 $workflow = mysql_query("Select id From activity Where name = '".$activity_name1[$i]."'");
-               while($row = mysql_fetch_array($workflow)) 
-               {
-                       $activity_id[] = $row['id'];
-                       
-                       
-               }
+			$workflow = mysql_query("Select id From activity Where name = '".$activity_name1[$i]."'");
+while($row = mysql_fetch_array($workflow))
+{
+$activity_id[] = $row['id'];
+
+
+}
 			
        		$result2=mysql_query($checkquery);
        		$num_rows=mysql_num_rows($result2);
@@ -640,6 +648,8 @@ From
   budget_receivable_project
 Where
   budget_receivable_project.project_id = '".$projectid."'
+  And
+			  budget_receivable_project.flag = 0
 ")or die(mysql_error());
 		while($row=mysql_fetch_object($result))
 		{
@@ -673,7 +683,8 @@ From
    activity.id
 Where
  budget_receivable.project_id ='".$projectid."'
-")or die(mysql_error());
+And
+			  budget_receivable.flag = 0")or die(mysql_error());
 		while($row=mysql_fetch_object($result))
 		{
 			$data [] = $row;
@@ -681,15 +692,20 @@ Where
 	   	echo'({"results":'.json_encode($data).'})';
 	}
 
-function insertBudgetDetails($projectid,$ponumber1,$ponumber2,$total_receive_USD,$total_receive_GDP,$total_pay_USD,$total_pay_GDP,$profit_GDP,$profit_percentage,$invoice_date,$prostatus){
+function insertBudgetDetails($projectid,$ponumber1,$ponumber2,$total_receive_USD,$total_receive_GDP,$total_receive_project_USD,$total_receive_project_GDP,$total_pay_USD,$total_pay_GDP,$profit_GDP,$profit_percentage,$invoice_date,$prostatus){
 $checkquery="SELECT id FROM budget_total_detail WHERE project_id='".$projectid."' ";
        		$result2=mysql_query($checkquery);
        		$num_rows=mysql_num_rows($result2);
 			if($num_rows == 1)
-			{
+			    {
+			    	if($prostatus=="")
+									{
+									$prostatus="Current";
+									}
+					
 					
 				
-				$result1 = mysql_query("UPDATE budget_total_detail SET  ponumber1='".$ponumber1."',ponumber2 = '".$ponumber2."', total_receive_usd = '".$total_receive_USD."', total_receive_gdp = '".$total_receive_GDP."', total_pay_usd = '".$total_pay_USD."', total_pay_gdp = '".$total_pay_GDP."', project_profit_gdp='".$profit_GDP."', project_profit_per='".$profit_percentage."', invoice_date='".$invoice_date."', status='".$prostatus."'  WHERE project_id = '".$projectid."'");
+				$result1 = mysql_query("UPDATE budget_total_detail SET  ponumber1='".$ponumber1."',ponumber2 = '".$ponumber2."', total_receive_usd = '".$total_receive_USD."', total_receive_gdp = '".$total_receive_GDP."',total_receive_project_usd='".$total_receive_project_USD."', total_receive_project_gdp='".$total_receive_project_GDP."',total_pay_usd = '".$total_pay_USD."', total_pay_gdp = '".$total_pay_GDP."', project_profit_gdp='".$profit_GDP."', project_profit_per='".$profit_percentage."', invoice_date='".$invoice_date."', status='".$prostatus."'  WHERE project_id = '".$projectid."'");
 				
 				
 				if(!$result1)
@@ -706,8 +722,8 @@ $checkquery="SELECT id FROM budget_total_detail WHERE project_id='".$projectid."
 			
 			else
 			{
-				$result1 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,total_receive_gdp,total_pay_usd,total_pay_gdp,project_profit_gdp,project_profit_per,invoice_date,status)
-                                VALUES ('' ,'".$projectid."', '".$ponumber1."','".$ponumber2."','".$total_receive_USD."',  '".$total_receive_GDP."', '".$total_pay_USD."', '".$total_pay_GDP."', '".$profit_GDP."', '".$profit_percentage."', '', 'Current')");
+				$result1 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,total_receive_gdp,total_receive_project_usd,total_receive_project_gdp,total_pay_usd,total_pay_gdp,project_profit_gdp,project_profit_per,invoice_date,status)
+                                VALUES ('' ,'".$projectid."', '".$ponumber1."','".$ponumber2."','".$total_receive_USD."',  '".$total_receive_GDP."', '".$total_receive_project_USD."','".$total_receive_project_GDP."','".$total_pay_USD."', '".$total_pay_GDP."', '".$profit_GDP."', '".$profit_percentage."', '', 'Current')");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -856,4 +872,104 @@ Where
       	echo(json_encode($result));
 	  
     }
+	
+	
+function get_total_for_project($job_code)
+	{
+		$workflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($workflow)) {
+				
+			$workflowid = $row['workflow'];
+			$projectid = $row['id'];
+			
+		}
+		$result2 = mysql_query("
+		Select
+  budget_receivable_project.project_id ,
+  budget_receivable_project.no_of_unit,
+  budget_receivable_project.rate_usd,
+  budget_receivable_project.rate_gbp,
+  sum(budget_receivable_project.budgeted_usd) as budg_edit_total_receive_USD_p,
+ sum(budget_receivable_project.budgeted_gbp) as budg_edit_total_receive_GBP_p,
+ sum(budget_receivable_project.actual_usd)as edit_total_receive_USD_p,
+  sum(budget_receivable_project.actual_gbp) as edit_total_receive_GBP_p
+From
+  budget_receivable_project
+Where
+ 
+  budget_receivable_project.project_id = '".$projectid."'
+")or die(mysql_error());
+		if(!$result2)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;				
+			}
+       	while($row=mysql_fetch_object($result2))
+	   	{
+			$result ["data"] = $row;
+	  	}
+      	echo(json_encode($result));
+	}
+
+
+
+
+function deleteBudgetactivityReceivables_a($receivable_id)
+{
+		$checkquery="SELECT id FROM budget_receivable WHERE id='".$receivable_id."'";
+		$result1=mysql_query($checkquery);
+		$num_rows=mysql_num_rows($result1);
+		if($num_rows==1){
+				$result1= mysql_query("UPDATE budget_receivable SET flag=1 WHERE id='".$receivable_id."'");
+				
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  'Invalid query: ' . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = 'Deleted successfully';
+				}
+			}
+			else
+			{
+				$result["failure"] = true;
+				$result["message"] =  'Budget Receivable Id does not exist';
+			}
+		
+		echo json_encode($result);
+	}
+function deleteBudgetprojectReceivables_p($receivable_id)
+{
+		$checkquery="SELECT id FROM budget_receivable_project WHERE id='".$receivable_id."'";
+		$result1=mysql_query($checkquery);
+		$num_rows=mysql_num_rows($result1);
+		if($num_rows==1){
+				$result1= mysql_query("UPDATE budget_receivable_project SET flag=1 WHERE id='".$receivable_id."'");
+				
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  'Invalid query: ' . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = 'Deleted successfully';
+				}
+			}
+			else
+			{
+				$result["failure"] = true;
+				$result["message"] =  'Budget Receivable Id does not exist';
+			}
+		
+		echo json_encode($result);
+	}
 	?>

@@ -249,6 +249,49 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 					tooltip: 'Delete',
 					handler: function(grid, rowIndex, colIndex) {
 						
+						var grid = this.up('grid');
+					if (grid)
+					 {
+						var edit_Job_code=Ext.getCmp('edit_Job_code').getValue();
+						
+						//alert(edit_Job_code);
+						//var workflow=Ext.getCmp('budgetHeader_workflow').getValue();
+						var rec = grid.getStore().getAt(rowIndex);
+						Ext.Msg.confirm('Remove Record '+rec.get('activity_name')+' ?',+rec.get('activity_name'), function (button)
+						 {
+							if (button == 'yes')
+							 {
+								var id=rec.get('budgetReceive_id');
+								
+								//alert(id);
+								var conn = new Ext.data.Connection();
+								conn.request(
+								 	
+								{
+									 url: 'service/budget.php',
+								 	method: 'POST',
+								 	params : {action:20,receivable_id:id},
+								 	success:function(response)
+								 	{
+								 		obj = Ext.JSON.decode(response.responseText);
+								 		Ext.Msg.alert('Successfully Deleted', obj.message);
+								 		var grid3=Ext.getCmp('editaccountReceiveGrid_a');
+								 		grid3.getStore().load(
+								 		{
+								 			params:{action:13,job_code:edit_Job_code}
+								 		});
+								 	},
+								 	failure:function(response)
+								 	{
+										 obj = Ext.JSON.decode(response.responseText);
+								 		Ext.Msg.alert('Deletion Failed !', obj.message);
+								 	}
+								 });
+
+							}
+						});
+					}
+						
 				
 					}
 				},

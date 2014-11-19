@@ -43,6 +43,7 @@ hidden:true,
 },
 		
 		{
+			xtype: 'textfield',
 			id:'editbudgetHeader_workflow',
 			hidden:true,
 		},

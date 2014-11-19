@@ -366,32 +366,59 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					tooltip: 'Delete',
 					handler: function(grid, rowIndex, colIndex) {
 						
-						var grid = this.up('grid');
-					if (grid) {
-						var projectID=Ext.getCmp('budgetHeader_projectID').getValue(); 
-					var workflow=Ext.getCmp('budgetHeader_workflow').getValue(); 
-						       	var rec = grid.getStore().getAt(rowIndex);
-						Ext.Msg.confirm('Remove Record '+rec.get('stage')+' ?',+rec.get('stage'), function (button) {
-							if (button == 'yes') {
+						
+
+					var grid = this.up('grid');
+					if (grid)
+					{
+						
+						var edit_Job_code=Ext.getCmp('edit_Job_code').getValue();
+						var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
+						
+						//alert(projectID);
+						
+						var workflow=Ext.getCmp('editbudgetHeader_workflow').getValue();
+						//alert(workflow);
+						
+						var rec = grid.getStore().getAt(rowIndex);
+						Ext.Msg.confirm('Remove Record '+rec.get('activityid')+' ?',+rec.get('activityid'), function (button) 
+						{
+							if (button == 'yes') 
+							{
 								var id=rec.get('budgetExpense_id');
+								
+								//alert(id);
+								
 								var conn = new Ext.data.Connection();
-								conn.request({
+								conn.request(
+								{
 									url: 'service/budget.php',
 									method: 'POST',
-									params : {action:5,budgetid:id},
-									success:function(response){
-										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										  var grid3=Ext.getCmp('accountPayableGrid');
-									grid3.getStore().load({params:{action:1,workflowid:workflow,projectid:projectID}});
+									params : 
+									{
+										action:5,
+										budgetid:id
 									},
-									failure:function(response){
+									success: function(response) 
+									{
 										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Deletion Failed !', obj.message); 
+										Ext.Msg.alert('Successfully Deleted', obj.message);
+										var grid3=Ext.getCmp('editaccountPayableGrid');
+										grid3.getStore().load(
+										{
+											params: 
+											{
+												action:1,job_code:edit_Job_code
+											}
+										});
+									},
+									failure: function(response) 
+									{
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Deletion Failed !', obj.message);
 									}
 								});
-								
-								
+
 							}
 						});
 					}

@@ -46,10 +46,20 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                                 if(val==1){
                                 	Ext.getCmp('editaccountReceiveGrid_a').hide();
                                 	Ext.getCmp('editaccountReceiveGrid').show();
+                                	Ext.getCmp('edit_total_receive_USD').hide();
+                                	Ext.getCmp('edit_total_receive_GBP').hide();
+                                	Ext.getCmp('edit_total_receive_USD_p').show();
+                                		Ext.getCmp('edit_total_receive_GBP_p').show();
+                                	
                                 }
                                 else{
                                 		Ext.getCmp('editaccountReceiveGrid').hide();
                                 		Ext.getCmp('editaccountReceiveGrid_a').show();
+                                		Ext.getCmp('edit_total_receive_USD_p').hide();
+                                		Ext.getCmp('edit_total_receive_GBP_p').hide();
+                                		Ext.getCmp('edit_total_receive_USD').show();
+                                	Ext.getCmp('edit_total_receive_GBP').show();
+                                		
                                 }
                                } 
                         }
@@ -79,6 +89,25 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
 								{
 								xtype:'textfield',
 								  id:'edit_total_receive_GBP',
+								  fieldLabel: 'Total Receivable amount in £',
+								  x:500,
+								  y:260,
+								  //width:400,
+								  labelWidth: 180,
+								},
+								
+								{
+								xtype:'textfield',
+								  id:'edit_total_receive_USD_p',
+								  fieldLabel: 'Total Receivable amount in $',
+								  x:5,
+								  y:260,
+								 // width:400,
+								  labelWidth: 180,
+								},
+								{
+								xtype:'textfield',
+								  id:'edit_total_receive_GBP_p',
 								  fieldLabel: 'Total Receivable amount in £',
 								  x:500,
 								  y:260,
