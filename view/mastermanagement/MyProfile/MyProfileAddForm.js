@@ -38,7 +38,7 @@ Ext.define('MyDesktop.view.mastermanagement.MyProfile.MyProfileAddForm' , {
 	},
 	frame:true,
 	height:270,
-	//requires:['MyDesktop.store.State'],
+	
 	title:'My Profile',
 	defaults: {
 		labelWidth: 120,
