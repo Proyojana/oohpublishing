@@ -96,13 +96,13 @@ Ext.define('MyDesktop.view.MasterWindow', {
 						contentPanel9.doLayout(); 
 					}
 					break;
-				case 'myprofile' :
+			/*	case 'myprofile' :
 					if (myprofile == "undefined") {
 						myprofile = Ext.create('MyDesktop.view.mastermanagement.MyProfile.MyProfileTabPanel');
 						contentPanel9.add(myprofile);
 						contentPanel9.doLayout(); 
 					}
-					break;	
+					break;	*/
 					
 			}
 			contentPanel9.layout.setActiveItem(selectedNode[0].data.id+'tab');
