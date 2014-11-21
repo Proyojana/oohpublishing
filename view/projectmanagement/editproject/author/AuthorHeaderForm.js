@@ -56,7 +56,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorHeaderForm
 		x:510,
 		y:0,
 		width:220,
-	
+		
 		//labelWidth: 60,
 	},
 	{
@@ -69,6 +69,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorHeaderForm
 		
 	},
 	]
+	
+	
 	
 	this.callParent();
 }

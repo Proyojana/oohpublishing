@@ -82,6 +82,10 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 			hidden:true,
 		},
 		{
+			dataIndex:'job_code',
+			hidden:true,
+		},
+		{
 			header: 'Author/Editor',
 			dataIndex: 'author',
 			align: 'center',
@@ -155,10 +159,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 				handler:function(grid, rowIndex, colIndex)
 				{
 				//	alert("delete");
-				var job_code=Ext.getCmp('job_code').getValue(); 
+				var rec = grid.getStore().getAt(rowIndex);
+					console.log(AuthorEditJobCode.value);
 						var grid = this.up('grid');
 					if (grid) {
-						var rec = grid.getStore().getAt(rowIndex);
+						
 						Ext.Msg.confirm('Remove Record '+rec.get('name')+' ?',+rec.get('name'), function (button) {
 							if (button == 'yes') {
 								var id=rec.get('id');

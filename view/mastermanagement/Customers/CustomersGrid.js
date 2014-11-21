@@ -13,8 +13,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 	
 	id:'customersgrid',
 	initComponent: function() {
-		
-var ci = Ext.create('MyDesktop.store.Customers');
+	var ci = Ext.create('MyDesktop.store.Customers');
 		ci.load({
 			params: {
 				start: 0,

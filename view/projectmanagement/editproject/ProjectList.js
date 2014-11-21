@@ -229,7 +229,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						y:460,
 						handler:function(){
 							/** For Author Grid Save**/
-				    var job_code=Ext.getCmp('editauthHeader_Job').getValue(); 
 					var c='';var d='';
 					var e=''; var f='';
 					var g=''; var h='';

@@ -224,6 +224,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		text: 'Add',
 		id:'customer_basicadd',
 		iconCls: 'button_add',
+		hidden: false,
 		x:340,
 		y:270,
 		width:75,
