@@ -229,6 +229,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						y:460,
 						handler:function(){
 							/** For Author Grid Save**/
+							var job_code=Ext.getCmp('editauthHeader_Job').getValue();
 					var c='';var d='';
 					var e=''; var f='';
 					var g=''; var h='';
@@ -256,6 +257,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
+							
+							var grid3=Ext.getCmp('edit_author_grid');
+							grid3.getStore().load({
+									params: {
+									     action:2,
+									     job_code:job_code
+									         }
+									        });
+							
 						}
 					});
 					}
@@ -443,12 +453,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 			     x:400,
 				 y:760,
 				handler:function(){
-				 var val = Ext.getCmp('receive2').getValue();
+				// var val = Ext.getCmp('receive2').getValue();
 				// alert(val);
 	        	
-	        	 if(val==1)
-	        	 {
-	        	var job_code=Ext.getCmp('edit_Job_code').getValue();
+	        	
+	        	/*var job_code=Ext.getCmp('edit_Job_code').getValue();
 				var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
 					 
 					 var no_of_unit = '';  
@@ -485,13 +494,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 
 						}
 						
-					});
+					});*/
 					
 					
 					
 					
-					}else
-					{
+					
+					
 						
 					 var job_code=Ext.getCmp('edit_Job_code').getValue();
 					 var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();  
@@ -511,7 +520,10 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					 myStore.each(function(rec) {
 						
 						type=1;
-						activity_name=activity_name+rec.get('activity_name')+',';
+						//activity_name=activity_name+rec.get('activity_name')+',';
+						activity_name=activity_name+rec.get('activityid')+',';
+						//alert(activity_name);
+						//alert(activity_id);
 						no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
 						rate_USD=rate_USD+rec.get('rate_USD')+',';
 						rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
@@ -534,7 +546,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					
 												
 						
-					}
+					
 					
 					//Payable
 					
@@ -769,8 +781,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					grid1.getStore().load({	params : {action : 1,job_code : job_code,}});
 					var grid4=Ext.getCmp('editaccountReceiveGrid_a');
 					grid4.getStore().load({params:{action:13,job_code:job_code}});
-					var grid4=Ext.getCmp('editaccountReceiveGrid');
-					grid4.getStore().load({params:{action:12,job_code:job_code}});
+					/*var grid4=Ext.getCmp('editaccountReceiveGrid');
+					grid4.getStore().load({params:{action:12,job_code:job_code}});*/
 			//new changes		
 				/*var calc=Ext.getCmp('editaccountReceiveGrid');
 					calc.getStore().load({
@@ -790,6 +802,20 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							Ext.Msg.alert("Load failed", action.result.errorMessage);
 						}
 					});
+					
+					
+					var currentForm = Ext.getCmp('editBudgetForm');
+currentForm.getForm().load({
+url : 'service/budget.php',
+params : {
+action : 22,
+job_code:job_code
+},
+failure : function(form, action) {
+Ext.Msg.alert("Load failed", action.result.errorMessage);
+}
+});
+
 					
 				//new changes ends	
 				}

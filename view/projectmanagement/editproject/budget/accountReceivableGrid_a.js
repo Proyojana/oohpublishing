@@ -48,8 +48,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                 {
                     dataIndex: 'budgetReceive_id',
                     hidden: true,
+                },
+                {
+                	 dataIndex: 'activity_name',
+                    hidden: true,
+                	
                 }, {
-                    dataIndex: 'activity_name',
+                    dataIndex: 'activityid',
                     text: 'Activity',
                     flex: 1,
                     align: 'center',
@@ -128,6 +133,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 
                     renderer: function(value) {
                         var index = activity.find('product_id', value);
+                       // alert(value);
                         if (index != -1) {
                             return activity.getAt(index).data.product_name;
                         }

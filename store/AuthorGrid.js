@@ -1,6 +1,6 @@
  Ext.define('MyDesktop.store.AuthorGrid', {
         extend:'Ext.data.Store',
-		pageSize: 8,
+		pageSize: 20,
         model: 'MyDesktop.model.AuthorGrid',
         proxy: {
     		type:'ajax',
@@ -8,7 +8,7 @@
 			actionMethods: {
 		     read: 'POST'
     		},
-    			extraParams:{action:1},
+    			extraParams:{action:2},
     		reader: {
 				type:'json',
 	        	root: 'results',

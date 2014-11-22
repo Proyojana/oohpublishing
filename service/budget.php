@@ -68,6 +68,9 @@ include("../inc/php/encryptDecrypt.php");
 	  case 21:
 			deleteBudgetprojectReceivables_p($_POST['receivable_id']);
 			break;
+	 case 22:
+			get_total_for_activity($_POST['job_code']);
+			break;
 		default: 
 			break;
 	}
@@ -569,6 +572,7 @@ Where
 			
 		// }*/
 		    $activity_name1 = explode(',',$activity_name);
+		    //$activity_id1 = explode(',',$activity_id);
 		    $no_of_unit1 = explode(',',$no_of_unit);
 			$rate_USD1 = explode(',',$rate_USD);
 			$rate_GBP1 = explode(',',$rate_GBP);
@@ -580,20 +584,21 @@ Where
 		for ($i = 0; $i < count($activity_name1)-1; $i++)
 		{
 			$checkquery="SELECT id FROM budget_receivable WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."' ";
-			$workflow = mysql_query("Select id From activity Where name = '".$activity_name1[$i]."'");
+			echo "activity id".$activity_name1[$i];
+			/*$workflow = mysql_query("Select id From activity Where name = '".$activity_name1[$i]."'");
 while($row = mysql_fetch_array($workflow))
 {
 $activity_id[] = $row['id'];
 
 
-}
+}*/
 			
        		$result2=mysql_query($checkquery);
        		$num_rows=mysql_num_rows($result2);
 			if($num_rows == 1)
 			{
 				
-				$result1 = mysql_query("UPDATE budget_receivable SET  no_of_unit='".$no_of_unit1[$i]."', rate_usd = '".$rate_USD1[$i]."', rate_gbp = '".$rate_GBP1[$i]."', budgeted_usd = '".$budgeted_USD1[$i]."', budgeted_gbp= '".$budgeted_GBP1[$i]."', actual_usd = '".$actual_amount_USD1[$i]."',actual_gbp='".$actual_amount_GBP1[$i]."' WHERE project_id='".$projectID."'And activity='".$activity_id[$i]."'");
+				$result1 = mysql_query("UPDATE budget_receivable SET  no_of_unit='".$no_of_unit1[$i]."', rate_usd = '".$rate_USD1[$i]."', rate_gbp = '".$rate_GBP1[$i]."', budgeted_usd = '".$budgeted_USD1[$i]."', budgeted_gbp= '".$budgeted_GBP1[$i]."', actual_usd = '".$actual_amount_USD1[$i]."',actual_gbp='".$actual_amount_GBP1[$i]."' WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."'");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -676,7 +681,8 @@ function getReceivable_a($job_code)
   budget_receivable.budgeted_gbp As budgeted_amount_GBP,
  budget_receivable.actual_usd As actual_amount_USD,
  budget_receivable.actual_gbp As actual_amount_GBP,
- activity.name as activity_name
+ activity.name as activity_name,
+ activity.id as activityid
 From
  budget_receivable Inner Join
  activity On budget_receivable.activity =
@@ -971,5 +977,45 @@ function deleteBudgetprojectReceivables_p($receivable_id)
 			}
 		
 		echo json_encode($result);
+	}
+
+	
+	
+function get_total_for_activity($job_code)
+	{
+		$workflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($workflow)) {
+				
+			$workflowid = $row['workflow'];
+			$projectid = $row['id'];
+			
+		}
+		$result2 = mysql_query("
+		Select
+  sum(budget_receivable.budgeted_usd),
+  sum(budget_receivable.budgeted_gbp),
+  sum(budget_receivable.actual_usd) as edit_total_receive_USD,
+  sum(budget_receivable.actual_gbp) as edit_total_receive_GBP,
+  budget_receivable.project_id
+From
+  budget_receivable
+Where
+  
+  budget_receivable.project_id = '".$projectid."'
+")or die(mysql_error());
+		if(!$result2)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;				
+			}
+       	while($row=mysql_fetch_object($result2))
+	   	{
+			$result ["data"] = $row;
+	  	}
+      	echo(json_encode($result));
 	}
 	?>

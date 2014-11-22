@@ -80,6 +80,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 		{
 			dataIndex:'id',
 			hidden:true,
+			editor: { xtype:'textfield'
+					}
 		},
 		{
 			dataIndex:'job_code',
@@ -158,12 +160,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 				tooltip: 'Delete',
 				handler:function(grid, rowIndex, colIndex)
 				{
-				//	alert("delete");
-				var rec = grid.getStore().getAt(rowIndex);
-					console.log(AuthorEditJobCode.value);
-						var grid = this.up('grid');
+				var grid = this.up('grid');
 					if (grid) {
-						
+						var projectid=Ext.getCmp('editauthHeader_projectID').getValue();
+					//	alert(projectid);
+					
+						var job_code=Ext.getCmp('editauthHeader_Job').getValue();
+						       	var rec = grid.getStore().getAt(rowIndex);
 						Ext.Msg.confirm('Remove Record '+rec.get('name')+' ?',+rec.get('name'), function (button) {
 							if (button == 'yes') {
 								var id=rec.get('id');
@@ -175,8 +178,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										var grid3=Ext.getCmp('new_author_grid');
-									grid3.getStore().load({params:{action:2,job_code:job_code}});
+											var grid1 = Ext.getCmp('edit_author_grid');
+					                             grid1.getStore().load({
+						                                           params : {
+							                                       action : 2,
+							                                       job_code : job_code
+						                                               }
+					                                                 });
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

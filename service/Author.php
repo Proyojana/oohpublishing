@@ -76,7 +76,7 @@ $id=$_SESSION['id'];
 		else
 		{
 
-			$result1 = mysql_query ("INSERT INTO author(id,job_code,author,name,address,email,phone,see_proof,no_proof,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$job_code."','".$author[$i]."','".$name[$i]."','".$address[$i]."','".$email[$i]."','".$phone[$i]."','".$sproof[$i]."','".$nproof[$i]."','".$id."',now(),'','','')");		
+			$result1 = mysql_query ("INSERT INTO author(id,job_code,author,name,address,email,phone,see_proof,no_proof,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$job_code."','".$author[$i]."','".$name[$i]."','".$address[$i]."','".$email[$i]."','".$phone[$i]."','".$sproof[$i]."','".$nproof[$i]."','".$id[$i]."',now(),'','','')");		
 		
 		if(!$result1)
 			{

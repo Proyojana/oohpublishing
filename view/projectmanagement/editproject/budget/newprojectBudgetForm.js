@@ -18,8 +18,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
     },
     frame: true,
 
-    requires: ['MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHeaderForm', 'MyDesktop.view.projectmanagement.editproject.budget.editaccountPayableGrid', 'MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid_a',
-        'MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid'
+    requires: ['MyDesktop.view.projectmanagement.newprojectBudget.newprojectBudgetHeaderForm', 'MyDesktop.view.projectmanagement.editproject.budget.editaccountPayableGrid', 'MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid_a'/*,
+        'MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid'*/
     ],
     defaults: {
         labelWidth: 140,
@@ -30,7 +30,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
 
         this.items = [
 
-            {
+            /*{
                 xtype: 'combo',
                 x: 10,
                 y: 10,
@@ -72,7 +72,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                 x: 5,
                 y: 50,
                 height: 200,
-            }, {
+            },*/ {
                 xtype: 'editaccountReceiveGrid_a',
                 x: 5,
                 y: 50,
@@ -95,7 +95,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                 labelWidth: 180,
             },
 
-            {
+            /*{
                 xtype: 'textfield',
                 id: 'edit_total_receive_USD_p',
                 fieldLabel: 'Total Receivable amount in $',
@@ -111,7 +111,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                 y: 260,
                 //width:400,
                 labelWidth: 180,
-            }, {
+            },*/ {
                 xtype: 'editaccountPayableGrid',
                 x: 5,
                 y: 300,
