@@ -176,7 +176,7 @@ Where
 		else
 		{
 
-			$result1 = mysql_query ("INSERT INTO contributor(id,job_code,chap_num,contrib_name,email,see_proof,proof_sent,proof_back,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$job_code."','".$cnum[$i]."','".$name[$i]."','".$email[$i]."','".$sproof[$i]."','".$psent[$i]."','".$pback[$i]."','".$id."',now(),'','','')");		
+			$result1 = mysql_query ("INSERT INTO contributor(id,job_code,chap_num,contrib_name,email,see_proof,proof_sent,proof_back,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$job_code."','".$cnum[$i]."','".$name[$i]."','".$email[$i]."','".$sproof[$i]."','".$psent[$i]."','".$pback[$i]."','".$id[$i]."',now(),'','','')");		
 		
 		if(!$result1)
 			{

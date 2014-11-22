@@ -701,12 +701,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								var profit_GDP = Ext.getCmp("edit_profit_GBP").getValue();
 								var profit_percentage = Ext.getCmp("edit_profit_percentage").getValue();
 								//new changes
-								var total_receive_project_USD = Ext.getCmp("edit_total_receive_USD_p").getValue();
+								var total_receive_project_USD = 0;
 								//alert(total_receive_project_USD);
-								var total_receive_project_GDP = Ext.getCmp("edit_total_receive_GBP_p").getValue();
+								var total_receive_project_GDP = 0;
 								//alert(total_receive_project_GDP);
 
-								if(val==1) {
+
 
 									var conn = new Ext.data.Connection();
 
@@ -735,37 +735,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 											win.close();
 										}
 									});
-
-								} else {
-
-									var conn = new Ext.data.Connection();
-
-									conn.request({
-										url: 'service/budget.php',
-										method: 'POST',
-										params : {
-											action:14,
-											projectID:project_id,
-											ponumber1:ponumber1,
-											ponumber2:ponumber2,
-											total_receive_USD:total_receive_USD,
-											total_receive_GDP:total_receive_GDP,
-											total_receive_project_USD:total_receive_project_USD,
-											total_receive_project_GDP:total_receive_project_GDP,
-											total_pay_USD:total_pay_USD,
-											total_pay_GDP:total_pay_GDP,
-											profit_GDP:profit_GDP,
-											profit_percentage:profit_percentage,
-											invoice_date:invoice_date,
-											prostatus:prostatus
-										},
-										success: function(response) {
-											obj = Ext.JSON.decode(response.responseText);
-											Ext.Msg.alert('Message', obj.message);
-											win.close();
-										}
-									});
-								}
+								
 								//ends here
 							}
 						},{
