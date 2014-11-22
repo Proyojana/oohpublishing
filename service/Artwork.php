@@ -19,7 +19,14 @@ include("../inc/php/encryptDecrypt.php");
 		    break;
 	   	case 5:
 			getAddArtworkDetails($_POST['job_code']);
-			break;	
+			break;
+		case 6:
+			insertArtworkTotal($_POST['project_id'],$_POST['total_cost'],$_POST['total_redraws'],$_POST['total_relabel'],$_POST['total_final']);
+			break;
+		case 7 :
+		    selectArtworkTotal($_POST['project_id']);
+		    break;
+	    	
 		 default:  
 			break;
 	}
@@ -245,4 +252,84 @@ function deleteArtwork($id)
 	  	}
       	echo(json_encode($result));
     }
+	function insertArtworkTotal($project_id,$total_cost,$total_redraws,$total_relabel,$total_final)
+    {
+		$checkquery="SELECT id FROM artwork_total_detail WHERE project_id='".$project_id."'";
+		$result1=mysql_query($checkquery);
+		$num_rows=mysql_num_rows($result1);
+		
+		if($num_rows == 1)
+			{
+				
+				$result1 = mysql_query("UPDATE artwork_total_detail SET  total_cost='".$total_cost."',total_redraws = '".$total_redraws."', total_relabel = '".$total_relabel."', total_final = '".$total_final."' WHERE project_id='".$project_id."'");
+				if(!$result1)
+				{
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+				}
+				else
+				{
+					$result["success"] = true;
+					$result["message"] = "Artwork total saved successfully";
+				}
+		  }
+		else
+			
+		{
+			$result1 = mysql_query ("INSERT INTO artwork_total_detail(id,project_id,total_cost,total_redraws,total_relabel,total_final) VALUES('','".$project_id."','".$total_cost."','".$total_redraws."','".$total_relabel."','".$total_final."')");
+			if(!$result1)
+			{
+				$result["failure"] = true;
+				$result["message"] =  "Invalid query: " . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				$result["message"] = "Artwork Inserted successfully";
+			}
+		}
+		
+		echo json_encode($result);
+	}
+
+function selectArtworkTotal($projectid) 
+{
+	
+		$result2 = mysql_query("
+		Select
+  artwork_total_detail.id,
+  artwork_total_detail.project_id,
+  artwork_total_detail.total_cost as total_cost,
+  artwork_total_detail.total_redraws as total_redraws,
+  artwork_total_detail.total_relabel as total_relabel,
+  artwork_total_detail.total_final as total_final
+From
+  artwork_total_detail
+Where
+  
+ 
+  artwork_total_detail.project_id = '".$projectid."'
+")or die(mysql_error());
+		if(!$result2)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;				
+			}
+       	while($row=mysql_fetch_object($result2))
+	   	{
+			$result ["data"] = $row;
+	  	}
+      	echo(json_encode($result));		
+	
+}
+	
+
+				
+			
+		
+	
 	?>

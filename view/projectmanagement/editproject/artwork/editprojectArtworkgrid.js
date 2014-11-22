@@ -223,7 +223,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 
 		];
 		this.bbar = Ext.create('Ext.PagingToolbar', {
-			store : this.store,
+			 	store : this.store,
 			items:[
 			{
                                xtype : 'button',
@@ -361,50 +361,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 
 				}
 			},*/
-			{
-						xtype:'textfield',
-						fieldLabel:'Total Cost',
-						id:'total_cost',
-						labelWidth:80,
-						width:200,
-						x:320,
-						y:10,
-					   
-						
-					},
-					{
-						xtype:'textfield',
-						fieldLabel:'Total Redraws',
-						labelWidth:80,
-						id:'total_redraws',
-						width:200,
-						x:420,
-						y:10,
-					    
-						
-					},
-					{
-						xtype:'textfield',
-						fieldLabel:'Total Relabel',
-						labelWidth:80,
-						width:200,
-						id:'total_relabel',
-						x:520,
-						y:10,
-					 
-						
-					},
-					{
-						xtype:'textfield',
-						fieldLabel:'Total Final',
-						labelWidth:80,
-						width:180,
-						id:'total_final',
-						x:620,
-						y:10,
-					  
-						
-					},
+			
 			{
 				
 			}

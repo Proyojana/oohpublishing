@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
             },
 	frame:true,
 	
-	width:1100,
+	width:1150,
 	height:95,
 	title:'Header Data',
 	defaults: {
