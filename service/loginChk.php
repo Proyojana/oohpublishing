@@ -53,7 +53,7 @@ $loginPassword = isset($_POST["loginPassword"]) ? $_POST["loginPassword"] : "";
 	$result["role"]=$user_role;
 	//$result["user_is_admin"]=$user_is_admin;
 	$result["code"]=$user_no;
-	$result["errors"]["reason"] = "Please check a password";
+	$result["errors"]["reason"] = "Incorrect password - Please try again.";
 	}//if end
 	
 	else

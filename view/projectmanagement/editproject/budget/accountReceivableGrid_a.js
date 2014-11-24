@@ -223,6 +223,21 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                         align: 'center',
                         editor: {
                             xtype: 'textfield',
+							listeners: {
+                            change: function(field, newValue, oldValue) {
+								var calcOldValue = parseFloat(oldValue);
+								var calcNewValue = parseFloat(newValue);
+								if(oldValue === null || oldValue === undefined || oldValue === '' || oldValue === 'NaN' || oldValue === NaN)
+									calcOldValue = 0;
+								if(newValue === null || newValue === undefined || newValue === '' || newValue === 'NaN' || newValue === NaN)
+								{
+									calcNewValue = 0;
+									field.setValue('0.00');
+								}
+								var newUsdValue = parseFloat(Ext.getCmp('edit_total_receive_USD').getValue())- parseFloat(calcOldValue) + parseFloat(calcNewValue);
+								Ext.getCmp('edit_total_receive_USD').setValue(newUsdValue);
+                            }
+                        }
                         }
 
 
@@ -232,6 +247,23 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                         align: 'center',
                         editor: {
                             xtype: 'textfield',
+							listeners: {
+                            change: function(field, newValue, oldValue) {
+								var calcOldValue = parseFloat(oldValue);
+								var calcNewValue = parseFloat(newValue);
+								if(oldValue === null || oldValue === undefined || oldValue === '' || oldValue === 'NaN' || oldValue === NaN)
+									calcOldValue = 0;
+								if(newValue === null || newValue === undefined || newValue === '' || newValue === 'NaN' || newValue === NaN)
+								{
+									calcNewValue = 0;
+									field.setValue('0.00');
+								}
+								var newGbpValue = parseFloat(Ext.getCmp('edit_total_receive_GBP').getValue())- parseFloat(calcOldValue) + parseFloat(calcNewValue);
+								Ext.getCmp('edit_total_receive_GBP').setValue(newGbpValue);
+                            }
+
+                            }
+                        }
                         }
                     }]
                 },
