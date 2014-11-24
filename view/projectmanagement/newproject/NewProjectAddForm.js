@@ -50,6 +50,8 @@ var times = Ext.create('Ext.data.Store', {
             {"note":"Book endfoot"}
         ]
     });
+    
+    
 Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     extend: 'Ext.form.Panel',
     title:'Create New Project',
@@ -60,6 +62,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
               type: 'absolute'
             },
 	frame:true,
+	autoScroll:true,
 	height:245,
 	requires:['MyDesktop.store.Customers','MyDesktop.store.Workflow','MyDesktop.store.Customers_team'],
   
@@ -537,13 +540,68 @@ t.setValue(value1);
 			}
 
     	},
+    	
+    	{
+        // Fieldset in Column 1 - collapsible via toggle button
+       xtype:'fieldset',
+        layout: 'hbox',
+        title: 'Author/Editor Details',
+             x:0,
+			y:420,
+			layout:'absolute',
+			 defaults: {
+        labelWidth: 150,
+    },
+			height:70,
+        items :[
+    	{
+    		xtype:'textfield',
+			id:'author_create',
+			fieldLabel: 'Author/Editor',
+			align:'center',
+			x:0,
+			y:0,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			readOnly: true,
+			value:'Main Contact',
+			hidden:true
+			},
+    	{
+    		xtype:'textfield',
+			id:'author_name',
+			fieldLabel: 'Author Name',
+			align:'center',
+			x:0,
+			y:0,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			},
+			{
+    		xtype:'textfield',
+			id:'author_email',
+			fieldLabel: 'Email',
+			align:'center',
+			x:350,
+			y:0,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			vtype: 'email',
+			},
+    	
+		
+    	]
+    },
 		{
 			xtype:'button',
     	    text:'Save + Next',
     	    iconCls: 'button_add',
     	    id:'add_team',
 			x:450,
-			y:480,
+			y:540,
 			width:110,
 			handler: function (){			
 				//Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
@@ -581,6 +639,11 @@ t.setValue(value1);
 				var project_note= Ext.getCmp('project_note').getValue();
 				
 				var print_run_confirmed= Ext.getCmp('print_run_confirmed').getValue();
+				
+				//Author Details
+				var author_create= Ext.getCmp('author_create').getValue();
+				var author_name= Ext.getCmp('author_name').getValue();
+				var author_email= Ext.getCmp('author_email').getValue();
 				
 				if(currentForm.getForm().isValid() == true)
 				{
@@ -685,9 +748,34 @@ t.setValue(value1);
 					
 					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectauthorformTab');
 						
+					
 										
 						}
 					});
+					
+					
+					
+						var author_id='';
+					var author_phone='';
+					var author_see_proof='';
+					var author_no_proof='';
+					var author_address='';
+					
+					var conn = new Ext.data.Connection();
+					
+					conn.request({
+						url: 'service/Author.php',
+						method: 'POST',
+						params : {action:1,id:author_id,job_code:job_code,author:author_create,name:author_name,address:author_address,email:author_email,phone:author_phone,see_proof:author_see_proof,no_proof:author_no_proof},
+						success:function(response){
+						obj = Ext.JSON.decode(response.responseText);
+						Ext.Msg.alert('Message', obj.message);
+					}
+					});
+					
+
+
+					
 					}
 					else{
 						Ext.MessageBox.alert('Please fill HB ISBN or PB ISBN.');
@@ -710,7 +798,7 @@ t.setValue(value1);
 		  	iconCls: 'button_reset',
 		  	id:'reset_team',
 			x:600,
-			y:480,
+			y:540,
 			width:110,
 			handler: function (){
 				var currentForm = this.up('newprojectaddform');
@@ -729,14 +817,14 @@ xtype:'label',
 text:'Note:',
 
 x:10,
-y:450,
+y:500,
 },
 {
 
 html:'<span style="background-color:#dfe8f5; color:red;font-weight:bold">*</span>',
 border:false,
 x:10,
-y:470,
+y:520,
 width:8,
 
 },
@@ -744,21 +832,21 @@ width:8,
 xtype:'label',
 text:'Mandatory fields',
 x:20,
-y:470,
+y:520,
 
 },
 {
 html:'<span style="background-color:#dfe8f5; color:blue;font-weight:bold">*</span>',
 border:false,
 x:10,
-y:495,
+y:545,
 width:8,
 },
 {
 xtype:'label',
 text:'Both are not mandatory but should fill one atleast.',
 x:20,
-y:495,
+y:545,
 
 }]
 	  
