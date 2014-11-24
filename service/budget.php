@@ -584,7 +584,7 @@ Where
 		for ($i = 0; $i < count($activity_name1)-1; $i++)
 		{
 			$checkquery="SELECT id FROM budget_receivable WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."' ";
-			echo "activity id".$activity_name1[$i];
+			//echo "activity id".$activity_name1[$i];
 			/*$workflow = mysql_query("Select id From activity Where name = '".$activity_name1[$i]."'");
 while($row = mysql_fetch_array($workflow))
 {

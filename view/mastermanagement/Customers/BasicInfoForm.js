@@ -19,6 +19,13 @@ function autoLoadCode()
 							
 							});
     };
+     Ext.apply(Ext.form.VTypes, {
+            'phone': function () {
+                var re = /^[0-9]{0,20}$/;  
+                return function (v) { return re.test(v); };
+            }(), 'phoneText': 'Must be Numeric Values ',
+          
+        });
 Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 	extend: 'Ext.form.Panel',
 	alias : 'widget.custbasicinfoform',
@@ -121,7 +128,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		width:250,
 		
 		name: 'city',
-		afterLabelTextTpl: required,allowBlank: false,
+	//	afterLabelTextTpl: required,allowBlank: false,
 	//	margin:'-20 0 0 400',
       },
       {
@@ -132,7 +139,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		name: 'state',
 		
 		width:250,
-		afterLabelTextTpl: required,allowBlank: false,
+		//afterLabelTextTpl: required,allowBlank: false,
 		//margin:'5 0 0 0'
       },
       {
@@ -144,7 +151,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		y:120,
 		name: 'country',
 		//margin:'5 0 0 0'
-		afterLabelTextTpl: required,allowBlank: false,
+		//afterLabelTextTpl: required,allowBlank: false,
       },
     /*  {
       //	xtype:'numberfield',
@@ -160,7 +167,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		
       },*/
       {
-      	xtype:'numberfield',
+      		xtype:'textfield',
       	hideTrigger:true,
       	id:'custbasicphone',
 		fieldLabel: 'Phone',
@@ -169,7 +176,8 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		x:340,
 		y:150,
 		name: 'basicphone',
-		afterLabelTextTpl: required,allowBlank: false,
+		//afterLabelTextTpl: required,allowBlank: false,
+			vtype: 'phone',
 		//margin:'5 0 0 0'
 		
       },

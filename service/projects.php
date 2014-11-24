@@ -18,7 +18,7 @@ $id=$_SESSION['id'];
 			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['project_author'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id);	
 			break;
 		case 5:
-			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['project_start_date'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note'],$_POST['ebook_isbn']);
+			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['project_start_date'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note'],$_POST['ebook_isbn'],$_POST['author_create'],$_POST['author_name'],$_POST['author_email']);
 			break;
 		case 6:
 			BulkDelete($_POST['id']);
@@ -236,7 +236,7 @@ Where
 		echo json_encode($result);
 	}
 	
-	function insertProjectMaster($job_code,$title,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$project_start_date,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed,$project_note,$ebook_isbn)
+	function insertProjectMaster($job_code,$title,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$project_start_date,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed,$project_note,$ebook_isbn,$author_create,$author_name,$author_email)
 		
     {
     	
@@ -253,8 +253,20 @@ Where
 			autoinsertschedule($codegen,$project_start_date,$workflow);			
 			$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='projects'");
 			
-			
-			
+			$checkquery="SELECT id FROM project_title WHERE job_code='".$job_code."'";
+			$result1=mysql_query($checkquery);
+			//$project_id=0;
+			while($row = mysql_fetch_array($result1))
+			{
+                $project_id = $row['id'];
+
+                     }
+        insertBudgetTotal($project_id);                     
+		autoinsertbudget($project_id,$workflow);
+		insertAuthor($job_code,$author_create,$author_name,$author_email);
+		 
+			//echo "project id=".$project_id;
+			//echo "work flow id=".$workflow;
 			
 /** mail function
  			$to = "durairajgowri13@gmail.com";
@@ -825,4 +837,79 @@ Where
 		
 		
 	}
+
+
+//insert budget receivable  
+function autoinsertbudget($project_id,$workflow)
+	{
+		
+		$getworkflowstages = mysql_query("Select
+ 
+ 
+ 
+  stages.activity,
+  
+  stages.ratecard_USD,
+  stages.ratecard_GBP
+From
+  stages
+Where
+  stages.workflow_id = '".$workflow."'
+Group By
+ 
+  stages.activity");
+		while($row = mysql_fetch_array($getworkflowstages))
+		{
+			$activity = $row['activity'];
+			$ratecard_USD = $row['ratecard_USD'];
+			$ratecard_GBP = $row['ratecard_GBP'];
+			
+		
+			$budget_receivable = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity, no_of_unit, rate_usd, rate_gbp, budgeted_usd, budgeted_gbp, actual_usd, actual_gbp,created_by,created_on,modified_by,modified_on,flag)
+                                VALUES ('','".$project_id."','".$activity."','','".$ratecard_USD."','".$ratecard_GBP."','','','','','','','','','')");
+			
+			
+			$budget_expense = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,vendor ,no_of_unit,rate_USD,rate_GBP,budgeted_amount_USD,budgeted_amount_GBP,acual_amount_USD ,actual_amount_GBP,created_by,created_on,modified_by,modified_on,flag)
+                                VALUES ('' ,'".$project_id."', '','".$activity."','','',  '',  '',  '','',  '',  '',  '', '','', '0000-00-00 00:00:00',  '')");
+		}
+		
+		
+	}
+
+//insert budget total
+function insertBudgetTotal($project_id)
+{
+$result2 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,total_receive_gdp,total_receive_project_usd,total_receive_project_gdp,total_pay_usd,total_pay_gdp,project_profit_gdp,project_profit_per,invoice_date,status)
+VALUES ('' ,'".$project_id."', '','','', '', '','','', '', '', '', '', 'Current')");
+if(!$result2)
+{
+$result["failure"] = true;
+$result["message"] = "Invalid query: " . mysql_error();
+}
+else
+{
+$result["success"] = true;
+$result["message"] = "Inserted successfully";
+}
+}
+
+
+//insert author
+
+function insertAuthor($job_code,$author_create,$author_name,$author_email)
+{
+	$result2 = mysql_query("INSERT INTO author(id,job_code,author,name,address,email,phone,see_proof,no_proof,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$job_code."','".$author_create."','".$author_name."','','".$author_email."','','','','',now(),'','','')");
+	if(!$result2) 
+	{
+		$result["failure"] = true;
+		$result["message"] = "Invalid query: " . mysql_error();
+	}
+	else
+	{
+		$result["success"] = true;
+		$result["message"] = "Inserted successfully";
+	}
+}
+
+
 ?>

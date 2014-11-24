@@ -6,6 +6,14 @@ var per = Ext.create('Ext.data.Store', {
             {"per_name":"Miss"}
         ]
     });
+     Ext.apply(Ext.form.VTypes, {
+            'phone': function () {
+                var re = /^[0-9]{0,20}$/;  
+                return function (v) { return re.test(v); };
+            }(), 'phoneText': 'Must be Numeric Values ',
+          
+        });    
+
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 	extend: 'Ext.form.Panel',
@@ -84,16 +92,18 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 		afterLabelTextTpl: required,allowBlank: false,
 	},
 { 
-		xtype:'numberfield',
+		xtype:'textfield',
 		hideTrigger:true,
 
 		id:'contctphone',
 		fieldLabel: 'Phone',
 		name: 'contctphone',
+		vtype: 'phone',
 		afterLabelTextTpl: required,
 		allowBlank: false,
 		x:150,
 		y:100,
+		
 		//margin:'-25 0 0 400',
 		width:270
 	},

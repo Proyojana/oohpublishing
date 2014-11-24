@@ -262,7 +262,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 								Ext.getCmp('edit_total_receive_GBP').setValue(newGbpValue);
                             }
 
-                            }
+                            
                         }
                         }
                     }]

@@ -1,4 +1,12 @@
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
+ Ext.apply(Ext.form.VTypes, {
+            'phone': function () {
+                var re = /^[0-9]{0,20}$/;  
+                return function (v) { return re.test(v); };
+            }(), 'phoneText': 'Must be Numeric Values ',
+          
+        });    
+
 Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 	extend: 'Ext.form.Panel',
 	alias : 'widget.teamform',
@@ -55,7 +63,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 		//margin:'5 0 0 0'
       },
       { 
-      	xtype:'numberfield',
+      	xtype:'textfield',
 		hideTrigger:true,
       	id:'teamphone',
 		fieldLabel: 'Phone',
@@ -64,6 +72,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 		x:150,
 		y:130,
 		name: 'teamphone',
+		vtype: 'phone',
 		//margin:'5 0 0 0'
 		
       },

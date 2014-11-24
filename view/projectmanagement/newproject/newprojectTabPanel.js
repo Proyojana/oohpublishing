@@ -20,7 +20,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.newprojectTabPanel',{
 					},*/
 					
                     items: [{xtype:'newprojectaddform'},
-                    {
+                    /*{
                     	id:'newprojectauthorformTab',
                     	xtype:'newprojectauthorform'
                     },
@@ -44,5 +44,5 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.newprojectTabPanel',{
                     {
                     	  id:'newprojectartworkformTab',
                           xtype:'newprojectArtworkform'
-                    }]
+                    }*/]
 	});

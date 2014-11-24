@@ -6,6 +6,13 @@ var per = Ext.create('Ext.data.Store', {
             {"per_name":"Miss"}
         ]
     });
+       Ext.apply(Ext.form.VTypes, {
+            'phone': function () {
+                var re = /^[0-9]{0,20}$/;  
+                return function (v) { return re.test(v); };
+            }(), 'phoneText': 'Must be Numeric Values ',
+          
+        });
 var required = '<span style="color:red;font-weight:bold" data-qtip="Required">*</span>';
 var service = Ext.create('MyDesktop.store.Service');
 		service.load({
@@ -128,8 +135,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
      {
       	id:'basiccity',
 		fieldLabel: 'City',
-		afterLabelTextTpl: required,
-		allowBlank: false,
+		//afterLabelTextTpl: required,
+		//allowBlank: false,
 		x:10,
 		y:120,
 		width:250,
@@ -140,8 +147,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
       {
       	id:'basicstate',
 		fieldLabel: 'Country/State',
-		afterLabelTextTpl: required,	
-		allowBlank: false,		
+	//	afterLabelTextTpl: required,	
+		//allowBlank: false,		
 		x:340,
 		y:120,
 		name: 'state',
@@ -177,17 +184,18 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		
       },
       { 
-      	xtype:'numberfield',
+      	xtype:'textfield',
 		hideTrigger:true,
       	id:'basicphone',
 		fieldLabel: 'Phone',
-		afterLabelTextTpl: required,
-		allowBlank: false,
+		//afterLabelTextTpl: required,
+		//allowBlank: false,
 		width:250,
 		
 		x:340,
 		y:150,
 		name: 'basicphone',
+		vtype: 'phone',
 		//margin:'5 0 0 0'
 		
       },

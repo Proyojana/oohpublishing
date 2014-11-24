@@ -74,12 +74,12 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
      	 afterrender: function(){
      	 //	alert("listen");
      	 	autoReload();
-     	    Ext.getCmp('newprojectauthorformTab').setDisabled(true);
+     	   /* Ext.getCmp('newprojectauthorformTab').setDisabled(true);
 			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
 			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
 			Ext.getCmp('newprojectteamformTab').setDisabled(true);
 			Ext.getCmp('newprojectnotesformTab').setDisabled(true);
-			Ext.getCmp('newprojectartworkformTab').setDisabled(true);
+			Ext.getCmp('newprojectartworkformTab').setDisabled(true);*/
      	}},
      	
 	initComponent:function(){
@@ -644,6 +644,11 @@ t.setValue(value1);
 				var author_create= Ext.getCmp('author_create').getValue();
 				var author_name= Ext.getCmp('author_name').getValue();
 				var author_email= Ext.getCmp('author_email').getValue();
+				var author_id='';
+					var author_phone='';
+					var author_see_proof='';
+					var author_no_proof='';
+					var author_address='';
 				
 				if(currentForm.getForm().isValid() == true)
 				{
@@ -657,7 +662,8 @@ t.setValue(value1);
 							project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,client_deadline:client_deadline,
 							agreed_deadline:agreed_deadline,project_start_date:project_start_date,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
 							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,word_count_indexing:word_count_indexing,
-							cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed,project_note:project_note,ebook_isbn:ebook_isbn},
+							cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed,project_note:project_note,ebook_isbn:ebook_isbn,
+							author_create:author_create,author_name:author_name,author_email:author_email},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -753,27 +759,6 @@ t.setValue(value1);
 						}
 					});
 					
-					
-					
-						var author_id='';
-					var author_phone='';
-					var author_see_proof='';
-					var author_no_proof='';
-					var author_address='';
-					
-					var conn = new Ext.data.Connection();
-					
-					conn.request({
-						url: 'service/Author.php',
-						method: 'POST',
-						params : {action:1,id:author_id,job_code:job_code,author:author_create,name:author_name,address:author_address,email:author_email,phone:author_phone,see_proof:author_see_proof,no_proof:author_no_proof},
-						success:function(response){
-						obj = Ext.JSON.decode(response.responseText);
-						Ext.Msg.alert('Message', obj.message);
-					}
-					});
-					
-
 
 					
 					}
