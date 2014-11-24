@@ -505,11 +505,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							x:400,
 							y:760,
 							handler: function() {
-								var val = Ext.getCmp('receive2').getValue();
+								//var val = Ext.getCmp('receive2').getValue();
 								// alert(val);
 
-								if(val==1) {
-									var job_code=Ext.getCmp('edit_Job_code').getValue();
+							
+									/*var job_code=Ext.getCmp('edit_Job_code').getValue();
 									var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
 									var budgetReceive_id=Ext.getCmp('budgetReceive_id').getValue();
 
@@ -566,9 +566,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 											});
 
 										}
-									});
+									});*/
 
-								} else {
 
 									var job_code=Ext.getCmp('edit_Job_code').getValue();
 									var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
@@ -618,8 +617,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 											Ext.Msg.alert('Message', obj.message);
 										}
 									});
-
-								}
+								
 
 								//Payable
 
@@ -876,13 +874,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							job_code:job_code
 						}
 					});
-					var grid4=Ext.getCmp('editaccountReceiveGrid');
+					/*var grid4=Ext.getCmp('editaccountReceiveGrid');
 					grid4.getStore().load({
 						params: {
 							action:12,
 							job_code:job_code
 						}
-					});
+					});*/
 					//new changes
 					/*var calc=Ext.getCmp('editaccountReceiveGrid');
 					calc.getStore().load({
