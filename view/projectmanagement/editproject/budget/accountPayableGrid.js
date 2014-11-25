@@ -10,7 +10,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 	
 	alias:'widget.editaccountPayableGrid',
 	closeAction: 'hide',
-	width:1100,
+	width:1085,
 	//selModel:sm,
 	requires:['MyDesktop.store.Budget'],
 	id:'editaccountPayableGrid',

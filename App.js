@@ -56,7 +56,7 @@ if(role==1){
                     
                     { name: 'Masters', iconCls: 'masters-shortcut', module: 'master-win',val:'left',   setLoading:true, }, 
                       { name: 'Projects', iconCls: 'projects', module: 'project-win',val:'left', mask:"waiting",},
-                   { name: 'Reports', iconCls: 'reportsmain', module: 'budgets-win',val:'left' ,   waitMsg:'Sending data...',},
+                  // { name: 'Reports', iconCls: 'reportsmain', module: 'budgets-win',val:'left' ,   waitMsg:'Sending data...',},
                     
                   
                 ]

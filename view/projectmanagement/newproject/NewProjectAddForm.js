@@ -74,18 +74,11 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
      	 afterrender: function(){
      	 //	alert("listen");
      	 	autoReload();
-     	   /* Ext.getCmp('newprojectauthorformTab').setDisabled(true);
-			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
-			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
-			Ext.getCmp('newprojectteamformTab').setDisabled(true);
-			Ext.getCmp('newprojectnotesformTab').setDisabled(true);
-			Ext.getCmp('newprojectartworkformTab').setDisabled(true);*/
+     	  
      	}},
      	
 	initComponent:function(){
-	/*	var ci = Ext.create('MyDesktop.store.State');
-		ci.load({params:{action: 7}});
-	    ci.loadPage(1);*/
+	
 	   	var client = Ext.create('MyDesktop.store.Customers');
 		client.load({params:{action: 1}});
 		 var team = Ext.create('MyDesktop.store.Customers_team');
@@ -529,13 +522,9 @@ t.setValue(value1);
 			change : function() {
 			//var currentForm = this.up('newprojectaddform');
 			var workflowid = Ext.getCmp('project_workflow').getValue();
-		//	alert(workflowid);
+		
 			
-			//team.load({params:{action:6,project_workflow:project_workflow}});
-			//workflow.load({params:{action:8,clientId:clientId}});
 			
-			var grid3=Ext.getCmp('newprojectSchedulegrid');
-			grid3.getStore().load({params:{action:2,workflowid:workflowid}});
 			}
 			}
 
@@ -597,7 +586,7 @@ t.setValue(value1);
     },
 		{
 			xtype:'button',
-    	    text:'Save + Next',
+    	    text:'Save',
     	    iconCls: 'button_add',
     	    id:'add_team',
 			x:450,
@@ -667,94 +656,9 @@ t.setValue(value1);
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							
-					Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
-					Ext.getCmp('newprojectbudgetformTab').setDisabled(false);
-					Ext.getCmp('newprojectscheduleformTab').setDisabled(false);	
-					Ext.getCmp('newprojectteamformTab').setDisabled(false);
-					Ext.getCmp('newprojectnotesformTab').setDisabled(false);
-					Ext.getCmp('newprojectartworkformTab').setDisabled(false);
-                	 /****load data in Author header form*****/
-                	var currentHeaderForm = Ext.getCmp('newprojectAuthorHeaderForm');
-						currentHeaderForm.getForm().load({
-   								 url: 'service/Author.php',
-							     params: {
-        						 	action:8,job_code:job_code
-							    },
-							      failure: function(form, action){
-						        Ext.Msg.alert("Load failed", action.result.errorMessage);
-    							}
-							   
-							   
-						});
-						 /****load data in Budget header form*****/
-					var currentForm = Ext.getCmp('newprojectBudgetHeaderForm');
-                	currentForm.getForm().load({
-   								 url: 'service/budget.php',
-							     params: {
-        						 	action:2,job_code:job_code
-							    },
-							      failure: function(form, action){
-						        Ext.Msg.alert("Load failed", action.result.errorMessage);
-    							}
-							   
-							   
-						});
-					var grid3=Ext.getCmp('accountPayableGrid');
-									grid3.getStore().load({params:{action:1,job_code:job_code}});
-					var grid4=Ext.getCmp('accountReceiveGrid_a');
-									grid4.getStore().load({params:{action:10,job_code:job_code}});
-					var grid3=Ext.getCmp('new_author_grid');
-									grid3.getStore().load({params:{action:2,job_code:job_code}});
-						/***load data in Schedule header form*****/
-						var workflow_id= Ext.getCmp('project_workflow').getValue();
-						var currentHeaderForm = Ext.getCmp('newprojectScheduleHeaderForm');
-                	 currentHeaderForm.getForm().load({
-   								 url: 'service/schedule.php',
-							     params: {
-        						 	action:1,job_code:job_code
-							    },
-							      failure: function(form, action){
-						        Ext.Msg.alert("Load failed", action.result.errorMessage);
-    							}
-							   	});
-					var grid3=Ext.getCmp('newprojectSchedulegrid');
-			        grid3.getStore().load({params:{action:2,workflowid:workflow_id}});
-					/****load data in Team header form*****/			
-						var currentHeaderForm = Ext.getCmp('newprojectTeamHeaderForm');
-							currentHeaderForm.getForm().load({
-								url: 'service/projects.php',
-								params: {
-									action:16,
-									job_code:job_code
-								},
-								
-							});
-					//load data in Notes header form
-                       	var currentHeaderForm = Ext.getCmp('newprojectNotesHeaderForm');
-                	    currentHeaderForm.getForm().load({
-   								 url: 'service/notes.php',
-							     params: {
-        						 	action:5,job_code:job_code
-							    },
-							      failure: function(form, action){
-						        Ext.Msg.alert("Load failed", action.result.errorMessage);
-    							}
-						});
-						//load data in Artwork header form
-					 var currentHeaderForm = Ext.getCmp('createprojectArtworkHeaderForm');
-							currentHeaderForm.getForm().load({
-								url: 'service/Artwork.php',
-								params: {
-									action:5,
-									job_code:job_code
-								},
-								
-							});
-					
-					Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectauthorformTab');
-						
-					
+								currentForm.getForm().reset();
+								autoReload();
+																		
 										
 						}
 					});
@@ -788,13 +692,7 @@ t.setValue(value1);
 			handler: function (){
 				var currentForm = this.up('newprojectaddform');
 				currentForm.getForm().reset();
-				autoReload();
-			Ext.getCmp('newprojectauthorformTab').setDisabled(true);
-			Ext.getCmp('newprojectbudgetformTab').setDisabled(true);
-			Ext.getCmp('newprojectscheduleformTab').setDisabled(true);
-			Ext.getCmp('newprojectteamformTab').setDisabled(true);
-			Ext.getCmp('newprojectnotesformTab').setDisabled(true);
-			Ext.getCmp('newprojectartworkformTab').setDisabled(true);
+				autoReload();		
 			}
 	  	},
 	  	{

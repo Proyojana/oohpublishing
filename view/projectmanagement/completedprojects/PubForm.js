@@ -6,7 +6,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PubForm' ,
     margin: '10 10 10 10',
 	
 	frame:true,
-	requires:['MyDesktop.view.projectmanagement.completedprojects.PublisherGrid','MyDesktop.view.projectmanagement.completedprojects.Author','MyDesktop.view.projectmanagement.completedprojects.budgetGrid','MyDesktop.view.projectmanagement.completedprojects.AddChargesGrid','MyDesktop.view.projectmanagement.completedprojects.scheduleGrid','MyDesktop.view.projectmanagement.completedprojects.ContribGrid','MyDesktop.view.projectmanagement.completedprojects.NotesGrid','MyDesktop.view.projectmanagement.completedprojects.details','MyDesktop.view.projectmanagement.completedprojects.scheduleForm'],
+	requires:['MyDesktop.view.projectmanagement.completedprojects.PublisherGrid','MyDesktop.view.projectmanagement.completedprojects.Author','MyDesktop.view.projectmanagement.completedprojects.budgetGrid','MyDesktop.view.projectmanagement.completedprojects.completedprojectArtworkgrid','MyDesktop.view.projectmanagement.completedprojects.scheduleGrid','MyDesktop.view.projectmanagement.completedprojects.ContribGrid','MyDesktop.view.projectmanagement.completedprojects.NotesGrid','MyDesktop.view.projectmanagement.completedprojects.details','MyDesktop.view.projectmanagement.completedprojects.scheduleForm','MyDesktop.view.projectmanagement.completedprojects.accountReceivableGrid_a'],
     title:'Completed Projects',
     defaults: 
     {
@@ -69,8 +69,12 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PubForm' ,
 				xtype:'budgetgridCP'
 			},
 			{
+				xtype:'completed_editaccountReceiveGrid_a'
+				
+			},						
+			{
 				///iconCls: 'personalinfo',
-				xtype:'addchargesgridCP'
+				xtype:'completeprojectArtworkgrid'
 			},
 			]
 			

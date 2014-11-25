@@ -3,14 +3,14 @@ var sm = Ext.create('Ext.selection.CheckboxModel', {
 });
 var encode = false;
 
-Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid_a', {
+Ext.define('MyDesktop.view.projectmanagement.currentprojects.accountReceivableGrid_a', {
     extend: 'Ext.grid.Panel',
-    title: 'Budget Accounts Receivables',
-    alias: 'widget.editaccountReceiveGrid_a',
+    title: 'Budget Receivables',
+    alias: 'widget.current_editaccountReceiveGrid_a',
     closeAction: 'hide',
-    width: 1085,
+    width: 1100,
     requires: ['MyDesktop.model.Receivable_a'],
-    id: 'editaccountReceiveGrid_a',
+    id: 'current_editaccountReceiveGrid_a',
     plugins: [
         Ext.create('Ext.grid.plugin.CellEditing', {
             clicksToEdit: 1
@@ -334,7 +334,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 
         this.bbar = Ext.create('Ext.PagingToolbar', {
             store: this.store,
-            items: [{
+            items: [/*{
                     xtype: 'button',
                     text: 'Insert New Row',
                     pressed: true,
@@ -383,7 +383,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                         });
 
                     }
-                },
+                },*/
 
             ]
         });

@@ -9,7 +9,7 @@ Ext.define('MyDesktop.view.mastermanagement.currentprojects.budgetForm' ,{
 	
 	frame:true,
 	requires:['MyDesktop.view.projectmanagement.currentprojects.budgetGrid','MyDesktop.view.projectmanagement.currentprojects.budgetaddform','MyDesktop.view.projectmanagement.currentprojects.budgetorderform'],
-   title:'Budget',
+   title:'Budget Payables',
     defaults: {
         
         labelWidth: 70,

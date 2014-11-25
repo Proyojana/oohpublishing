@@ -191,7 +191,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 					var rec = grid.getStore().getAt(rowIndex);
 					var project_id = rec.get('pro_id');
 					var job_code = rec.get('pro_code');
-					console.log(job_code);
+					
 					var currentForm = Ext.getCmp('editprojectaddform');
 					currentForm.getForm().load({
 						url : 'service/EditProjects.php',
@@ -505,68 +505,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							x:400,
 							y:760,
 							handler: function() {
-								//var val = Ext.getCmp('receive2').getValue();
-								// alert(val);
-
-							
-									/*var job_code=Ext.getCmp('edit_Job_code').getValue();
-									var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
-									var budgetReceive_id=Ext.getCmp('budgetReceive_id').getValue();
-
-									var no_of_unit = '';
-									var rate_USD = '';
-									var rate_GBP= '';
-									var budgeted_amount_USD= '';
-									var budgeted_amount_GBP = '';
-									var actual_amount_USD = '';
-									var actual_amount_GBP = '';
-									var grid=Ext.getCmp('editaccountReceiveGrid');
-
-									var total_USD=0;
-									var total_GBP=0;
-									var myStore = Ext.getCmp('editaccountReceiveGrid').getStore();
-									myStore.each( function(rec) {
-										no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
-										rate_USD=rate_USD+rec.get('rate_USD')+',';
-										rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
-										budgeted_amount_USD=budgeted_amount_USD+rec.get('budgeted_amount_USD')+',';
-
-										budgeted_amount_GBP=budgeted_amount_GBP+rec.get('budgeted_amount_GBP')+',';
-										actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
-										actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
-									});
-									var conn = new Ext.data.Connection();
-									conn.request({
-										url: 'service/budget.php',
-										method: 'POST',
-										params : {
-											action:6,
-											budgetReceive_id:budgetReceive_id,
-											job_code:job_code,
-											projectID:projectID,
-											rate_USD:rate_USD,
-											rate_GBP:rate_GBP,
-											no_of_unit:no_of_unit,
-											budgeted_USD:budgeted_amount_USD,
-											budgeted_GBP:budgeted_amount_GBP,
-											actual_amount_USD:actual_amount_USD,
-											actual_amount_GBP:actual_amount_GBP,
-											total_USD:total_USD,
-											total_GBP:total_GBP
-										},
-										success: function(response) {
-											obj = Ext.JSON.decode(response.responseText);
-											Ext.Msg.alert('Message', obj.message);
-											var grid3=Ext.getCmp('editaccountReceiveGrid');
-											grid3.getStore().load({
-												params: {
-													action:12,
-													job_code:job_code
-												}
-											});
-
-										}
-									});*/
+								
 
 
 									var job_code=Ext.getCmp('edit_Job_code').getValue();

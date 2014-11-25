@@ -177,6 +177,23 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PublisherGrid', {
 						}
 					});
 					
+						var gridNotes=Ext.getCmp('completeprojectArtworkgrid');
+					gridNotes.getStore().load({
+						params: {
+							action:3,
+							project_id:project_id
+						}
+					});
+					
+										
+							var gridNotes=Ext.getCmp('completed_editaccountReceiveGrid_a');
+					gridNotes.getStore().load({
+						params: {
+							action:13,
+							job_code:job_code
+						}
+					});
+					
 					/*end*/
 					
 				}

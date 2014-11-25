@@ -10,7 +10,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.budgetGrid', {
 	
 	//height:200,
 	requires:['MyDesktop.store.Budget'],
-	title:'Budget',
+	title:'Budget Payables',
 	id:'budgetgridCP',
 	initComponent: function() {
 		

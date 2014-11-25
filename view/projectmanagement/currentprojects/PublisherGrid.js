@@ -17,7 +17,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 	'MyDesktop.view.projectmanagement.currentprojects.Author','MyDesktop.view.projectmanagement.currentprojects.ContribGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionTitleInfoGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionScheduleGrid',
 	'MyDesktop.view.projectmanagement.currentprojects.ProductionTeamGrid', 'MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGrid','MyDesktop.view.projectmanagement.currentprojects.TypesetterInfoGrid',
 	'MyDesktop.view.projectmanagement.currentprojects.TypesetterAuthorGrid', 'MyDesktop.view.projectmanagement.currentproject.scheduleGrid','MyDesktop.view.projectmanagement.currentprojects.NotesGrid','MyDesktop.view.projectmanagement.currentprojects.Production_html_form',
-	'MyDesktop.view.projectmanagement.currentprojects.Production_pdf_form','MyDesktop.view.projectmanagement.currentprojects.Typesetting_html_form','MyDesktop.view.projectmanagement.currentprojects.Typesetting_pdf_form' ],
+	'MyDesktop.view.projectmanagement.currentprojects.Production_pdf_form','MyDesktop.view.projectmanagement.currentprojects.Typesetting_html_form','MyDesktop.view.projectmanagement.currentprojects.Typesetting_pdf_form','MyDesktop.view.projectmanagement.currentprojects.currentprojectArtworkgrid','MyDesktop.view.projectmanagement.currentprojects.accountReceivableGrid_a' ],
 	id:'publishergrid',
 	initComponent: function() {
 		var customers = Ext.create('MyDesktop.store.Reports');
@@ -171,6 +171,24 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 							project_id:project_id
 						}
 					});
+					
+					var gridNotes=Ext.getCmp('currentprojectArtworkgrid');
+					gridNotes.getStore().load({
+						params: {
+							action:3,
+							project_id:project_id
+						}
+					});
+					
+					var gridNotes=Ext.getCmp('current_editaccountReceiveGrid_a');
+					gridNotes.getStore().load({
+						params: {
+							action:13,
+							job_code:job_code
+						}
+					});
+					
+				
 
 					}
 			},{
