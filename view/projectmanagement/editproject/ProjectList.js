@@ -1256,6 +1256,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									success: function(response) {
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Message', obj.message);
+										
+										var grid1 = Ext.getCmp('editteamgrid');
+										grid1.getStore().load({
+										params : 
+										{
+											action : 12,
+											project_id : project_id,
+										}
+									});
 									}
 								});
 
@@ -1386,7 +1395,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							y:370,
 							width:100,
 							handler: function() {
-								var job_code=Ext.getCmp('job_code').getValue();
+								var job_code=Ext.getCmp('editnotesHeader_Job').getValue();
 								var project_id=Ext.getCmp('editnotesHeader_projectID').getValue();
 
 								var dateresolved='';

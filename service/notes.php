@@ -99,7 +99,7 @@ function insertNotes($notes_id, $project_id, $dateraised, $narrative, $dateresol
 						$result["message"] = "Invalid query: " . mysql_error();
 					} else {
 						$result["success"] = true;
-						$result["message"] = "shedule saved successfully";
+						$result["message"] = "Notes saved successfully";
 					}
 				} else {
 					//	echo 'insert';

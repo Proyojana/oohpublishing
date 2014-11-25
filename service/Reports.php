@@ -425,28 +425,18 @@ Where
 							
 			}
 			
-				$budget=mysql_query("Select
-  budget_expense.stage,
-  budget_expense.unit,
-  budget_expense.actual_units,
-  budget_expense.acual_amount_USD,
-  activity.name
-From
-  budget_expense Inner Join
-  activity On budget_expense.activity =
-    activity.id
-Where
-  budget_expense.project_id = '" . $project_id . "'");
-			while($budget1=mysql_fetch_array($budget))
-			{
-				
-				$bActivity[]= $budget1['name'];
-					$unit[]= $budget1['unit'];
-						$actualUnit[]= $budget1['actual_units'];
-							$actualAmount[]= $budget1['acual_amount_USD']; 
-								$bStage[]= $budget1['stage'];
-							
-			}
+				$budget=mysql_query("Select activity.name, budget_expense.no_of_unit, budget_expense.acual_amount_USD, budget_expense.actual_amount_GBP
+										From budget_expense Inner Join activity On budget_expense.activity = activity.id
+										 Where  budget_expense.project_id= '" . $project_id . "'");
+				while($row=mysql_fetch_array($budget))
+				{
+					
+					$bActivity[]= $row['name'];
+					$actualUnit[]= $row['no_of_unit'];
+					$actual_amount_USD[]= $row['actual_amount_USD']; 
+					$actual_amount_GBP[]= $row['actual_amount_GBP'];
+					
+				}
 			
 		
 ?>
@@ -459,7 +449,7 @@ Where
 	
 	</br>
 	<b>Title Info:</br>
-	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px; page-break-after: always;">	
 	<tr>
 	<td style="padding-left:10px;">Title</td>
 	<td style="padding-left:10px;"><?php echo $pTitle?></td>
@@ -501,19 +491,52 @@ Where
 	<td style="padding-left:10px;"><?php echo $word?></td>
 	</tr>
 	</table>
+	</br>
+	<b>Budget</b>
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;page-break-after: always;">
 	
+	 <tr>
+
+		<td style="padding-left:10px;">
+			Activity
+		</td>
+		<td style="text-align:center">
+			No. of Units 
+		</td>
+		<td style="padding-left:10px;">
+			Actual Amount in USD
+		</td>
+		<td style="text-align:center">
+			Actual Amount in GBP
+		</td>
+	</tr>
+<?php for($i=0;$i<count($bActivity);$i++)
+		{
+			echo "<tr>";
+			echo "<td style='padding-left:10px;'>" .$bActivity[$i]."</td>";
+			echo "<td style='text-align:center'>" .$actualUnit[$i]. "</td>";
+			echo "<td style='padding-left:10px;'>" .$actual_amount_USD[$i]. "</td>";
+			
+			
+			echo "<td style='text-align:center'>" .$actual_amount_GBP[$i]. "</td>";
+			echo "</tr>";
+			
+		}
+		?>
+		
+	</table>
 	</br>
 	<b>Schedule</b>
-	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">	
-	<tr>
+	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px; page-break-after: always;">	
+	<tr >
 		<td style="padding-left:10px;">
 			<b>
-			Activity
+			Stage
 			</b>
 		</td>
 		<td style="padding-left:10px;">
 			<b>
-			Stage
+			Activity
 			</b>
 		</td>
 		<td style="padding-left:10px;">
@@ -540,10 +563,18 @@ Where
 		?>
 		
 	</table>
-	</br>
+	
 	<b>Team</b>
-	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
-		
+	<table width="100%" border="1" style="border-collapse: collapse; margin-bottom:10px;">
+	
+	 <tr>
+
+		<td style="padding-left:10px;">
+			Role
+		</td>
+		<td style="text-align:center">
+			name 
+		</td>
 		<?php for($i=0;$i<count($name);$i++)
 		{
 			echo "<tr>";
@@ -556,41 +587,7 @@ Where
 		?>
 		
 	</table>
-	</br>
-	<b>Budget</b>
-	<table width="100%" border="1" style="border-collapse: collapse;margin-bottom:10px;">
 	
-	<tr>
-		<td style="padding-left:10px;">
-			Activity
-		</td>
-		<td style="padding-left:10px;">
-			Stage
-		</td>
-		<td style="padding-left:10px;">
-			Unit
-		</td>
-		<td style="text-align:center">
-			No. of Units Actual
-		</td>
-		<td style="text-align:center">
-			Actual Amount in $
-		</td>
-	</tr>
-<?php for($i=0;$i<count($bActivity);$i++)
-		{
-			echo "<tr>";
-			echo "<td style='padding-left:10px;'>" .$bActivity[$i]."</td>";
-			echo "<td style='padding-left:10px;'>" .$bStage[$i]. "</td>";
-			echo "<td style='padding-left:10px;'>" .$unit[$i]. "</td>";
-			echo "<td style='text-align:center'>" .$actualUnit[$i]. "</td>";
-			echo "<td style='text-align:center'>" .$actualAmount[$i]. "</td>";
-			echo "</tr>";
-			
-		}
-		?>
-		
-	</table>
 	</table>
 	
 	
@@ -634,7 +631,7 @@ Where
 				$result["message"] = 'Invalid query: ' . mysql_error();
 			} else {
 				$result["success"] = true;
-				$result["message"] = 'Message send sucessfully';
+				$result["message"] = 'Message sent sucessfully';
 			}
 			
 			echo(json_encode($result));

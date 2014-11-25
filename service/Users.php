@@ -408,6 +408,7 @@ Where
 				}
 			}
 			}
+echo json_encode($result);
 	}
 	function getTeam($project_id)
 	{

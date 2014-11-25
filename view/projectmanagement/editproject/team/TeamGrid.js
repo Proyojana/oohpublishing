@@ -118,7 +118,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					align: 'center',
                     flex:1,
 					editor:{
-					 	xtype:'textfield'
+					 	xtype:'textfield',
+					 	vtype:'email',
                         },
                 },
 			];
