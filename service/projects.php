@@ -825,7 +825,7 @@ Where
 			$date = strtotime("+".$daysperstage." day", $date);
 			$newdate = date('Y-m-d', $date);
 			$newresult = mysql_query("Insert into schedule (id, project_id, workflow_id, activity, stage_order, stage, estimated_daysperstage, actual_daysperstage, estimated_start_date, actual_start_date, estimated_end_date, actual_end_date, bufferday, status, created_by, created_on, modified_by, modified_on, flag) 
-			VALUES (NULL, '".$projectid."', '".$workflow."', '".$activity."', '".$stage_order."', '".$stage_name."', '".$daysperstage."', '0', '".$project_start_date."', NULL, '".$newdate."', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0')");
+			VALUES (NULL, '".$projectid."', '".$workflow."', '".$activity."', '".$stage_order."', '".$stage_name."', '".$daysperstage."', '0', '".$project_start_date."', NULL, '".$newdate."', NULL, NULL, NULL, NULL, now(), NULL, NULL, '0')");
 			
 			$date1 = strtotime($newdate);
 			$date1 = strtotime("+1 day", $date);
