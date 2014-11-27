@@ -119,7 +119,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							var grid1=Ext.getCmp('vendorsteamgrid');
-						    grid1.getStore().load({params:{action:3,basicvendorid:basicvendorid}});
+						    grid1.getStore().load({params:{action:3,basicvendorid:basicvendorid}});						     							
+							 Ext.getCmp('vendorsteamgrid').getView().refresh();
+							 autoLoadCode();
 							}
 					});
 					}
@@ -132,7 +134,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 		},
       {
 		xtype:'button',
-		text: 'Edit',
+		text: 'Edit/Save',
 		
 		id:'teameditven',
 		iconCls: 'editClass',
@@ -165,7 +167,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.TeamsInfoForm' , {
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							var grid1=Ext.getCmp('vendorsteamgrid');
-						    grid1.getStore().load({params:{action:3,basicvendorid:basicvendorid}});
+						    grid1.getStore().load({params:{action:3,basicvendorid:basicvendorid}});						 						
+							 Ext.getCmp('vendorsteamgrid').getView().refresh();
+							 autoLoadCode();
 							
 						}
 					});

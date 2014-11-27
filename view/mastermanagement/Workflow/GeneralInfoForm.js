@@ -133,6 +133,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('workflowgrid').getStore().reload();
+							Ext.getCmp('workflowgrid').getView().refresh();
 							autoLoadCode();								
 						}
 					});
@@ -147,7 +148,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 		
 		{
 			xtype: 'button',
-		  	text: 'Edit',
+		  	text: 'Edit/Save',
 		  	iconCls: 'editClass',
 		  	id:'edit_workflow',
 			align:'center',
@@ -177,7 +178,8 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('workflowgrid').getStore().reload();
-																
+							Ext.getCmp('workflowgrid').getView().refresh();
+							autoLoadCode();										
 						}
 					});
 				}

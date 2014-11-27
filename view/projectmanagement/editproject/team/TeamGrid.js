@@ -1,30 +1,29 @@
 var sm = Ext.create('Ext.selection.CheckboxModel',{
            checkOnly:true
 			});
-var role = Ext.create('Ext.data.Store', {
-        fields: ['role'],
-        data : [
-         {"role":"Project Manager"},
-         {"role":"Production Editor"},
-         {"role":"Copy Editor"},
-         {"role":"Proof Reader"},
-         {"role":"Indexer"},
-         {"role":"Typesetter"},
-        ]
-    });
-Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
+var store1 = Ext.create('Ext.data.JsonStore', {
+    fields: ['role_id','role',],
+    data: [{"role_id":"1","role":"Project Manager"},
+    {"role_id":"2","role":"Production Editor"},
+    {"role_id":"3","role":"Copy Editor"},
+    {"role_id":"4","role":"Proof Reader"},
+    {"role_id":"5","role":"Indexer"},
+    {"role_id":"6","role":"Typesetter"},
+    ]});
+    	
+Ext.define('MyDesktop.view.projectmanagement.newproject.team.TeamGrid', {
 	extend:'Ext.grid.Panel',
-	alias:'widget.editteamgrid',
+	alias:'widget.newteamgrid',
 	closeAction: 'hide',
 	selModel:sm,
 	height:250,
-	requires:['MyDesktop.store.Users','MyDesktop.store.Team'],
-	id:'editteamgrid',
+	requires:['MyDesktop.store.ProjectManagers','MyDesktop.store.ProductionEditor','MyDesktop.store.Projects',],
+	id:'newteamgrid',
 	plugins: [
              Ext.create('Ext.grid.plugin.CellEditing', {
                  clicksToEdit: 1,
-                 markDirty: true,
-                 listeners: {
+                  markDirty: true,
+                   listeners: {
                  'edit': function (editor,e) {
                                          var grid = e.grid;
                                                     var record = e.record;
@@ -33,42 +32,29 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
                                    }
                                }
              })        
-             ],
+   ],
 	initComponent: function() {
-		/*var users = Ext.create('MyDesktop.store.Users');
-		users.load({params:{action: 1}});*/
-		//var users = Ext.create('MyDesktop.store.GetVenCntct');
-	//	users.load({params:{action: 1}});
-			var users = Ext.create('MyDesktop.store.GetVenCntct');
-		users.load({
-			params: {
-				start: 0,
-				limit: 8
-			}
-		});
-		var team = Ext.create('MyDesktop.store.Team');
-		team.load({params:{action: 12}});
-		this.store = team,
+		
+		var projectmanager = Ext.create('MyDesktop.store.ProjectManagers');
+		projectmanager.load({params:{action: 8}});
+		
+		var vendor = Ext.create('MyDesktop.store.Vendors');
+		vendor.load({params:{action: 1}});
+	
+		this.store = store1,
 			this.columns = [
 				{
-					dataIndex: 'id',
+					dataIndex: 'role_id',
 					align: 'center',
                     flex:1,
                     hidden:true
  			   },
-			   {
+			    {
 				 dataIndex: 'role',
 				 text: 'Role',
 				 align: 'center',
                  flex:1,
-                 editor:{
-					 	xtype:'combo',
-					 	store: role,
-						queryMode: 'local',
-						displayField: 'role',
-						valueField: 'role',
-						}
-				
+				 
 				},	
 				{
 					dataIndex: 'name',
@@ -78,17 +64,16 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					editor:{
 						//xtype:'textfield'
 					 	xtype:'combo',
-					 	store: users,
-					 	// autoLoad:true,
-						//queryMode: 'local',
-						displayField: 'firstname',
-						valueField: 'firstname',
-						
-						/*listeners: {
-                change: function (field, newValue, oldValue) {
-                	 var grid = this.up().up();
-                     var selModel = grid.getSelectionModel();
-                	 var conn = new Ext.data.Connection();
+					 	store: vendor,
+						queryMode: 'local',
+						displayField: 'name',
+						valueField: 'name',
+						listeners: {
+                /*change: function (field, newValue, oldValue) {
+                	var grid = this.up().up();
+                        // get selection model of the grid  
+                    var selModel = grid.getSelectionModel();
+                		var conn = new Ext.data.Connection();
 					 conn.request({
 					 url: 'service/Users.php',
 					 method: 'POST',
@@ -100,13 +85,13 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					 }
 					 });
                     
-			            }
-			              }	*/
+			            }*/
+			              }	
                         },
-                        renderer: function(value) {
-					var index = users.find('id', value);
+                         renderer: function(value) {
+					var index = vendor.find('id', value);
 					if (index != -1) {
-					return users.getAt(index).data.name;
+					return vendor.getAt(index).data.name;
 					}
 					return value;
 					}
@@ -118,10 +103,10 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					align: 'center',
                     flex:1,
 					editor:{
-					 	xtype:'textfield',
-					 	vtype:'email',
+					 	xtype:'textfield'
                         },
-                },
+
+				},
 			];
 		this.bbar = Ext.create('Ext.PagingToolbar', {  
 
@@ -130,43 +115,24 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
 			items:[
-			{
-                               xtype : 'button',
-                               text : 'Insert New Row',
-                               pressed:true,
-                               x : 500,
-                               y : 10,
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-               						var r = Ext.create('MyDesktop.model.Team', {
-               						id:'',
-                    				role: '',
-                    				name: '',
-                 					email: '',
-                    				
-                    				
-                				});
-                				//store.getCount()-1
-                		       team.insert(team.getCount(), r);
-            				 }                           
-        },
 			/*{
 				xtype:'button',
-				text:'Save',
+				text:'Save + Next',
 				pressed:true,
 				width:100,
 				handler:function(){
-					var project_id=Ext.getCmp('editteamHeader_projectID').getValue(); 
+					var project_id=Ext.getCmp('teamHeader_projectID').getValue(); 
+					var job_code=Ext.getCmp('teamHeader_Job').getValue(); 
 					var role='';
 					var name='';
 					var email='';
-					var myStore = Ext.getCmp('editteamgrid').getStore();
+					var myStore = Ext.getCmp('newteamgrid').getStore();
 					myStore.each(function(rec) {
 						role=role+rec.get('role')+',';
 						name=name+rec.get('name')+',';
 						email=email+rec.get('email')+',';
 						});
+						
 					var conn = new Ext.data.Connection();
 					 conn.request({
 						url: 'service/Users.php',
@@ -174,12 +140,31 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 						params : {action:11,project_id:project_id,role:role,name:name,email:email},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
+							Ext.Msg.alert('Message', obj.message);
+							//Ext.getCmp('newprojectnotesformTab').setDisabled(false);
+							
 						}
 					});
-					
+					var currentHeaderForm = Ext.getCmp('newprojectNotesHeaderForm');
+                	
+                	
+						
+						currentHeaderForm.getForm().load({
+   								 url: 'service/notes.php',
+							     params: {
+        						 	action:5,job_code:job_code
+							    },
+							      failure: function(form, action){
+						        Ext.Msg.alert("Load failed", action.result.errorMessage);
+    							}
+							   
+							   
+						});
+					Ext.getCmp('newprojectnotesformTab').setDisabled(false);
+						Ext.getCmp('newprojecttab').layout.setActiveItem('newprojectnotesformTab');
 				}
-			}*/]
+			}*/
+			]
 			
 						
 		}),

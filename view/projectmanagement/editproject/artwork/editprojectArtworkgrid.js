@@ -202,7 +202,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtw
 									params : {action:4,id:id},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										Ext.Msg.alert('Successfully Deleted', obj.message);
+										
+										Ext.getCmp('editprojectArtworkgrid').getView().refresh(); 
 										var grid3=Ext.getCmp('editprojectArtworkgrid');
 									grid3.getStore().load({params:{action:3,project_id:project_id}});
 									},

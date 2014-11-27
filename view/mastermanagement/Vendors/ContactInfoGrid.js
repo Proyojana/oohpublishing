@@ -160,12 +160,16 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoGrid', {
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
 									var grid1=Ext.getCmp('vendorscontactgrid');
 						grid1.getStore().load({params:{action:1,vendorid:vendorid}});
+						Ext.getCmp('vendorscontactgrid').getStore().reload();
+                        Ext.getCmp('vendorscontactgrid').getView().refresh();
 									},
+									
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Deletion Failed !', obj.message); 
 									}
 								});
+								
 								
 								
 							}

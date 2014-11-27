@@ -296,6 +296,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 													job_code:job_code
 												}
 											});
+											
+											Ext.getCmp('edit_author_grid').getView().refresh(); 
 										}
 									});
 								} else {
@@ -620,6 +622,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 												job_code:job_code
 											}
 										});
+										
+										Ext.getCmp('editaccountPayableGrid').getView().refresh();
 
 									}
 								});
@@ -755,6 +759,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 													success: function(response) {
 														obj = Ext.JSON.decode(response.responseText);
 														Ext.Msg.alert('Message', obj.message);
+														
+														
 														win.close();
 
 													}
@@ -806,6 +812,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							job_code : job_code,
 						}
 					});
+					Ext.getCmp('editaccountPayableGrid').getView().refresh();
 					var grid4=Ext.getCmp('editaccountReceiveGrid_a');
 					grid4.getStore().load({
 						params: {
@@ -813,6 +820,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							job_code:job_code
 						}
 					});
+					Ext.getCmp('editaccountReceiveGrid_a').getView().refresh();
 					/*var grid4=Ext.getCmp('editaccountReceiveGrid');
 					grid4.getStore().load({
 						params: {
@@ -945,6 +953,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 												projectid:projectid
 											}
 										});
+										
+										Ext.getCmp('editprojectSchedulegrid').getView().refresh();
 
 									}
 								});
@@ -1187,6 +1197,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 
 						}
 					});
+					Ext.getCmp('editprojectSchedulegrid').getView().refresh();
 					var currentForm = Ext.getCmp('editprojectScheduleHeaderForm');
 					currentForm.getForm().load({
 						url : 'service/schedule.php',
@@ -1265,6 +1276,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 											project_id : project_id,
 										}
 									});
+										Ext.getCmp('editteamgrid').getView().refresh();
 									}
 								});
 
@@ -1348,6 +1360,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 
 						}
 					});
+					Ext.getCmp('editteamgrid').getView().refresh();
 					var currentForm = Ext.getCmp('TeamHeaderForm');
 					currentForm.getForm().load({
 						url : 'service/Users.php',
@@ -1436,6 +1449,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 												project_id:project_id
 											}
 										});
+										Ext.getCmp('editnotesgrid').getView().refresh();
 
 									}
 								});
@@ -1531,6 +1545,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						},
 
 					});
+					
 
 					var grid3=Ext.getCmp('editnotesgrid');
 					grid3.getStore().load({
@@ -1539,6 +1554,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							project_id:project_id
 						}
 					});
+					Ext.getCmp('editnotesgrid').getView().refresh();
 
 				}
 			},{
@@ -1673,6 +1689,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 												project_id:project_id
 											}
 										});
+										Ext.getCmp('editprojectArtworkgrid').getView().refresh();
 
 									}
 								});

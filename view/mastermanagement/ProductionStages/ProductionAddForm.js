@@ -114,6 +114,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('productiongrid').getStore().reload();
+							Ext.getCmp('productiongrid').getView().refresh();
 						//Ext.getCmp('productiontab').layout.setActiveItem('productiongrid');
 						autoLoadCode();
 										
@@ -130,7 +131,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 		
 		{
 			xtype: 'button',
-		  	text: 'Edit',
+		  	text: 'Edit/Save',
 		  	iconCls: 'editClass',
 		  	id:'edit_production',
 			align:'center',
@@ -158,7 +159,11 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('productiongrid').getStore().reload();
+							
+										Ext.getCmp('productiongrid').getView().refresh(); 
+										autoLoadCode();
 							Ext.getCmp('productiontab').layout.setActiveItem('productiongrid');
+							
 						}
 					});
 				}

@@ -201,6 +201,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 										Ext.Msg.alert('Successfully saved', obj.message); 
 										var grid3=Ext.getCmp('stagesgrid');
 						            grid3.getStore().load({params:{action:1,workflowid:WorkflowId.value}});
+						            Ext.getCmp('stagesgrid').getView().refresh();
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
@@ -234,6 +235,8 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
 										 //var grid3=Ext.getCmp('stagesgrid');
 										 Ext.getCmp('stagesgrid').getStore().reload();
+										  Ext.getCmp('stagesgrid').getView().refresh();
+										 
 										 
 									},
 									failure:function(response){
@@ -321,6 +324,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 										Ext.Msg.alert('Successfully saved', obj.message); 
 										var grid3=Ext.getCmp('stagesgrid');
 										grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
+										  Ext.getCmp('stagesgrid').getView().refresh();
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

@@ -162,6 +162,8 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										
+										Ext.getCmp('custteamgrid').getView().refresh();
 										var grid1=Ext.getCmp('custteamgrid');
 						grid1.getStore().load({params:{action:3,customerid:teams_customerid}});
 									},

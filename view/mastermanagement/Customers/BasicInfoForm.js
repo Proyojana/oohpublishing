@@ -69,6 +69,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		y:10,
 		width:250,
 		afterLabelTextTpl: required,allowBlank: false,
+		readOnly:true,
 	},{
 		id:'custbasicname',
 		fieldLabel: 'Name',
@@ -266,6 +267,8 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('customersgrid').getStore().reload();
+							
+							Ext.getCmp('customersgrid').getView().refresh();
 							autoLoadCode();
 							}
 					});
@@ -279,7 +282,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		},
       {
 		xtype:'button',
-		text: 'Edit',
+		text: 'Edit/Save',
 		
 		id:'customer_basicedit',
 		iconCls: 'editClass',
@@ -318,8 +321,11 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
-							//currentForm.getForm().reset();
+							currentForm.getForm().reset();
 							Ext.getCmp('customersgrid').getStore().reload();
+							
+							Ext.getCmp('customersgrid').getView().refresh();
+							autoLoadCode();
 						}
 					});
 					}

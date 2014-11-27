@@ -14,7 +14,7 @@
 		function getVendorMastercntct()
 	{
  		$num_result = mysql_query ("Select 
-  
+  vendors_contacts.id as vendor_id,
   vendors_contacts.firstname
 From
   vendors_contacts
@@ -23,8 +23,8 @@ WHERE vendors_contacts.flag=0")or die(mysql_error());
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select 
- 
-  vendors_contacts.firstname
+ vendors_contacts.id as vendor_id,
+  vendors_contacts.firstname as vendor_firstname
 From
   vendors_contacts
 WHERE vendors_contacts.flag=0 LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());

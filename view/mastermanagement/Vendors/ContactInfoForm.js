@@ -166,7 +166,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							var grid1=Ext.getCmp('vendorscontactgrid');
-						    grid1.getStore().load({params:{action:1,vendorid:vendorid}});
+						    grid1.getStore().load({params:{action:1,vendorid:vendorid}});						   						
+							Ext.getCmp('vendorscontactgrid').getView().refresh();
+							 autoLoadCode();
 							}
 					});
 					}
@@ -179,7 +181,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 		},
       {
 		xtype:'button',
-		text: 'Edit',
+		text: 'Edit/Save',
 		
 		id:'cntcteditven',
 		iconCls: 'editClass',
@@ -212,7 +214,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							var grid1=Ext.getCmp('vendorscontactgrid');
-						    grid1.getStore().load({params:{action:1,vendorid:vendorid}});
+						    grid1.getStore().load({params:{action:1,vendorid:vendorid}});						    					
+							 Ext.getCmp('vendorscontactgrid').getView().refresh();
+							 autoLoadCode();
 						}
 					});
 					}

@@ -172,12 +172,15 @@ requires : ['MyDesktop.store.Teamvendor'],
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
 										 var grid1=Ext.getCmp('vendorsteamgrid');
 						grid1.getStore().load({params:{action:3,basicvendorid:basicvendorid}});
+						Ext.getCmp('vendorsteamgrid').getStore().reload();
+                                Ext.getCmp('vendorsteamgrid').getView().refresh();
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Deletion Failed !', obj.message); 
 									}
 								});
+								
 								
 								
 							}

@@ -114,7 +114,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionGrid', {
 						Ext.getCmp('reset_production').setVisible(true);
 						
 						Ext.getCmp('productiontab').layout.setActiveItem('productionform');
-						Ext.getCmp('product_code').setReadOnly(false);
+						Ext.getCmp('product_code').setReadOnly(true);
 						Ext.getCmp('product_name').setReadOnly(false);
 						Ext.getCmp('product_description').setReadOnly(false);
 						
@@ -145,6 +145,7 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionGrid', {
 												limit: 50
 											}
 										});
+										Ext.getCmp('productiongrid').getView().refresh(); 
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

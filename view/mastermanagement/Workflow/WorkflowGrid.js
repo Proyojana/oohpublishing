@@ -85,7 +85,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.WorkflowGrid', {
 						
 var grid3=Ext.getCmp('stagesgrid');
 		grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
-						
+				Ext.getCmp('stagesgrid').getView().refresh();		
 						Ext.getCmp('workflow_code').setReadOnly(true);
 						Ext.getCmp('workflow_name').setReadOnly(true);
 						Ext.getCmp('workflow_description').setReadOnly(true);
@@ -126,6 +126,7 @@ var grid3=Ext.getCmp('stagesgrid');
 						
 		var grid3=Ext.getCmp('stagesgrid');
 		grid3.getStore().load({params:{action:1,workflowid:workflow_id}});
+		Ext.getCmp('stagesgrid').getView().refresh();
 						Ext.getCmp('workflow_code').setReadOnly(false);
 						Ext.getCmp('workflow_name').setReadOnly(false);
 						Ext.getCmp('workflow_description').setReadOnly(false);
@@ -159,6 +160,9 @@ var grid3=Ext.getCmp('stagesgrid');
 												limit: 50
 											}
 										});
+										Ext.getCmp('workflowgrid').getStore().reload();
+								        Ext.getCmp('workflowgrid').getView().refresh();
+										
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

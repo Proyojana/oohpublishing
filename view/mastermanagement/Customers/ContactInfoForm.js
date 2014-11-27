@@ -114,8 +114,8 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 		//margin:'-25 0 0 400',
 		width:270,
 		vtype: 'phone',
-		allowBlank: false,
-		afterLabelTextTpl: required,
+		//allowBlank: false,
+		//afterLabelTextTpl: required,
 	},
 	
      {
@@ -171,6 +171,10 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							
+							currentForm.getForm().reset();
+							Ext.getCmp('custcontactgrid').getStore().reload();
+										Ext.getCmp('custcontactgrid').getView().refresh();
+							
 							 var grid3=Ext.getCmp('custcontactgrid');
 						grid3.getStore().load({params:{action:1,id:teams_customerid}});
 							}
@@ -185,7 +189,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 		},
       {
 		xtype:'button',
-		text: 'Edit',
+		text: 'Edit/Save',
 		id:'customersContact_edit',
 		iconCls: 'editClass',
 		x:410,
@@ -215,6 +219,9 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoForm' , {
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
+							currentForm.getForm().reset();
+							Ext.getCmp('custcontactgrid').getStore().reload();
+										Ext.getCmp('custcontactgrid').getView().refresh();
 							 var grid3=Ext.getCmp('custcontactgrid');
 						grid3.getStore().load({params:{action:1,id:teams_customerid}});
 							}

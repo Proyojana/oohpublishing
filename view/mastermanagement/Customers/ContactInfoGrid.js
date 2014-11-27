@@ -152,7 +152,9 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.ContactInfoGrid', {
 									params : {action:3,id:id},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										Ext.Msg.alert('Successfully Deleted', obj.message);
+										
+										Ext.getCmp('custcontactgrid').getView().refresh(); 
 										var grid3=Ext.getCmp('custcontactgrid');
 						              grid3.getStore().load({params:{action:1,id:teams_customerid}});
 									},

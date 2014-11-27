@@ -116,6 +116,9 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamsInfoForm' , {
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
+							currentForm.getForm().reset();
+							Ext.getCmp('custteamgrid').getStore().reload();
+							Ext.getCmp('custteamgrid').getView().refresh();
 							var grid1=Ext.getCmp('custteamgrid');
 						grid1.getStore().load({params:{action:3,customerid:teams_customerid}});
 							}
@@ -130,7 +133,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamsInfoForm' , {
 		},
       {
 		xtype:'button',
-		text: 'Edit',
+		text: 'Edit/Save',
 		id:'custteaminfo_edit',
 		iconCls: 'editClass',
 		x:410,
@@ -156,6 +159,9 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamsInfoForm' , {
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
+							currentForm.getForm().reset();
+							Ext.getCmp('custteamgrid').getStore().reload();
+							Ext.getCmp('custteamgrid').getView().refresh();
 							var grid1=Ext.getCmp('custteamgrid');
 						grid1.getStore().load({params:{action:3,customerid:teams_customerid}});
 						}

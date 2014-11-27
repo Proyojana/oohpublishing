@@ -262,6 +262,7 @@ xtype:'button',
 					Ext.Msg.alert('Message', obj.message); 
 					currentForm.getForm().reset();
 					Ext.getCmp('usersgrid').getStore().reload();
+					Ext.getCmp('usersgrid').getView().refresh();
 					autoLoadCode();
 				}
 				});
@@ -275,7 +276,7 @@ xtype:'button',
 		
 		{
 			xtype: 'button',
-		  	text: 'Edit',
+		  	text: 'Edit/Save',
 		  	iconCls: 'editClass',
 		  	id:'edit_users',
 			align:'center',
@@ -310,6 +311,8 @@ xtype:'button',
 					Ext.Msg.alert('Message', obj.message); 
 					currentForm.getForm().reset();
 					Ext.getCmp('usersgrid').getStore().reload();
+					Ext.getCmp('usersgrid').getView().refresh();
+					autoLoadCode();
 					}
 					});
 					}

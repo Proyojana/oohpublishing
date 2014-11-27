@@ -60,6 +60,7 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 			x:330,
 			y:10,
 			width:320,
+			readOnly:true,
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},{
@@ -112,9 +113,12 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
+							 autoLoadCode();
+							 
 							Ext.getCmp('trolesgrid').getStore().reload();
+							Ext.getCmp('productiongrid').getView().refresh(); 
 						//	Ext.getCmp('citytab').layout.setActiveItem('citygrid');
-							 autoLoadCode();			
+										
 						}
 					});
 				}
@@ -128,7 +132,7 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 		
 		{
 			xtype: 'button',
-		  	text: 'Edit',
+		  	text: 'Edit/Save',
 		  	iconCls: 'editClass',
 		  	id:'edit_roles',
 			align:'center',
@@ -153,8 +157,11 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesAddForm' ,{
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
+							autoLoadCode();	
 							Ext.getCmp('trolesgrid').getStore().reload();
+							Ext.getCmp('productiongrid').getView().refresh(); 
 						//	Ext.getCmp('citytab').layout.setActiveItem('citygrid');
+							
 										
 						}
 					});

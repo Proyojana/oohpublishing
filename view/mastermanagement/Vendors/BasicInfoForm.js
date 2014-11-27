@@ -272,6 +272,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 							Ext.getCmp('Vendors_contactTab').setDisabled(false);
 							Ext.getCmp('Vendors_ratecardgridTab').setDisabled(false);
 							Ext.getCmp('vendorsgrid').getStore().reload();
+							Ext.getCmp('vendorsgrid').getView().refresh();
 							 autoLoadCode();
 							}
 					});
@@ -285,7 +286,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		},
       {
 		xtype:'button',
-		text: 'Edit',
+		text: 'Edit/Save',
 		
 		id:'venedit',
 		iconCls: 'editClass',
@@ -324,7 +325,9 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
-							Ext.getCmp('vendorsgrid').getStore().reload();
+							Ext.getCmp('vendorsgrid').getStore().reload();							
+							Ext.getCmp('vendorsgrid').getView().refresh();
+							 autoLoadCode();
 						}
 					});
 					}

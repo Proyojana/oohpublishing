@@ -177,7 +177,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 									params : {action:5,id:id},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										Ext.Msg.alert('Successfully Deleted', obj.message);
+										Ext.getCmp('edit_author_grid').getView().refresh(); 
 											var grid1 = Ext.getCmp('edit_author_grid');
 					                             grid1.getStore().load({
 						                                           params : {

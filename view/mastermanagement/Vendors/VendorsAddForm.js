@@ -164,6 +164,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsAddForm' ,{
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
 							Ext.getCmp('vendorsgrid').getStore().reload();
+							Ext.getCmp('vendorsgrid').getView().refresh();
 							Ext.getCmp('vendorstab').layout.setActiveItem('vendorsgrid');
 										
 						}
@@ -179,7 +180,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsAddForm' ,{
 		
 		{
 			xtype: 'button',
-		  	text: 'Edit',
+		  	text: 'Edit/Save',
 		  	iconCls: 'editClass',
 		  //	id:'edit_freelancer',
 			align:'center',
@@ -212,7 +213,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsAddForm' ,{
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
 							currentForm.getForm().reset();
-							Ext.getCmp('vendorsgrid').getStore().reload();
+							Ext.getCmp('vendorsgrid').getStore().reload();							
+							Ext.getCmp('vendorsgrid').getView().refresh();
 							Ext.getCmp('vendorstab').layout.setActiveItem('vendorsgrid');
 										
 						}

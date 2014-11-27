@@ -185,6 +185,9 @@ Ext.define('MyDesktop.view.mastermanagement.Users.UsersGrid', {
 												limit: 50
 											}
 										});
+										 Ext.getCmp('usersgrid').getStore().reload();
+                                         Ext.getCmp('usersgrid').getView().refresh();
+										  
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

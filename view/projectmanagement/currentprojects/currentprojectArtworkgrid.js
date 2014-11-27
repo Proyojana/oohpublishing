@@ -171,54 +171,6 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.currentprojectArtwo
 					
 					}
 					
-		},{
-			xtype:'actioncolumn',
-			align: 'center',
-			flex : 0.5,
-			//width:250,
-			text:'Actions',
-			items: [
-			/*{
-				iconCls: 'editClass',
-				//icon: 'inc/ext/resources/shared/icons/fam/cog_edit.png',  // Use a URL in the icon config
-				tooltip: 'Edit',
-			},*/{
-				iconCls: 'deleteClass',
-				tooltip: 'Delete',
-				handler:function(grid, rowIndex, colIndex)
-				{
-				//	alert("delete");
-				var project_id=Ext.getCmp('edit_ArtworkHeader_projectID').getValue(); 
-						var grid = this.up('grid');
-					if (grid) {
-						var rec = grid.getStore().getAt(rowIndex);
-						Ext.Msg.confirm('Remove Record '+rec.get('figurenumber')+' ?',+rec.get('figurenumber'), function (button) {
-							if (button == 'yes') {
-								var id=rec.get('id');
-								var conn = new Ext.data.Connection();
-								conn.request({
-									url: 'service/Artwork.php',
-									method: 'POST',
-									params : {action:4,id:id},
-									success:function(response){
-										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										var grid3=Ext.getCmp('editprojectArtworkgrid');
-									grid3.getStore().load({params:{action:3,project_id:project_id}});
-									},
-									failure:function(response){
-										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Deletion Failed !', obj.message); 
-									}
-								});
-								
-								
-							}
-						});
-					}
-					 
-				}
-			}]
 		}
 
 		];

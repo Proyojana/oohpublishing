@@ -161,6 +161,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 									success: function(response) {
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message);
+										
+										Ext.getCmp('edit_contrib_grid').getView().refresh(); 
 										var grid3=Ext.getCmp('edit_contrib_grid');
 										grid3.getStore().load({
 											params: {

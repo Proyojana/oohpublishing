@@ -454,6 +454,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 												action:1,job_code:edit_Job_code
 											}
 										});
+										 Ext.getCmp('editaccountPayableGrid').getView().refresh();
+										
 									},
 									failure: function(response) 
 									{

@@ -117,6 +117,9 @@ Ext.define('MyDesktop.view.mastermanagement.Services.ServiceAddForm' ,{
 		Ext.Msg.alert('Message', obj.message); 
 		currentForm.getForm().reset();
 		Ext.getCmp('servicegrid').getStore().reload();
+		Ext.getCmp('servicegrid').getStore().reload();
+Ext.getCmp('servicegrid').getView().refresh();
+
 		     	autoLoadCode(); 	
 		}
 		});
@@ -130,7 +133,7 @@ Ext.define('MyDesktop.view.mastermanagement.Services.ServiceAddForm' ,{
 		
 		{
 			xtype: 'button',
-		  	text: 'Edit',
+		  	text: 'Edit/Save',
 		  	iconCls: 'editClass',
 		  	id:'edit_service',
 		    align:'center',
@@ -156,6 +159,9 @@ obj = Ext.JSON.decode(response.responseText);
 Ext.Msg.alert('Message', obj.message); 
 currentForm.getForm().reset();
 Ext.getCmp('servicegrid').getStore().reload();
+Ext.getCmp('servicegrid').getView().refresh();
+autoLoadCode();
+
 }
 });
 }

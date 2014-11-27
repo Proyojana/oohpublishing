@@ -473,6 +473,7 @@ alert(est_start_day);
 													projectid:projectid
 												}
 											});
+											Ext.getCmp('editaccountReceiveGrid_a').getView().refresh();
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

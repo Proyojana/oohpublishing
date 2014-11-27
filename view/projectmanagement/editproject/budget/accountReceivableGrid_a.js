@@ -312,6 +312,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                                                             job_code: edit_Job_code
                                                         }
                                                     });
+                                                    Ext.getCmp('editaccountReceiveGrid_a').getView().refresh();
                                                 },
                                                 failure: function(response) {
                                                     obj = Ext.JSON.decode(response.responseText);

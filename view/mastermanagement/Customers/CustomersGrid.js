@@ -88,9 +88,10 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
+						
+						
+						
 						Ext.getCmp('custbasiccode').setReadOnly(true);
-						
-						
 						
 						Ext.getCmp('custbasicname').setReadOnly(true);
 						Ext.getCmp('custbasicaddress1').setReadOnly(true);
@@ -144,6 +145,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 						        Ext.Msg.alert("Load failed", action.result.errorMessage);
     							}
 						});
+					
 					
    	    		    //alert("value ");
 							Ext.getCmp('custbasiccode').setReadOnly(true);
@@ -205,7 +207,10 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 										
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										
 										Ext.getCmp('customersgrid').getStore().reload();
+										
+										Ext.getCmp('customersgrid').getView().refresh(); 
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

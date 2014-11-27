@@ -143,12 +143,10 @@ Ext.define('MyDesktop.view.mastermanagement.Services.ServiceGrid', {
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										stat.load({
-											params: {
-												start: 0,
-												limit: 50
-											}
-										});
+										Ext.getCmp('servicegrid').getStore().reload();
+                                        Ext.getCmp('servicegrid').getView().refresh();
+
+										
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

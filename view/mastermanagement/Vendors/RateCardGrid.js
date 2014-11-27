@@ -198,12 +198,15 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.RateCardGrid', {
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
 										var grid1=Ext.getCmp('Vendors_ratecardgridTab');
 						                grid1.getStore().load({params:{action:1,vendorid:vendorid}});
+						                Ext.getCmp('ratecardgrid').getStore().reload();
+                                Ext.getCmp('ratecardgrid').getView().refresh();
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Deletion Failed !', obj.message); 
 									}
 								});
+								
 								
 								
 							}

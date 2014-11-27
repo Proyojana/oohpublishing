@@ -2,7 +2,7 @@
         extend: 'Ext.data.Model',
         fields: [
             
-             'firstname'      
+             'vendor_id','vendor_firstname'      
         ],
-        idProperty: 'firstname'
+        idProperty: 'vendor_firstname'
     });

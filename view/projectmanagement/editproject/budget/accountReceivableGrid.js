@@ -186,6 +186,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 								 		{
 								 			params:{action:12,job_code:edit_Job_code}
 								 		});
+								 		Ext.getCmp('editaccountReceiveGrid').getView().refresh();
 								 	},
 								 	failure:function(response)
 								 	{

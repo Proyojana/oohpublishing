@@ -107,6 +107,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid',
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										Ext.getCmp('editnotesgrid').getView().refresh();
 										  var grid3=Ext.getCmp('editnotesgrid');
 											grid3.getStore().load({
 												params: {

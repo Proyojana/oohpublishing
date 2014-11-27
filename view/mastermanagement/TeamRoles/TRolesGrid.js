@@ -154,12 +154,9 @@ Ext.define('MyDesktop.view.mastermanagement.TeamRoles.TRolesGrid', {
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										stat.load({
-											params: {
-												start: 0,
-												limit: 50
-											}
-										});
+										Ext.getCmp('trolesgrid').getStore().reload();
+										Ext.getCmp('trolesgrid').getView().refresh(); 
+										
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

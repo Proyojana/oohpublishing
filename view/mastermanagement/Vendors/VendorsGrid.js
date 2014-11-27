@@ -224,6 +224,8 @@ Ext.getCmp('basicname').setReadOnly(false);
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										Ext.getCmp('vendorsgrid').getStore().reload();
+								        Ext.getCmp('vendorsgrid').getView().refresh();
 										
 									},
 									failure:function(response){
@@ -231,7 +233,7 @@ Ext.getCmp('basicname').setReadOnly(false);
 										Ext.Msg.alert('Deletion Failed !', obj.message); 
 									}
 								});
-								Ext.getCmp('vendorsgrid').getStore().reload();
+								
 								
 							}
 						});
