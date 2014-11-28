@@ -6,7 +6,7 @@ var sm = Ext.create('Ext.selection.CheckboxModel',{
 Ext.define('MyDesktop.view.projectmanagement.currentprojects.NotesGrid', {
 	extend:'Ext.grid.Panel',
 	//features:[filters],
-	title: 'Notes & Remainders',
+	title: 'Notes & Reminders',
 	alias:'widget.notesgrid',
 	closeAction: 'hide',
 	//selModel:sm,

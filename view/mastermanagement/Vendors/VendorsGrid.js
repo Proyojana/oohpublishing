@@ -138,6 +138,11 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 						Ext.getCmp('venedit').setVisible(false); 
 						 Ext.getCmp('venreset').setVisible(false);
 						 //load teams grid
+						 
+						 var grid2=Ext.getCmp('Vendors_currentprojectsgridTab');
+						grid2.getStore().load({params:{action:1,vendorid:id}});
+							var history=Ext.getCmp('Vendors_histryprojectsgridTab');
+						history.getStore().load({params:{action:2,vendorid:id}});
 						 var grid1=Ext.getCmp('vendorsteamgrid');
 						grid1.getStore().load({params:{action:3,basicvendorid:id}});
 						 var grid1=Ext.getCmp('vendorscontactgrid');

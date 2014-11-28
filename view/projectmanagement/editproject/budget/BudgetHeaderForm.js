@@ -140,8 +140,16 @@
 
                          if (newValue == null) {
                              combo.setValue("Current");
+                             Ext.getCmp('publishergrid').getStore().reload();
+                             Ext.getCmp('publishergrid').getView().refresh();
+                             Ext.getCmp('publishergridCP').getStore().reload();
+                             Ext.getCmp('publishergridCP').getView().refresh();
                          } else {
                              combo.setValue("Completed");
+                             Ext.getCmp('publishergrid').getStore().reload();
+                             Ext.getCmp('publishergrid').getView().refresh();
+                             Ext.getCmp('publishergridCP').getStore().reload();
+                             Ext.getCmp('publishergridCP').getView().refresh();
                          }
                      }
                  }

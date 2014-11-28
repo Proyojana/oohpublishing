@@ -478,7 +478,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 				handler : function(grid, rowIndex, colIndex) {
 					var win = Ext.create('Ext.Window', {
 						extend : 'Ext.form.Panel',
-						draggable   : false,
+						draggable   : true,
 						modal: true,
 						closable: false,
 						layout : {
@@ -1382,7 +1382,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							type : 'absolute'
 						},
 						autoScroll : true,
-						title : 'Add Notes & Remainders',
+						title : 'Add Notes & Reminders',
 						width : 1125,
 						height : 450,
 						modal: true,

@@ -99,8 +99,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoForm' , {
 		fieldLabel: 'Phone',
 		name: 'contctphone',
 		vtype: 'phone',
-		afterLabelTextTpl: required,
-		allowBlank: false,
+		//afterLabelTextTpl: required,
+		//allowBlank: false,
 		x:150,
 		y:100,
 		

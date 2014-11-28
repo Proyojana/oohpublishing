@@ -71,7 +71,7 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
 				},
 				{
 					dataIndex: 'coe',
-					text: 'Cast Off Extend',
+					text: 'Cast Off Extent',
 					align: 'center',
 					flex:1,
 					filter: {
@@ -80,7 +80,7 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
 				},
 				{
 					dataIndex: 'ce',
-					text: 'Current Extend',
+					text: 'Current Extent',
 					align: 'center',
 					flex:1,
 					filter: {
