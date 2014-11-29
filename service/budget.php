@@ -71,6 +71,9 @@ include("../inc/php/encryptDecrypt.php");
 	 case 22:
 			get_total_for_activity($_POST['job_code']);
 			break;
+	 case 23:
+			get_total_for_expense($_POST['job_code']);
+			break;
 		default: 
 			break;
 	}
@@ -98,11 +101,11 @@ include("../inc/php/encryptDecrypt.php");
 			  budget_expense.vendor as vendor,
 			  budget_expense.no_of_unit as no_of_unit,
 			  budget_expense.rate_USD as rate_USD,
-			  budget_expense.rate_GBP rate_GBP,
-			  budget_expense.budgeted_amount_USD as budgeted_amount_USD,
-			  budget_expense.budgeted_amount_GBP as budgeted_amount_GBP,
-			  budget_expense.acual_amount_USD as actual_amount_USD,
-			  budget_expense.actual_amount_GBP actual_amount_GBP,
+			  budget_expense.rate_GBP rate_GBP,			  
+			 (rate_USD*no_of_unit) as budgeted_amount_USD,
+             (rate_GBP*no_of_unit) as budgeted_amount_GBP,  
+			  (rate_USD*no_of_unit) as actual_amount_USD,
+			  (rate_GBP*no_of_unit) as  actual_amount_GBP,
 			  stages.activity as activityid,
 			  budget_expense.id as budgetExpense_id,
 			  activity.name as activity_name
@@ -126,10 +129,10 @@ include("../inc/php/encryptDecrypt.php");
 			  budget_expense.no_of_unit as no_of_unit,
 			  budget_expense.rate_USD as rate_USD,
 			  budget_expense.rate_GBP as rate_GBP,
-			  budget_expense.budgeted_amount_USD as budgeted_amount_USD,
-			  budget_expense.budgeted_amount_GBP budgeted_amount_GBP,
-			  budget_expense.acual_amount_USD as actual_amount_USD,
-			  budget_expense.actual_amount_GBP as actual_amount_GBP,
+			 (rate_USD*no_of_unit) as budgeted_amount_USD,
+             (rate_GBP*no_of_unit) as budgeted_amount_GBP,  
+			  (rate_USD*no_of_unit) as actual_amount_USD,
+			  (rate_GBP*no_of_unit) as  actual_amount_GBP,
 			  budget_expense.activity As activityid,
   			  budget_expense.id as budgetExpense_id,
   			  activity.name as activity_name
@@ -646,8 +649,8 @@ function getReceivable_p($job_code)
   budget_receivable_project.no_of_unit as no_of_unit,
   budget_receivable_project.actual_usd as actual_amount_USD,
   budget_receivable_project.actual_gbp as actual_amount_GBP,
-  budget_receivable_project.budgeted_usd as budgeted_amount_USD,
-  budget_receivable_project.budgeted_gbp as budgeted_amount_GBP
+   (ratecard_USD*confirmed_extent) as budgeted_amount_USD,
+(ratecard_GBP*confirmed_extent) as budgeted_amount_GBP  
   
 From
   budget_receivable_project
@@ -673,14 +676,15 @@ function getReceivable_a($job_code)
 		}
 		$result = mysql_query("
 		Select
+		
  budget_receivable.id As budgetReceive_id,
  budget_receivable.no_of_unit As no_of_unit,
  budget_receivable.rate_gbp As rate_GBP,
  budget_receivable.rate_usd As rate_USD,
- budget_receivable.budgeted_usd As budgeted_amount_USD,
-  budget_receivable.budgeted_gbp As budgeted_amount_GBP,
- budget_receivable.actual_usd As actual_amount_USD,
- budget_receivable.actual_gbp As actual_amount_GBP,
+(rate_USD*no_of_unit) as budgeted_amount_USD,
+(rate_GBP*no_of_unit) as budgeted_amount_GBP,  
+(rate_USD*no_of_unit) As actual_amount_USD,
+(rate_GBP*no_of_unit) As actual_amount_GBP,
  activity.name as activity_name,
  activity.id as activityid
 From
@@ -992,16 +996,56 @@ function get_total_for_activity($job_code)
 		}
 		$result2 = mysql_query("
 		Select
-  sum(budget_receivable.budgeted_usd),
-  sum(budget_receivable.budgeted_gbp),
-  sum(budget_receivable.actual_usd) as edit_total_receive_USD,
-  sum(budget_receivable.actual_gbp) as edit_total_receive_GBP,
-  budget_receivable.project_id
+	budget_receivable.no_of_unit As no_of_unit,
+ budget_receivable.rate_gbp As rate_GBP,
+ budget_receivable.rate_usd As rate_USD,
+  sum(rate_USD*no_of_unit) as edit_total_receive_USD,
+  sum(rate_GBP*no_of_unit) as edit_total_receive_GBP
 From
   budget_receivable
 Where
   
   budget_receivable.project_id = '".$projectid."'
+")or die(mysql_error());
+		if(!$result2)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;				
+			}
+       	while($row=mysql_fetch_object($result2))
+	   	{
+			$result ["data"] = $row;
+	  	}
+      	echo(json_encode($result));
+	}
+	
+	
+	
+	function get_total_for_expense($job_code)
+	{
+		$workflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($workflow)) {
+				
+			$workflowid = $row['workflow'];
+			$projectid = $row['id'];
+			
+		}
+		$result2 = mysql_query("
+		Select
+	budget_expense.no_of_unit As no_of_unit,
+ budget_expense.rate_gbp As rate_GBP,
+ budget_expense.rate_usd As rate_USD,
+  sum(rate_USD*no_of_unit) as edit_total_pay_USD,
+  sum(rate_GBP*no_of_unit) as edit_total_pay_GBP
+From
+  budget_expense
+Where
+  
+  budget_expense.project_id = '".$projectid."'
 ")or die(mysql_error());
 		if(!$result2)
 			{

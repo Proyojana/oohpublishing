@@ -847,6 +847,30 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							Ext.Msg.alert("Load failed", action.result.errorMessage);
 						}
 					});
+					
+						var currentForm = Ext.getCmp('editBudgetForm');
+					currentForm.getForm().load({
+						url : 'service/budget.php',
+						params : {
+							action : 22,
+							job_code:job_code
+						},
+						failure : function(form, action) {
+							Ext.Msg.alert("Load failed", action.result.errorMessage);
+						}
+					});
+					
+					var currentForm = Ext.getCmp('editBudgetForm');
+					currentForm.getForm().load({
+						url : 'service/budget.php',
+						params : {
+							action : 23,
+							job_code:job_code
+						},
+						failure : function(form, action) {
+							Ext.Msg.alert("Load failed", action.result.errorMessage);
+						}
+					});
 
 					//new changes ends
 				}

@@ -262,7 +262,7 @@ Where
 
                      }
         insertBudgetTotal($project_id);                     
-		autoinsertbudget($project_id,$workflow);
+		autoinsertbudget($project_id,$workflow,$confirmed_extent);
 		insertAuthor($job_code,$author_create,$author_name,$author_email);
 		 
 			//echo "project id=".$project_id;
@@ -840,7 +840,7 @@ Where
 
 
 //insert budget receivable  
-function autoinsertbudget($project_id,$workflow)
+function autoinsertbudget($project_id,$workflow,$confirmed_extent)
 	{
 		
 		$getworkflowstages = mysql_query("Select
@@ -866,11 +866,11 @@ Group By
 			
 		
 			$budget_receivable = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity, no_of_unit, rate_usd, rate_gbp, budgeted_usd, budgeted_gbp, actual_usd, actual_gbp,created_by,created_on,modified_by,modified_on,flag)
-                                VALUES ('','".$project_id."','".$activity."','','".$ratecard_USD."','".$ratecard_GBP."','','','','','','','','','')");
+                                VALUES ('','".$project_id."','".$activity."','".$confirmed_extent."','".$ratecard_USD."','".$ratecard_GBP."','','','','','','','','','')");
 			
 			
 			$budget_expense = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,vendor ,no_of_unit,rate_USD,rate_GBP,budgeted_amount_USD,budgeted_amount_GBP,acual_amount_USD ,actual_amount_GBP,created_by,created_on,modified_by,modified_on,flag)
-                                VALUES ('' ,'".$project_id."', '','".$activity."','','',  '',  '',  '','',  '',  '',  '', '','', '0000-00-00 00:00:00',  '')");
+                                VALUES ('' ,'".$project_id."', '','".$activity."','','".$confirmed_extent."',  '',  '',  '','',  '',  '',  '', '','', '0000-00-00 00:00:00',  '')");
 		}
 		
 		
