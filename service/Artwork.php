@@ -36,7 +36,7 @@ function getArtworkDetails($job_code)
 	  customers.name as edit_ArtworkHeader_ClientName,
 	  customers.code as edit_ArtworkHeader_ClientCode,
 	  customers.id as edit_ArtworkHeader_clientId,
-	  project_title.title as edit_ArtworkHeader_ProjectName,
+	  project_title.project_name as edit_ArtworkHeader_ProjectName,
 	  project_title.workflow as edit_ArtworkHeader_workflow,
 	  project_title.job_code as edit_ArtworkHeader_Job,
 	  project_title.id as edit_ArtworkHeader_projectID,
