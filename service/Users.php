@@ -336,7 +336,7 @@ Where
 	  customers.name as editteamHeader_ClientName,
 	  customers.code as editteamHeader_ClientCode,
 	  customers.id as editteamHeader_clientId,
-	  project_title.title as editteamHeader_ProjectName,
+	  project_title.project_name as editteamHeader_ProjectName,
 	  project_title.workflow as editteamHeader_workflow,
 	  project_title.job_code as editteamHeader_Job,
 	  project_title.id as editteamHeader_projectID,

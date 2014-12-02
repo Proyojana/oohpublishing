@@ -356,7 +356,7 @@ Where
 	  customers.name as editauthHeader_ClientName,
 	  customers.code as editauthHeader_ClientCode,
 	  customers.id as editauthHeader_clientId,
-	  project_title.title as editauthHeader_ProjectName,
+	  project_title.project_name as editauthHeader_ProjectName,
 	  project_title.workflow as editauthHeader_workflow,
 	  project_title.job_code as editauthHeader_Job,
 	  project_title.id as editauthHeader_projectID

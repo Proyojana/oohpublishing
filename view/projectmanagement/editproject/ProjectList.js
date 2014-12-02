@@ -104,6 +104,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 													var job_code = Ext.getCmp('edit_job_code').getValue();
 
 													var project_title = Ext.getCmp('edit_project_title').getValue();
+													var project_name= Ext.getCmp('edit_project_name').getValue();
 													//var project_author= Ext.getCmp('edit_project_author').getValue();
 													var hb_isbn= Ext.getCmp('edit_hb_isbn').getValue();
 													var pb_isbn= Ext.getCmp('edit_pb_isbn').getValue();
@@ -142,6 +143,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 																project_id:project_id,
 																job_code:job_code,
 																project_title:project_title,
+																project_name:project_name,
 																hb_isbn:hb_isbn,
 																pb_isbn:pb_isbn,
 																project_series:project_series,
@@ -1222,6 +1224,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 						}
 					});
 					Ext.getCmp('editprojectSchedulegrid').getView().refresh();
+					
+					/*loading header data*/
 					var currentForm = Ext.getCmp('editprojectScheduleHeaderForm');
 					currentForm.getForm().load({
 						url : 'service/schedule.php',

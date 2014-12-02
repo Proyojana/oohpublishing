@@ -12,7 +12,7 @@ $id=$_SESSION['id'];
 			getProjectById($_POST["project_code"]);	
 			break;
 		case 3:
-			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['edit_word_count_indexing'],$_POST['edit_print_run'],$_POST['edit_print_run_confirmed'],$_POST['edit_cover_type'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$_POST['project_note'],$_POST['ebook_isbn'],$id);	
+			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['project_name'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['edit_word_count_indexing'],$_POST['edit_print_run'],$_POST['edit_print_run_confirmed'],$_POST['edit_cover_type'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$_POST['project_note'],$_POST['ebook_isbn'],$id);	
 			break;
 		case 4:
 			getBudgetReceivables($_POST['projectid']);
@@ -72,6 +72,7 @@ Where
   project_title.id As edit_project_id,
   project_title.job_code As edit_job_code,
   project_title.title As edit_project_title,
+  project_title.project_name As edit_project_name,
   project_title.author As edit_project_author,
   project_title.hb_isbn As edit_hb_isbn,
   project_title.pb_isbn As edit_pb_isbn,
@@ -118,14 +119,14 @@ Where
       	echo(json_encode($result));
     }
   
-     function updateProjectMaster($proj_id,$job_code,$title,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$edit_word_count_indexing,$edit_print_run,$edit_print_run_confirmed,$edit_cover_type,$client_deadline,$agreed_deadline,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$project_note,$ebook_isbn,$id)
+     function updateProjectMaster($proj_id,$job_code,$title,$project_name,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$edit_word_count_indexing,$edit_print_run,$edit_print_run_confirmed,$edit_cover_type,$client_deadline,$agreed_deadline,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$project_note,$ebook_isbn,$id)
     {
 		$checkquery="SELECT id FROM project_title WHERE id='".$proj_id."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==1){
-			$result1= mysql_query("UPDATE project_title set title='".$title."',hb_isbn='".$hb_isbn."',pb_isbn='".$pb_isbn."',ebook_isbn='".$ebook_isbn."',series='".$series."',format='".$format."',design='".$design."',castoff_extent='".$castoff_extent."',confirmed_extent='".$confirmed_extent."',word_count_indexing='".$edit_word_count_indexing."',print_run='".$edit_print_run."',print_run_confirmed='".$edit_print_run_confirmed."',cover_type='".$edit_cover_type."',client_deadline='".$client_deadline."',agreed_deadline='".$agreed_deadline."',word_count='".$word_count."',manuscript_pages='".$manuscript."',expect_index_extent='".$index_extent."',chapter_footer_req='".$footer."',contains_color='".$colour."',note='".$project_note."',client='".$client."',client='".$client."',client_team='".$team."',workflow='".$workflow."',modified_by='".$id."',modified_on=now() WHERE id=".$proj_id."");
+			$result1= mysql_query("UPDATE project_title set title='".$title."',project_name='".$project_name."',hb_isbn='".$hb_isbn."',pb_isbn='".$pb_isbn."',ebook_isbn='".$ebook_isbn."',series='".$series."',format='".$format."',design='".$design."',castoff_extent='".$castoff_extent."',confirmed_extent='".$confirmed_extent."',word_count_indexing='".$edit_word_count_indexing."',print_run='".$edit_print_run."',print_run_confirmed='".$edit_print_run_confirmed."',cover_type='".$edit_cover_type."',client_deadline='".$client_deadline."',agreed_deadline='".$agreed_deadline."',word_count='".$word_count."',manuscript_pages='".$manuscript."',expect_index_extent='".$index_extent."',chapter_footer_req='".$footer."',contains_color='".$colour."',note='".$project_note."',client='".$client."',client='".$client."',client_team='".$team."',workflow='".$workflow."',modified_by='".$id."',modified_on=now() WHERE id=".$proj_id."");
 				
 		if(!$result1)
 			{

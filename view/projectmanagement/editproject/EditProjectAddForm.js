@@ -82,16 +82,16 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.EditProjectAddForm' ,{
 			allowBlank: false,
 			afterLabelTextTpl: required,
 			},
-    	/*{
+    	{
     		
-    		id:'edit_project_author',
-			fieldLabel: 'Author',
+    		id:'edit_project_name',
+			fieldLabel: 'Project name',
 			x:710,
 			y:10,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
-    	},*/
+    	},
     	{
 			id:'edit_hb_isbn',
 			fieldLabel: 'HB ISBN',
@@ -489,6 +489,8 @@ t.setValue(value1);
                 var project_id = Ext.getCmp("edit_project_id").getValue();
 				var job_code = Ext.getCmp('edit_job_code').getValue();
 				var project_title = Ext.getCmp('edit_project_title').getValue();
+				var project_name= Ext.getCmp('edit_project_name').getValue();
+				
 				//var project_author= Ext.getCmp('edit_project_author').getValue();
 				var hb_isbn= Ext.getCmp('edit_hb_isbn').getValue();
 				var pb_isbn= Ext.getCmp('edit_pb_isbn').getValue();
@@ -525,7 +527,7 @@ t.setValue(value1);
 					conn.request({
 					url: 'service/EditProjects.php',
 					method: 'POST',
-					params : {action:3,project_id:project_id,job_code:job_code,project_title:project_title,hb_isbn:hb_isbn,pb_isbn:pb_isbn,
+					params : {action:3,project_id:project_id,job_code:job_code,project_title:project_title,project_name:project_name,hb_isbn:hb_isbn,pb_isbn:pb_isbn,
 						project_series:project_series,project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,
 						edit_word_count_indexing:edit_word_count_indexing,edit_print_run:edit_print_run,edit_print_run_confirmed:edit_print_run_confirmed,edit_cover_type:edit_cover_type,
 						client_deadline:client_deadline,agreed_deadline:agreed_deadline,word_count:word_count,manuscript:manuscript,index_extent:index_extent,

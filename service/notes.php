@@ -35,7 +35,7 @@ function getProjectDetails($job_code) {
 				  customers.name as editnotesHeader_ClientName,
 				  customers.code as editnotesHeader_ClientCode,
 				  customers.id as editnotesHeader_clientId,
-				  project_title.title as editnotesHeader_ProjectName,
+				  project_title.project_name as editnotesHeader_ProjectName,
 				  project_title.workflow as editnotesHeader_workflow,
 				  project_title.job_code as editnotesHeader_Job,
 				  project_title.id as editnotesHeader_projectID,

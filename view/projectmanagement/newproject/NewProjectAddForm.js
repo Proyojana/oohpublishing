@@ -106,7 +106,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
     	{
     		xtype:'textfield',
 			id:'project_title',
-			fieldLabel: 'Title',
+			fieldLabel: 'Book Title',
 			align:'center',
 			x:360,
 			y:10,
@@ -114,16 +114,17 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			allowBlank: false,
 			afterLabelTextTpl: required,
 			},
-    	/*{
+    	{
     		
-    		id:'project_author',
-			fieldLabel: 'Author',
+    		xtype:'textfield',
+    		id:'project_name',
+			fieldLabel: 'Project Name',
 			x:710,
 			y:10,
-			width:320,0000
+			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
-    	},*/
+    	},
     	{
     		xtype:'textfield',
 			id:'hb_isbn',
@@ -597,7 +598,8 @@ t.setValue(value1);
 				var currentForm = this.up('newprojectaddform');
 				var job_code = Ext.getCmp('job_code').getValue();
 				var project_title = Ext.getCmp('project_title').getValue();
-				//var project_author= Ext.getCmp('project_author').getValue();
+				var project_name= Ext.getCmp('project_name').getValue();
+				
 				var hb_isbn= Ext.getCmp('hb_isbn').getValue();
 				var pb_isbn= Ext.getCmp('pb_isbn').getValue();
 				var ebook_isbn= Ext.getCmp('ebook_isbn').getValue();
@@ -647,7 +649,7 @@ t.setValue(value1);
 					conn.request({
 						url: 'service/projects.php',
 						method: 'POST',
-						params : {action:5,job_code:job_code,project_title:project_title,/*project_author:project_author,*/hb_isbn:hb_isbn,pb_isbn:pb_isbn,project_series:project_series,
+						params : {action:5,job_code:job_code,project_title:project_title,project_name:project_name,/*project_author:project_author,*/hb_isbn:hb_isbn,pb_isbn:pb_isbn,project_series:project_series,
 							project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,client_deadline:client_deadline,
 							agreed_deadline:agreed_deadline,project_start_date:project_start_date,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
 							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,word_count_indexing:word_count_indexing,

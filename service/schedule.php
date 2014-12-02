@@ -241,7 +241,7 @@ Where
 	  customers.name as edit_scheduleHeader_ClientName,
 	  customers.code as edit_scheduleHeader_ClientCode,
 	  customers.id as edit_scheduleHeader_clientId,
-	  project_title.title as edit_scheduleHeader_ProjectName,
+	  project_title.project_name as edit_scheduleHeader_ProjectName,
 	  project_title.workflow as edit_scheduleHeader_workflow,
 	  project_title.job_code as edit_scheduleHeader_Job,
 	  project_title.id as edit_scheduleHeader_projectID,

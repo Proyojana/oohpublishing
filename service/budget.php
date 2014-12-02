@@ -490,7 +490,7 @@ function deleteBudgetactivity($budgetid)
   customers.name As editbudgetHeader_ClientName,
   customers.code As editbudgetHeader_ClientCode,
   customers.id As editbudgetHeader_clientId,
-  project_title.title As editbudgetHeader_ProjectName,
+  project_title.project_name As editbudgetHeader_ProjectName,
   project_title.workflow As editbudgetHeader_workflow,
   project_title.job_code As edit_Job_code,
   project_title.id As editbudgetHeader_projectID,
