@@ -203,17 +203,24 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                         text: '$',
                         align: 'center',
                         editor: {
-                            xtype: 'textfield',
-                        }
-
+                            xtype: 'numberfield',                           
+                             hideTrigger:true,
+                             decimalPrecision: 2,
+                        },
+                             sortable: true,
+                             renderer: Ext.util.Format.numberRenderer('000000.00'),
 
                     }, {
                         dataIndex: 'budgeted_amount_GBP',
                         text: '£',
                         align: 'center',
                         editor: {
-                            xtype: 'textfield',
-                        }
+                            xtype: 'numberfield',
+                              hideTrigger:true,
+                             decimalPrecision: 2,
+                        },
+                          sortable: true,
+                             renderer: Ext.util.Format.numberRenderer('000000.00'),
                     }]
                 }, {
                     text: 'Actual Amount',
@@ -222,7 +229,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                         text: '$',
                         align: 'center',
                         editor: {
-                            xtype: 'textfield',
+                            xtype: 'numberfield',
+                              hideTrigger:true,
+                             decimalPrecision: 2,
 							listeners: {
                             change: function(field, newValue, oldValue) {
 								var calcOldValue = parseFloat(oldValue);
@@ -238,7 +247,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 								Ext.getCmp('edit_total_receive_USD').setValue(newUsdValue);
                             }
                         }
-                        }
+                        },
+                             sortable: true,
+                             renderer: Ext.util.Format.numberRenderer('000000.00'),
 
 
                     }, {
@@ -246,7 +257,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                         text: '£',
                         align: 'center',
                         editor: {
-                            xtype: 'textfield',
+                            xtype: 'numberfield',
+                              hideTrigger:true,
+                             decimalPrecision: 2,
 							listeners: {
                             change: function(field, newValue, oldValue) {
 								var calcOldValue = parseFloat(oldValue);
@@ -264,7 +277,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 
                             
                         }
-                        }
+                        },
+                          sortable: true,
+                             renderer: Ext.util.Format.numberRenderer('000000.00'),
                     }]
                 },
 
@@ -357,7 +372,18 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                                 obj1 = Ext.JSON.decode(response.responseText);
                                 var confirm = obj1.data.confirmed_extent;
                                 var cast = obj1.data.castoff_extent;
-                                if (confirm.data != null) {
+                                if (confirm != 0 && cast != 0 ) {
+                                    var r = Ext.create('MyDesktop.model.Receive_a', {
+                                        budgetReceive_id: '',
+                                        activity_name: '',
+                                        no_of_unit: cast,
+                                        rate_USD: '',
+                                        rate_GBP: '',
+                                        amt_USD: '',
+                                        amt_GBP: ''
+                                    });
+                                    budget.insert(budget.getCount(), r);
+                                } else if(confirm != 0 ){
                                     var r = Ext.create('MyDesktop.model.Receive_a', {
                                         budgetReceive_id: '',
                                         activity_name: '',
@@ -368,8 +394,10 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                                         amt_GBP: ''
                                     });
                                     budget.insert(budget.getCount(), r);
-                                } else {
-                                    var r = Ext.create('MyDesktop.model.Receive_a', {
+                                }
+                                else
+                                {
+                                	 var r = Ext.create('MyDesktop.model.Receive_a', {
                                         budgetReceive_id: '',
                                         activity_name: '',
                                         no_of_unit: cast,

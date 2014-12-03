@@ -317,8 +317,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					text: '$',
 		        	align:'center',
 		        	editor: { 
-						xtype:'textfield',
-					}
+						xtype:'numberfield',
+						hideTrigger:true,
+                        decimalPrecision: 2,
+					},
+					sortable: true,
+                    renderer: Ext.util.Format.numberRenderer('000000.00'),
 		        	
 					
 			    },
@@ -327,8 +331,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					text: '£',
 		        	align:'center',
 		        	editor: { 
-						xtype:'textfield',
-					}
+						xtype:'numberfield',
+						hideTrigger:true,
+                        decimalPrecision: 2,
+					},
+					sortable: true,
+                    renderer: Ext.util.Format.numberRenderer('000000.00'),
 			    }
 			    ]
 			    },
@@ -341,7 +349,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 		        	text: '$',
 		        	align:'center',
 		        	editor: { 
-						xtype:'textfield',
+						xtype:'numberfield',
+						hideTrigger:true,
+                        decimalPrecision: 2,
 						listeners: {
                             change: function(field, newValue, oldValue) {
 								var calcOldValue = parseFloat(oldValue);
@@ -363,7 +373,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 						
 						
 						
-						}
+						},
+						sortable: true,
+                        renderer: Ext.util.Format.numberRenderer('000000.00'),
 		        	
 		       },
 		       {
@@ -371,8 +383,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 		        	text: '£',
 		        	align:'center',
 		        	editor: { 
-						xtype:'textfield',
-						
+						xtype:'numberfield',
+						hideTrigger:true,
+                        decimalPrecision: 2,
 							listeners: {
                             change: function(field, newValue, oldValue) {
 								var calcOldValue = parseFloat(oldValue);
@@ -392,7 +405,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
                         }
 						
 						
-						}
+						},
+						sortable: true,
+                        renderer: Ext.util.Format.numberRenderer('000000.00'),
 		       },
 		       ]
 		       },
@@ -496,7 +511,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					 obj1 = Ext.JSON.decode(response.responseText);
 					 var confirm=obj1.data.confirmed_extent;
 					 var cast=obj1.data.castoff_extent;
-					 if(confirm.data==null)
+					if (confirm != 0 && cast != 0 )
 					 {
 					var r = Ext.create('MyDesktop.model.budget', {
                						budgetExpense_id:'',
@@ -514,7 +529,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
                 				});
                 		       budget.insert(budget.getCount(), r);
 					 }
-					 else
+					 else if(confirm != 0 )
 					 {
 					 		var r = Ext.create('MyDesktop.model.budget', {
                						budgetExpense_id:'',
@@ -522,6 +537,23 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
                     				activity: '',
                  					vendor:'',
                     				no_of_unit: confirm,
+                    				rate_USD: '',
+                    				rate_GBP: '',
+                    				budgeted_amount_USD:'',
+                    				budgeted_amount_GBP: '',
+                    				actual_amount_USD: '',
+                    				actual_amount_GBP: '',
+                    				
+                				});
+                		       budget.insert(budget.getCount(), r);
+					 }else 
+					 {
+					 	var r = Ext.create('MyDesktop.model.budget', {
+               						budgetExpense_id:'',
+                    				activityid: '',
+                    				activity: '',
+                 					vendor:'',
+                    				no_of_unit: cast,
                     				rate_USD: '',
                     				rate_GBP: '',
                     				budgeted_amount_USD:'',

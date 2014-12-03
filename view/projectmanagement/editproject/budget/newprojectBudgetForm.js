@@ -1,3 +1,23 @@
+Ext.override(Ext.form.NumberField, {
+    forcePrecision : false,
+
+    valueToRaw: function(value) {
+        var me = this,
+            decimalSeparator = me.decimalSeparator;
+        value = me.parseValue(value);
+        value = me.fixPrecision(value);
+        value = Ext.isNumber(value) ? value : parseFloat(String(value).replace(decimalSeparator, '.'));
+        if (isNaN(value))
+        {
+          value = '';
+        } else {
+          value = me.forcePrecision ? value.toFixed(me.decimalPrecision) : parseFloat(value);
+          value = String(value).replace(".", decimalSeparator);
+        }
+        return value;
+    }
+});
+
 var type = Ext.create('Ext.data.Store', {
     fields: ['id', 'name'],
     data: [{
@@ -78,11 +98,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                 y: 50,
                 height: 200,
             }, {
-                xtype: 'textfield',
-                id: 'edit_total_receive_USD',
+                xtype: 'numberfield',
+                id: 'edit_total_receive_USD',                
+                
+                hideTrigger:true,
                 fieldLabel: 'Total Receivable amount in $',
                 x: 5,
                 y: 260,
+                forcePrecision: true,       
+                decimalPrecision: 2,
                 // width:400,
                 labelWidth: 180,
             }, {
@@ -93,6 +117,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                 y: 260,
                 //width:400,
                 labelWidth: 180,
+                 forcePrecision: true,    
+                  decimalPrecision: 2,
             },
 
             /*{
@@ -124,6 +150,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                 y: 510,
                 // width:400,
                 labelWidth: 180,
+                 forcePrecision: true,    
+                  decimalPrecision: 2,
             }, {
                 xtype: 'textfield',
                 id: 'edit_total_pay_GBP',
@@ -132,6 +160,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                 y: 510,
                 //width:400,
                 labelWidth: 180,
+                forcePrecision: true,    
+                decimalPrecision: 2,
 
             }, {
                 xtype: 'textfield',
