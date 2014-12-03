@@ -249,47 +249,27 @@ Where
 		{
 			$result1 = mysql_query ("INSERT INTO project_title(id,job_code,title,project_name,author,hb_isbn,pb_isbn,ebook_isbn,series,format,design,castoff_extent,confirmed_extent,client_deadline,agreed_deadline,project_start_date,word_count,word_count_indexing,manuscript_pages,expect_index_extent,chapter_footer_req,contains_color,cover_type,print_run,print_run_confirmed,note,client,client_team,workflow,created_by,created_on,modified_by,modified_on,flag) 
 			VALUES('','".$job_code."','".$title."','".$project_name."','','".$hb_isbn."','".$pb_isbn."','".$ebook_isbn."','".$series."','".$format."','".$design."','".$castoff_extent."','".$confirmed_extent."','".$client_deadline."','".$agreed_deadline."','".$project_start_date."','".$word_count."','".$word_count_indexing."','".$manuscript."','".$index_extent."','".$footer."','".$colour."','".$cover_type."','".$print_run."','".$print_run_confirmed."','".$project_note."','".$client."','".$team."','".$workflow."','".$id."',now(),'','','')");
-			$codegen = mysql_insert_id();
-			autoinsertschedule($codegen,$project_start_date,$workflow);			
-			$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='projects'");
-			
-			$checkquery="SELECT id FROM project_title WHERE job_code='".$job_code."'";
-			$result1=mysql_query($checkquery);
-			//$project_id=0;
-			while($row = mysql_fetch_array($result1))
+			if($result1)
 			{
-                $project_id = $row['id'];
-
-                     }
-        insertBudgetTotal($project_id);                     
-		autoinsertbudget($project_id,$workflow,$confirmed_extent);
-		insertAuthor($job_code,$author_create,$author_name,$author_email);
+				$codegen = mysql_insert_id();
+				autoinsertschedule($codegen,$project_start_date,$workflow);			
+				$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='projects'");
+				
+				insertBudgetTotal($codegen);                     
+				autoinsertbudget($codegen,$workflow,$confirmed_extent);
+				insertAuthor($job_code,$author_create,$author_name,$author_email);
+				$result["success"] = true;
+				//$result["schedule"] = $scherror;
+				$result["message"] = "Project Inserted successfully";
 		 
-			//echo "project id=".$project_id;
-			//echo "work flow id=".$workflow;
-			
-/** mail function
- 			$to = "durairajgowri13@gmail.com";
-			$subject = "Mail";
-			$message = "You got mail";
-			$from = "gowri.sundari@proyojana.com";
-			$headers ="Hi";
-			$mail_sent= mail($to,$subject,$message,$headers);
-
-**/
-			
-			
-			if(!$result1)
+				
+			}
+			else
 			{
 				$result["failure"] = true;
 				//$result["schedule"] = $scherror;
 				$result["message"] =  "Invalid query: " . mysql_error();
-			}
-			else
-			{
-				$result["success"] = true;
-				//$result["schedule"] = $scherror;
-				$result["message"] = "Project Inserted successfully";
+				
 			}
 		}
 		else
