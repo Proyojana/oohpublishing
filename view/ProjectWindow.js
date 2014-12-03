@@ -99,7 +99,7 @@ Ext.define('MyDesktop.view.ProjectWindow', {
  
 		var desktop = this.app.getDesktop();
 	
-		var win = desktop.getWindow('master-win');
+		var win = desktop.getWindow('project-win');
 		
 		//	Ext.getBody().unmask();
 		if(!win) {

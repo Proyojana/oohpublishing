@@ -661,7 +661,7 @@ t.setValue(value1);
 								currentForm.getForm().reset();
 								autoReload();
 																		
-										
+									Ext.getCmp('projectlist').getStore().reload();	
 						}
 					});
 					
