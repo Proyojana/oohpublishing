@@ -528,7 +528,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									myStore.each( function(rec) {
 
 										type=1;
-										activity_name=activity_name+rec.get('activity_name')+',';
+										activity_name=activity_name+rec.get('activityid')+',';
 										no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
 										rate_USD=rate_USD+rec.get('rate_USD')+',';
 										rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
@@ -558,6 +558,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										success: function(response) {
 											obj = Ext.JSON.decode(response.responseText);
 											Ext.Msg.alert('Message', obj.message);
+											Ext.getCmp('editaccountReceiveGrid_a').getView().refresh();
 										}
 									});
 								
@@ -689,17 +690,40 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							x:600,
 							y:760,
 							handler: function() {
+								
+								
+								 //For Account payable grid
 								var myStore = Ext.getCmp('editaccountPayableGrid').getStore();
 								var records = myStore.getRange();
+								var count=0;
 								for(var i =0; i < records.length; i++) {
 									var rec = records[i];
-									var count=0;
+									
 									if(rec.dirty == true) {
 										count++;
+										
 									}
 
 								}
-								if(count==0) {
+								
+								
+								
+								 //For Account payable grid
+								var myStore1 = Ext.getCmp('editaccountReceiveGrid_a').getStore();
+								var records1 = myStore1.getRange();
+								var count1=0;
+								for(var i =0; i < records1.length; i++) {
+									var rec = records1[i];
+									
+									if(rec.dirty == true) {
+										count1++;
+									}
+
+								}
+								
+								
+								
+								if(count==0 && count1==0) {
 									win.close();
 								} else {
 									Ext.Msg.show({
@@ -708,7 +732,59 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										buttons: Ext.Msg.YESNO,
 										fn: function(btn) {
 											if(btn=='yes') {
+												
+												//Receivable
+												
+												var job_code=Ext.getCmp('edit_Job_code').getValue();
+									var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
+									var activity_name = '';
+									var no_of_unit = '';
+									var rate_USD = '';
+									var rate_GBP= '';
+									var budgeted_USD= '';
+									var budgeted_GBP = '';
+									var actual_amount_USD = '';
+									var actual_amount_GBP = '';
+									var grid=Ext.getCmp('editaccountReceiveGrid_a');
 
+									var myStore = Ext.getCmp('editaccountReceiveGrid_a').getStore();
+									myStore.each( function(rec) {
+
+										type=1;
+										activity_name=activity_name+rec.get('activityid')+',';
+										no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
+										rate_USD=rate_USD+rec.get('rate_USD')+',';
+										rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
+										budgeted_USD=budgeted_USD+rec.get('budgeted_amount_USD')+',';
+										budgeted_GBP=budgeted_GBP+rec.get('budgeted_amount_GBP')+',';
+										actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
+										actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
+									});
+									//alert(budgeted_USD);
+									var conn = new Ext.data.Connection();
+									conn.request({
+										url: 'service/budget.php',
+										method: 'POST',
+										params : {
+											action:11,
+											job_code:job_code,
+											projectID:projectID,
+											activity_name:activity_name,
+											no_of_unit:no_of_unit,
+											rate_USD:rate_USD,
+											rate_GBP:rate_GBP,
+											budgeted_USD:budgeted_USD,
+											budgeted_GBP:budgeted_GBP,
+											actual_amount_USD:actual_amount_USD,
+											actual_amount_GBP:actual_amount_GBP
+										},
+										success: function(response) {
+											obj = Ext.JSON.decode(response.responseText);
+											Ext.Msg.alert('Message', obj.message);
+										}
+									});
+												
+												//payable
 												var type=2;
 												var job_code=Ext.getCmp('edit_Job_code').getValue();
 												var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();

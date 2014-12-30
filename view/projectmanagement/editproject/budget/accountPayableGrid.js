@@ -212,6 +212,24 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 		        	textStyle:'font-size:13px;',
 		        	editor: { 
 						xtype:'textfield',
+						
+						listeners:{ 
+						change: function(field, newValue, oldValue){
+		                	 var grid = this.up().up();
+		                     // get selection model of the grid  
+		                     var selModel = grid.getSelectionModel();
+		                	 var rate=selModel.getSelection()[0].data.no_of_unit;
+		                //	  var rate1=selModel.getSelection()[0].data.rate_GBP;
+		                	//calculate budgeted amount
+		                	 var budget=newValue*rate;
+		                	 
+		                	 
+		                	 selModel.getSelection()[0].set('budgeted_amount_USD', budget);
+		                	// selModel.getSelection()[0].set('budgeted_amount_GBP', budget1);
+		                	 selModel.getSelection()[0].set('actual_amount_USD', budget);
+		                	// selModel.getSelection()[0].set('actual_amount_GBP', budget1);
+						}
+						}
 					}
 									
 				},
@@ -221,6 +239,23 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 		        	align:'center',
 		        	editor: { 
 						xtype:'textfield',
+						
+							listeners:{ 
+						change: function(field, newValue, oldValue){
+		                	 var grid = this.up().up();
+		                     // get selection model of the grid  
+		                     var selModel = grid.getSelectionModel();
+		                	 var rate=selModel.getSelection()[0].data.no_of_unit;
+		                //	  var rate1=selModel.getSelection()[0].data.rate_GBP;
+		                	//calculate budgeted amount
+		                	 var budget1=newValue*rate;
+		                	
+		                	// selModel.getSelection()[0].set('budgeted_amount_USD', budget);
+		                 selModel.getSelection()[0].set('budgeted_amount_GBP', budget1);
+		                	// selModel.getSelection()[0].set('actual_amount_USD', budget);
+		                	 selModel.getSelection()[0].set('actual_amount_GBP', budget1);
+						}
+						}
 					}
 				}
 				]
@@ -316,27 +351,17 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					dataIndex: 'budgeted_amount_USD',
 					text: '$',
 		        	align:'center',
-		        	editor: { 
-						xtype:'numberfield',
-						hideTrigger:true,
-                        decimalPrecision: 2,
-					},
-					sortable: true,
-                    renderer: Ext.util.Format.numberRenderer('000000.00'),
-		        	
+		        	decimalPrecision: 2,
+		        			        	
 					
 			    },
 			    {
 			    	dataIndex: 'budgeted_amount_GBP',
 					text: '£',
-		        	align:'center',
-		        	editor: { 
-						xtype:'numberfield',
-						hideTrigger:true,
-                        decimalPrecision: 2,
-					},
-					sortable: true,
-                    renderer: Ext.util.Format.numberRenderer('000000.00'),
+		        	align:'center',		        	
+                    decimalPrecision: 2,			
+				//	sortable: true,
+                 //   renderer: Ext.util.Format.numberRenderer('000000.00'),
 			    }
 			    ]
 			    },
