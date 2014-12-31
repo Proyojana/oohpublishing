@@ -352,7 +352,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					text: '$',
 		        	align:'center',
 		        	decimalPrecision: 2,
-		        			        	
+		        	sortable: true,
+                    renderer: Ext.util.Format.numberRenderer('0000.00'),
+                    //summaryType: 'sum',
 					
 			    },
 			    {
@@ -360,8 +362,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					text: '£',
 		        	align:'center',		        	
                     decimalPrecision: 2,			
-				//	sortable: true,
-                 //   renderer: Ext.util.Format.numberRenderer('000000.00'),
+					sortable: true,
+                    renderer: Ext.util.Format.numberRenderer('000000.00'),
 			    }
 			    ]
 			    },

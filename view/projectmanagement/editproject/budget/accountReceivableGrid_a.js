@@ -241,15 +241,17 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                          //   xtype: 'numberfield',                           
                          //    hideTrigger:true,
                              decimalPrecision: 2,
-                       // },
-                           //  sortable: true,
-                            // renderer: Ext.util.Format.numberRenderer('000000.00'),
-
+                       
+                            sortable: true,
+                           renderer: Ext.util.Format.numberRenderer('000000.00'),
+                                        
                     }, {
                         dataIndex: 'budgeted_amount_GBP',
                         text: '£',
                         align: 'center',                      
                              decimalPrecision: 2,
+                             sortable: true,
+                             renderer: Ext.util.Format.numberRenderer('0000.00'),
                      
                     }]
                 }, {
