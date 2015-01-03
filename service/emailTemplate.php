@@ -7,7 +7,7 @@ $id=$_SESSION['id'];
 	switch($_POST["action"]) /*Read action sent from front-end */
 	{
 		case 1:
-			vendorEmail($_POST['job_code'],$id);
+			vendorEmail($_POST['job_code'],$_POST['projectID'],$id);
 			break;
 		case 2:
 			authorEmail($_POST['job_code'],$id);
@@ -124,7 +124,7 @@ Where
 				}	
     }
 	
-function vendorEmail($job_code,$id)
+function vendorEmail($job_code,$projectID,$id)
  	{
 		/** insert into temp**/
  		$selectworkflow = mysql_query("Select
@@ -198,16 +198,19 @@ Thanks,
 						$result["message"] = "Notes saved successfully";
 					}
 			/** Get message from temp **/		
-		$result1 = mysql_query (" Select distinct
-author.email as vendorEmail,
+
+$result1 = mysql_query (" Select distinct
+vendors_contacts.email as vendorEmail,
 temp.message as vendorMessage,
 user_masters.user_email as vendorFrom
 From
-author,
+budget_expense Inner Join
+vendors_contacts On budget_expense.vendor =
+vendors_contacts.vendor_id,
 temp,
 user_masters
 Where
-author.job_code='".$job_code."' || user_masters.user_id='".$id."'");
+budget_expense.project_id='".$projectID."' || user_masters.user_id='".$id."'");
 			
 		if(!$result1)
 			{

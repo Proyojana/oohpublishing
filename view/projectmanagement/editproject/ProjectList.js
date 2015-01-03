@@ -1211,12 +1211,14 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								});
 								email_vendor.show();
 								var job_code=Ext.getCmp('edit_scheduleHeader_Job').getValue();
+								var projectID=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
 								var currentForm = Ext.getCmp('emailVendor');
 								currentForm.getForm().load({
 									url : 'service/emailTemplate.php',
 									params : {
 										action : 1,
-										job_code:job_code
+										job_code:job_code,
+										projectID:projectID
 									}
 								});
 							}
