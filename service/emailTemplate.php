@@ -82,7 +82,7 @@ Thanks,
 					}
 		/** Get message from temp **/			
 	$result3 = mysql_query ("Select Distinct
- author.email As authorEmail,
+ Group_Concat(author.email) As authorEmail,
   user_masters.user_email As authorFrom,
   temp.message As authorMessage
 From
@@ -200,7 +200,7 @@ Thanks,
 			/** Get message from temp **/		
 
 $result1 = mysql_query (" Select distinct
-vendors_contacts.email as vendorEmail,
+Group_Concat(vendors_contacts.email) as vendorEmail,
 temp.message as vendorMessage,
 user_masters.user_email as vendorFrom
 From
