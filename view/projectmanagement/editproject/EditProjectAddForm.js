@@ -536,6 +536,13 @@ t.setValue(value1);
 					obj = Ext.JSON.decode(response.responseText);
 					Ext.Msg.alert('Message', obj.message); 
 					
+					Ext.getCmp('projectlist').getView().refresh();
+var grid3=Ext.getCmp('projectlist');
+grid3.getStore().load({
+params: {
+action:1
+}
+});
 					}
 					});
 				}
