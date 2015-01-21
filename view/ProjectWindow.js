@@ -10,7 +10,7 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 	extend: 'Ext.ux.desktop.Module',
 
 	id:'project-win',
-	
+
 	init : function() {
 		//
 		this.launcher = {
@@ -18,23 +18,21 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 			iconCls:'smallProjects',
 		};
 		this.callParent();
-		
+
 	},
-	
 	createWindow : function() {
-		
-  
+
 		var flag=0;
-		
-		
+
 		var dashboard = Ext.create('MyDesktop.view.projectmanagement.DashboardTabPanel');
 		var tab1 = "undefined";
 		var newproject = "undefined";
 		var editproject = "undefined";
 		var report = "undefined";
-		var completedproject = "undefined"; 
-		
-		var contentPanel8 = Ext.create('Ext.panel.Panel',{
+		var completedproject = "undefined";
+		var archives = "undefined";
+
+		var contentPanel8 = Ext.create('Ext.panel.Panel', {
 			id: 'content-panel8',
 			region: 'center', // this is what makes this panel into a region within the containing layout
 			layout: 'card',
@@ -44,63 +42,60 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 			items: [dashboard]
 		});
 		var navs = Ext.create('MyDesktop.view.projectmanagement.MasterNav');
-		
+
 		navs.getSelectionModel().on('select', function(selModel, record) {
 			var selectedNode = navs.getSelectionModel().getSelection();
 			console.log(selectedNode[0].data.id)
-			switch(selectedNode[0].data.id){
+			switch(selectedNode[0].data.id) {
 				case 'newproject':
-					if(newproject == "undefined")
-					{
+					if(newproject == "undefined") {
 						newproject = Ext.create('MyDesktop.view.projectmanagement.newproject.newprojectTabPanel');
 						contentPanel8.add(newproject);
 						contentPanel8.doLayout();
 					}
 					break;
 				case 'editproject':
-					if(editproject == "undefined")
-					{
+					if(editproject == "undefined") {
 						editproject = Ext.create('MyDesktop.view.projectmanagement.editproject.editprojectTabPanel');
 						contentPanel8.add(editproject);
 						contentPanel8.doLayout();
 					}
 					break;
 				case 'projectmanagement':
-					if(tab1 == "undefined")
-					{
+					if(tab1 == "undefined") {
 						tab1 = Ext.create('MyDesktop.view.projectmanagement.currentprojects.projectmanagementTabPanel');
 						contentPanel8.add(tab1);
 						contentPanel8.doLayout();
 					}
 					break;
 				case 'projectmanagementCP':
-					if(completedproject == "undefined")
-					{
+					if(completedproject == "undefined") {
 						completedproject = Ext.create('MyDesktop.view.projectmanagement.completedprojects.projectmanagementTabPanel');
 						contentPanel8.add(completedproject);
 						contentPanel8.doLayout();
 					}
 					break;
 				case 'projectreport':
-					if(report == "undefined")
-					{
+					if(report == "undefined") {
 						report = Ext.create('MyDesktop.view.projectmanagement.Reports.ProjectReportTabPanel');
 						contentPanel8.add(report);
+						contentPanel8.doLayout();
+					}
+					break;
+				case 'archives':
+					if(archives == "undefined") {
+						archives = Ext.create('MyDesktop.view.projectmanagement.Archives.ArchivesTabPanel');
+						contentPanel8.add(archives);
 						contentPanel8.doLayout();
 					}
 					break;
 			}
 			Ext.getCmp('content-panel8').layout.setActiveItem(selectedNode[0].data.id+'tab');
 		});
-		
-	
-	
-			
- 
 		var desktop = this.app.getDesktop();
-	
+
 		var win = desktop.getWindow('project-win');
-		
+
 		//	Ext.getBody().unmask();
 		if(!win) {
 			win = desktop.createWindow({
@@ -132,6 +127,6 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 			});
 		}
 		return win;
-	
+
 	},
 });

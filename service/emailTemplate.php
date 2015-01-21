@@ -27,6 +27,13 @@ $id=$_SESSION['id'];
 		case 7:
 			updateTemplateMaster($_POST["templateid"],$_POST['templatecode'],$_POST['templatename'],$_POST['templaterole'],$_POST['templatemain'],$_POST['templatefooter']);	
 			break;
+			case 8:
+			deleteProjectById($_POST["project_id"]);	
+			break;
+		case 9:
+			Archive();	
+			break;
+			
 		default: 
 			break;
 	}
@@ -469,4 +476,104 @@ From
 
 		echo json_encode($result);
     }
+	
+		function deleteProjectById($project_id)
+ 
+    {    	
+			  $project_id1= explode(',',$project_id);			 		
+			  for ($i = 0; $i < count($project_id1)-1; $i++)
+			{				
+					$checkquery="SELECT id FROM project_title WHERE id='".$project_id1[$i]."' ";
+					$result1=mysql_query($checkquery);
+					$num_rows=mysql_num_rows($result1);	
+			
+			   if($num_rows==1)
+			    {
+				     $result1= mysql_query("UPDATE project_title SET flag=1 WHERE id='".$project_id1[$i]."'");
+				     if(!$result1)
+				    {
+					$result["failure"] = true;
+					$result["message"] =  "Invalid query: " . mysql_error();
+				    }
+				else
+				   {
+					$result["success"] = true;
+					$result["message"] = "Archived successfully";
+				   }
+			   }
+			else
+				{
+					$result["success"] = true;
+					$result["message"] = "Cannot Archive";
+				}
+				
+			}	
+		echo json_encode($result);
+	}
+	
+	 function Archive()
+    {
+ 		$num_result = mysql_query ("Select
+  project_title.job_code As code,
+  project_title.id As id,
+  project_title.title As title,
+  project_title.author As author,
+  project_title.series As series,
+  project_title.format As format,
+  project_title.design As design,
+  project_title.agreed_deadline As deadline,
+  project_title.client_team As client_team,
+  project_title.word_count As word_count,
+  customers.name As client,
+  workflow.name As workflow,
+  customers_teams.team_name As client_team,
+  budget_total_detail.project_id
+From
+  project_title Inner Join
+  customers On project_title.client = customers.id Inner Join
+  workflow On project_title.workflow = workflow.id Left Join
+  customers_teams On project_title.client_team =
+    customers_teams.id Inner Join
+  budget_total_detail On project_title.id =
+    budget_total_detail.project_id
+Where
+  project_title.flag = 0 And
+  budget_total_detail.status = 'Completed'")or die(mysql_error());
+		
+		$totaldata = mysql_num_rows($num_result);
+
+		$result = mysql_query("Select
+  project_title.job_code As code,
+  project_title.id As id,
+  project_title.title As title,
+  project_title.author As author,
+  project_title.series As series,
+  project_title.format As format,
+  project_title.design As design,
+  project_title.agreed_deadline As deadline,
+  project_title.client_team As client_team,
+  project_title.word_count As word_count,
+  customers.name As client,
+  workflow.name As workflow,
+  customers_teams.team_name As client_team,
+  budget_total_detail.project_id
+From
+  project_title Inner Join
+  customers On project_title.client = customers.id Inner Join
+  workflow On project_title.workflow = workflow.id Left Join
+  customers_teams On project_title.client_team =
+    customers_teams.id Inner Join
+  budget_total_detail On project_title.id =
+    budget_total_detail.project_id
+Where
+  project_title.flag = 1 And
+  budget_total_detail.status = 'Completed' LIMIT ".$_POST['start'].", ".$_POST['limit'])or die(mysql_error());
+  
+		while($row=mysql_fetch_object($result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
+	}
+	
     ?>

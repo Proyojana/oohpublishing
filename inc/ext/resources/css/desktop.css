@@ -382,6 +382,10 @@ background-image:url(../shared/icons/fam/copy_paste.png);
 {
 	background:url(../shared/icons/fam/report.png);height:16px;width:16px;margin-right:5px;
 }
+.archives
+{
+background:url(../shared/icons/fam/database.png);height:16px;width:16px;margin-right:5px;
+}
 .users
 {
 	background:url(../shared/icons/fam/users.png);height:16px;width:16px;margin-right:5px;

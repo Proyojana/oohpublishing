@@ -97,7 +97,7 @@ Where
 						$result["message"] = "Stage Inserted successfully";
 					}
 				}
-			}
+			
 			else if($num_rows==1)
 			{
 			
@@ -117,6 +117,7 @@ Where
 				{
 					$result["success"] = true;
 					$result["message"] = "Stage is not exist";
+				}
 				}
 				}
 		echo json_encode($result);
