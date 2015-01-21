@@ -1,6 +1,6 @@
  Ext.define('MyDesktop.store.GetVenCntct', {
         extend:'Ext.data.Store',
-		pageSize: 8,
+		pageSize: 20,
         model: 'MyDesktop.model.GetVenCntct',
         proxy: {
     		type:'ajax',

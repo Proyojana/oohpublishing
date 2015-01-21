@@ -43,7 +43,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 		users.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 50
 			}
 		});
 		var team = Ext.create('MyDesktop.store.Team');
@@ -86,13 +86,14 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 						mode: 'local',
 			   	   triggerAction: 'all',
 						
-						/*listeners: {
+						listeners: {
                 change: function (field, newValue, oldValue) {
+                	
                 	 var grid = this.up().up();
                      var selModel = grid.getSelectionModel();
                 	 var conn = new Ext.data.Connection();
 					 conn.request({
-					 url: 'service/Users.php',
+					 url: 'service/GetVenCntct.php',
 					 method: 'POST',
 					 params : {action:2,userid1:newValue},
 					 success:function(response){
@@ -103,7 +104,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					 });
                     
 			            }
-			              }	*/
+			              }	
                         },
                         renderer: function(value) {
 					var index = users.find('vendor_id', value);
