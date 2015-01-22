@@ -73,7 +73,7 @@ From
  project_team,
  user_masters,
  temp
-    Where (project_team.project_id='".$project_id."' and project_team.flag=0) || user_masters.user_id='".$id."' ");
+    Where (project_team.project_id='".$project_id."' and project_team.flag=0)");
 			
 		if(!$result1)
 			{
@@ -153,7 +153,7 @@ From
  project_team,
  user_masters,
  temp
-    Where (project_team.project_id='".$project_id."' and project_team.flag=0) || user_masters.user_id='".$id."' ");
+    Where (project_team.project_id='".$project_id."' and project_team.flag=0)");
 			
 		if(!$result1)
 			{

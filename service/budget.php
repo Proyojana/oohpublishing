@@ -787,8 +787,8 @@ function getCurrencyRate()
  budget_total_detail.total_receive_gdp as edit_total_receive_GBP,
  budget_total_detail.total_pay_gdp as edit_total_pay_GBP,
  budget_total_detail.total_pay_usd as edit_total_pay_USD,
- budget_total_detail.project_profit_gdp as edit_profit_GBP,
- budget_total_detail.project_profit_per as edit_profit_percentage
+ ROUND(budget_total_detail.project_profit_gdp,0) as edit_profit_GBP,
+ROUND(budget_total_detail.project_profit_per,0) as edit_profit_percentage
 From
  budget_total_detail
 	Where
