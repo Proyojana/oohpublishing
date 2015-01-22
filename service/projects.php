@@ -18,7 +18,7 @@ $id=$_SESSION['id'];
 			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['project_author'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id);	
 			break;
 		case 5:
-			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['project_name'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['project_start_date'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note'],$_POST['ebook_isbn'],$_POST['author_create'],$_POST['author_name'],$_POST['author_email']);
+			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['project_name'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['project_start_date'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note'],$_POST['ebook_isbn'],$_POST['author_create'],$_POST['author_name'],$_POST['author_last_name'],$_POST['author_designation'],$_POST['author_email']);
 			break;
 		case 6:
 			BulkDelete($_POST['id']);
@@ -236,7 +236,7 @@ Where
 		echo json_encode($result);
 	}
 	
-	function insertProjectMaster($job_code,$title,$project_name,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$project_start_date,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed,$project_note,$ebook_isbn,$author_create,$author_name,$author_email)
+	function insertProjectMaster($job_code,$title,$project_name,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$project_start_date,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed,$project_note,$ebook_isbn,$author_create,$author_name,$author_last_name,$author_designation,$author_email)
 		
     {
     	
@@ -257,7 +257,7 @@ Where
 				
 				insertBudgetTotal($codegen);                     
 				autoinsertbudget($codegen,$workflow,$castoff_extent,$confirmed_extent);
-				insertAuthor($job_code,$author_create,$author_name,$author_email);
+				insertAuthor($job_code,$author_create,$author_name,$author_last_name,$author_designation,$author_email);
 				$result["success"] = true;
 				//$result["schedule"] = $scherror;
 				$result["message"] = "Project Inserted successfully";
@@ -882,9 +882,9 @@ $result["message"] = "Inserted successfully";
 
 //insert author
 
-function insertAuthor($job_code,$author_create,$author_name,$author_email)
+function insertAuthor($job_code,$author_create,$author_name,$author_last_name,$author_designation,$author_email)
 {
-	$result2 = mysql_query("INSERT INTO author(id,job_code,author,name,address,email,phone,see_proof,no_proof,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$job_code."','".$author_create."','".$author_name."','','".$author_email."','','','','',now(),'','','')");
+	$result2 = mysql_query("INSERT INTO author(id,job_code,author,name,last_name,designation,address,email,phone,see_proof,no_proof,created_by,created_on,modified_by,modified_on,flag) VALUES('','".$job_code."','".$author_create."','".$author_name."','".$author_last_name."','".$author_designation."','','".$author_email."','','','','',now(),'','','')");
 	if(!$result2) 
 	{
 		$result["failure"] = true;

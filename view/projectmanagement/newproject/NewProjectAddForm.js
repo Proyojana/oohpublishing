@@ -542,7 +542,7 @@ t.setValue(value1);
 			 defaults: {
         labelWidth: 150,
     },
-			height:70,
+			height:100,
         items :[
     	{
     		xtype:'textfield',
@@ -561,9 +561,31 @@ t.setValue(value1);
     	{
     		xtype:'textfield',
 			id:'author_name',
-			fieldLabel: 'Author Name',
+			fieldLabel: 'First Name',
 			align:'center',
 			x:0,
+			y:0,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			},
+			{
+    		xtype:'textfield',
+			id:'author_last_name',
+			fieldLabel: 'Last Name',
+			align:'center',
+			x:350,
+			y:0,
+			width:320,
+			/*allowBlank: false,
+			afterLabelTextTpl: required,*/
+			},
+			{
+    		xtype:'textfield',
+			id:'author_designation',
+			fieldLabel: 'Designation',
+			align:'center',
+			x:700,
 			y:0,
 			width:320,
 			allowBlank: false,
@@ -574,8 +596,8 @@ t.setValue(value1);
 			id:'author_email',
 			fieldLabel: 'Email',
 			align:'center',
-			x:350,
-			y:0,
+			x:0,
+			y:30,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
@@ -591,7 +613,7 @@ t.setValue(value1);
     	    iconCls: 'button_add',
     	    id:'add_team',
 			x:450,
-			y:540,
+			y:550,
 			width:110,
 			handler: function (){			
 				//Ext.getCmp('newprojectauthorformTab').setDisabled(false);	
@@ -634,6 +656,8 @@ t.setValue(value1);
 				//Author Details
 				var author_create= Ext.getCmp('author_create').getValue();
 				var author_name= Ext.getCmp('author_name').getValue();
+				var author_last_name= Ext.getCmp('author_last_name').getValue();
+				var author_designation= Ext.getCmp('author_designation').getValue();
 				var author_email= Ext.getCmp('author_email').getValue();
 				var author_id='';
 					var author_phone='';
@@ -654,7 +678,7 @@ t.setValue(value1);
 							agreed_deadline:agreed_deadline,project_start_date:project_start_date,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
 							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,word_count_indexing:word_count_indexing,
 							cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed,project_note:project_note,ebook_isbn:ebook_isbn,
-							author_create:author_create,author_name:author_name,author_email:author_email},
+							author_create:author_create,author_name:author_name,author_last_name:author_last_name,author_designation:author_designation,author_email:author_email},
 						success:function(response){
 							obj = Ext.JSON.decode(response.responseText);
 							Ext.Msg.alert('Message', obj.message); 
@@ -689,7 +713,7 @@ t.setValue(value1);
 		  	iconCls: 'button_reset',
 		  	id:'reset_team',
 			x:600,
-			y:540,
+			y:550,
 			width:110,
 			handler: function (){
 				var currentForm = this.up('newprojectaddform');
@@ -702,14 +726,14 @@ xtype:'label',
 text:'Note:',
 
 x:10,
-y:500,
+y:520,
 },
 {
 
 html:'<span style="background-color:#dfe8f5; color:red;font-weight:bold">*</span>',
 border:false,
 x:10,
-y:520,
+y:540,
 width:8,
 
 },
@@ -717,21 +741,21 @@ width:8,
 xtype:'label',
 text:'Mandatory fields',
 x:20,
-y:520,
+y:540,
 
 },
 {
 html:'<span style="background-color:#dfe8f5; color:blue;font-weight:bold">*</span>',
 border:false,
 x:10,
-y:545,
+y:565,
 width:8,
 },
 {
 xtype:'label',
 text:'Both are not mandatory but should fill one atleast.',
 x:20,
-y:545,
+y:565,
 
 }]
 	  
