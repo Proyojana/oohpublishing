@@ -1,6 +1,6 @@
  Ext.define('MyDesktop.store.HistoryProjects', {
         extend:'Ext.data.Store',
-		pageSize: 8,
+		pageSize: 50,
         model: 'MyDesktop.model.HistoryProjects',
         proxy: {
     		type:'ajax',
