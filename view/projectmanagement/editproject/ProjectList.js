@@ -1165,6 +1165,18 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							x:250,
 							y:500,
 							handler: function() {
+								
+								/*activity*/
+								var selection = Ext.getCmp('editprojectSchedulegrid').getSelectionModel().getSelection();
+								if(selection.length==0) {
+									Ext.Msg.alert("Select atleast one");
+								} else {
+									var length=selection.length;
+									//alert(length);
+								
+								
+								/**/
+								
 								var email_vendor = Ext.create('Ext.Window', {
 									extend : 'Ext.form.Panel',
 									layout : {
@@ -1210,6 +1222,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									}]
 								});
 								email_vendor.show();
+								}
+								var activity_id='';
+								for (var i=0; i < selection.length; i++) {
+									if((length-1)>=i) {
+										activity_id = activity_id + selection[i].data.activityid+',';
+									//alert(activity_id);
+									}
+								}
+								
 								var job_code=Ext.getCmp('edit_scheduleHeader_Job').getValue();
 								var projectID=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
 								var currentForm = Ext.getCmp('emailVendor');
@@ -1218,7 +1239,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									params : {
 										action : 1,
 										job_code:job_code,
-										projectID:projectID
+										projectID:projectID,
+										activity_id:activity_id
 									}
 								});
 							}

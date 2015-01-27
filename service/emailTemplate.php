@@ -7,7 +7,7 @@ $id=$_SESSION['id'];
 	switch($_POST["action"]) /*Read action sent from front-end */
 	{
 		case 1:
-			vendorEmail($_POST['job_code'],$_POST['projectID'],$id);
+			vendorEmail($_POST['job_code'],$_POST['projectID'],$id,$_POST['activity_id']);
 			break;
 		case 2:
 			authorEmail($_POST['job_code'],$id);
@@ -131,7 +131,7 @@ Where
 				}	
     }
 	
-function vendorEmail($job_code,$projectID,$id)
+function vendorEmail($job_code,$projectID,$id,$activity_id)
  	{
 		/** insert into temp**/
  		$selectworkflow = mysql_query("Select
@@ -164,7 +164,7 @@ function vendorEmail($job_code,$projectID,$id)
 			$user = $row['user'];
 		}
 		
-		$result1 = "<p>Dear <b>".$client."</b>,</p>
+		$result_sub = "<p>Dear <b>".$client."</b>,</p>
 
 <p>Thank you very much for agreeing to take on this project.</p>
 
@@ -195,19 +195,59 @@ Thanks,
 
 ";
 		
-     $result2 = mysql_query("INSERT INTO temp (id,message)
-		                               VALUES ('' ,'" . $result1 . "')");
+    
+			/** Get message from temp **/		
+
+$activity_id1= explode(',',$activity_id);	
+$activity_id1=array_unique($activity_id1);
+	for ($i=0; $i<count($activity_id1)-1;$i++)
+{	
+//echo "ID".count($activity_id1);;
+$result1 = mysql_query ("Select
+  budget_expense.project_id,
+  budget_expense.vendor,
+ Group_Concat(vendors_contacts.email),
+ 
+  budget_expense.activity
+From
+
+  budget_expense Inner Join
+  vendors On budget_expense.vendor = vendors.id Inner Join
+  vendors_contacts On vendors.id = vendors_contacts.vendor_id
+  Inner Join
+  activity On budget_expense.activity = activity.id
+Where       
+  budget_expense.project_id = '".$projectID."'  And
+  budget_expense.activity in ( '".$activity_id1[$i]."')");
+  
+   	while($row=mysql_fetch_array($result1))
+	   	{
+		
+			//$result ["data"] = $row;
+			
+			$maill= $row[2].",";		
+	
+			
+	  	}
+		$mailll.=$maill."";
+		
+}		
+//echo "mail_id's".$mailll;	
+
+
+ $result2 = mysql_query("INSERT INTO temp (id,message,email_id)
+		                               VALUES ('' ,'" . $result_sub . "','" . $mailll  . "')");
 					if(!$result2) {
 						$result["failure"] = true;
 						$result["message"] = "Invalid query: " . mysql_error();
 					} else {
 						$result["success"] = true;
 						$result["message"] = "Notes saved successfully";
-					}
-			/** Get message from temp **/		
+					}	
 
+					
 $result1 = mysql_query (" Select distinct
-Group_Concat(vendors_contacts.email) as vendorEmail,
+temp.email_id as vendorEmail,
 temp.message as vendorMessage,
 user_masters.user_email as vendorFrom
 From
@@ -233,8 +273,30 @@ budget_expense.project_id='".$projectID."' || user_masters.user_id='".$id."'");
 			$result ["data"] = $row;
 	  	}
       	echo(json_encode($result));
+		
+
+
+	/*if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;	
+		
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+		
+			$result ["data"] = $row;
+			
+	  	
+		
+}
+      	echo(json_encode($result));*/
       	
-      /**	Delete the temp**/
+      //	Delete the temp
 		$result1= mysql_query("DELETE FROM temp");
 				
 				if(!$result1)
