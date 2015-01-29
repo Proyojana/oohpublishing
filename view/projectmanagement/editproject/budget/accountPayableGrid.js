@@ -349,6 +349,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 							{
 							var bal=receive_usd-pay_usd;
 							var per=(bal/receive_usd)*100;
+							per=Math.round(per);
 							Ext.getCmp('edit_profit_percentage').setValue(per);
 					 var conn = new Ext.data.Connection();
 					 conn.request({
@@ -375,6 +376,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 							var pay_gdp = Ext.getCmp('edit_total_pay_GBP').getValue();
 							var bal=receive_gdp-pay_gdp;
 							var per=(bal/receive_gdp)*100;
+							per=Math.round(per);
 							Ext.getCmp('edit_profit_percentage').setValue(per);
 							if(bal!=0){
 							Ext.getCmp('edit_profit_GBP').setValue(bal);
