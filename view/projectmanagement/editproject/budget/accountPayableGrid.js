@@ -362,6 +362,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					 {
 					 var obj=obj1.data.rate;
 					 var val = obj*bal;
+					 val=Math.round(val);
 					 Ext.getCmp('edit_profit_GBP').setValue(val);
 					 }
 					 else
@@ -379,6 +380,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 							per=Math.round(per);
 							Ext.getCmp('edit_profit_percentage').setValue(per);
 							if(bal!=0){
+								bal=Math.round(bal);
 							Ext.getCmp('edit_profit_GBP').setValue(bal);
 							}
 					 }
