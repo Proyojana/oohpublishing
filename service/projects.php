@@ -255,7 +255,7 @@ Where
 				autoinsertschedule($codegen,$project_start_date,$workflow);			
 				$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='projects'");
 				
-				insertBudgetTotal($codegen);                     
+				//insertBudgetTotal($codegen);                     
 				autoinsertbudget($codegen,$workflow,$castoff_extent,$confirmed_extent);
 				insertAuthor($job_code,$author_create,$author_name,$author_last_name,$author_designation,$author_email);
 				$result["success"] = true;
@@ -805,7 +805,7 @@ Where
 			$date = strtotime("+".$daysperstage." day", $date);
 			$newdate = date('Y-m-d', $date);
 			$newresult = mysql_query("Insert into schedule (id, project_id, workflow_id, activity, stage_order, stage, estimated_daysperstage, actual_daysperstage, estimated_start_date, actual_start_date, estimated_end_date, actual_end_date, bufferday, status, created_by, created_on, modified_by, modified_on, flag) 
-			VALUES (NULL, '".$projectid."', '".$workflow."', '".$activity."', '".$stage_order."', '".$stage_name."', '".$daysperstage."', '0', '".$project_start_date."', NULL, '".$newdate."', NULL, NULL, NULL, NULL, now(), NULL, NULL, '0')");
+			VALUES (NULL, '".$projectid."', '".$workflow."', '".$activity."', '".$stage_order."', '".$stage_name."', '".$daysperstage."', '".$daysperstage."', '".$project_start_date."', '".$project_start_date."', '".$newdate."', '".$newdate."', NULL, NULL, NULL, now(), NULL, NULL, '0')");
 			
 			$date1 = strtotime($newdate);
 			$date1 = strtotime("+1 day", $date);
@@ -821,52 +821,102 @@ Where
 
 //insert budget receivable  
 function autoinsertbudget($project_id,$workflow,$castoff_extent,$confirmed_extent)
-	{
-		if($castoff_extent!=0 && $confirmed_extent!=0)			
-			$finalextent=$castoff_extent;			
-        else if($castoff_extent!=0)			
-			$finalextent=$castoff_extent;
-		else
-			$finalextent=$confirmed_extent;  
-		
-		$getworkflowstages = mysql_query("Select
- 
- 
- 
-  stages.activity,
-  
-  stages.ratecard_USD,
-  stages.ratecard_GBP
+{
+if($castoff_extent!=0 && $confirmed_extent!=0)
+$finalextent=$castoff_extent;
+else if($castoff_extent!=0)
+$finalextent=$castoff_extent;
+else
+$finalextent=$confirmed_extent;
+
+$getworkflowstages = mysql_query("Select
+
+
+
+stages.activity,
+
+stages.ratecard_USD,
+stages.ratecard_GBP,
+ stages.payable_ratecard_USD,
+  stages.payable_ratecard_GBP
 From
-  stages
+stages
 Where
-  stages.workflow_id = '".$workflow."'
+stages.workflow_id = '".$workflow."'
 Group By
- 
-  stages.activity");
-		while($row = mysql_fetch_array($getworkflowstages))
-		{
-			$activity = $row['activity'];
-			$ratecard_USD = $row['ratecard_USD'];
-			$ratecard_GBP = $row['ratecard_GBP'];
-			
-		
-			$budget_receivable = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity, no_of_unit, rate_usd, rate_gbp, budgeted_usd, budgeted_gbp, actual_usd, actual_gbp,created_by,created_on,modified_by,modified_on,flag)
-                                VALUES ('','".$project_id."','".$activity."','".$finalextent."','".$ratecard_USD."','".$ratecard_GBP."','','','','','','','','','')");
-			
-			
-			$budget_expense = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,vendor ,no_of_unit,rate_USD,rate_GBP,budgeted_amount_USD,budgeted_amount_GBP,acual_amount_USD ,actual_amount_GBP,created_by,created_on,modified_by,modified_on,flag)
-                                VALUES ('' ,'".$project_id."', '','".$activity."','','".$finalextent."',  '',  '',  '','',  '',  '',  '', '','', '0000-00-00 00:00:00',  '')");
-		}
-		
-		
-	}
+
+stages.activity");
+//$total_USD = 0;
+//$total_GBP = 0;
+while($row = mysql_fetch_array($getworkflowstages))
+{
+$activity = $row['activity'];
+$ratecard_USD = $row['ratecard_USD'];
+
+$ratecard_GBP = $row['ratecard_GBP'];
+$payable_ratecard_USD = $row['payable_ratecard_USD'];
+
+$payable_ratecard_GBP = $row['payable_ratecard_GBP'];
+
+
+$budgeted_USD=$finalextent*$ratecard_USD;
+$budgeted_GBP=$finalextent*$ratecard_GBP;
+//RECEIVABLE TOTAL(budgeted) 
+$rec_budget_USD_total+=$budgeted_USD;
+$rec_budget_GBP_total+=$budgeted_GBP;
+
+$actuals_USD=$finalextent*$ratecard_USD;
+$actuals_GBP=$finalextent*$ratecard_GBP;
+//RECEIVABLE TOTAL(actuals) 
+$rec_actuals_USD_total+=$actuals_USD;
+$rec_actuals_GBP_total+=$actuals_GBP;
+
+
+
+//payables
+$payable_budgeted_USD=$finalextent*$payable_ratecard_USD;
+$payable_budgeted_GBP=$finalextent*$payable_ratecard_GBP;
+//payable TOTAL(budgeted) 
+$pay_budget_USD_total+=$payable_budgeted_USD;
+$pay_budget_GBP_total+=$payable_budgeted_GBP;
+
+$payable_actuals_USD=$finalextent*$payable_ratecard_USD;
+$payable_actuals_GBP=$finalextent*$payable_ratecard_GBP;
+
+//payable TOTAL(actuals)
+$pay_actuals_USD_total+=$payable_actuals_USD;
+$pay_actuals_GBP_total+=$payable_actuals_GBP;
+
+
+
+$budget_receivable = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity, no_of_unit, rate_usd, rate_gbp, budgeted_usd, budgeted_gbp, actual_usd, actual_gbp,created_by,created_on,modified_by,modified_on,flag)
+VALUES ('','".$project_id."','".$activity."','".$finalextent."','".$ratecard_USD."','".$ratecard_GBP."','".$budgeted_USD."','".$budgeted_GBP."','".$actuals_USD."','".$actuals_GBP."','','','','','')");
+
+
+$budget_expense = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,vendor ,no_of_unit,rate_USD,rate_GBP,budgeted_amount_USD,budgeted_amount_GBP,acual_amount_USD ,actual_amount_GBP,created_by,created_on,modified_by,modified_on,flag)
+VALUES ('' ,'".$project_id."', '','".$activity."','','".$finalextent."', '".$payable_ratecard_USD."', '".$payable_ratecard_GBP."', '".$payable_budgeted_USD."','".$payable_budgeted_GBP."', '".$payable_actuals_USD."', '".$payable_actuals_GBP."', '', '','', '0000-00-00 00:00:00', '')");
+}
+//USD
+$bal=$rec_budget_USD_total-$pay_budget_USD_total;
+$profit_USD=@ceil(($bal/$rec_budget_USD_total)*100);
+//echo "profit USd ".$profit_USD;
+
+//GBP
+$balance=$rec_budget_GBP_total-$pay_budget_GBP_total;
+$profit_GBP=@ceil(($balance/$rec_budget_GBP_total)*100);
+
+//echo "profit GBP ".$profit_GBP;
+
+insertBudgetTotal($project_id,$profit_USD,$profit_GBP);
+
+}
+
 
 //insert budget total
-function insertBudgetTotal($project_id)
+function insertBudgetTotal($project_id,$profit_USD,$profit_GBP)
 {
 $result2 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,total_receive_gdp,total_receive_project_usd,total_receive_project_gdp,total_pay_usd,total_pay_gdp,project_profit_gdp,project_profit_per,invoice_date,status)
-VALUES ('' ,'".$project_id."', '','','', '', '','','', '', '', '', '', 'Current')");
+VALUES ('' ,'".$project_id."', '','','', '', '','','', '', '".$profit_USD."', '".$profit_GBP."', '', 'Current')");
 if(!$result2)
 {
 $result["failure"] = true;

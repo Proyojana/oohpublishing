@@ -23,6 +23,9 @@ $id=$_SESSION['id'];
 		case 6:
 			deleteScheduleactivity($_POST['id']);
 			break;
+		case 7:
+            autoupdateschedule($_POST['projectid'],$_POST['project_start_date'],$_POST['schedule_id']);
+            break; 		
 		default: 
 			break;
 	}
@@ -298,5 +301,60 @@ Where
 		
 		echo json_encode($result);
 	}
+	
+	function autoupdateschedule($projectid,$project_start_date,$schedule_id)
+{ 
+
+$getrows = mysql_query("Select
+schedule.id,
+schedule.project_id,
+schedule.workflow_id,
+schedule.activity,
+schedule.stage,
+schedule.estimated_daysperstage,
+schedule.estimated_start_date,
+schedule.estimated_end_date,
+schedule.stage_order,
+schedule.flag
+From
+schedule
+Where
+schedule.id >= '".$schedule_id."'
+And schedule.project_id = '".$projectid."'");
+//$num_rows=mysql_num_rows($getrows);
+
+//$getworkflowstages = mysql_query("SELECT stage_order, stage_name, no_of_days, activity from stages where workflow_id='".$workflow."' and flag='0' order by stage_order asc");
+while($row = mysql_fetch_array($getrows))
+{
+$schedule_id = $row['id'];
+$daysperstage = $row['estimated_daysperstage'];
+
+$date = strtotime($project_start_date);
+$date = strtotime("+".$daysperstage." day", $date);
+$newdate = date('Y-m-d', $date);
+$newresult = mysql_query("update schedule set estimated_start_date='".$project_start_date."' , estimated_end_date= '".$newdate."' where id='".$schedule_id."' ");
+
+$date1 = strtotime($newdate);
+$date1 = strtotime("+1 day", $date);
+$newdate1 = date('Y-m-d', $date1);
+
+$project_start_date = $newdate1;
+
+}
+
+if(!$getrows)
+{
+$result["failure"] = true;
+$result["message"] = 'Invalid query: ' . mysql_error();
+}
+else
+{
+$result["success"] = true;
+$result["message"] = 'dates changed successfully';
+}
+
+echo json_encode($result);
+}
+  
   
 ?>

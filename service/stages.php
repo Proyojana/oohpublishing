@@ -9,13 +9,13 @@ $id=$_SESSION['id'];
 			getRatecardMaster($_POST['workflowid']);
 			break;
 		case 2:
-			insertStageMaster($_POST['stage_id'],$_POST['stage_order'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name'],$_POST['no_of_days'],$_POST['ratecard_USD'],$_POST['ratecard_GBP']);
+			insertStageMaster($_POST['stage_id'],$_POST['stage_order'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name'],$_POST['no_of_days'],$_POST['ratecard_USD'],$_POST['ratecard_GBP'],$_POST['payable_ratecard_USD'],$_POST['payable_ratecard_GBP']);
 			break;
 		case 3:
 			deleteStageById($_POST["stage_id"]);	
 			break;
 		case 4:
-			saveStageMaster($_POST['stage_id'],$_POST['stage_order'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name'],$_POST['no_of_days'],$_POST['ratecard_USD'],$_POST['ratecard_GBP']);
+			saveStageMaster($_POST['stage_id'],$_POST['stage_order'],$_POST['workflow_id'],$_POST['activity'],$_POST['stage_name'],$_POST['no_of_days'],$_POST['ratecard_USD'],$_POST['ratecard_GBP'],$_POST['payable_ratecard_USD'],$_POST['payable_ratecard_GBP']);
 			break;
 		case 5:
 			getDefaultStages();
@@ -31,6 +31,8 @@ $id=$_SESSION['id'];
   stages.no_of_days As no_of_days,
   stages.ratecard_USD As ratecard_USD,
   stages.ratecard_GBP As ratecard_GBP,
+  stages.payable_ratecard_USD As payable_ratecard_USD,
+  stages.payable_ratecard_GBP As payable_ratecard_GBP,
   activity.id As activity,
   stages.id As stage_id
 From
@@ -48,6 +50,8 @@ Where
   stages.no_of_days As no_of_days,
   stages.ratecard_USD As ratecard_USD,
   stages.ratecard_GBP As ratecard_GBP,
+  stages.payable_ratecard_USD As payable_ratecard_USD,
+  stages.payable_ratecard_GBP As payable_ratecard_GBP,
   activity.id As activity,
   stages.id As stage_id
 From
@@ -64,7 +68,7 @@ Where
 		}
 	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
 	}
-	function insertStageMaster($stage_id,$stage_order,$workflow_id,$activity,$stage_name,$no_of_days,$ratecard_USD,$ratecard_GBP)
+	function insertStageMaster($stage_id,$stage_order,$workflow_id,$activity,$stage_name,$no_of_days,$ratecard_USD,$ratecard_GBP,$payable_ratecard_USD,$payable_ratecard_GBP)
     {
     	
     		$stage_id1 = explode(',',$stage_id);
@@ -74,6 +78,8 @@ Where
 			$no_of_days1= explode(',',$no_of_days);
 			$ratecard_USD1= explode(',',$ratecard_USD);
 			$ratecard_GBP1= explode(',',$ratecard_GBP);
+			$payable_ratecard_USD1= explode(',',$payable_ratecard_USD);
+			$payable_ratecard_GBP1= explode(',',$payable_ratecard_GBP);
 		
 			for ($i = 0; $i < count($stage_id1)-1; $i++)
 			{
@@ -85,7 +91,7 @@ Where
 					
 					if($num_rows==0)
 					{
-						$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,no_of_days,ratecard_USD,ratecard_GBP,flag) VALUES('','".$workflow_id."','".$stage_order1[$i]."','".$stage_name1[$i]."','".$activity1[$i]."','".$no_of_days1[$i]."','".$ratecard_USD1[$i]."','".$ratecard_GBP1[$i]."','')");
+						$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,no_of_days,ratecard_USD,ratecard_GBP,payable_ratecard_USD,payable_ratecard_GBP,flag) VALUES('','".$workflow_id."','".$stage_order1[$i]."','".$stage_name1[$i]."','".$activity1[$i]."','".$no_of_days1[$i]."','".$ratecard_USD1[$i]."','".$ratecard_GBP1[$i]."','".$payable_ratecard_USD1[$i]."','".$payable_ratecard_GBP1[$i]."','')");
 						if(!$result1)
 						{
 							$result["failure"] = true;
@@ -101,7 +107,7 @@ Where
 			else if($num_rows==1)
 			{
 			
-				$result1 = mysql_query ("Update stages set stage_name='".$stage_name1[$i]."',activity='".$activity1[$i]."',no_of_days='".$no_of_days1[$i]."',ratecard_GBP='".$ratecard_GBP1[$i]."',ratecard_USD='".$ratecard_USD1[$i]."' where id='".$stage_id1[$i]."'");
+				$result1 = mysql_query ("Update stages set stage_name='".$stage_name1[$i]."',activity='".$activity1[$i]."',no_of_days='".$no_of_days1[$i]."',ratecard_GBP='".$ratecard_GBP1[$i]."',ratecard_USD='".$ratecard_USD1[$i]."',payable_ratecard_USD='".$payable_ratecard_USD1[$i]."',payable_ratecard_GBP='".$payable_ratecard_GBP1[$i]."' where id='".$stage_id1[$i]."'");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -164,7 +170,7 @@ Where
 		echo json_encode($result);
 	}
 	
-	function saveStageMaster($stage_id,$stage_order,$workflow_id,$activity,$stage_name,$no_of_days,$ratecard_USD,$ratecard_GBP)
+	function saveStageMaster($stage_id,$stage_order,$workflow_id,$activity,$stage_name,$no_of_days,$ratecard_USD,$ratecard_GBP,$payable_ratecard_USD,$payable_ratecard_GBP)
     {
 		$checkquery="SELECT id FROM stages WHERE id='".$stage_id."' ";
 		$result1=mysql_query($checkquery);
@@ -172,7 +178,7 @@ Where
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,no_of_days,ratecard_USD,ratecard_GBP,flag) VALUES('','".$workflow_id."','".$stage_order."','".$stage_name."','".$activity."','".$no_of_days."','".$ratecard_USD."','".$ratecard_GBP."','')");
+			$result1 = mysql_query ("INSERT INTO stages(id,workflow_id,stage_order,stage_name,activity,no_of_days,ratecard_USD,ratecard_GBP,payable_ratecard_USD,payable_ratecard_GBP,flag) VALUES('','".$workflow_id."','".$stage_order."','".$stage_name."','".$activity."','".$no_of_days."','".$ratecard_USD."','".$ratecard_GBP."','".$payable_ratecard_USD."','".$payable_ratecard_GBP."','')");
 			if(!$result1)
 			{
 				$result["failure"] = true;
@@ -187,7 +193,7 @@ Where
 		else if($num_rows==1)
 		{
 			
-			$result1 = mysql_query ("Update stages set stage_name='".$stage_name."',activity='".$activity."',no_of_days='".$no_of_days."',ratecard_USD='".$ratecard_USD."',ratecard_GBP='".$ratecard_GBP."' where id='".$stage_id."'");
+			$result1 = mysql_query ("Update stages set stage_name='".$stage_name."',activity='".$activity."',no_of_days='".$no_of_days."',ratecard_USD='".$ratecard_USD."',ratecard_GBP='".$ratecard_GBP."',payable_ratecard_USD='".$payable_ratecard_USD."',payable_ratecard_GBP='".$payable_ratecard_GBP."' where id='".$stage_id."'");
 			if(!$result1)
 			{
 				$result["failure"] = true;

@@ -17,7 +17,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 		clicksToEdit: 1
 	})
 	],
-initComponent: function() {//load activity combo
+	initComponent: function() {//load activity combo
 		var activity = Ext.create('MyDesktop.store.ProductionStages');
 		activity.load({
 			params: {
@@ -32,17 +32,14 @@ initComponent: function() {//load activity combo
 				limit: 30
 			}
 		});
-		
-		
+
 		ci.loadPage(1);
 		this.store = ci,
-	
+
 		this.columns = [{
 			dataIndex: 'schedule_id',
 			hidden:true
-		},
-	
-		{
+		},{
 			dataIndex: 'stageorder',
 			text: 'Stage Order',
 			align: 'center',
@@ -51,154 +48,163 @@ initComponent: function() {//load activity combo
 				hideTrigger:true,
 			},
 			flex:0.5,
-		},
-		{
+		},{
 			dataIndex: 'activityid',
 			text: 'Activity',
 			align: 'center',
 			flex:1,
-			 editor: { 
-						xtype:'combo',
-						store: activity,
-						queryMode: 'local',
-						displayField: 'product_name',
-						valueField: 'product_id',
-						},
-						
-	renderer: function(value) {
-					var index = activity.find('product_id', value);
-					if (index != -1) {
+			editor: {
+				xtype:'combo',
+				store: activity,
+				queryMode: 'local',
+				displayField: 'product_name',
+				valueField: 'product_id',
+			},
+
+			renderer: function(value) {
+				var index = activity.find('product_id', value);
+				if (index != -1) {
 					return activity.getAt(index).data.product_name;
-					}
-					return value;
-					}
-		},
-		{
+				}
+				return value;
+			}
+		},{
 			dataIndex: 'stage',
 			text: 'Stage',
 			align: 'center',
 			flex:1,
 			//width:270,
-			editor: { 
-						xtype:'textfield',
-						
-					}
+			editor: {
+				xtype:'textfield',
+
+			}
 		},{
-			
+
 			dataIndex: 'estimated_daysperstage',
 			text:'Days per stage Estimate',
-				align:'center',		
-				editor: {
-					xtype:'numberfield',
-					hideTrigger:true,
-						listeners: {
-						change: function(field, newValue, oldValue) {
-										
-							var grid = this.up().up();
-							//get rowIndex
-							var selectedRecord = grid.getSelectionModel().getSelection()[0];
-							var rowIndex = grid.store.indexOf(selectedRecord);
-														
-							// get selection model of the grid							
-							var selModel = grid.getSelectionModel();
-							//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
-							
-							if(rowIndex!=0){
+			align:'center',
+			editor: {
+				xtype:'numberfield',
+				hideTrigger:true,
+				listeners: {
+					change: function(field, newValue, oldValue) {
+
+						var grid = this.up().up();
+						//get rowIndex
+						var selectedRecord = grid.getSelectionModel().getSelection()[0];
+						var rowIndex = grid.store.indexOf(selectedRecord);
+
+						// get selection model of the grid
+						var selModel = grid.getSelectionModel();
+						//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
+
+						if(rowIndex!=0) {
 							/* set value for estimated_start_date */
 							var bDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
 							var eEndDate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;
 							var val=Ext.Date.add(eEndDate,Ext.Date.DAY,bDay);
 							selModel.getSelection()[0].set('estimated_start_date', val);
-							
+
 							/* set value for estimated_end_date */
 							var sdate=selModel.getSelection()[0].data.estimated_start_date;
 							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
 							selModel.getSelection()[0].set('estimated_end_date', val1);
-							}
-							
-							else
-							{
-								
-								var currentForm = this.up('newprojectScheduleform');
-								var startDate = Ext.getCmp('schedule_projectStartDate').getValue();
-								
-								if(startDate!=null)
-								{
-									/* set value for estimated_start_date */
-									selModel.getSelection()[0].set('estimated_start_date', startDate);
-									
-									/* set value for estimated_end_date */
-									var sdate=selModel.getSelection()[0].data.estimated_start_date;
-									var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
-									selModel.getSelection()[0].set('estimated_end_date', val1);
-								}
-								else
-								{	
-									
-									Ext.Msg.alert('Message', 'Please Select Project Start Date');
-									//empty the entered value in grid column estimated_daysperstage
-									var rec = grid.store.getAt(rowIndex);
-                					rec.set('estimated_daysperstage', '0');
-									selModel.getSelection()[0].set('estimated_daysperstage', 0);
-								}
-							}
-					} 
+						} else {
 
+							var currentForm = this.up('newprojectScheduleform');
+							var startDate = Ext.getCmp('schedule_projectStartDate').getValue();
+
+							if(startDate!=null) {
+								/* set value for estimated_start_date */
+								selModel.getSelection()[0].set('estimated_start_date', startDate);
+
+								/* set value for estimated_end_date */
+								var sdate=selModel.getSelection()[0].data.estimated_start_date;
+								var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+								selModel.getSelection()[0].set('estimated_end_date', val1);
+							} else {
+
+								Ext.Msg.alert('Message', 'Please Select Project Start Date');
+								//empty the entered value in grid column estimated_daysperstage
+								var rec = grid.store.getAt(rowIndex);
+								rec.set('estimated_daysperstage', '0');
+								selModel.getSelection()[0].set('estimated_daysperstage', 0);
+							}
+						}
+					}
 				}
-				},
+			},
 
-				textStyle:'font-size:13px;'
+			textStyle:'font-size:13px;'
 
-			
 		},{
 			text:'Start Date',
-			
+
 			columns: [{
 				dataIndex: 'estimated_start_date',
 				text: 'Estimate',
 				align:'center',
 				editor: {
 					xtype:'datefield',
-                    format: 'd/m/Y',
+					format: 'd/m/Y',
 					listeners: {
 						change: function(field, newValue, oldValue) {
 							var grid = this.up().up();
 							// get selection model of the grid
-														
+
 							var selModel = grid.getSelectionModel();
-							var days=selModel.getSelection()[0].data.estimated_daysperstage;
+							var schedule_id=selModel.getSelection()[0].data.schedule_id;
+							//var estimated_daysperstage=selModel.getSelection()[0].data.estimated_daysperstage;
 
-							var val=Ext.Date.add(newValue,Ext.Date.DAY,days);
+							project_start_date=newValue;
+							var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
+							// alert(projectid);
+							var conn = new Ext.data.Connection();
+							conn.request({
+								url: 'service/schedule.php',
+								method: 'POST',
+								params : {
+									action:7,
+									projectid:projectid,
+									project_start_date:project_start_date,
+									schedule_id:schedule_id,
+									//estimated_daysperstage:estimated_daysperstage,
 
-							selModel.getSelection()[0].set('estimated_end_date', val);
-									
-						
+								},
+								success: function(response) {
+									obj = Ext.JSON.decode(response.responseText);
+									//Ext.Msg.alert('Message', obj.message);
+									//win.close();
+
+									var grid3=Ext.getCmp('editprojectSchedulegrid');
+									grid3.getStore().load({
+										params: {
+											action:4,
+											projectid:projectid
+										}
+									});
+									Ext.getCmp('editprojectSchedulegrid').getView().refresh();
+								}
+							});
 						},
 					} ,
 
-		
 				},
-					renderer: function(value){
-						//alert(value);
-						if(value!=null && value!='' && value!='null'){
-							var v=value.getDay();
-							if(v==0||v==6){
-							return '<span style="color:#FF0000;font-weight:bold">'+value+'</span>';	
-							}
-							else
-							{
-								return value;
-							}
-						}
-						else
-						{						
+				renderer: function(value) {
+					//alert(value);
+					if(value!=null && value!='' && value!='null') {
+						var v=value.getDay();
+						if(v==0||v==6) {
+							return '<span style="color:#FF0000;font-weight:bold">'+value+'</span>';
+						} else {
 							return value;
-														
 						}
-						
-					},
-				
+					} else {
+						return value;
 
+					}
+
+				},
 				textStyle:'font-size:13px;'
 
 			},{
@@ -209,44 +215,40 @@ initComponent: function() {//load activity combo
 					xtype:'datefield',
 					format: 'd/m/Y',
 					/*listeners: {
-						change: function(field, newValue, oldValue) {
-							var ONE_DAY = 1000 * 60 * 60 * 24;
-							var grid = this.up().up();
-							// get selection model of the grid
-							var selModel = grid.getSelectionModel();
-							var est_start_day=selModel.getSelection()[0].data.estimated_start_date;
-alert(est_start_day);
-                          var estimated_end_date=selModel.getSelection()[0].data.estimated_end_date;
-                          alert(estimated_end_date);
-                         var diff= Math.abs(estimated_end_date - est_start_day)
-                      alert( Math.round(diff/ONE_DAY));
-                    
-							//var val=Ext.Date.add(newValue,Ext.Date.DAY,days);
+					 change: function(field, newValue, oldValue) {
+					 var ONE_DAY = 1000 * 60 * 60 * 24;
+					 var grid = this.up().up();
+					 // get selection model of the grid
+					 var selModel = grid.getSelectionModel();
+					 var est_start_day=selModel.getSelection()[0].data.estimated_start_date;
+					 alert(est_start_day);
+					 var estimated_end_date=selModel.getSelection()[0].data.estimated_end_date;
+					 alert(estimated_end_date);
+					 var diff= Math.abs(estimated_end_date - est_start_day)
+					 alert( Math.round(diff/ONE_DAY));
 
-							//selModel.getSelection()[0].set('actual_end_date', val);
+					 //var val=Ext.Date.add(newValue,Ext.Date.DAY,days);
 
-						},
-					} ,*/
+					 //selModel.getSelection()[0].set('actual_end_date', val);
+
+					 },
+					 } ,*/
 				},
-				renderer: function(value){
-						//alert(value);
-						if(value!=null && value!='' && value!='null'){
-							var v=value.getDay();
-							if(v==0||v==6){
-							return '<span style="color:#FF0000;font-weight:bold">'+value+'</span>';	
-							}
-							else
-							{
-								return value;
-							}
-						}
-						else
-						{						
+				renderer: function(value) {
+					//alert(value);
+					if(value!=null && value!='' && value!='null') {
+						var v=value.getDay();
+						if(v==0||v==6) {
+							return '<span style="color:#FF0000;font-weight:bold">'+value+'</span>';
+						} else {
 							return value;
-														
 						}
-						
-					},
+					} else {
+						return value;
+
+					}
+
+				},
 			}
 			]
 		},{
@@ -265,38 +267,34 @@ alert(est_start_day);
 							// get selection model of the grid
 							var selModel = grid.getSelectionModel();
 							var start_date=selModel.getSelection()[0].data.estimated_start_date;
-							//date diffrence 
+							//date diffrence
 							var sec = 1000;
 							var min = sec * 60;
 							var hour = min * 60;
 							var day = hour * 24;
-							
+
 							var dateDiff = (newValue - start_date) / day;
-							
+
 							selModel.getSelection()[0].set('estimated_daysperstage', dateDiff);
 
 						},
 					} ,
 				},
-				renderer: function(value){
-						//alert(value);
-						if(value!=null && value!='' && value!='null'){
-							var v=value.getDay();
-							if(v==0||v==6){
-							return '<span style="color:#FF0000;font-weight:bold">'+value+'</span>';	
-							}
-							else
-							{
-								return value;
-							}
-						}
-						else
-						{						
+				renderer: function(value) {
+					//alert(value);
+					if(value!=null && value!='' && value!='null') {
+						var v=value.getDay();
+						if(v==0||v==6) {
+							return '<span style="color:#FF0000;font-weight:bold">'+value+'</span>';
+						} else {
 							return value;
-														
 						}
-						
-					},
+					} else {
+						return value;
+
+					}
+
+				},
 				textStyle:'font-size:13px;'
 
 			},{
@@ -312,60 +310,55 @@ alert(est_start_day);
 							// get selection model of the grid
 							var selModel = grid.getSelectionModel();
 							var start_date=selModel.getSelection()[0].data.actual_start_date;
-							//date diffrence 
+							//date diffrence
 							var sec = 1000;
 							var min = sec * 60;
 							var hour = min * 60;
 							var day = hour * 24;
-							
+
 							var dateDiff = (newValue - start_date) / day;
-							
+
 							selModel.getSelection()[0].set('actual_daysperstage', dateDiff);
 
 						},
 					} ,
 				},
-				renderer: function(value){
-						//alert(value);
-						if(value!=null && value!='' && value!='null'){
-							var v=value.getDay();
-							if(v==0||v==6){
-							return '<span style="color:#FF0000;font-weight:bold">'+value+'</span>';	
-							}
-							else
-							{
-								return value;
-							}
-						}
-						else
-						{						
+				renderer: function(value) {
+					//alert(value);
+					if(value!=null && value!='' && value!='null') {
+						var v=value.getDay();
+						if(v==0||v==6) {
+							return '<span style="color:#FF0000;font-weight:bold">'+value+'</span>';
+						} else {
 							return value;
-														
 						}
-						
-					},
+					} else {
+						return value;
+
+					}
+
+				},
 			}
 			]
-		},
-		{
-				dataIndex: 'actual_daysperstage',
-				text: 'Days per Stage Actuals',				
-				editor: {
-					xtype:'numberfield',
-					hideTrigger:true,
-						listeners: {
-						change: function(field, newValue, oldValue) {
-										
-							var grid = this.up().up();
-							//get rowIndex
-							var selectedRecord = grid.getSelectionModel().getSelection()[0];
-							var rowIndex = grid.store.indexOf(selectedRecord);
-							
-							// get selection model of the grid							
-							var selModel = grid.getSelectionModel();
-							//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
-							
-							if(rowIndex!=0){
+		},{
+			dataIndex: 'actual_daysperstage',
+			text: 'Days per Stage Actuals',
+			editor: {
+				xtype:'numberfield',
+				hideTrigger:true,
+				listeners: {
+					change: function(field, newValue, oldValue) {
+
+						var grid = this.up().up();
+						//get rowIndex
+						var selectedRecord = grid.getSelectionModel().getSelection()[0];
+						var rowIndex = grid.store.indexOf(selectedRecord);
+
+						// get selection model of the grid
+						var selModel = grid.getSelectionModel();
+						//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
+
+						if(rowIndex!=0) {
 							//	var aDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
 							var aEndDate=grid.getStore().getAt(rowIndex-1).data.actual_end_date;
 							/*var val=Ext.Date.add(aEndDate,Ext.Date.DAY,aDay);*/
@@ -373,88 +366,77 @@ alert(est_start_day);
 							var sdate=selModel.getSelection()[0].data.actual_start_date;
 							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
 							selModel.getSelection()[0].set('actual_end_date', val1);
-							}
-							
-							else
-							{
-								
-									//selModel.getSelection()[0].set('estimated_start_date', startDate);
-									var sdate=selModel.getSelection()[0].data.actual_start_date;	
-									var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
-									selModel.getSelection()[0].set('actual_end_date', val1);
-								
-							}
-					} 
+						} else {
 
+							//selModel.getSelection()[0].set('estimated_start_date', startDate);
+							var sdate=selModel.getSelection()[0].data.actual_start_date;
+							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+							selModel.getSelection()[0].set('actual_end_date', val1);
+
+						}
+					}
 				}
-				},
-	
-				align:'center',
-			},{
+			},
 
-		dataIndex: 'bufferday',
+			align:'center',
+		},{
+
+			dataIndex: 'bufferday',
 			text: 'Buffer Days',
 			editor: {
 				xtype:'numberfield',
 				hideTrigger:true,
-					listeners: {
-						change: function(field, newValue, oldValue) {
-										
-							var grid = this.up().up();
-							//get rowIndex
-							var selectedRecord = grid.getSelectionModel().getSelection()[0];
-							var rowIndex = grid.store.indexOf(selectedRecord);
-							
-							// get selection model of the grid							
-							var selModel = grid.getSelectionModel();
-											
-							/* set value for estimated start date **/
-							var eEndDate=selModel.getSelection()[0].data.estimated_end_date;
-							var val=Ext.Date.add(eEndDate,Ext.Date.DAY,newValue);
-							
-							var rec = grid.store.getAt(rowIndex+1);
-                			rec.set('estimated_start_date', val);
-							
-							/* set value for estimated end date */
-							var eDay=grid.getStore().getAt(rowIndex+1).data.estimated_daysperstage;
-							var eStartDate=grid.getStore().getAt(rowIndex+1).data.estimated_start_date;
-							var eEndDateval=Ext.Date.add(eStartDate,Ext.Date.DAY,eDay);
-							rec.set('estimated_end_date', eEndDateval);
-							
-							
-								
+				listeners: {
+					change: function(field, newValue, oldValue) {
 
-							
-					} 
+						var grid = this.up().up();
+						//get rowIndex
+						var selectedRecord = grid.getSelectionModel().getSelection()[0];
+						var rowIndex = grid.store.indexOf(selectedRecord);
 
+						// get selection model of the grid
+						var selModel = grid.getSelectionModel();
+
+						/* set value for estimated start date **/
+						var eEndDate=selModel.getSelection()[0].data.estimated_end_date;
+						var val=Ext.Date.add(eEndDate,Ext.Date.DAY,newValue);
+
+						var rec = grid.store.getAt(rowIndex+1);
+						rec.set('estimated_start_date', val);
+
+						/* set value for estimated end date */
+						var eDay=grid.getStore().getAt(rowIndex+1).data.estimated_daysperstage;
+						var eStartDate=grid.getStore().getAt(rowIndex+1).data.estimated_start_date;
+						var eEndDateval=Ext.Date.add(eStartDate,Ext.Date.DAY,eDay);
+						rec.set('estimated_end_date', eEndDateval);
+
+					}
 				}
 			},
 			align:'center',
-		
-		
-		},
-		{
-			dataIndex: 'status',
-				text: 'Status',
-				align:'center',
-				flex:1
-			
+
 		},{
-		 xtype:'actioncolumn',
-		 align: 'center',
-		 flex:1,
-		 //width:250,
-		 text:'Actions',
-		 items: [{
-					iconCls: 'deleteClass',
-					tooltip: 'Delete',
-					handler: function(grid, rowIndex, colIndex) {
-						
-						var grid = this.up('grid');
+			dataIndex: 'status',
+			text: 'Status',
+			align:'center',
+			flex:1
+
+		},{
+			xtype:'actioncolumn',
+			align: 'center',
+			flex:1,
+			//width:250,
+			text:'Actions',
+			items: [{
+				iconCls: 'deleteClass',
+				tooltip: 'Delete',
+				handler: function(grid, rowIndex, colIndex) {
+
+					var grid = this.up('grid');
 					if (grid) {
 						var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
-						
-						       	var rec = grid.getStore().getAt(rowIndex);
+
+						var rec = grid.getStore().getAt(rowIndex);
 						Ext.Msg.confirm('Remove Record '+rec.get('stage')+' ?',+rec.get('stage'), function (button) {
 							if (button == 'yes') {
 								var id=rec.get('schedule_id');
@@ -462,33 +444,35 @@ alert(est_start_day);
 								conn.request({
 									url: 'service/schedule.php',
 									method: 'POST',
-									params : {action:6,id:id},
-									success:function(response){
-										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										 var grid3=Ext.getCmp('editprojectSchedulegrid');
-											grid3.getStore().load({
-												params: {
-													action:4,
-													projectid:projectid
-												}
-											});
-											Ext.getCmp('editaccountReceiveGrid_a').getView().refresh();
+									params : {
+										action:6,
+										id:id
 									},
-									failure:function(response){
+									success: function(response) {
 										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Deletion Failed !', obj.message); 
+										Ext.Msg.alert('Successfully Deleted', obj.message);
+										var grid3=Ext.getCmp('editprojectSchedulegrid');
+										grid3.getStore().load({
+											params: {
+												action:4,
+												projectid:projectid
+											}
+										});
+										Ext.getCmp('editaccountReceiveGrid_a').getView().refresh();
+									},
+									failure: function(response) {
+										obj = Ext.JSON.decode(response.responseText);
+										Ext.Msg.alert('Deletion Failed !', obj.message);
 									}
 								});
-								
-								
+
 							}
 						});
 					}
-					
-					}
-				},]
-		 }];
+
+				}
+			},]
+		}];
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 
 			store : this.store,
@@ -496,40 +480,40 @@ alert(est_start_day);
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
 			items:[{
-                               xtype : 'button',
-                               text : 'Insert New Row',
-                               pressed:true,
-                               x : 500,
-                               y : 10,
-                               width : 100,
-                               height : 25,
-                               handler : function() {
-               						var r = Ext.create('MyDesktop.model.Schedule', {
-               						schedule_id:'',
-                    				stageorder: '',
-                    				activity: '',
-                 					activityid: '',
-                    				stage: '',
-                    				estimated_daysperstage:'',
-                    				actual_daysperstage: '',
-                    				estimated_start_date: '',
-                 					actual_start_date: '',
-                    				estimated_end_date: '',
-                    				actual_end_date:'',
-                    				bufferday: '',
-                    				
-                				});
-                				//store.getCount()-1
-                		       ci.insert(ci.getCount(), r);
-            				 }                           
-        },
+				xtype : 'button',
+				text : 'Insert New Row',
+				pressed:true,
+				x : 500,
+				y : 10,
+				width : 100,
+				height : 25,
+				handler : function() {
+					var r = Ext.create('MyDesktop.model.Schedule', {
+						schedule_id:'',
+						stageorder: '',
+						activity: '',
+						activityid: '',
+						stage: '',
+						estimated_daysperstage:'',
+						actual_daysperstage: '',
+						estimated_start_date: '',
+						actual_start_date: '',
+						estimated_end_date: '',
+						actual_end_date:'',
+						bufferday: '',
+
+					});
+					//store.getCount()-1
+					ci.insert(ci.getCount(), r);
+				}
+			},
 			]
 
 		}),
 
 		this.callParent(arguments);
-		
-			}
+
+	}
 });
 
 // Load first data page

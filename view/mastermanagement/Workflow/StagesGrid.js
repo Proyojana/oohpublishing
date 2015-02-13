@@ -145,7 +145,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 					
 				},
 				{
-					text:'Rate Card',
+					text:'Receivables Rate Card',
 					
 		columns: [{
 					dataIndex: 'ratecard_USD',
@@ -158,6 +158,28 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 				},
 				{
 					dataIndex: 'ratecard_GBP',
+					text: 'Pounds(GBP)',
+		        	align:'center',
+		        	editor:{
+						xtype:'textfield'
+					}
+				}
+				]
+				},
+				{
+					text:'Payables Rate Card',
+					
+		columns: [{
+					dataIndex: 'payable_ratecard_USD',
+					text: 'Dollars(USD)',
+		        	align:'center',
+		        	editor:{
+						xtype:'textfield'
+					}
+									
+				},
+				{
+					dataIndex: 'payable_ratecard_GBP',
 					text: 'Pounds(GBP)',
 		        	align:'center',
 		        	editor:{
@@ -191,11 +213,13 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 								var no_of_days=rec.get('no_of_days');
 								var ratecard_USD=rec.get('ratecard_USD');
 								var ratecard_GBP=rec.get('ratecard_GBP');							
+								var payable_ratecard_USD=rec.get('payable_ratecard_USD');
+								var payable_ratecard_GBP=rec.get('payable_ratecard_GBP');
 								var conn = new Ext.data.Connection();
 								conn.request({
 									url: 'service/stages.php',
 									method: 'POST',
-									params : {action:4,stage_id:stage_id,workflow_id:WorkflowId.value,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP},
+									params : {action:4,stage_id:stage_id,workflow_id:WorkflowId.value,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP,payable_ratecard_USD:payable_ratecard_USD,payable_ratecard_GBP:payable_ratecard_GBP},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 
@@ -277,7 +301,9 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
                     				activity: '',
                     				no_of_days:'',
                     				ratecard_USD:'',
-                    				ratecard_GBP:''
+                    				ratecard_GBP:'',
+                    				payable_ratecard_USD:'',
+                    				payable_ratecard_GBP:''
                     				
                 				});
                 		       ratecard.insert(ratecard.getCount(), r);
@@ -299,6 +325,8 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 								var no_of_days='';
 								var ratecard_USD='';
 								var ratecard_GBP='';
+								var payable_ratecard_USD='';
+								var payable_ratecard_GBP='';
 							var grid=Ext.getCmp('stagesgrid');
 							
 					var myStore = Ext.getCmp('stagesgrid').getStore();
@@ -311,6 +339,8 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 				    no_of_days=no_of_days+rec.get('no_of_days')+',';
 				    ratecard_USD=ratecard_USD+rec.get('ratecard_USD')+',';
 					ratecard_GBP=ratecard_GBP+rec.get('ratecard_GBP')+',';
+					payable_ratecard_USD=payable_ratecard_USD+rec.get('payable_ratecard_USD')+',';
+					payable_ratecard_GBP=payable_ratecard_GBP+rec.get('payable_ratecard_GBP')+',';
 				    			
 				});
 				      
@@ -318,7 +348,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 					conn.request({
 									url: 'service/stages.php',
 									method: 'POST',
-									params : {action:2,stage_id:stage_id,workflow_id:WorkflowId.value,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP},
+									params : {action:2,stage_id:stage_id,workflow_id:WorkflowId.value,activity:activity,stage_name:stage_name,stage_order:stage_order,no_of_days:no_of_days,ratecard_USD:ratecard_USD,ratecard_GBP:ratecard_GBP,payable_ratecard_USD:payable_ratecard_USD,payable_ratecard_GBP:payable_ratecard_GBP},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully saved', obj.message); 
