@@ -367,7 +367,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					 }
 					 else
 					 {
-					 	Ext.getCmp('edit_profit_GBP').setValue();
+					 	Ext.getCmp('edit_profit_GBP').setValue(bal);
 					 }
 					 }
 					 });

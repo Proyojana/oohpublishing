@@ -87,25 +87,105 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 				xtype:'numberfield',
 				hideTrigger:true,
 				listeners: {
-					change: function(field, newValue, oldValue) {
+					// edit: function(editor, e) {
+					change: function(field, newValue, oldValue,record) {
 
+				 	
 						var grid = this.up().up();
 						//get rowIndex
 						var selectedRecord = grid.getSelectionModel().getSelection()[0];
 						var rowIndex = grid.store.indexOf(selectedRecord);
+						
+
 
 						// get selection model of the grid
 						var selModel = grid.getSelectionModel();
 						//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
+if(newValue!=null)	
+{
+	var dps=newValue;
 
-						if(rowIndex!=0) {
-							/* set value for estimated_start_date */
+if(rowIndex==0){
+	var val=grid.getStore().getAt(rowIndex).data.estimated_start_date;
+	var asd=grid.getStore().getAt(rowIndex).data.actual_start_date;
+	var schedule_id=selModel.getSelection()[0].data.schedule_id;							
+							project_start_date=val;
+							actuals_start_date=asd;
+							var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
+							var conn = new Ext.data.Connection();
+							conn.request({
+								url: 'service/schedule.php',
+								method: 'POST',
+								params : {
+									action:8,
+									projectid:projectid,
+									project_start_date:project_start_date,
+									schedule_id:schedule_id,
+									dps:dps,
+									actuals_start_date:actuals_start_date,
+								},
+								success: function(response) {
+									obj = Ext.JSON.decode(response.responseText);
+									var grid3=Ext.getCmp('editprojectSchedulegrid');
+									grid3.getStore().load({
+										params: {
+											action:4,
+											projectid:projectid
+										}
+									});
+									Ext.getCmp('editprojectSchedulegrid').getView().refresh();
+								}
+							});
+}
+
+	
+else
+{
+	var prevenddate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;						
+	var prevactualenddate=grid.getStore().getAt(rowIndex-1).data.actual_end_date;
+    var val=Ext.Date.add(prevenddate,Ext.Date.DAY,1);
+     var asd=Ext.Date.add(prevactualenddate,Ext.Date.DAY,1);
+	var schedule_id=selModel.getSelection()[0].data.schedule_id;							
+							project_start_date=val;
+							actuals_start_date=asd;
+							var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
+							var conn = new Ext.data.Connection();
+							conn.request({
+								url: 'service/schedule.php',
+								method: 'POST',
+								params : {
+									action:8,
+									projectid:projectid,
+									project_start_date:project_start_date,
+									schedule_id:schedule_id,
+									dps:dps,
+									actuals_start_date:actuals_start_date,
+								},
+								success: function(response) {
+									obj = Ext.JSON.decode(response.responseText);
+									var grid3=Ext.getCmp('editprojectSchedulegrid');
+									grid3.getStore().load({
+										params: {
+											action:4,
+											projectid:projectid
+										}
+									});
+									Ext.getCmp('editprojectSchedulegrid').getView().refresh();
+								}
+							});
+}					
+						
+}
+
+						/**if(rowIndex!=0) {
+							
 							var bDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
+						
 							var eEndDate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;
 							var val=Ext.Date.add(eEndDate,Ext.Date.DAY,bDay);
 							selModel.getSelection()[0].set('estimated_start_date', val);
 
-							/* set value for estimated_end_date */
+						
 							var sdate=selModel.getSelection()[0].data.estimated_start_date;
 							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
 							selModel.getSelection()[0].set('estimated_end_date', val1);
@@ -115,22 +195,22 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 							var startDate = Ext.getCmp('schedule_projectStartDate').getValue();
 
 							if(startDate!=null) {
-								/* set value for estimated_start_date */
+							
 								selModel.getSelection()[0].set('estimated_start_date', startDate);
 
-								/* set value for estimated_end_date */
+								
 								var sdate=selModel.getSelection()[0].data.estimated_start_date;
 								var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
 								selModel.getSelection()[0].set('estimated_end_date', val1);
 							} else {
 
 								Ext.Msg.alert('Message', 'Please Select Project Start Date');
-								//empty the entered value in grid column estimated_daysperstage
+							
 								var rec = grid.store.getAt(rowIndex);
 								rec.set('estimated_daysperstage', '0');
 								selModel.getSelection()[0].set('estimated_daysperstage', 0);
 							}
-						}
+						}**/
 					}
 				}
 			},
@@ -214,25 +294,47 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 				editor: {
 					xtype:'datefield',
 					format: 'd/m/Y',
-					/*listeners: {
-					 change: function(field, newValue, oldValue) {
-					 var ONE_DAY = 1000 * 60 * 60 * 24;
-					 var grid = this.up().up();
-					 // get selection model of the grid
-					 var selModel = grid.getSelectionModel();
-					 var est_start_day=selModel.getSelection()[0].data.estimated_start_date;
-					 alert(est_start_day);
-					 var estimated_end_date=selModel.getSelection()[0].data.estimated_end_date;
-					 alert(estimated_end_date);
-					 var diff= Math.abs(estimated_end_date - est_start_day)
-					 alert( Math.round(diff/ONE_DAY));
+					listeners: {
+						change: function(field, newValue, oldValue) {
+							var grid = this.up().up();
+							// get selection model of the grid
 
-					 //var val=Ext.Date.add(newValue,Ext.Date.DAY,days);
+							var selModel = grid.getSelectionModel();
+							var schedule_id=selModel.getSelection()[0].data.schedule_id;
+							//var estimated_daysperstage=selModel.getSelection()[0].data.estimated_daysperstage;
 
-					 //selModel.getSelection()[0].set('actual_end_date', val);
+							project_start_date=newValue;
+							var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
+							// alert(projectid);
+							var conn = new Ext.data.Connection();
+							conn.request({
+								url: 'service/schedule.php',
+								method: 'POST',
+								params : {
+									action:9,
+									projectid:projectid,
+									project_start_date:project_start_date,
+									schedule_id:schedule_id,
+									//estimated_daysperstage:estimated_daysperstage,
 
-					 },
-					 } ,*/
+								},
+								success: function(response) {
+									obj = Ext.JSON.decode(response.responseText);
+									//Ext.Msg.alert('Message', obj.message);
+									//win.close();
+
+									var grid3=Ext.getCmp('editprojectSchedulegrid');
+									grid3.getStore().load({
+										params: {
+											action:4,
+											projectid:projectid
+										}
+									});
+									Ext.getCmp('editprojectSchedulegrid').getView().refresh();
+								}
+							});
+						},
+					 } ,
 				},
 				renderer: function(value) {
 					//alert(value);
@@ -342,6 +444,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 			]
 		},{
 			dataIndex: 'actual_daysperstage',
+			hidden:true,
 			text: 'Days per Stage Actuals',
 			editor: {
 				xtype:'numberfield',
@@ -383,6 +486,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 
 			dataIndex: 'bufferday',
 			text: 'Buffer Days',
+			hidden:true,
 			editor: {
 				xtype:'numberfield',
 				hideTrigger:true,
@@ -418,6 +522,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 		},{
 			dataIndex: 'status',
 			text: 'Status',
+			hidden:true,
 			align:'center',
 			flex:1
 
