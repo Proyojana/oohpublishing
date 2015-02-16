@@ -81,18 +81,22 @@ var store1 = Ext.create('Ext.data.JsonStore', {
                 },
     }]
 });
-Ext.define('MyDesktop.view.projectmanagement.DashboardDualBar' ,{
-    extend: 'Ext.form.FieldSet',
-    alias : 'widget.dashboarddualbar',
+
+var dualbarobject =  Ext.getCmp('dashboarddualbar');
+
+if(!dualbarobject){
+	Ext.define('MyDesktop.view.projectmanagement.DashboardDualBar' ,{
+		extend: 'Ext.form.FieldSet',
+		alias : 'widget.dashboarddualbar',
    		id:'dashboarddualbar',
    		width:530,
    		//y:60,
    		title:'Budget Vs Actual',
  //   margin: '10 10 10 10',   
-	   defaults: {        
-        labelWidth: 90,
-    },
-	items:[barchart]
-	
-}); 
+		defaults: {        
+			labelWidth: 90,
+		},
+		items:[barchart]
+	}); 
+}
 });

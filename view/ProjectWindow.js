@@ -24,13 +24,17 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 
 		var flag=0;
 
-		var dashboard = Ext.create('MyDesktop.view.projectmanagement.DashboardTabPanel');
+		//var 
+		var dashboard = "undefined";
+		if(dashboard == "undefined")
+			dashboard = Ext.create('MyDesktop.view.projectmanagement.DashboardTabPanel');
 		var tab1 = "undefined";
 		var newproject = "undefined";
 		var editproject = "undefined";
 		var report = "undefined";
 		var completedproject = "undefined";
 		var archives = "undefined";
+		var win = "undefined";
 
 		var contentPanel8 = Ext.create('Ext.panel.Panel', {
 			id: 'content-panel8',
@@ -43,7 +47,7 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 		});
 		var navs = Ext.create('MyDesktop.view.projectmanagement.MasterNav');
 
-		navs.getSelectionModel().on('select', function(selModel, record) {
+		/*navs.getSelectionModel().on('select', function(selModel, record) {
 			var selectedNode = navs.getSelectionModel().getSelection();
 			console.log(selectedNode[0].data.id)
 			switch(selectedNode[0].data.id) {
@@ -91,13 +95,12 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 					break;
 			}
 			Ext.getCmp('content-panel8').layout.setActiveItem(selectedNode[0].data.id+'tab');
-		});
+		});*/
 		var desktop = this.app.getDesktop();
 
-		var win = desktop.getWindow('project-win');
-
-		//	Ext.getBody().unmask();
-		if(!win) {
+		
+		if(win=="undefined")
+		{
 			win = desktop.createWindow({
 				id: 'project-win',
 				title:'Project Management',
@@ -108,13 +111,14 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 				constrainHeader:true,
 				//setLoading:true,
 				closable: true,
+				closeAction: 'hide',
 				width: 600,
 				minWidth: 600,
 				height: 600,
 				layout: {
 					type: 'border',
 					padding: 5
-				},
+				}/*,
 				items: [{
 					region: 'west',
 					title: 'Dashboard',
@@ -122,10 +126,15 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 					rootVisible: false,
 					autoScroll: true,
 					items: [navs]
-				},contentPanel8]
+				},contentPanel8]*/
 
 			});
 		}
+		else
+		{
+			win = desktop.getWindow('project-win');
+		}
+		console.log(win);
 		return win;
 
 	},
