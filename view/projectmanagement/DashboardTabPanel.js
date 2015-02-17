@@ -1,12 +1,14 @@
+
+if(!Ext.getCmp('dashboardform'))
+{
+	var dashboardformobject = Ext.create('MyDesktop.view.projectmanagement.DashboardForm');
+}
+
 Ext.define('MyDesktop.view.projectmanagement.DashboardTabPanel',{
 		extend:'Ext.tab.Panel',
 		id:'projectdashboardtab',
 		alias:'widget.projectdashboardtab',
-		
-		requires:['MyDesktop.view.projectmanagement.DashboardForm'],
-					autoDestroy: false,
-					deferredRender: true,
-                    xtype: 'tabpanel',
-					region: 'center',
-                    items: [{xtype:'dashboardform'}]
+		deferredRender: true,
+		region: 'center',
+        items: [dashboardformobject]
 	});

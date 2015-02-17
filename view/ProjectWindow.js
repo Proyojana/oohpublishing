@@ -25,9 +25,9 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 		var flag=0;
 
 		//var 
-		var dashboard = "undefined";
-		if(dashboard == "undefined")
-			dashboard = Ext.create('MyDesktop.view.projectmanagement.DashboardTabPanel');
+		
+		if(!Ext.getCmp('newprojecttab'))
+			dashboard = Ext.create('MyDesktop.view.projectmanagement.newproject.newprojectTabPanel');
 		var tab1 = "undefined";
 		var newproject = "undefined";
 		var editproject = "undefined";
@@ -36,6 +36,7 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 		var archives = "undefined";
 		var win = "undefined";
 
+		if(!Ext.getCmp('content-panel8')){
 		var contentPanel8 = Ext.create('Ext.panel.Panel', {
 			id: 'content-panel8',
 			region: 'center', // this is what makes this panel into a region within the containing layout
@@ -44,15 +45,15 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 			activeItem: 0,
 			border: false,
 			items: [dashboard]
-		});
+		});}
 		var navs = Ext.create('MyDesktop.view.projectmanagement.MasterNav');
 
-		/*navs.getSelectionModel().on('select', function(selModel, record) {
+		navs.getSelectionModel().on('select', function(selModel, record) {
 			var selectedNode = navs.getSelectionModel().getSelection();
 			console.log(selectedNode[0].data.id)
 			switch(selectedNode[0].data.id) {
 				case 'newproject':
-					if(newproject == "undefined") {
+					if(!Ext.getCmp('newprojecttab')) {
 						newproject = Ext.create('MyDesktop.view.projectmanagement.newproject.newprojectTabPanel');
 						contentPanel8.add(newproject);
 						contentPanel8.doLayout();
@@ -95,11 +96,11 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 					break;
 			}
 			Ext.getCmp('content-panel8').layout.setActiveItem(selectedNode[0].data.id+'tab');
-		});*/
+		});
 		var desktop = this.app.getDesktop();
 
 		
-		if(win=="undefined")
+		if(!Ext.getCmp('project-win'))
 		{
 			win = desktop.createWindow({
 				id: 'project-win',
@@ -118,7 +119,7 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 				layout: {
 					type: 'border',
 					padding: 5
-				}/*,
+				},
 				items: [{
 					region: 'west',
 					title: 'Dashboard',
@@ -126,7 +127,7 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 					rootVisible: false,
 					autoScroll: true,
 					items: [navs]
-				},contentPanel8]*/
+				},contentPanel8]
 
 			});
 		}
@@ -134,7 +135,7 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 		{
 			win = desktop.getWindow('project-win');
 		}
-		console.log(win);
+		//updateWindowData();
 		return win;
 
 	},
