@@ -8,7 +8,7 @@ Ext.onReady(function() {
   setTimeout(function(){
     Ext.get('loading').remove();
     Ext.get('loading-mask').fadeOut({remove:true});
-  }, 25);
+  });
 });
 
 Ext.define('MyDesktop.App', {
