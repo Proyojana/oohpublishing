@@ -34,7 +34,7 @@
 		var mail = <?php	echo json_encode($user_mail);?>;
 		
 		</script>
-		<script type="text/javascript" src="inc/ext/ext.js"></script>
+		<script type="text/javascript" src="inc/ext/ext-all.js"></script>
 		<script type="text/javascript" src="inc/ext/src/lib/pdf.js/pdf.js"></script>
 		<script type="text/javascript" src="inc/ext/src/lib/pdf.js/compatibility.js"></script>
 		<script type="text/javascript" src="inc/ext/src/ux/panel/PDF.js"></script>
