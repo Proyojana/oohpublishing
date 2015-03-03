@@ -1549,7 +1549,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								myStore.each( function(rec) {
 
 									dateresolved=dateresolved+rec.get('dateresolved')+',';
-									narrative=narrative+rec.get('narrative')+',';
+									narrative=narrative+rec.get('narrative')+',,';
 									dateraised=dateraised+rec.get('dateraised')+',';
 									notes_id=notes_id+rec.get('id')+',';
 

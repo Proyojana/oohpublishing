@@ -66,7 +66,7 @@ function insertNotes($notes_id, $project_id, $dateraised, $narrative, $dateresol
 		
 			$notes_id1 = explode(',', $notes_id);
 			$dateraised1 = explode(',', $dateraised);
-			$narrative1 = explode(',', $narrative);
+			$narrative1 = explode(',,', $narrative);
 			$dateresolved1 = explode(',', $dateresolved);
 			for($i = 0; $i < count($narrative1) - 1; $i++) {
 				$checkquery = "SELECT id FROM notes WHERE id='" . $notes_id1[$i] . "'";
