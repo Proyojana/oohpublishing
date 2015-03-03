@@ -82,7 +82,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
 					 	
 						queryMode: 'local',
 						displayField: 'vendor_firstname',
-						valueField: 'vendor_id',
+						valueField: 'vendor_firstname',
 						mode: 'local',
 			   	   triggerAction: 'all',
 						

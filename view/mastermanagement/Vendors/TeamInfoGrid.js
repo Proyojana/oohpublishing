@@ -158,6 +158,7 @@ requires : ['MyDesktop.store.Teamvendor'],
 					var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
+						var currentForm = Ext.getCmp('Vendors_teamformTab');
 						var basicvendorid=Ext.getCmp('basicid').getValue();
 						Ext.Msg.confirm('Remove Record '+rec.get('teamname')+' ?',+rec.get('teamname'), function (button) {
 							if (button == 'yes') {
@@ -169,7 +170,9 @@ requires : ['MyDesktop.store.Teamvendor'],
 									params : {action:5,teamid:id},
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										Ext.Msg.alert('Successfully Deleted', obj.message);
+										currentForm.getForm().reset();
+										 
 										 var grid1=Ext.getCmp('vendorsteamgrid');
 						grid1.getStore().load({params:{action:3,basicvendorid:basicvendorid}});
 						Ext.getCmp('vendorsteamgrid').getStore().reload();

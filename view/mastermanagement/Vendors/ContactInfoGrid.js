@@ -146,6 +146,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoGrid', {
 					var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
+						var currentForm = Ext.getCmp('Vendors_contactTab');
 							var vendorid=Ext.getCmp('basicid').getValue();
 						Ext.Msg.confirm('Remove Record '+rec.get('name')+' ?',+rec.get('name'), function (button) {
 							if (button == 'yes') {
@@ -158,6 +159,8 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.ContactInfoGrid', {
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
+										
+										currentForm.getForm().reset();
 									var grid1=Ext.getCmp('vendorscontactgrid');
 						grid1.getStore().load({params:{action:1,vendorid:vendorid}});
 						Ext.getCmp('vendorscontactgrid').getStore().reload();

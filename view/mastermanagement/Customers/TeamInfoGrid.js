@@ -148,6 +148,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
 					//tooltip: 'Delete',
 				handler: function(grid, rowIndex, colIndex) {
 					var teams_customerid = Ext.getCmp('basic_customerid').getValue();
+					 var currentForm = Ext.getCmp('customerteamsformTab');
 					var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
@@ -162,7 +163,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
 									success:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message); 
-										
+										currentForm.getForm().reset();
 										Ext.getCmp('custteamgrid').getView().refresh();
 										var grid1=Ext.getCmp('custteamgrid');
 						grid1.getStore().load({params:{action:3,customerid:teams_customerid}});
@@ -170,6 +171,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.TeamInfoGrid', {
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Deletion Failed !', obj.message); 
+										
 									}
 								});
 								
