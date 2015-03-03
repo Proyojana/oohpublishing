@@ -46,7 +46,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
            		}
 				},
 				
-				{
+				/*{
 					dataIndex: 'lstname',
 					text: 'Last Name',
 					align: 'center',
@@ -54,7 +54,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.VendorsGrid', {
 					filter: {
                 	type: 'string'
            		}
-				},
+				},*/
 				
 				{
 					dataIndex: 'email',

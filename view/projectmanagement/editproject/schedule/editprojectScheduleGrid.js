@@ -578,7 +578,7 @@ else
 				}
 			},]
 		}];
-		this.bbar = Ext.create('Ext.PagingToolbar', {
+		/*this.bbar = Ext.create('Ext.PagingToolbar', {
 
 			store : this.store,
 			displayInfo: true,
@@ -614,7 +614,7 @@ else
 			},
 			]
 
-		}),
+		}),*/
 
 		this.callParent(arguments);
 
