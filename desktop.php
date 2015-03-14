@@ -34,12 +34,13 @@
 		var mail = <?php	echo json_encode($user_mail);?>;
 		
 		</script>
-		<script type="text/javascript" src="inc/ext/ext-all.js"></script>
+		<script type="text/javascript" src="inc/ext/ext.js"></script>
 		<script type="text/javascript" src="inc/ext/src/lib/pdf.js/pdf.js"></script>
 		<script type="text/javascript" src="inc/ext/src/lib/pdf.js/compatibility.js"></script>
 		<script type="text/javascript" src="inc/ext/src/ux/panel/PDF.js"></script>
 		<script type="text/javascript" src="inc/ext/src/ux/util/PDF/TextLayerBuilder.js"></script>
-
+		<script type="text/javascript" src="inc/ext/src/ux/exporter/swfobject.js"></script>
+       <script type="text/javascript" src="inc/ext/src/ux/exporter/downloadify.min.js"></script>
 		<script type="text/javascript" src="inc/ext/src/ux/grid/Printer.js"></script>
 		<script type="text/javascript" src="tinymce/TinyMCETextArea.js"></script>
         <script type="text/javascript" src="tinymce/tiny_mce_src.js"></script>

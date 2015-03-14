@@ -18,7 +18,7 @@ $id=$_SESSION['id'];
 			updateProjectMaster($_POST['project_id'],$_POST['job_code'],$_POST['project_title'],$_POST['project_author'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id);	
 			break;
 		case 5:
-			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['project_name'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['project_start_date'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note'],$_POST['ebook_isbn'],$_POST['author_create'],$_POST['author_name'],$_POST['author_last_name'],$_POST['author_designation'],$_POST['author_email']);
+			insertProjectMaster($_POST['job_code'],$_POST['project_title'],$_POST['project_name'],$_POST['hb_isbn'],$_POST['pb_isbn'],$_POST['project_series'],$_POST['project_format'],$_POST['project_design'],$_POST['castoff_extent'],$_POST['confirmed_extent'],$_POST['conversionrate'],$_POST['client_deadline'],$_POST['agreed_deadline'],$_POST['project_start_date'],$_POST['word_count'],$_POST['manuscript'],$_POST['index_extent'],$_POST['chapter_footer'],$_POST['contain_colour'],$_POST['project_client'],$_POST['project_team'],$_POST['project_workflow'],$id,$_POST['word_count_indexing'],$_POST['cover_type'],$_POST['print_run'],$_POST['print_run_confirmed'],$_POST['project_note'],$_POST['ebook_isbn'],$_POST['author_create'],$_POST['author_name'],$_POST['author_last_name'],$_POST['author_designation'],$_POST['author_email']);
 			break;
 		case 6:
 			BulkDelete($_POST['id']);
@@ -236,7 +236,7 @@ Where
 		echo json_encode($result);
 	}
 	
-	function insertProjectMaster($job_code,$title,$project_name,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$client_deadline,$agreed_deadline,$project_start_date,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed,$project_note,$ebook_isbn,$author_create,$author_name,$author_last_name,$author_designation,$author_email)
+	function insertProjectMaster($job_code,$title,$project_name,$hb_isbn,$pb_isbn,$series,$format,$design,$castoff_extent,$confirmed_extent,$conversionrate,$client_deadline,$agreed_deadline,$project_start_date,$word_count,$manuscript,$index_extent,$footer,$colour,$client,$team,$workflow,$id,$word_count_indexing,$cover_type,$print_run,$print_run_confirmed,$project_note,$ebook_isbn,$author_create,$author_name,$author_last_name,$author_designation,$author_email)
 		
     {
     	
@@ -247,8 +247,8 @@ Where
 		
 		if($num_rows==0)
 		{
-			$result1 = mysql_query ("INSERT INTO project_title(id,job_code,title,project_name,author,hb_isbn,pb_isbn,ebook_isbn,series,format,design,castoff_extent,confirmed_extent,client_deadline,agreed_deadline,project_start_date,word_count,word_count_indexing,manuscript_pages,expect_index_extent,chapter_footer_req,contains_color,cover_type,print_run,print_run_confirmed,note,client,client_team,workflow,created_by,created_on,modified_by,modified_on,flag) 
-			VALUES('','".$job_code."','".$title."','".$project_name."','','".$hb_isbn."','".$pb_isbn."','".$ebook_isbn."','".$series."','".$format."','".$design."','".$castoff_extent."','".$confirmed_extent."','".$client_deadline."','".$agreed_deadline."','".$project_start_date."','".$word_count."','".$word_count_indexing."','".$manuscript."','".$index_extent."','".$footer."','".$colour."','".$cover_type."','".$print_run."','".$print_run_confirmed."','".$project_note."','".$client."','".$team."','".$workflow."','".$id."',now(),'','','')");
+			$result1 = mysql_query ("INSERT INTO project_title(id,job_code,title,project_name,author,hb_isbn,pb_isbn,ebook_isbn,series,format,design,castoff_extent,confirmed_extent,conversionrate,client_deadline,agreed_deadline,project_start_date,word_count,word_count_indexing,manuscript_pages,expect_index_extent,chapter_footer_req,contains_color,cover_type,print_run,print_run_confirmed,note,client,client_team,workflow,created_by,created_on,modified_by,modified_on,flag) 
+			VALUES('','".$job_code."','".$title."','".$project_name."','','".$hb_isbn."','".$pb_isbn."','".$ebook_isbn."','".$series."','".$format."','".$design."','".$castoff_extent."','".$confirmed_extent."','".$conversionrate."','".$client_deadline."','".$agreed_deadline."','".$project_start_date."','".$word_count."','".$word_count_indexing."','".$manuscript."','".$index_extent."','".$footer."','".$colour."','".$cover_type."','".$print_run."','".$print_run_confirmed."','".$project_note."','".$client."','".$team."','".$workflow."','".$id."',now(),'','','')");
 			if($result1)
 			{
 				$codegen = mysql_insert_id();
@@ -889,12 +889,12 @@ $pay_actuals_GBP_total+=$payable_actuals_GBP;
 
 
 
-$budget_receivable = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity, no_of_unit, rate_usd, rate_gbp, budgeted_usd, budgeted_gbp, actual_usd, actual_gbp,created_by,created_on,modified_by,modified_on,flag)
-VALUES ('','".$project_id."','".$activity."','".$finalextent."','".$ratecard_USD."','".$ratecard_GBP."','".$budgeted_USD."','".$budgeted_GBP."','".$actuals_USD."','".$actuals_GBP."','','','','','')");
+$budget_receivable = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity,currency_rate,unit_of_measurement, no_of_unit, rate_usd, rate_gbp, budgeted_usd, budgeted_gbp, actual_usd, actual_gbp,created_by,created_on,modified_by,modified_on,flag)
+VALUES ('','".$project_id."','".$activity."','','','".$finalextent."','".$ratecard_USD."','".$ratecard_GBP."','".$budgeted_USD."','".$budgeted_GBP."','".$actuals_USD."','".$actuals_GBP."','','','','','')");
 
 
-$budget_expense = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,vendor ,no_of_unit,rate_USD,rate_GBP,budgeted_amount_USD,budgeted_amount_GBP,acual_amount_USD ,actual_amount_GBP,created_by,created_on,modified_by,modified_on,flag)
-VALUES ('' ,'".$project_id."', '','".$activity."','','".$finalextent."', '".$payable_ratecard_USD."', '".$payable_ratecard_GBP."', '".$payable_budgeted_USD."','".$payable_budgeted_GBP."', '".$payable_actuals_USD."', '".$payable_actuals_GBP."', '', '','', '0000-00-00 00:00:00', '')");
+$budget_expense = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,currency_rate,unit_of_measurement,vendor ,no_of_unit,rate_USD,rate_GBP,budgeted_amount_USD,budgeted_amount_GBP,acual_amount_USD ,actual_amount_GBP,created_by,created_on,modified_by,modified_on,flag)
+VALUES ('' ,'".$project_id."', '','".$activity."','','','','".$finalextent."', '".$payable_ratecard_USD."', '".$payable_ratecard_GBP."', '".$payable_budgeted_USD."','".$payable_budgeted_GBP."', '".$payable_actuals_USD."', '".$payable_actuals_GBP."', '', '','', '0000-00-00 00:00:00', '')");
 }
 //USD
 $bal=$rec_budget_USD_total-$pay_budget_USD_total;

@@ -198,6 +198,18 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			allowBlank: false,
 			afterLabelTextTpl: required,
 			},
+			
+			{
+    		xtype:'textfield',
+			id:'conversionrate',
+			fieldLabel: 'Conversion Rate',
+			align:'center',
+			x:710,
+			y:100,
+			width:320,
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			},
     	{
     		
     		id:'castoff_extent',
@@ -631,6 +643,7 @@ t.setValue(value1);
 				var project_design= Ext.getCmp('project_design').getValue();
 				var castoff_extent= Ext.getCmp('castoff_extent').getValue();
 				var confirmed_extent= Ext.getCmp('confirmed_extent').getValue();
+				var conversionrate= Ext.getCmp('conversionrate').getValue();
 				
 				var client_deadline = Ext.getCmp('client_deadline').getValue();
 				var agreed_deadline = Ext.getCmp('agreed_deadline').getValue();
@@ -674,7 +687,7 @@ t.setValue(value1);
 						url: 'service/projects.php',
 						method: 'POST',
 						params : {action:5,job_code:job_code,project_title:project_title,project_name:project_name,/*project_author:project_author,*/hb_isbn:hb_isbn,pb_isbn:pb_isbn,project_series:project_series,
-							project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,client_deadline:client_deadline,
+							project_format:project_format,project_design:project_design,castoff_extent:castoff_extent,confirmed_extent:confirmed_extent,conversionrate:conversionrate,client_deadline:client_deadline,
 							agreed_deadline:agreed_deadline,project_start_date:project_start_date,word_count:word_count,manuscript:manuscript,index_extent:index_extent,chapter_footer:chapter_footer,
 							contain_colour:contain_colour,project_client:project_client,project_team:project_team,project_workflow:project_workflow,word_count_indexing:word_count_indexing,
 							cover_type:cover_type,print_run:print_run,print_run_confirmed:print_run_confirmed,project_note:project_note,ebook_isbn:ebook_isbn,

@@ -1,3 +1,19 @@
+var cur_rate = Ext.create('Ext.data.Store', {
+    fields: ['period', 'name'],
+    data : [
+         {"period":"USD", "name":"USD"},
+            {"period":"GBP", "name":"GBP"}
+        ]
+    });
+    var unit_of_measure = Ext.create('Ext.data.Store', {
+        fields: ['unit_of_measure'],
+        data : [
+         {"unit_of_measure":"Cast-off extent"},
+         {"unit_of_measure":" Manuscript pages"},
+         {"unit_of_measure":"Project"},
+        ]
+    }); 
+     
 var sm = Ext.create('Ext.selection.CheckboxModel', {
     checkOnly: true
 });
@@ -140,6 +156,34 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
                         return value;
                     }
                 },
+                {
+				 dataIndex: 'currency_rate',
+				 text: 'Currency',
+				 align: 'center',
+                 flex:1,
+                 editor:{
+					 	xtype:'combo',
+					 	store: cur_rate,
+						queryMode: 'local',
+						displayField: 'period',
+						valueField: 'name',
+						}
+				
+				},
+				{
+				 dataIndex: 'unit_of_measurement',
+				 text: 'Unit Of Measurement',
+				 align: 'center',
+                 flex:2,
+                 editor:{
+					 	xtype:'combo',
+					 	store: unit_of_measure,
+						queryMode: 'local',
+						displayField: 'unit_of_measure',
+						valueField: 'unit_of_measure',
+						}
+				
+				},	
 
                 {
                     text: 'Rate / Unit',

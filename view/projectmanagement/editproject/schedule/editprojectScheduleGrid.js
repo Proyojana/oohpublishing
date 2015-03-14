@@ -90,127 +90,117 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.editprojectSch
 					// edit: function(editor, e) {
 					change: function(field, newValue, oldValue,record) {
 
-				 	
 						var grid = this.up().up();
 						//get rowIndex
 						var selectedRecord = grid.getSelectionModel().getSelection()[0];
 						var rowIndex = grid.store.indexOf(selectedRecord);
-						
-
 
 						// get selection model of the grid
 						var selModel = grid.getSelectionModel();
 						//var eDay=selModel.getSelection()[0].data.estimated_daysperstage;
-if(newValue!=null)	
-{
-	var dps=newValue;
+						if(newValue!=null) {
+							var dps=newValue;
 
-if(rowIndex==0){
-	var val=grid.getStore().getAt(rowIndex).data.estimated_start_date;
-	var asd=grid.getStore().getAt(rowIndex).data.actual_start_date;
-	var schedule_id=selModel.getSelection()[0].data.schedule_id;							
-							project_start_date=val;
-							actuals_start_date=asd;
-							var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
-							var conn = new Ext.data.Connection();
-							conn.request({
-								url: 'service/schedule.php',
-								method: 'POST',
-								params : {
-									action:8,
-									projectid:projectid,
-									project_start_date:project_start_date,
-									schedule_id:schedule_id,
-									dps:dps,
-									actuals_start_date:actuals_start_date,
-								},
-								success: function(response) {
-									obj = Ext.JSON.decode(response.responseText);
-									var grid3=Ext.getCmp('editprojectSchedulegrid');
-									grid3.getStore().load({
-										params: {
-											action:4,
-											projectid:projectid
-										}
-									});
-									Ext.getCmp('editprojectSchedulegrid').getView().refresh();
-								}
-							});
-}
+							if(rowIndex==0) {
+								var val=grid.getStore().getAt(rowIndex).data.estimated_start_date;
+								var asd=grid.getStore().getAt(rowIndex).data.actual_start_date;
+								var schedule_id=selModel.getSelection()[0].data.schedule_id;
+								project_start_date=val;
+								actuals_start_date=asd;
+								var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
+								var conn = new Ext.data.Connection();
+								conn.request({
+									url: 'service/schedule.php',
+									method: 'POST',
+									params : {
+										action:8,
+										projectid:projectid,
+										project_start_date:project_start_date,
+										schedule_id:schedule_id,
+										dps:dps,
+										actuals_start_date:actuals_start_date,
+									},
+									success: function(response) {
+										obj = Ext.JSON.decode(response.responseText);
+										var grid3=Ext.getCmp('editprojectSchedulegrid');
+										grid3.getStore().load({
+											params: {
+												action:4,
+												projectid:projectid
+											}
+										});
+										Ext.getCmp('editprojectSchedulegrid').getView().refresh();
+									}
+								});
+							} else {
+								var prevenddate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;
+								var prevactualenddate=grid.getStore().getAt(rowIndex-1).data.actual_end_date;
+								var val=Ext.Date.add(prevenddate,Ext.Date.DAY,1);
+								var asd=Ext.Date.add(prevactualenddate,Ext.Date.DAY,1);
+								var schedule_id=selModel.getSelection()[0].data.schedule_id;
+								project_start_date=val;
+								actuals_start_date=asd;
+								var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
+								var conn = new Ext.data.Connection();
+								conn.request({
+									url: 'service/schedule.php',
+									method: 'POST',
+									params : {
+										action:8,
+										projectid:projectid,
+										project_start_date:project_start_date,
+										schedule_id:schedule_id,
+										dps:dps,
+										actuals_start_date:actuals_start_date,
+									},
+									success: function(response) {
+										obj = Ext.JSON.decode(response.responseText);
+										var grid3=Ext.getCmp('editprojectSchedulegrid');
+										grid3.getStore().load({
+											params: {
+												action:4,
+												projectid:projectid
+											}
+										});
+										Ext.getCmp('editprojectSchedulegrid').getView().refresh();
+									}
+								});
+							}
 
-	
-else
-{
-	var prevenddate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;						
-	var prevactualenddate=grid.getStore().getAt(rowIndex-1).data.actual_end_date;
-    var val=Ext.Date.add(prevenddate,Ext.Date.DAY,1);
-     var asd=Ext.Date.add(prevactualenddate,Ext.Date.DAY,1);
-	var schedule_id=selModel.getSelection()[0].data.schedule_id;							
-							project_start_date=val;
-							actuals_start_date=asd;
-							var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
-							var conn = new Ext.data.Connection();
-							conn.request({
-								url: 'service/schedule.php',
-								method: 'POST',
-								params : {
-									action:8,
-									projectid:projectid,
-									project_start_date:project_start_date,
-									schedule_id:schedule_id,
-									dps:dps,
-									actuals_start_date:actuals_start_date,
-								},
-								success: function(response) {
-									obj = Ext.JSON.decode(response.responseText);
-									var grid3=Ext.getCmp('editprojectSchedulegrid');
-									grid3.getStore().load({
-										params: {
-											action:4,
-											projectid:projectid
-										}
-									});
-									Ext.getCmp('editprojectSchedulegrid').getView().refresh();
-								}
-							});
-}					
-						
-}
+						}
 
 						/**if(rowIndex!=0) {
-							
-							var bDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
-						
-							var eEndDate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;
-							var val=Ext.Date.add(eEndDate,Ext.Date.DAY,bDay);
-							selModel.getSelection()[0].set('estimated_start_date', val);
 
-						
-							var sdate=selModel.getSelection()[0].data.estimated_start_date;
-							var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
-							selModel.getSelection()[0].set('estimated_end_date', val1);
-						} else {
+						 var bDay=grid.getStore().getAt(rowIndex-1).data.bufferday;
 
-							var currentForm = this.up('newprojectScheduleform');
-							var startDate = Ext.getCmp('schedule_projectStartDate').getValue();
+						 var eEndDate=grid.getStore().getAt(rowIndex-1).data.estimated_end_date;
+						 var val=Ext.Date.add(eEndDate,Ext.Date.DAY,bDay);
+						 selModel.getSelection()[0].set('estimated_start_date', val);
 
-							if(startDate!=null) {
-							
-								selModel.getSelection()[0].set('estimated_start_date', startDate);
+						 var sdate=selModel.getSelection()[0].data.estimated_start_date;
+						 var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+						 selModel.getSelection()[0].set('estimated_end_date', val1);
+						 } else {
 
-								
-								var sdate=selModel.getSelection()[0].data.estimated_start_date;
-								var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
-								selModel.getSelection()[0].set('estimated_end_date', val1);
-							} else {
+						 var currentForm = this.up('newprojectScheduleform');
+						 var startDate = Ext.getCmp('schedule_projectStartDate').getValue();
 
-								Ext.Msg.alert('Message', 'Please Select Project Start Date');
-							
-								var rec = grid.store.getAt(rowIndex);
-								rec.set('estimated_daysperstage', '0');
-								selModel.getSelection()[0].set('estimated_daysperstage', 0);
-							}
-						}**/
+						 if(startDate!=null) {
+
+						 selModel.getSelection()[0].set('estimated_start_date', startDate);
+
+						 var sdate=selModel.getSelection()[0].data.estimated_start_date;
+						 var val1=Ext.Date.add(sdate,Ext.Date.DAY,newValue);
+						 selModel.getSelection()[0].set('estimated_end_date', val1);
+						 } else {
+
+						 Ext.Msg.alert('Message', 'Please Select Project Start Date');
+
+						 var rec = grid.store.getAt(rowIndex);
+						 rec.set('estimated_daysperstage', '0');
+						 selModel.getSelection()[0].set('estimated_daysperstage', 0);
+						 }
+						 }**/
 					}
 				}
 			},
@@ -224,7 +214,8 @@ else
 				dataIndex: 'estimated_start_date',
 				text: 'Estimate',
 				align:'center',
-				editor: {
+				
+				/*editor: {
 					xtype:'datefield',
 					format: 'd/m/Y',
 					listeners: {
@@ -237,6 +228,7 @@ else
 							//var estimated_daysperstage=selModel.getSelection()[0].data.estimated_daysperstage;
 
 							project_start_date=newValue;
+							
 							var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
 							// alert(projectid);
 							var conn = new Ext.data.Connection();
@@ -269,7 +261,7 @@ else
 						},
 					} ,
 
-				},
+				},*/
 				renderer: function(value) {
 					//alert(value);
 					if(value!=null && value!='' && value!='null') {
@@ -306,6 +298,44 @@ else
 							project_start_date=newValue;
 							var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();
 							// alert(projectid);
+							
+							/*For Estimated*/
+							selModel.getSelection()[0].set('estimated_start_date', project_start_date);
+							var project_start_date1=selModel.getSelection()[0].data.estimated_start_date;
+							
+							var conn = new Ext.data.Connection();
+							conn.request({
+								url: 'service/schedule.php',
+								method: 'POST',
+								params : {
+									action:7,
+									projectid:projectid,
+									project_start_date:project_start_date1,
+									schedule_id:schedule_id,
+									//estimated_daysperstage:estimated_daysperstage,
+
+								},
+								success: function(response) {
+									obj = Ext.JSON.decode(response.responseText);
+									//Ext.Msg.alert('Message', obj.message);
+									//win.close();
+
+									var grid3=Ext.getCmp('editprojectSchedulegrid');
+									grid3.getStore().load({
+										params: {
+											action:4,
+											projectid:projectid
+										}
+									});
+									Ext.getCmp('editprojectSchedulegrid').getView().refresh();
+								}
+							});
+							
+							
+							/*end*/
+							
+							
+							
 							var conn = new Ext.data.Connection();
 							conn.request({
 								url: 'service/schedule.php',
@@ -334,7 +364,7 @@ else
 								}
 							});
 						},
-					 } ,
+					} ,
 				},
 				renderer: function(value) {
 					//alert(value);
@@ -360,7 +390,7 @@ else
 				dataIndex: 'estimated_end_date',
 				text: 'Estimate',
 				align:'center',
-				editor: {
+				/*editor: {
 					xtype:'datefield',
 					format: 'd/m/Y',
 					listeners: {
@@ -381,7 +411,7 @@ else
 
 						},
 					} ,
-				},
+				},*/
 				renderer: function(value) {
 					//alert(value);
 					if(value!=null && value!='' && value!='null') {
@@ -403,7 +433,7 @@ else
 				dataIndex: 'actual_end_date',
 				text: 'Actuals',
 				align:'center',
-				editor: {
+				/*editor: {
 					xtype:'datefield',
 					format: 'd/m/Y',
 					listeners: {
@@ -424,7 +454,7 @@ else
 
 						},
 					} ,
-				},
+				},*/
 				renderer: function(value) {
 					//alert(value);
 					if(value!=null && value!='' && value!='null') {
@@ -580,41 +610,41 @@ else
 		}];
 		/*this.bbar = Ext.create('Ext.PagingToolbar', {
 
-			store : this.store,
-			displayInfo: true,
-			displayMsg: 'Displaying topics {0} - {1} of {2}',
-			emptyMsg: "No topics to display",
-			items:[{
-				xtype : 'button',
-				text : 'Insert New Row',
-				pressed:true,
-				x : 500,
-				y : 10,
-				width : 100,
-				height : 25,
-				handler : function() {
-					var r = Ext.create('MyDesktop.model.Schedule', {
-						schedule_id:'',
-						stageorder: '',
-						activity: '',
-						activityid: '',
-						stage: '',
-						estimated_daysperstage:'',
-						actual_daysperstage: '',
-						estimated_start_date: '',
-						actual_start_date: '',
-						estimated_end_date: '',
-						actual_end_date:'',
-						bufferday: '',
+		 store : this.store,
+		 displayInfo: true,
+		 displayMsg: 'Displaying topics {0} - {1} of {2}',
+		 emptyMsg: "No topics to display",
+		 items:[{
+		 xtype : 'button',
+		 text : 'Insert New Row',
+		 pressed:true,
+		 x : 500,
+		 y : 10,
+		 width : 100,
+		 height : 25,
+		 handler : function() {
+		 var r = Ext.create('MyDesktop.model.Schedule', {
+		 schedule_id:'',
+		 stageorder: '',
+		 activity: '',
+		 activityid: '',
+		 stage: '',
+		 estimated_daysperstage:'',
+		 actual_daysperstage: '',
+		 estimated_start_date: '',
+		 actual_start_date: '',
+		 estimated_end_date: '',
+		 actual_end_date:'',
+		 bufferday: '',
 
-					});
-					//store.getCount()-1
-					ci.insert(ci.getCount(), r);
-				}
-			},
-			]
+		 });
+		 //store.getCount()-1
+		 ci.insert(ci.getCount(), r);
+		 }
+		 },
+		 ]
 
-		}),*/
+		 }),*/
 
 		this.callParent(arguments);
 

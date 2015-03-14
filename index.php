@@ -10,6 +10,8 @@ if(isset($_SESSION['user_name']))
 	<link rel="stylesheet" type="text/css" href="inc/ext/resources/css/multidate.css">	
 	<script type="text/javascript" src="inc/ext/ext-all.js"></script>
 	<script type="text/javascript" src="login.js"></script>
+	<script type="text/javascript" src="inc/ext/src/ux/exporter/swfobject.js"></script>
+       <script type="text/javascript" src="inc/ext/src/ux/exporter/downloadify.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
     <link rel="stylesheet" type="text/css" href="inc/ext/resources/css/multidate.css">	
     <link rel="stylesheet" type="text/css" href="inc/ext/resources/css/desktop.css" />	
