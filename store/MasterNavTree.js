@@ -36,7 +36,7 @@ Ext.define('MyDesktop.store.MasterNavTree', {
         		]
         },
           { id:'template', text: "Email Templates",iconCls:'gmailClass', leaf: true },
-        		
+        	{ id:'currencyrate', text: "Currency Rate",iconCls:'', leaf: true },	
         		
 			
 			]

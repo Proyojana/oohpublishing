@@ -29,6 +29,7 @@ Ext.define('MyDesktop.view.MasterWindow', {
 		var servicetab = "undefined";
 		var template = "undefined";
 		var myprofile = "undefined";
+		var currencyrate = "undefined";
 
 		var contentPanel9 = Ext.create('Ext.panel.Panel',{
 			
@@ -93,6 +94,13 @@ Ext.define('MyDesktop.view.MasterWindow', {
 					if (template == "undefined") {
 						template = Ext.create('MyDesktop.view.mastermanagement.EmailTemplate.TemplateTabPanel');
 						contentPanel9.add(template);
+						contentPanel9.doLayout(); 
+					}
+					break;
+				case 'currencyrate' :
+					if (currencyrate == "undefined") {
+						currencyrate = Ext.create('MyDesktop.view.mastermanagement.CurrencyRate.CurrencyRateTabPanel');
+						contentPanel9.add(currencyrate);
 						contentPanel9.doLayout(); 
 					}
 					break;
