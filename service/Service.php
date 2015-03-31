@@ -17,7 +17,8 @@
 			updateServiceMaster($_POST["serviceid"],$_POST['servicecode'],$_POST['servicename'],$_POST['servicedescription']);	
 			break;
 		case 5:
-			insertServiceMaster($_POST['servicecode'],$_POST['servicename'],$_POST['servicedescription']);
+			insertServiceMaster($_POST[
+			'servicecode'],$_POST['servicename'],$_POST['servicedescription']);
 			break;
 		case 6:
 			BulkDelete($_POST['id']);
@@ -29,7 +30,7 @@
 			getServiceListMasterByVendors($_POST['code']);
 			break;
 		case 9: 
-			autoRequestCode($id);
+			autoRequestCode();
 			break;
 		default: 
 			break;
@@ -271,7 +272,7 @@ Where
 	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
 	}
     
-		function autoRequestCode($id) {
+		function autoRequestCode() {
 	$autoRequest = mysql_query("select code from services");
 	$num_rows = mysql_num_rows($autoRequest);
 	if($num_rows > 0) {
