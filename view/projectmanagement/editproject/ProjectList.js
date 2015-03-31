@@ -501,7 +501,76 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							x:0,
 							y:160,
 							margin:'5 5 5 5'
-						},{
+						},
+						{
+							xtype:'button',
+							text:'Calculate',
+							pressed:true,
+							width:100,
+							x:200,
+							y:760,
+							handler: function() 
+							{
+								
+																
+								var total_USD = 0;
+								var total_GBP = 0;
+								
+								var conversion_rate=Ext.getCmp('conversion_rate').getValue();
+								
+								var myStore = Ext.getCmp('editaccountReceiveGrid_a').getStore();
+								myStore.each( function(rec) 
+								{
+									var currency_rate=rec.get('currency_rate');
+									if(currency_rate=="USD")
+								{
+										total_USD = total_USD + parseFloat(rec.get('actual_amount_USD_GBP'));	
+								}
+								else if(currency_rate=="GBP")
+								{
+									total_GBP = total_GBP + parseFloat(rec.get('actual_amount_USD_GBP'));
+								}		
+							
+									
+								});
+								Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
+								Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
+								
+								var total_USD_Payable = 0;
+								var total_GBP_Payable = 0;
+								var total_profit=0;
+								var total_profit_percentage=0;
+								
+								var myStore1 = Ext.getCmp('editaccountPayableGrid').getStore();
+								myStore1.each( function(rec) 
+								{
+									var currency_rate=rec.get('currency_rate');
+									if(currency_rate=="USD")
+								{
+										total_USD_Payable = total_USD_Payable + parseFloat(rec.get('actual_amount_USD_GBP'));	
+								}
+								else if(currency_rate=="GBP")
+								{
+									total_GBP_Payable = total_GBP_Payable + parseFloat(rec.get('actual_amount_USD_GBP'));
+								}		
+							
+									
+								});
+								
+								Ext.getCmp('edit_total_pay_USD').setValue(total_USD_Payable);
+								Ext.getCmp('edit_total_pay_GBP').setValue(total_GBP_Payable);
+								
+								total_profit=((total_GBP_Payable*conversion_rate)+total_USD_Payable)-((total_GBP*conversion_rate)+total_USD);
+								total_profit_percentage=((total_GBP_Payable*conversion_rate)+total_USD_Payable)/((total_GBP*conversion_rate)+total_USD);
+								
+								total_profit_percentage = Math.round(total_profit_percentage * 100) / 100;
+								total_profit = Math.round(total_profit * 100) / 100;
+								//alert(total_profit_percentage);
+								Ext.getCmp('edit_profit_GBP').setValue(total_profit);
+								Ext.getCmp('edit_profit_percentage').setValue(total_profit_percentage);
+						}
+						},
+						{
 							xtype:'button',
 							text:'Update',
 							pressed:true,
@@ -516,12 +585,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
 									var activity_name = '';
 									var no_of_unit = '';
-									var rate_USD = '';
-									var rate_GBP= '';
-									var budgeted_USD= '';
-									var budgeted_GBP = '';
-									var actual_amount_USD = '';
-									var actual_amount_GBP = '';
+									var rate_USD_GBP = '';
+									//var rate_GBP= '';
+									var budgeted_USD_GBP= '';
+									//var budgeted_GBP = '';
+									var actual_amount_USD_GBP = '';
+									//var actual_amount_GBP = '';
 									var currency_rate='';
 									var unit_of_measurement='';
 									var grid=Ext.getCmp('editaccountReceiveGrid_a');
@@ -532,12 +601,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										type=1;
 										activity_name=activity_name+rec.get('activityid')+',';
 										no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
-										rate_USD=rate_USD+rec.get('rate_USD')+',';
-										rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
-										budgeted_USD=budgeted_USD+rec.get('budgeted_amount_USD')+',';
-										budgeted_GBP=budgeted_GBP+rec.get('budgeted_amount_GBP')+',';
-										actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
-										actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
+										rate_USD_GBP=rate_USD_GBP+rec.get('rate_USD_GBP')+',';
+										//rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
+										budgeted_USD_GBP=budgeted_USD_GBP+rec.get('budgeted_amount_USD_GBP')+',';
+										//budgeted_GBP=budgeted_GBP+rec.get('budgeted_amount_GBP')+',';
+										actual_amount_USD_GBP=actual_amount_USD_GBP+rec.get('actual_amount_USD_GBP')+',';
+										//actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
 										
 										unit_of_measurement=unit_of_measurement+rec.get('unit_of_measurement')+',';
 										currency_rate=currency_rate+rec.get('currency_rate')+',';
@@ -557,12 +626,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 											currency_rate:currency_rate,
 											unit_of_measurement:unit_of_measurement,
 											no_of_unit:no_of_unit,
-											rate_USD:rate_USD,
-											rate_GBP:rate_GBP,
-											budgeted_USD:budgeted_USD,
-											budgeted_GBP:budgeted_GBP,
-											actual_amount_USD:actual_amount_USD,
-											actual_amount_GBP:actual_amount_GBP
+											rate_USD_GBP:rate_USD_GBP,
+											//rate_GBP:rate_GBP,
+											budgeted_USD_GBP:budgeted_USD_GBP,
+											//budgeted_GBP:budgeted_GBP,
+											actual_amount_USD_GBP:actual_amount_USD_GBP,
+											//actual_amount_GBP:actual_amount_GBP
 										},
 										success: function(response) {
 											obj = Ext.JSON.decode(response.responseText);
@@ -582,12 +651,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 
 								var vendor='';
 								var no_of_unit='';
-								var rate_USD='';
-								var rate_GBP='';
-								var budgeted_amount_USD='';
-								var budgeted_amount_GBP='';
-								var actual_amount_USD='';
-								var actual_amount_GBP='';
+								var rate_USD_GBP='';
+								//var rate_GBP='';
+								var budgeted_amount_USD_GBP='';
+								//var budgeted_amount_GBP='';
+								var actual_amount_USD_GBP='';
+								//var actual_amount_GBP='';
 								var budget_id='';
 								var currency_rate='';
 									var unit_of_measurement='';
@@ -598,12 +667,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									activity=activity+rec.get('activityid')+',';
 									vendor=vendor+rec.get('vendor')+',';
 									no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
-									rate_USD=rate_USD+rec.get('rate_USD')+',';
-									rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
-									budgeted_amount_USD=budgeted_amount_USD+rec.get('budgeted_amount_USD')+',';
-									budgeted_amount_GBP=budgeted_amount_GBP+rec.get('budgeted_amount_GBP')+',';
-									actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
-									actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
+									rate_USD_GBP=rate_USD_GBP+rec.get('rate_USD_GBP')+',';
+									//rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
+									budgeted_amount_USD_GBP=budgeted_amount_USD_GBP+rec.get('budgeted_amount_USD_GBP')+',';
+									//budgeted_amount_GBP=budgeted_amount_GBP+rec.get('budgeted_amount_GBP')+',';
+									actual_amount_USD_GBP=actual_amount_USD_GBP+rec.get('actual_amount_USD_GBP')+',';
+									//actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
 									budget_id=budget_id+rec.get('budgetExpense_id')+',';
 									unit_of_measurement=unit_of_measurement+rec.get('unit_of_measurement')+',';
 									currency_rate=currency_rate+rec.get('currency_rate')+',';
@@ -623,12 +692,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										unit_of_measurement:unit_of_measurement,
 										vendor:vendor,
 										no_of_unit:no_of_unit,
-										rate_USD:rate_USD,
-										rate_GBP:rate_GBP,
-										budgeted_amount_USD:budgeted_amount_USD,
-										budgeted_amount_GBP:budgeted_amount_GBP,
-										actual_amount_USD:actual_amount_USD,
-										actual_amount_GBP:actual_amount_GBP
+										rate_USD_GBP:rate_USD_GBP,
+										//rate_GBP:rate_GBP,
+										budgeted_amount_USD_GBP:budgeted_amount_USD_GBP,
+										//budgeted_amount_GBP:budgeted_amount_GBP,
+										actual_amount_USD_GBP:actual_amount_USD_GBP,
+										//actual_amount_GBP:actual_amount_GBP
 									},
 									success: function(response) {
 										obj = Ext.JSON.decode(response.responseText);
@@ -755,12 +824,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
 									var activity_name = '';
 									var no_of_unit = '';
-									var rate_USD = '';
-									var rate_GBP= '';
-									var budgeted_USD= '';
-									var budgeted_GBP = '';
-									var actual_amount_USD = '';
-									var actual_amount_GBP = '';
+									var rate_USD_GBP = '';
+									//var rate_GBP= '';
+									var budgeted_USD_GBP= '';
+									//var budgeted_GBP = '';
+									var actual_amount_USD_GBP = '';
+									//var actual_amount_GBP = '';
 									
 									var currency_rate='';
 									var unit_of_measurement='';
@@ -773,12 +842,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										type=1;
 										activity_name=activity_name+rec.get('activityid')+',';
 										no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
-										rate_USD=rate_USD+rec.get('rate_USD')+',';
-										rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
-										budgeted_USD=budgeted_USD+rec.get('budgeted_amount_USD')+',';
-										budgeted_GBP=budgeted_GBP+rec.get('budgeted_amount_GBP')+',';
-										actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
-										actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
+										rate_USD_GBP=rate_USD_GBP+rec.get('rate_USD_GBP')+',';
+										//rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
+										budgeted_USD_GBP=budgeted_USD_GBP+rec.get('budgeted_amount_USD_GBP')+',';
+										//budgeted_GBP=budgeted_GBP+rec.get('budgeted_amount_GBP')+',';
+										actual_amount_USD_GBP=actual_amount_USD_GBP+rec.get('actual_amount_USD_GBP')+',';
+										//actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
 										unit_of_measurement=unit_of_measurement+rec.get('unit_of_measurement')+',';
 										currency_rate=currency_rate+rec.get('currency_rate')+',';
 									});
@@ -795,12 +864,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 											currency_rate:currency_rate,
 											unit_of_measurement:unit_of_measurement,
 											no_of_unit:no_of_unit,
-											rate_USD:rate_USD,
-											rate_GBP:rate_GBP,
-											budgeted_USD:budgeted_USD,
-											budgeted_GBP:budgeted_GBP,
-											actual_amount_USD:actual_amount_USD,
-											actual_amount_GBP:actual_amount_GBP
+											rate_USD_GBP:rate_USD_GBP,
+											//rate_GBP:rate_GBP,
+											budgeted_USD_GBP:budgeted_USD_GBP,
+											//budgeted_GBP:budgeted_GBP,
+											actual_amount_USD_GBP:actual_amount_USD_GBP,
+											//actual_amount_GBP:actual_amount_GBP
 										},
 										success: function(response) {
 											obj = Ext.JSON.decode(response.responseText);
@@ -817,12 +886,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 
 												var vendor='';
 												var no_of_unit='';
-												var rate_USD='';
-												var rate_GBP='';
-												var budgeted_amount_USD='';
-												var budgeted_amount_GBP='';
-												var actual_amount_USD='';
-												var actual_amount_GBP='';
+												var rate_USD_GBP='';
+												//var rate_GBP='';
+												var budgeted_amount_USD_GBP='';
+												//var budgeted_amount_GBP='';
+												var actual_amount_USD_GBP='';
+												//var actual_amount_GBP='';
 												var budget_id='';
 												
 												var currency_rate='';
@@ -834,12 +903,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 													activity=activity+rec.get('activityid')+',';
 													vendor=vendor+rec.get('vendor')+',';
 													no_of_unit=no_of_unit+rec.get('no_of_unit')+',';
-													rate_USD=rate_USD+rec.get('rate_USD')+',';
-													rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
-													budgeted_amount_USD=budgeted_amount_USD+rec.get('budgeted_amount_USD')+',';
-													budgeted_amount_GBP=budgeted_amount_GBP+rec.get('budgeted_amount_GBP')+',';
-													actual_amount_USD=actual_amount_USD+rec.get('actual_amount_USD')+',';
-													actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
+													rate_USD_GBP=rate_USD_GBP+rec.get('rate_USD_GBP')+',';
+													//rate_GBP=rate_GBP+rec.get('rate_GBP')+',';
+													budgeted_amount_USD_GBP=budgeted_amount_USD_GBP+rec.get('budgeted_amount_USD_GBP')+',';
+													//budgeted_amount_GBP=budgeted_amount_GBP+rec.get('budgeted_amount_GBP')+',';
+													actual_amount_USD_GBP=actual_amount_USD_GBP+rec.get('actual_amount_USD_GBP')+',';
+													//actual_amount_GBP=actual_amount_GBP+rec.get('actual_amount_GBP')+',';
 													budget_id=budget_id+rec.get('budgetExpense_id')+',';
 													unit_of_measurement=unit_of_measurement+rec.get('unit_of_measurement')+',';
 													currency_rate=currency_rate+rec.get('currency_rate')+',';
@@ -858,12 +927,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 														unit_of_measurement:unit_of_measurement,
 														vendor:vendor,
 														no_of_unit:no_of_unit,
-														rate_USD:rate_USD,
-														rate_GBP:rate_GBP,
-														budgeted_amount_USD:budgeted_amount_USD,
-														budgeted_amount_GBP:budgeted_amount_GBP,
-														actual_amount_USD:actual_amount_USD,
-														actual_amount_GBP:actual_amount_GBP
+														rate_USD_GBP:rate_USD_GBP,
+														//rate_GBP:rate_GBP,
+														budgeted_amount_USD_GBP:budgeted_amount_USD_GBP,
+														//budgeted_amount_GBP:budgeted_amount_GBP,
+														actual_amount_USD_GBP:actual_amount_USD_GBP,
+														//actual_amount_GBP:actual_amount_GBP
 													},
 													success: function(response) {
 														obj = Ext.JSON.decode(response.responseText);

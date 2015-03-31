@@ -22,7 +22,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 		ci.loadPage(1);
 		this.store=ci,
 		this.columns = [{
-			dataIndex: 'id',
+			dataIndex: 'currency_rate_id',
 			hidden:true
 		},{
 			dataIndex: 'currency_rate_gbp',
@@ -57,13 +57,13 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 				iconCls: 'viewClass',
 				tooltip: 'View',
 				handler: function(grid, rowIndex, colIndex) {
-					var currentForm = Ext.getCmp('custbasicinfoform');
+					var currentForm = Ext.getCmp('currencyrateform');
 					var rec = grid.getStore().getAt(rowIndex);
-					var id=rec.get('id');
+					var id=rec.get('currency_rate_id');
 					currentForm.getForm().load({
-						url: 'service/customers.php',
+						url: 'service/CurrencyRate.php',
 						params: {
-							action:2,
+							action:3,
 							id:id
 						},
 						failure: function(form, action) {
@@ -71,48 +71,19 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 						}
 					});
 
-					Ext.getCmp('custbasiccode').setReadOnly(true);
-
-					Ext.getCmp('custbasicname').setReadOnly(true);
-					Ext.getCmp('custbasicaddress1').setReadOnly(true);
-					Ext.getCmp('custbasicaddress2').setReadOnly(true);
-					Ext.getCmp('custbasiccity').setReadOnly(true);
-
-					Ext.getCmp('custbasicstate').setReadOnly(true);
-					Ext.getCmp('custbasiccountry').setReadOnly(true);
-
-					//Ext.getCmp('custbasicpin').setReadOnly(true);
-					Ext.getCmp('custbasicphone').setReadOnly(true);
-
-					Ext.getCmp('custbasicfax').setReadOnly(true);
-					Ext.getCmp('custbasicemail').setReadOnly(true);
-					Ext.getCmp('custbasicwebsite').setReadOnly(true);
-					Ext.getCmp('custbasicdescription').setReadOnly(true);
+					Ext.getCmp('currency_rate_gbp').setReadOnly(true);
+					Ext.getCmp('currency_rate_from').setReadOnly(true);
+					Ext.getCmp('currency_rate_to').setReadOnly(true);
+					
 					//hide add,edit and reset buttons
-					Ext.getCmp('customer_basicadd').setVisible(false);
-					Ext.getCmp('customer_basicedit').setVisible(false);
-					Ext.getCmp('customer_basicreset').setVisible(false);
-					//load teams grid
-					var grid1=Ext.getCmp('custteamgrid');
-					grid1.getStore().load({
-						params: {
-							action:3,
-							customerid:id
-						}
-					});
-					//load ratecard grid
-
-					//load contacts grid
-					var grid3=Ext.getCmp('custcontactgrid');
-					grid3.getStore().load({
-						params: {
-							action:1,
-							id:id
-						}
-					});
-					//show inner panel
-					Ext.getCmp('customercontactsformTab').setDisabled(false);
-					Ext.getCmp('customerteamsformTab').setDisabled(false);
+					//Ext.getCmp('reset_currency_rate').getEl().hide();
+					//Ext.getCmp('add_currency_rate').getEl().hide();
+					//Ext.getCmp('edit_currency_rate').getEl().hide();
+					
+					Ext.getCmp('add_currency_rate').setVisible(false);
+					Ext.getCmp('edit_currency_rate').setVisible(false);
+					Ext.getCmp('reset_currency_rate').setVisible(false);
+					Ext.getCmp('currencyrateaddform').setTitle('View Service');
 
 				}
 			},{
@@ -121,65 +92,32 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 				tooltip: 'Edit',
 				handler: function(grid, rowIndex, colIndex) {
 
-					var currentForm = Ext.getCmp('custbasicinfoform');
+					var currentForm = Ext.getCmp('currencyrateform');
 					var rec = grid.getStore().getAt(rowIndex);
-					var id=rec.get('id');
+					var id=rec.get('currency_rate_id');
 					currentForm.getForm().load({
-						url: 'service/customers.php',
+						url: 'service/CurrencyRate.php',
 						params: {
-							action:2,
+							action:3,
 							id:id
 						},
-
 						failure: function(form, action) {
 							Ext.Msg.alert("Load failed", action.result.errorMessage);
 						}
 					});
-
 					//alert("value ");
-					Ext.getCmp('custbasiccode').setReadOnly(true);
-
-					Ext.getCmp('custbasicname').setReadOnly(false);
-					Ext.getCmp('custbasicaddress1').setReadOnly(false);
-					Ext.getCmp('custbasicaddress2').setReadOnly(false);
-					Ext.getCmp('custbasiccity').setReadOnly(false);
-
-					Ext.getCmp('custbasicstate').setReadOnly(false);
-					Ext.getCmp('custbasiccountry').setReadOnly(false);
-
-					//Ext.getCmp('custbasicpin').setReadOnly(false);
-					Ext.getCmp('custbasicphone').setReadOnly(false);
-
-					Ext.getCmp('custbasicfax').setReadOnly(false);
-					Ext.getCmp('custbasicemail').setReadOnly(false);
-					Ext.getCmp('custbasicwebsite').setReadOnly(false);
-					Ext.getCmp('custbasicdescription').setReadOnly(false);
+					Ext.getCmp('currency_rate_gbp').setReadOnly(false);
+					Ext.getCmp('currency_rate_from').setReadOnly(false);
+					Ext.getCmp('currency_rate_to').setReadOnly(false);
 					//show add,edit and reset buttons
-					Ext.getCmp('customer_basicadd').setVisible(true);
-					Ext.getCmp('customer_basicedit').setVisible(true);
-					Ext.getCmp('customer_basicreset').setVisible(true);
-					//load teams grid
-					var grid1=Ext.getCmp('custteamgrid');
-					grid1.getStore().load({
-						params: {
-							action:3,
-							customerid:id
-						}
-					});
-					//load ratecard grid
-
-					//load contacts grid
-					var grid3=Ext.getCmp('custcontactgrid');
-					grid3.getStore().load({
-						params: {
-							action:1,
-							id:id
-						}
-					});
-					//show inner panel
-					Ext.getCmp('customercontactsformTab').setDisabled(false);
-					Ext.getCmp('customerteamsformTab').setDisabled(false);
-
+					//Ext.getCmp('reset_currency_rate').getEl().show();
+					//Ext.getCmp('add_currency_rate').getEl().show();
+					//Ext.getCmp('edit_currency_rate').getEl().show();
+					
+					Ext.getCmp('add_currency_rate').setVisible(true);
+					Ext.getCmp('edit_currency_rate').setVisible(true);
+					Ext.getCmp('reset_currency_rate').setVisible(true);
+					
 				}
 			},{
 				iconCls: 'deleteClass',
@@ -188,15 +126,15 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 					var grid = this.up('grid');
 					if (grid) {
 						var rec = grid.getStore().getAt(rowIndex);
-						Ext.Msg.confirm('Remove Record '+rec.get('code')+' ?',+rec.get('code'), function (button) {
+						Ext.Msg.confirm('Remove Record '+rec.get('currency_rate_id')+' ?',+rec.get('currency_rate_id'), function (button) {
 							if (button == 'yes') {
 								var id=rec.get('id');
 								var conn = new Ext.data.Connection();
 								conn.request({
-									url: 'service/customers.php',
+									url: 'service/CurrencyRate.php',
 									method: 'POST',
 									params : {
-										action:3,
+										action:4,
 										id:id
 									},
 									success: function(response) {
@@ -204,9 +142,9 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 										obj = Ext.JSON.decode(response.responseText);
 										Ext.Msg.alert('Successfully Deleted', obj.message);
 
-										Ext.getCmp('customersgrid').getStore().reload();
+										Ext.getCmp('currencyrategrid').getStore().reload();
 
-										Ext.getCmp('customersgrid').getView().refresh();
+										Ext.getCmp('currencyrategrid').getView().refresh();
 									},
 									failure: function(response) {
 										obj = Ext.JSON.decode(response.responseText);

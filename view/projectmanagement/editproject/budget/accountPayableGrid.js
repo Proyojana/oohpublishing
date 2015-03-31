@@ -1,15 +1,20 @@
 var cur_rate = Ext.create('Ext.data.Store', {
     fields: ['period', 'name'],
     data : [
-         {"period":"USD", "name":"USD"},
-            {"period":"GBP", "name":"GBP"}
+         {
+		
+		"name":"USD"
+	},{
+		
+		"name":"GBP"
+	}
         ]
     }); 
 var unit_of_measure = Ext.create('Ext.data.Store', {
         fields: ['unit_of_measure'],
         data : [
          {"unit_of_measure":"Cast-off extent"},
-         {"unit_of_measure":" Manuscript pages"},
+         {"unit_of_measure":"Manuscript pages"},
          {"unit_of_measure":"Project"},
         ]
     }); 
@@ -106,34 +111,6 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					}
 				},
 				{
-				 dataIndex: 'currency_rate',
-				 text: 'Currency',
-				 align: 'center',
-                 flex:2,
-                 editor:{
-					 	xtype:'combo',
-					 	store: cur_rate,
-						queryMode: 'local',
-						displayField: 'period',
-						valueField: 'name',
-						}
-				
-				},
-				{
-				 dataIndex: 'unit_of_measurement',
-				 text: 'Unit Of Measurement',
-				 align: 'center',
-                 flex:3,
-                 editor:{
-					 	xtype:'combo',
-					 	store: unit_of_measure,
-						queryMode: 'local',
-						displayField: 'unit_of_measure',
-						valueField: 'unit_of_measure',
-						}
-				
-				},		
-				{
 				 	dataIndex: 'vendor',
 		        	text: 'Vendor',
 		        	flex: 2,
@@ -145,7 +122,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 						    valueField: 'id',
 						    listeners: {
                 change: function (field, newValue, oldValue) {
-                	var grid = this.up().up();
+                	/*var grid = this.up().up();
                         // get selection model of the grid  
                     var selModel = grid.getSelectionModel();
                 	var activityid=selModel.getSelection()[0].data.activityid;
@@ -233,7 +210,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 							}
 					 }
 					 }
-					 });
+					 });*/
 					 }
                     }
 					},
@@ -246,7 +223,132 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					}
 		        	
 		       },
-		       	{
+				{
+				 dataIndex: 'currency_rate',
+				 text: 'Currency',
+				 align: 'center',
+                 flex:1,
+                 editor:{
+					 	xtype:'combo',
+					 	store: cur_rate,
+						queryMode: 'local',
+						displayField: 'name',
+						valueField: 'name',
+						listeners: {
+					change: function (field, newValue, oldValue) 
+					{
+
+						var grid = this.up().up();
+						var selModel = grid.getSelectionModel();
+						var activityid=selModel.getSelection()[0].data.activityid;
+						var edit_Job_code=Ext.getCmp('edit_Job_code').getValue(); 
+						var conn = new Ext.data.Connection();
+						conn.request({
+							url: 'service/budget.php',
+							method: 'POST',
+							params : {
+								action:27,
+								edit_Job_code:edit_Job_code,activityid:activityid
+							},
+							success: function(response) {
+								obj1 = Ext.JSON.decode(response.responseText);
+								var currency_activity=obj1.data.currency_activity;
+								//console.log(currency_activity);
+								var ratecard_USD=obj1.data.ratecard_USD;
+								//console.log(ratecard_USD);
+								var ratecard_GBP=obj1.data.ratecard_GBP;
+								//console.log(ratecard_GBP);
+								if(newValue=="USD")
+								{
+									selModel.getSelection()[0].set('rate_USD_GBP', ratecard_USD);
+								}
+								else if(newValue=="GBP")
+								{
+									selModel.getSelection()[0].set('rate_USD_GBP', ratecard_GBP);
+								}
+							}
+						});
+
+					}
+				}
+			}
+				
+				},
+				{
+				 dataIndex: 'unit_of_measurement',
+				 text: 'Unit Of Measurement',
+				 align: 'center',
+                 flex:2,
+                 editor:{
+					 	xtype:'combo',
+					 	store: unit_of_measure,
+						queryMode: 'local',
+						displayField: 'unit_of_measure',
+						valueField: 'unit_of_measure',
+						listeners: {
+					change: function (field, newValue, oldValue) 
+					{
+
+						var grid = this.up().up();
+						var selModel = grid.getSelectionModel();
+						var edit_Job_code=Ext.getCmp('edit_Job_code').getValue(); 
+						var conn = new Ext.data.Connection();
+						conn.request({
+							url: 'service/budget.php',
+							method: 'POST',
+							params : {
+								action:26,
+								unit_of_measurement:newValue,edit_Job_code:edit_Job_code
+							},
+							success: function(response) {
+								obj1 = Ext.JSON.decode(response.responseText);
+								var no_of_unit=obj1.data.no_of_unit;
+								var no_of_unit1=obj1.data.no_of_unit1;
+								if(newValue=="Cast-off extent")
+								{
+									selModel.getSelection()[0].set('no_of_unit', no_of_unit);
+								}
+								else if(newValue=="Manuscript pages")
+								{
+									selModel.getSelection()[0].set('no_of_unit', no_of_unit1);
+								}
+								else if(newValue=="Project")
+								{
+									var no_of_unit_project=1;
+									selModel.getSelection()[0].set('no_of_unit', no_of_unit_project);
+								}
+						//var selModel = grid.getSelectionModel();
+						var no_of_unit=selModel.getSelection()[0].data.no_of_unit;
+						//alert(no_of_unit);
+						var rate_USD_GBP = selModel.getSelection()[0].data.rate_USD_GBP;
+							
+						var budget_actual_amount=no_of_unit*rate_USD_GBP;
+						
+						selModel.getSelection()[0].set('budgeted_amount_USD_GBP', budget_actual_amount);
+						
+						selModel.getSelection()[0].set('actual_amount_USD_GBP', budget_actual_amount);				
+							
+							}
+						});
+								
+
+					}
+				}
+						}
+				
+				},		
+				
+		       {
+					dataIndex: 'rate_USD_GBP',
+					text: 'Rate / Unit',
+					flex: 1,
+					align: 'center',
+					editor: 
+					{
+						xtype: 'textfield',
+					}
+				},
+		       /*	{
 					text:'Rate / Unit',
 					
 		columns: [{
@@ -344,8 +446,43 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					}
 				}
 				]
-				},
+				},*/
 				{
+			dataIndex: 'no_of_unit',
+			text: 'No Of Units',
+			flex: 1,
+			align: 'center',
+			editor: {
+				xtype: 'textfield',
+				listeners: {
+					change: function(field, newValue, oldValue) {
+
+						var grid = this.up().up();
+						var selModel = grid.getSelectionModel();
+						var rate = selModel.getSelection()[0].data.rate_USD;
+						var rate1 = selModel.getSelection()[0].data.rate_GBP;
+						var actual = newValue * rate;
+						var actual1 = newValue * rate1;
+						selModel.getSelection()[0].set('budgeted_amount_USD', actual);
+						selModel.getSelection()[0].set('budgeted_amount_GBP', actual1);
+						selModel.getSelection()[0].set('actual_amount_USD', actual);
+						selModel.getSelection()[0].set('actual_amount_GBP', actual1);
+
+						var total_USD = 0;
+						var total_GBP = 0;
+						var myStore = Ext.getCmp('editaccountReceiveGrid_a').getStore();
+						myStore.each( function(rec) {
+							total_USD = total_USD + parseFloat(rec.get('actual_amount_USD'));
+							total_GBP = total_GBP + parseFloat(rec.get('actual_amount_GBP'));
+						});
+						Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
+						Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
+
+					}
+				}
+			}
+		},
+				/*{
 					dataIndex: 'no_of_unit',
 					text: 'No of Units',
 					flex: 2,
@@ -432,8 +569,19 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
                              } 
                              }
 					
-				},
+				},*/
+				
 				{
+			dataIndex: 'budgeted_amount_USD_GBP',
+			text: 'Budgeted Amount',
+			flex: 2,
+			align: 'center',
+			decimalPrecision: 2,
+			sortable: true,
+			renderer: Ext.util.Format.numberRenderer('000000.00'),
+			
+		},
+			/*	{
 					text:'Budgeted Amount',
 		columns: [
 				{
@@ -455,8 +603,19 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
                     renderer: Ext.util.Format.numberRenderer('000000.00'),
 			    }
 			    ]
-			    },
-              {
+			    },*/
+			   
+			   {
+			dataIndex: 'actual_amount_USD_GBP',
+			text: 'Actual Amount',
+			flex: 2,
+			align: 'center',
+			decimalPrecision: 2,
+			sortable: true,
+			renderer: Ext.util.Format.numberRenderer('000000.00'),
+			
+		},
+              /*{
 		        	text:'Actual Amount',
 		        	
 		columns: [
@@ -526,7 +685,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
                         renderer: Ext.util.Format.numberRenderer('000000.00'),
 		       },
 		       ]
-		       },
+		       },*/
 		       							
 		{
 			xtype:'actioncolumn',

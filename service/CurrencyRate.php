@@ -11,10 +11,13 @@
 			insertgetCurrencyRate($_POST['currency_rate_gbp'],$_POST['currency_rate_from'],$_POST['currency_rate_to']);
 			break;
 		case 3:
-			deletegetCurrencyRate($_POST["serviceid"]);	
+			getCurrencyMasterById($_POST["id"]);	
 			break;
 		case 4:
-			updategetCurrencyRate($_POST["serviceid"],$_POST['servicecode'],$_POST['servicename'],$_POST['servicedescription']);	
+			deletegetCurrencyRate($_POST["id"]);	
+			break;
+		case 5:
+			updategetCurrencyRate($_POST["currency_rate_id"],$_POST['currency_rate_gbp'],$_POST['currency_rate_from'],$_POST['currency_rate_to']);	
 			break;
 		default: 
 			break;
@@ -24,7 +27,7 @@
 	function getCurrencyRate()
 	{
  		$num_result = mysql_query ("Select
-  currency_rate.id as id,
+  currency_rate.id as currency_rate_id,
   currency_rate.currency_rate_gbp as currency_rate_gbp,
   currency_rate.currency_rate_from as currency_rate_from,
   currency_rate.currency_rate_to as currency_rate_to
@@ -34,7 +37,7 @@
 		$totaldata = mysql_num_rows($num_result);
 
 		$result = mysql_query("Select
-  currency_rate.id as id,
+  currency_rate.id as currency_rate_id,
   currency_rate.currency_rate_gbp as currency_rate_gbp,
   currency_rate.currency_rate_from as currency_rate_from,
   currency_rate.currency_rate_to as currency_rate_to
@@ -46,15 +49,43 @@
 			$data [] = $row;
 		}
 	   	echo'({"total":"'.$totaldata.'","results":'.json_encode($data).'})';
-	} 
-     function updateServiceMaster($serviceid,$servicecode,$servicename,$servicedescription)
+	}
+	function getCurrencyMasterById($id)
+ 	{
+	$result1 = mysql_query ("select currency_rate.id as currency_rate_id,
+  currency_rate.currency_rate_gbp as currency_rate_gbp,
+  currency_rate.currency_rate_from as currency_rate_from,
+  currency_rate.currency_rate_to as currency_rate_to
+  From
+  currency_rate where
+		  	currency_rate.id=".$id."");
+			
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+			$result ["data"] = $row;
+	  	}
+		
+		
+      	echo(json_encode($result));
+    } 
+     function updategetCurrencyRate($currency_rate_id,$currency_rate_gbp,$currency_rate_from,$currency_rate_to)
     {
-		$checkquery="SELECT id FROM services WHERE id='".$serviceid."'";
+		$checkquery="SELECT id FROM currency_rate WHERE currency_rate.id='".$currency_rate_id."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		
 		if($num_rows==1){
-			$result1= mysql_query("UPDATE services set code='".$servicecode."', name='".$servicename."',description='".$servicedescription."',modified_by=' ',modified_on=now() WHERE id=".$serviceid."");
+			$result1= mysql_query("UPDATE currency_rate set currency_rate_gbp='".$currency_rate_gbp."', currency_rate_from='".$currency_rate_from."',currency_rate_to='".$currency_rate_to."',modified_by=' ',modified_on=now() WHERE id=".$currency_rate_id."");
 				
 		if(!$result1)
 			{
@@ -70,7 +101,7 @@
 		else
 		{
 			$result["failure"] = true;
-			$result["message"] =  'User does not exist';
+			$result["message"] =  'Currency rate does not exist';
 		}
 		
 
@@ -78,13 +109,13 @@
     }
     
     
-	function deleteServiceMasterById($serviceid)
+	function deletegetCurrencyRate($currency_rate_id)
     {
-		$checkquery="SELECT id FROM services WHERE id='".$serviceid."'";
+		$checkquery="SELECT id FROM currency_rate WHERE id='".$currency_rate_id."'";
 		$result1=mysql_query($checkquery);
 		$num_rows=mysql_num_rows($result1);
 		if($num_rows==1){
-				$result1= mysql_query("UPDATE services SET flag=1 WHERE id='".$serviceid."'");
+				$result1= mysql_query("UPDATE currency_rate SET flag=1 WHERE id='".$currency_rate_id."'");
 				
 				if(!$result1)
 				{
@@ -100,7 +131,7 @@
 			else
 			{
 				$result["failure"] = true;
-				$result["message"] =  'Service does not exist';
+				$result["message"] =  'Currency rate does not exist';
 			}
 		
 		echo json_encode($result);

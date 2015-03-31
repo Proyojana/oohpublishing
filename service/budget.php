@@ -13,9 +13,9 @@ include("../inc/php/encryptDecrypt.php");
 			break;
 		case 3:
 			getBudgetUnit($_POST["vendor"],$_POST["activityid"]);	
-			break;
+			break; 
 		case 4:
-			insertBudgetExpense($_POST['job_code'],$_POST['budget_id'],$_POST['activity'],$_POST['currency_rate'],$_POST['unit_of_measurement'],$_POST['vendor'],$_POST['no_of_unit'],$_POST['rate_USD'],$_POST['rate_GBP'],$_POST['budgeted_amount_USD'],$_POST['budgeted_amount_GBP'],$_POST['actual_amount_USD'],$_POST['actual_amount_GBP']);
+			insertBudgetExpense($_POST['job_code'],$_POST['budget_id'],$_POST['activity'],$_POST['currency_rate'],$_POST['unit_of_measurement'],$_POST['vendor'],$_POST['no_of_unit'],$_POST['rate_USD_GBP'],$_POST['budgeted_amount_USD_GBP'],$_POST['actual_amount_USD_GBP']);
 			break;
 		case 5:
 			deleteBudgetactivity($_POST['budgetid']);
@@ -36,7 +36,7 @@ include("../inc/php/encryptDecrypt.php");
 			getActivity_a($_POST['job_code']);
 			break;
 		case 11:
-			insertBudgetReceivables_a($_POST['job_code'],$_POST['projectID'],$_POST['activity_name'],$_POST['currency_rate'],$_POST['unit_of_measurement'],$_POST['rate_USD'],$_POST['rate_GBP'],$_POST['no_of_unit'],$_POST['budgeted_USD'],$_POST['budgeted_GBP'],$_POST['actual_amount_USD'],$_POST['actual_amount_GBP']);
+			insertBudgetReceivables_a($_POST['job_code'],$_POST['projectID'],$_POST['activity_name'],$_POST['currency_rate'],$_POST['unit_of_measurement'],$_POST['rate_USD_GBP'],$_POST['no_of_unit'],$_POST['budgeted_USD_GBP'],$_POST['actual_amount_USD_GBP']);
 			break;
 		case 12:
 			getReceivable_p($_POST['job_code']);
@@ -74,6 +74,18 @@ include("../inc/php/encryptDecrypt.php");
 	 case 23:
 			get_total_for_expense($_POST['job_code']);
 			break;
+	 case 24:
+			getUnitOfMeasurement($_POST['unit_of_measurement'],$_POST['edit_Job_code']);
+			break;
+	 case 25:
+			getCurrencyRateReceivable($_POST['edit_Job_code'],$_POST['activityid']);
+			break;
+	 case 26:
+			getUnitOfMeasurementPayable($_POST['unit_of_measurement'],$_POST['edit_Job_code']);
+			break;
+	 case 27:
+			getCurrencyRatePayable($_POST['edit_Job_code'],$_POST['activityid']);
+			break;
 		default: 
 			break;
 	}
@@ -100,12 +112,12 @@ include("../inc/php/encryptDecrypt.php");
 			  stages.workflow_id,
 			  budget_expense.vendor as vendor,
 			  budget_expense.no_of_unit as no_of_unit,
-			  budget_expense.rate_USD as rate_USD,
-			  budget_expense.rate_GBP rate_GBP,			  
-			 budgeted_amount_USD as budgeted_amount_USD,
-             budgeted_amount_GBP as budgeted_amount_GBP,  
-			  acual_amount_USD as actual_amount_USD,
-			  actual_amount_GBP as  actual_amount_GBP,
+			  budget_expense.rate_USD_GBP as rate_USD_GBP,
+			  		  
+			 budgeted_amount_USD_GBP as budgeted_amount_USD_GBP,
+             
+			  acual_amount_USD_GBP as actual_amount_USD_GBP,
+			 
 			  stages.activity as activityid,
 			  budget_expense.id as budgetExpense_id,
 			 budget_expense.currency_rate as currency_rate,
@@ -129,12 +141,12 @@ include("../inc/php/encryptDecrypt.php");
 			  budget_expense.workflow_id,
 			 budget_expense.vendor as vendor,
 			  budget_expense.no_of_unit as no_of_unit,
-			  budget_expense.rate_USD as rate_USD,
-			  budget_expense.rate_GBP as rate_GBP,
-			 budgeted_amount_USD as budgeted_amount_USD,
-             budgeted_amount_GBP as budgeted_amount_GBP,  
-			  acual_amount_USD as actual_amount_USD,
-			  actual_amount_GBP as  actual_amount_GBP,
+			  budget_expense.rate_USD_GBP as rate_USD_GBP,
+			  
+			 budgeted_amount_USD_GBP as budgeted_amount_USD_GBP,
+             
+			  acual_amount_USD_GBP as actual_amount_USD_GBP,
+			 
 			  budget_expense.activity As activityid,
   			  budget_expense.id as budgetExpense_id,
 			    budget_expense.currency_rate as currency_rate,
@@ -254,7 +266,7 @@ include("../inc/php/encryptDecrypt.php");
 	  
     }
 	
-	function insertBudgetExpense($job_code,$budget_id,$activity,$currency_rate,$unit_of_measurement,$vendor,$no_of_unit,$rate_USD,$rate_GBP,$budgeted_amount_USD,$budgeted_amount_GBP,$actual_amount_USD,$actual_amount_GBP)
+	function insertBudgetExpense($job_code,$budget_id,$activity,$currency_rate,$unit_of_measurement,$vendor,$no_of_unit,$rate_USD_GBP,$budgeted_amount_USD_GBP,$actual_amount_USD_GBP)
     {
     		$selectworkflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
 		while($row = mysql_fetch_array($selectworkflow)) {
@@ -268,12 +280,12 @@ include("../inc/php/encryptDecrypt.php");
 			$budget_id1 = explode(',',$budget_id);
 			$vendor1 = explode(',',$vendor);
 			$no_of_unit1 = explode(',',$no_of_unit);
-			$rate_USD1 = explode(',',$rate_USD);
-			$rate_GBP1 = explode(',',$rate_GBP);
-			$budgeted_amount_USD1 = explode(',',$budgeted_amount_USD);
-			$budgeted_amount_GBP1 = explode(',',$budgeted_amount_GBP);
-			$actual_amount_USD1 = explode(',',$actual_amount_USD);
-			$actual_amount_GBP1 = explode(',',$actual_amount_GBP);
+			$rate_USD1_GBP = explode(',',$rate_USD_GBP);
+			//$rate_GBP1 = explode(',',$rate_GBP);
+			$budgeted_amount_USD1_GBP = explode(',',$budgeted_amount_USD_GBP);
+			//$budgeted_amount_GBP1 = explode(',',$budgeted_amount_GBP);
+			$actual_amount_USD1_GBP = explode(',',$actual_amount_USD_GBP);
+			//$actual_amount_GBP1 = explode(',',$actual_amount_GBP);
 			$currency_rate1 = explode(',',$currency_rate);
 			$unit_of_measurement1 = explode(',',$unit_of_measurement);
 		for ($i = 0; $i < count($activity1)-1; $i++)
@@ -284,7 +296,7 @@ include("../inc/php/encryptDecrypt.php");
 			if($num_rows == 1)
 			{
 				
-				$result1 = mysql_query("UPDATE budget_expense SET  workflow_id='".$workflow."',activity = '".$activity1[$i]."',currency_rate = '".$currency_rate1[$i]."', unit_of_measurement = '".$unit_of_measurement1[$i]."', vendor = '".$vendor1[$i]."', no_of_unit = '".$no_of_unit1[$i]."', rate_USD = '".$rate_USD1[$i]."', rate_GBP = '".$rate_GBP1[$i]."', budgeted_amount_USD ='".$budgeted_amount_USD1[$i]."' , budgeted_amount_GBP ='".$budgeted_amount_GBP1[$i]."', acual_amount_USD = '".$actual_amount_USD1[$i]."', actual_amount_GBP = '".$actual_amount_GBP1[$i]."' WHERE id = '".$budget_id1[$i]."'");
+				$result1 = mysql_query("UPDATE budget_expense SET  workflow_id='".$workflow."',activity = '".$activity1[$i]."',currency_rate = '".$currency_rate1[$i]."', unit_of_measurement = '".$unit_of_measurement1[$i]."', vendor = '".$vendor1[$i]."', no_of_unit = '".$no_of_unit1[$i]."', rate_USD_GBP = '".$rate_USD1_GBP[$i]."', budgeted_amount_USD_GBP ='".$budgeted_amount_USD1_GBP[$i]."', acual_amount_USD_GBP = '".$actual_amount_USD1_GBP[$i]."' WHERE id = '".$budget_id1[$i]."'");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -299,8 +311,8 @@ include("../inc/php/encryptDecrypt.php");
 			
 			else
 			{
-				$result1 = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,vendor ,no_of_unit,rate_USD,rate_GBP,budgeted_amount_USD,budgeted_amount_GBP,acual_amount_USD ,actual_amount_GBP,created_by,created_on,modified_by,modified_on,flag)
-                                VALUES ('' ,'".$projectID."', '".$workflow."','".$activity1[$i]."','".$currency_rate1[$i]."','".$unit_of_measurement1[$i]."','".$vendor1[$i]."','".$no_of_unit1[$i]."',  '".$rate_USD1[$i]."',  '".$rate_GBP1[$i]."',  '".$budgeted_amount_USD1[$i]."','".$budgeted_amount_GBP1[$i]."',  '".$actual_amount_USD1[$i]."',  '".$actual_amount_GBP1[$i]."',  '', '','', '0000-00-00 00:00:00',  '')");
+				$result1 = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,vendor ,no_of_unit,rate_USD_GBP,budgeted_amount_USD_GBP,acual_amount_USD_GBP ,created_by,created_on,modified_by,modified_on,flag)
+                                VALUES ('' ,'".$projectID."', '".$workflow."','".$activity1[$i]."','".$currency_rate1[$i]."','".$unit_of_measurement1[$i]."','".$vendor1[$i]."','".$no_of_unit1[$i]."',  '".$rate_USD1_GBP[$i]."',  '".$budgeted_amount_USD1_GBP[$i]."',  '".$actual_amount_USD1_GBP[$i]."',  '', '','', '0000-00-00 00:00:00',  '')");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -502,6 +514,7 @@ function deleteBudgetactivity($budgetid)
   project_title.id As editbudgetHeader_projectID,
   project_title.castoff_extent As editbudgetHeader_castoffextent,
   project_title.confirmed_extent As editbudgetHeader_confirmedextent,
+  project_title.conversionrate As conversion_rate,
   author.name As editbudgetHeader_author_name,
   budget_total_detail.ponumber1 As edit_budgetHeader_ponumber1,
   budget_total_detail.ponumber2 As edit_budgetHeader_ponumber2,
@@ -571,7 +584,7 @@ Where
 	   	echo'({"results":'.json_encode($data).'})';
 	}
 	
-	function insertBudgetReceivables_a($job_code,$projectID,$activity_name,$currency_rate,$unit_of_measurement,$rate_USD,$rate_GBP,$no_of_unit,$budgeted_USD,$budgeted_GBP,$actual_amount_USD,$actual_amount_GBP)
+	function insertBudgetReceivables_a($job_code,$projectID,$activity_name,$currency_rate,$unit_of_measurement,$rate_USD_GBP,$no_of_unit,$budgeted_USD_GBP,$actual_amount_USD_GBP)
     {
 /*	$selectworkflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
 		while($row = mysql_fetch_array($selectworkflow)) {
@@ -583,12 +596,12 @@ Where
 		    $activity_name1 = explode(',',$activity_name);
 		    //$activity_id1 = explode(',',$activity_id);
 		    $no_of_unit1 = explode(',',$no_of_unit);
-			$rate_USD1 = explode(',',$rate_USD);
-			$rate_GBP1 = explode(',',$rate_GBP);
-			$budgeted_USD1 = explode(',',$budgeted_USD);
-			$budgeted_GBP1 = explode(',',$budgeted_GBP);
-			$actual_amount_USD1 = explode(',',$actual_amount_USD);
-			$actual_amount_GBP1 = explode(',',$actual_amount_GBP);
+			$rate_USD1_GBP = explode(',',$rate_USD_GBP);
+			//$rate_GBP1 = explode(',',$rate_GBP);
+			$budgeted_USD1_GBP = explode(',',$budgeted_USD_GBP);
+			//$budgeted_GBP1 = explode(',',$budgeted_GBP);
+			$actual_amount_USD1_GBP = explode(',',$actual_amount_USD_GBP);
+			//$actual_amount_GBP1 = explode(',',$actual_amount_GBP);
 			$currency_rate1 = explode(',',$currency_rate);
 			$unit_of_measurement1 = explode(',',$unit_of_measurement);
 			
@@ -609,7 +622,7 @@ $activity_id[] = $row['id'];
 			if($num_rows == 1)
 			{
 				
-				$result1 = mysql_query("UPDATE budget_receivable SET  currency_rate = '".$currency_rate1[$i]."', unit_of_measurement = '".$unit_of_measurement1[$i]."',no_of_unit='".$no_of_unit1[$i]."', rate_usd = '".$rate_USD1[$i]."', rate_gbp = '".$rate_GBP1[$i]."', budgeted_usd = '".$budgeted_USD1[$i]."', budgeted_gbp= '".$budgeted_GBP1[$i]."', actual_usd = '".$actual_amount_USD1[$i]."',actual_gbp='".$actual_amount_GBP1[$i]."' WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."'");
+				$result1 = mysql_query("UPDATE budget_receivable SET  currency_rate = '".$currency_rate1[$i]."', unit_of_measurement = '".$unit_of_measurement1[$i]."',no_of_unit='".$no_of_unit1[$i]."', rate_usd_gbp= '".$rate_USD1_GBP[$i]."', budgeted_usd_gbp = '".$budgeted_USD1_GBP[$i]."', actual_usd_gbp = '".$actual_amount_USD1_GBP[$i]."' WHERE project_id='".$projectID."'And activity='".$activity_name1[$i]."'");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -624,8 +637,8 @@ $activity_id[] = $row['id'];
 			
 			else
 			{
-				$result1 = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity,currency_rate,unit_of_measurement, no_of_unit, rate_usd, rate_gbp, budgeted_usd, budgeted_gbp, actual_usd, actual_gbp,created_by,created_on,modified_by,modified_on,flag)
-                                VALUES ('','".$projectID."','".$activity_name1[$i]."','".$currency_rate1[$i]."','".$unit_of_measurement1[$i]."','".$no_of_unit1[$i]."','".$rate_USD1[$i]."','".$rate_GBP1[$i]."','".$budgeted_USD1[$i]."','".$budgeted_GBP1[$i]."','".$actual_amount_USD1[$i]."','".$actual_amount_GBP1[$i]."','','','','','')");
+				$result1 = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity,currency_rate,unit_of_measurement, no_of_unit, rate_usd_gbp, budgeted_usd_gbp, actual_usd_gbp,created_by,created_on,modified_by,modified_on,flag)
+                                VALUES ('','".$projectID."','".$activity_name1[$i]."','".$currency_rate1[$i]."','".$unit_of_measurement1[$i]."','".$no_of_unit1[$i]."','".$rate_USD1_GBP[$i]."','".$budgeted_USD1_GBP[$i]."','".$actual_amount_USD1_GBP[$i]."','','','','','')");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -689,12 +702,12 @@ function getReceivable_a($job_code)
  budget_receivable.currency_rate as currency_rate,
  budget_receivable.unit_of_measurement as unit_of_measurement,
  budget_receivable.no_of_unit As no_of_unit,
- budget_receivable.rate_gbp As rate_GBP,
- budget_receivable.rate_usd As rate_USD,
-budgeted_usd as budgeted_amount_USD,
-budgeted_gbp as budgeted_amount_GBP,  
-actual_usd As actual_amount_USD,
-actual_gbp  As actual_amount_GBP,
+
+ budget_receivable.rate_usd_gbp As rate_USD_GBP,
+budgeted_usd_gbp as budgeted_amount_USD_GBP,
+
+actual_usd_gbp As actual_amount_USD_GBP,
+
  activity.name as activity_name,
  activity.id as activityid
 From
@@ -1070,6 +1083,127 @@ Where
 	   	{
 			$result ["data"] = $row;
 	  	}
+      	echo(json_encode($result));
+	}
+	
+	function getUnitOfMeasurement($unit_of_measurement,$edit_Job_code)
+	{
+	
+		$result1 = mysql_query ("Select
+			  
+			  project_title.castoff_extent as no_of_unit,
+			  project_title.manuscript_pages as no_of_unit1
+			  From project_title Where project_title.job_code = '".$edit_Job_code."' ");
+		
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+			$result ["data"] = $row;
+	  	}
+		
+		
+      	echo(json_encode($result));
+	}
+	function getCurrencyRateReceivable($edit_Job_code,$activityid)
+	{
+	
+		$workflow_id = mysql_query ("Select
+			  project_title.workflow
+			  From project_title Where project_title.job_code = '".$edit_Job_code."' ");
+		while($row = mysql_fetch_array($workflow_id)) {				
+			$workflow = $row['workflow'];			
+		}
+		$result1 = mysql_query ("Select
+			  
+			  stages.activity as currency_activity,
+			  stages.ratecard_USD as ratecard_USD,
+			  stages.ratecard_GBP as ratecard_GBP
+			  From stages Where stages.workflow_id = '".$workflow."' and stages.activity = '".$activityid."'");
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+			$result ["data"] = $row;
+	  	}
+		
+		
+      	echo(json_encode($result));
+	}
+	function getUnitOfMeasurementPayable($unit_of_measurement,$edit_Job_code)
+	{
+	
+		$result1 = mysql_query ("Select
+			  
+			  project_title.castoff_extent as no_of_unit,
+			  project_title.manuscript_pages as no_of_unit1
+			  From project_title Where project_title.job_code = '".$edit_Job_code."' ");
+		
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+			$result ["data"] = $row;
+	  	}
+		
+		
+      	echo(json_encode($result));
+	}
+	function getCurrencyRatePayable($edit_Job_code,$activityid)
+	{
+	
+		$workflow_id = mysql_query ("Select
+			  project_title.workflow
+			  From project_title Where project_title.job_code = '".$edit_Job_code."' ");
+		while($row = mysql_fetch_array($workflow_id)) {				
+			$workflow = $row['workflow'];			
+		}
+		$result1 = mysql_query ("Select
+			  
+			  stages.activity as currency_activity,
+			  stages.payable_ratecard_USD as ratecard_USD,
+			  stages.payable_ratecard_GBP as ratecard_GBP
+			  From stages Where stages.workflow_id = '".$workflow."' and stages.activity = '".$activityid."'");
+		if(!$result1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["success"] = true;
+				
+			}
+       	while($row=mysql_fetch_object($result1))
+	   	{
+			$result ["data"] = $row;
+	  	}
+		
+		
       	echo(json_encode($result));
 	}
 	?>

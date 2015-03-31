@@ -56,6 +56,9 @@ $id=$_SESSION['id'];
 	   case 17:
 			tauthorinfo($_POST['job_code']);
 			break;
+	   case 18:
+			autoRequestCurrencyRate();
+			break;
 		default: 
 			break;
 	}
@@ -255,7 +258,7 @@ Where
 				autoinsertschedule($codegen,$project_start_date,$workflow);			
 				$insertcodgen = mysql_query("UPDATE codegen set value = '".$codegen."' where tablename='projects'");
 				
-				//insertBudgetTotal($codegen);                     
+				insertBudgetTotal($codegen);                     
 				autoinsertbudget($codegen,$workflow,$castoff_extent,$confirmed_extent);
 				insertAuthor($job_code,$author_create,$author_name,$author_last_name,$author_designation,$author_email);
 				$result["success"] = true;
@@ -848,6 +851,14 @@ Group By
 stages.activity");
 //$total_USD = 0;
 //$total_GBP = 0;
+$rec_budget_USD_total=0;
+$rec_budget_GBP_total=0;
+$rec_actuals_USD_total=0;
+$rec_actuals_GBP_total=0;
+$pay_budget_USD_total=0;
+$pay_budget_GBP_total=0;
+$pay_actuals_USD_total=0;
+$pay_actuals_GBP_total=0;
 while($row = mysql_fetch_array($getworkflowstages))
 {
 $activity = $row['activity'];
@@ -889,12 +900,12 @@ $pay_actuals_GBP_total+=$payable_actuals_GBP;
 
 
 
-$budget_receivable = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity,currency_rate,unit_of_measurement, no_of_unit, rate_usd, rate_gbp, budgeted_usd, budgeted_gbp, actual_usd, actual_gbp,created_by,created_on,modified_by,modified_on,flag)
-VALUES ('','".$project_id."','".$activity."','','','".$finalextent."','".$ratecard_USD."','".$ratecard_GBP."','".$budgeted_USD."','".$budgeted_GBP."','".$actuals_USD."','".$actuals_GBP."','','','','','')");
+$budget_receivable = mysql_query("INSERT INTO budget_receivable (id ,project_id, activity,currency_rate,unit_of_measurement, no_of_unit, rate_usd_gbp, budgeted_usd_gbp, actual_usd_gbp,created_by,created_on,modified_by,modified_on,flag)
+VALUES ('','".$project_id."','".$activity."','','','','','','','','','','','')");
 
 
-$budget_expense = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,currency_rate,unit_of_measurement,vendor ,no_of_unit,rate_USD,rate_GBP,budgeted_amount_USD,budgeted_amount_GBP,acual_amount_USD ,actual_amount_GBP,created_by,created_on,modified_by,modified_on,flag)
-VALUES ('' ,'".$project_id."', '','".$activity."','','','','".$finalextent."', '".$payable_ratecard_USD."', '".$payable_ratecard_GBP."', '".$payable_budgeted_USD."','".$payable_budgeted_GBP."', '".$payable_actuals_USD."', '".$payable_actuals_GBP."', '', '','', '0000-00-00 00:00:00', '')");
+$budget_expense = mysql_query("INSERT INTO budget_expense (id ,project_id,workflow_id,activity,currency_rate,unit_of_measurement,vendor ,no_of_unit,rate_USD_GBP,budgeted_amount_USD_GBP,acual_amount_USD_GBP,created_by,created_on,modified_by,modified_on,flag)
+VALUES ('' ,'".$project_id."', '','".$activity."','','','','', '', '', '', '', '','', '0000-00-00 00:00:00', '')");
 }
 //USD
 $bal=$rec_budget_USD_total-$pay_budget_USD_total;
@@ -907,16 +918,16 @@ $profit_GBP=@ceil(($balance/$rec_budget_GBP_total)*100);
 
 //echo "profit GBP ".$profit_GBP;
 
-insertBudgetTotal($project_id,$profit_USD,$profit_GBP);
+//insertBudgetTotal($project_id,$profit_USD,$profit_GBP);
 
 }
 
 
 //insert budget total
-function insertBudgetTotal($project_id,$profit_USD,$profit_GBP)
+function insertBudgetTotal($project_id)
 {
 $result2 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,total_receive_gdp,total_receive_project_usd,total_receive_project_gdp,total_pay_usd,total_pay_gdp,project_profit_gdp,project_profit_per,invoice_date,status)
-VALUES ('' ,'".$project_id."', '','','', '', '','','', '', '".$profit_USD."', '".$profit_GBP."', '', 'Current')");
+VALUES ('' ,'".$project_id."', '','','', '', '','','', '', '', '', '', 'Current')");
 if(!$result2)
 {
 $result["failure"] = true;
@@ -946,6 +957,31 @@ function insertAuthor($job_code,$author_create,$author_name,$author_last_name,$a
 		$result["message"] = "Inserted successfully";
 	}
 }
+function autoRequestCurrencyRate() 
+{
+	$sys_date=date("Y-m-d");
+//echo "System Date".$sys_date;
+	$autoRequest = mysql_query("SELECT MAX(currency_rate_to) FROM currency_rate WHERE currency_rate_from<'".$sys_date."' and currency_rate_to>'".$sys_date."'");
+	$row = mysql_fetch_row($autoRequest);
+    $date1 = $row[0];
+	//echo "Server date".$date1;
+	
+	$currency_rate_value = mysql_query("Select currency_rate_gbp From currency_rate Where currency_rate.currency_rate_to = '".$date1."'");
+ 		while($row = mysql_fetch_array($currency_rate_value)) {				
+			$currency_rate_gbp = $row['currency_rate_gbp'];			
+		}
+	
+	if(!$currency_rate_value)
+	{
+		$result["failure"] = true;
+		$result["message"] = 'Invalid query: ' . mysql_error();
+	} else 
+	{
+		$result["success"] = true;
+		$result["message"] = $currency_rate_gbp;
+	}
 
+	echo json_encode($result);
+}
 
 ?>

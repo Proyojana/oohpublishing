@@ -21,6 +21,27 @@ function autoReload()
 							
 							});
 };
+function autoRequestCurrencyRate()
+{
+	var currentForm = Ext.getCmp('newprojectaddform');   
+			 currentForm.getForm().load({
+   								 url: 'service/projects.php',
+							     params: {
+        						 	action:18
+        						 	
+							    },
+							    success:function(form,action){
+							    	
+							    	alert("success");
+							    	alert(action.result.message);
+							    },
+							    failure:function(form,action){	
+							    //	alert("failure");						    
+							    	Ext.getCmp('conversionrate').setValue(action.result.message);
+							    }
+							
+							});
+};
 var times = Ext.create('Ext.data.Store', {
         fields: ['format'],
         data : [
@@ -74,7 +95,7 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
      	 afterrender: function(){
      	 //	alert("listen");
      	 	autoReload();
-     	  
+     	  autoRequestCurrencyRate();
      	}},
      	
 	initComponent:function(){
@@ -697,7 +718,7 @@ t.setValue(value1);
 							Ext.Msg.alert('Message', obj.message); 
 								currentForm.getForm().reset();
 								autoReload();
-																		
+								 autoRequestCurrencyRate();										
 									Ext.getCmp('projectlist').getStore().reload();	
 						}
 					});
@@ -731,7 +752,8 @@ t.setValue(value1);
 			handler: function (){
 				var currentForm = this.up('newprojectaddform');
 				currentForm.getForm().reset();
-				autoReload();		
+				autoReload();
+				 autoRequestCurrencyRate();
 			}
 	  	},
 	  	{
