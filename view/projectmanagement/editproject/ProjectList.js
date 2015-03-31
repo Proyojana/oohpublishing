@@ -560,12 +560,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								Ext.getCmp('edit_total_pay_USD').setValue(total_USD_Payable);
 								Ext.getCmp('edit_total_pay_GBP').setValue(total_GBP_Payable);
 								
-								total_profit=((total_GBP_Payable*conversion_rate)+total_USD_Payable)-((total_GBP*conversion_rate)+total_USD);
-								total_profit_percentage=((total_GBP_Payable*conversion_rate)+total_USD_Payable)/((total_GBP*conversion_rate)+total_USD);
+								total_profit=((total_USD_Payable*conversion_rate)+total_GBP_Payable)-((total_USD*conversion_rate)+total_GBP);
+								total_profit_percentage=(((total_USD_Payable*conversion_rate)+total_GBP_Payable)/((total_USD*conversion_rate)+total_GBP));
 								
-								total_profit_percentage = Math.round(total_profit_percentage * 100) / 100;
-								total_profit = Math.round(total_profit * 100) / 100;
 								//alert(total_profit_percentage);
+								
 								Ext.getCmp('edit_profit_GBP').setValue(total_profit);
 								Ext.getCmp('edit_profit_percentage').setValue(total_profit_percentage);
 						}

@@ -180,6 +180,17 @@
                  }
 
              },
+             {
+    		xtype:'textfield',
+			id:'conversion_rate',
+			fieldLabel: 'Conversion Rate',
+			align:'center',
+			x:780,
+			y:67,
+			width:200,
+			allowBlank: false,
+			//afterLabelTextTpl: required,
+			},
 
 
              {
