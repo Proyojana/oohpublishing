@@ -21,7 +21,7 @@ Ext.define('MyDesktop.App', {
 		'Ext.ux.LiveSearchGridPanel',
 		'Ext.ux.form.MultiSelect',
 		'Ext.ux.form.TinyMCETextArea',
-		'Ext.ux.exporter.Exporter',
+		//'Ext.ux.exporter.Exporter',
         
         
     ],

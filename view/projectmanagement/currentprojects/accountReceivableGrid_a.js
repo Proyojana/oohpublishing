@@ -140,8 +140,26 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.accountReceivableGr
                         return value;
                     }
                 },
-
-                {
+				{
+				 dataIndex: 'currency_rate',
+				 text: 'Currency',
+				 align: 'center',
+                 flex:1,
+		       },
+				
+				{
+				 dataIndex: 'unit_of_measurement',
+				 text: 'Unit Of Measurement',
+				 align: 'center',
+                 flex:2,
+				},
+				{
+					dataIndex: 'rate_USD_GBP',
+					text: 'Rate / Unit',
+					flex: 1,
+					align: 'center',
+			},
+                /*{
                     text: 'Rate / Unit',
 
                     columns: [{
@@ -162,7 +180,14 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.accountReceivableGr
                             xtype: 'textfield',
                         }
                     }]
-                }, {
+                },*/
+			{
+			dataIndex: 'no_of_unit',
+			text: 'No Of Units',
+			flex: 1,
+			align: 'center',
+			},
+            /*{
                     dataIndex: 'no_of_unit',
                     text: 'No Of Units',
                     flex: 1,
@@ -196,7 +221,19 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.accountReceivableGr
                             }
                         }
                     }
-                }, {
+                },*/
+			
+			{
+			dataIndex: 'budgeted_amount_USD_GBP',
+			text: 'Budgeted Amount',
+			flex: 1,
+			align: 'center',
+			decimalPrecision: 2,
+			sortable: true,
+			renderer: Ext.util.Format.numberRenderer('000000.00'),
+			
+		},
+               /* {
                     text: 'Budgeted Amount',
                     columns: [{
                         dataIndex: 'budgeted_amount_USD',
@@ -215,7 +252,18 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.accountReceivableGr
                             xtype: 'textfield',
                         }
                     }]
-                }, {
+                },*/
+                {
+			dataIndex: 'actual_amount_USD_GBP',
+			text: 'Actual Amount',
+			flex: 1,
+			align: 'center',
+			decimalPrecision: 2,
+			sortable: true,
+			renderer: Ext.util.Format.numberRenderer('000000.00'),
+			
+		},
+               /* {
                     text: 'Actual Amount',
                     columns: [{
                         dataIndex: 'actual_amount_USD',
@@ -266,7 +314,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.accountReceivableGr
                         }
                         }
                     }]
-                }
+                }*/
 
 
                 

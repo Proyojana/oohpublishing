@@ -26,7 +26,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 			hidden:true
 		},{
 			dataIndex: 'currency_rate_gbp',
-			text: 'GBP',
+			text: '1 GBP per USD',
 			align: 'center',
 			flex:1,
 			filter: {
@@ -34,7 +34,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 			}
 		},{
 			dataIndex: 'currency_rate_from',
-			text: 'From',
+			text: 'Valid From',
 			align: 'center',
 			flex:2,
 			filter: {
@@ -42,7 +42,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 			}
 		},{
 			dataIndex: 'currency_rate_to',
-			text: 'To',
+			text: 'Valid To',
 			align: 'center',
 			flex:2,
 			filter: {

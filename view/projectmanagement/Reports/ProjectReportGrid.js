@@ -141,11 +141,11 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
 			emptyMsg: "No topics to display",
 			 items:[
                        
-                       {
+                      /* {
                                xtype:'exporterbutton',
                                text:'Export',
                                margin:'0 0 0 40'
-                       },
+                       },*/
                ]
  
 			

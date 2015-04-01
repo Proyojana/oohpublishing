@@ -91,7 +91,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.budgetGrid', {
 						
 					
 				},
-				{
+				/*{
 					dataIndex: 'stage',
 					text: 'Stage',
 					flex: 2,
@@ -102,7 +102,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.budgetGrid', {
 						}
 					
 					
-				},
+				},*/
 				 {
 				 	dataIndex: 'vendor',
 		        	text: 'Vendor',
@@ -124,14 +124,40 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.budgetGrid', {
 					}  
 		        	
 		       },
+		        {
+				 dataIndex: 'currency_rate',
+				 text: 'Currency',
+				 align: 'center',
+                 flex:1,
+		       },
+				
 				{
+				 dataIndex: 'unit_of_measurement',
+				 text: 'Unit Of Measurement',
+				 align: 'center',
+                 flex:2,
+				},
+				{
+					dataIndex: 'rate_USD_GBP',
+					text: 'Rate / Unit',
+					flex: 1,
+					align: 'center',
+				},
+				{
+					dataIndex: 'no_of_unit',
+					text: 'No Of Units',
+					flex: 2,
+					align:'center',
+					
+				},
+				/*{
 					dataIndex: 'unit',
 					text: 'Unit',
 					flex: 2,
 					align:'center',
 					
-				},
-				{	
+				},*/
+				/*{	
 			
 					dataIndex: 'num_units_budgeted',
 					text: 'No.of Units <br/>Budgeted',
@@ -156,9 +182,30 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.budgetGrid', {
 		        	align:'center',
 				}
 				]
-				},
+				},*/
 				
 				{
+			dataIndex: 'budgeted_amount_USD_GBP',
+			text: 'Budgeted Amount',
+			flex: 2,
+			align: 'center',
+			decimalPrecision: 2,
+			sortable: true,
+			renderer: Ext.util.Format.numberRenderer('000000.00'),
+			
+		},
+		{
+			dataIndex: 'actual_amount_USD_GBP',
+			text: 'Actual Amount',
+			flex: 2,
+			align: 'center',
+			decimalPrecision: 2,
+			sortable: true,
+			renderer: Ext.util.Format.numberRenderer('000000.00'),
+			
+		},
+				
+				/*{
 					text:'Budgeted Amount',
 		columns: [
 				{
@@ -202,7 +249,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.budgetGrid', {
 		        	align:'center',
 		       },
 		       ]
-		       },
+		       },*/
 		  
 		        
 			
