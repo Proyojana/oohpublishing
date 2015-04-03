@@ -294,7 +294,7 @@ Where
 		//echo $new_code;
 	} else {
 		
-		$new_code = "R0001";
+		$new_code = "S0001";
 	}
 
 	if(!$autoRequest) {

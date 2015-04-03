@@ -211,6 +211,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 										Ext.getCmp('customersgrid').getStore().reload();
 										
 										Ext.getCmp('customersgrid').getView().refresh(); 
+										Ext.getCmp('workflowgrid').getStore().reload();
 									},
 									failure:function(response){
 										obj = Ext.JSON.decode(response.responseText);

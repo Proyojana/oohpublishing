@@ -223,13 +223,20 @@ Ext.define('MyDesktop.view.projectmanagement.newproject.NewProjectAddForm' ,{
 			{
     		xtype:'textfield',
 			id:'conversionrate',
-			fieldLabel: 'Conversion Rate',
+			fieldLabel: 'Conversion Rate 1 GBP=',
 			align:'center',
 			x:710,
 			y:100,
 			width:320,
 			allowBlank: false,
 			afterLabelTextTpl: required,
+			},
+			{
+				xtype : 'label',
+				forId : 'currency_rate_usd_new',
+				text : 'USD',
+				x : 1040,
+				y : 105,
 			},
     	{
     		
@@ -336,6 +343,7 @@ t.setValue(value1);
     	{
 			fieldLabel:'Project Start Date',
 			id:'projectStartDate',
+			format: 'd/m/y',
 			xtype:'datefield',
 			x:720,
 			y:130,

@@ -270,6 +270,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 							
 							Ext.getCmp('customersgrid').getView().refresh();
 							autoLoadCode();
+							Ext.getCmp('workflowgrid').getStore().reload();
 							}
 					});
 					}
