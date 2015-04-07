@@ -80,7 +80,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		width:250,
 		afterLabelTextTpl: required,allowBlank: false,
 	},
-	{
+	/*{
 		xtype:'multiselect',
 		id:'custsevicesven',
 		fieldLabel:'Services',
@@ -96,7 +96,21 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		valueField: 'service_id',
 		ddReorder: true,
 		
-	},
+	},*/
+	{
+    		xtype:'combo',
+    		id:'custsevicesven',
+			fieldLabel: 'Services',
+			multiSelect: true,
+			x:660,
+			y:10,
+			width:250,
+			store:service,
+			displayField:'service_name',
+			valueField: 'service_id',
+			//labelWidth:140,
+			
+    },
 	
 	{   xtype:'textarea',
 		id:'custbasicaddress1',
@@ -149,7 +163,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		width:250,
 		
 		x:660,
-		y:120,
+		y:50,
 		name: 'country',
 		//margin:'5 0 0 0'
 		//afterLabelTextTpl: required,allowBlank: false,
@@ -187,7 +201,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
 		fieldLabel: 'Fax',
 		width:250,
 		x:660,
-		y:150,
+		y:90,
 		name: 'basicemail',
 		
 		

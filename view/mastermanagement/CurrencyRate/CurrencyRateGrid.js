@@ -128,7 +128,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 						var rec = grid.getStore().getAt(rowIndex);
 						Ext.Msg.confirm('Remove Record '+rec.get('currency_rate_id')+' ?',+rec.get('currency_rate_id'), function (button) {
 							if (button == 'yes') {
-								var id=rec.get('id');
+								var id=rec.get('currency_rate_id');
 								var conn = new Ext.data.Connection();
 								conn.request({
 									url: 'service/CurrencyRate.php',

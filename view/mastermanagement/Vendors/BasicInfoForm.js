@@ -115,7 +115,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		height:70,
 		width:250
 	},
-	{
+	/*{
 		xtype:'multiselect',
 		id:'basic_service',
 		fieldLabel:'Services',
@@ -131,7 +131,22 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 	    ddReorder: true,
 							           		         
 				
-	},
+	},*/
+	{
+    		xtype:'combo',
+    		id:'basic_service',
+			fieldLabel: 'Services',
+			name: 'basic_service',
+			multiSelect: true,
+			x:660,
+			y:10,
+			width:250,
+			store:service,
+			displayField:'service_name',
+			valueField: 'service_id',
+			//labelWidth:140,
+			
+    	},
      {
       	id:'basiccity',
 		fieldLabel: 'City',
@@ -164,7 +179,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		width:250,
 		
 		x:660,
-		y:120,
+		y:50,
 		name: 'country',
 		//margin:'5 0 0 0'
 		
@@ -205,7 +220,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
 		width:250,
 		
 		x:660,
-		y:150,
+		y:90,
 		name: 'basicfax',
 		//margin:'5 0 0 0'
 		

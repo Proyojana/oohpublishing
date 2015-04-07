@@ -394,6 +394,20 @@ t.setValue(value1);
     		
     	},
     	{
+    		xtype:'combo',
+    		id:'edit_project_note',
+			fieldLabel: 'Notes',
+			multiSelect: true,
+			x:700,
+			y:30,
+			width:320,
+			store:note,
+			displayField:'note',
+			valueField: 'note',
+			//labelWidth:140,
+			
+    	},
+    	/*{
     		xtype:'multiselect',
 			id:'edit_project_note',
 			fieldLabel: 'Notes:',
@@ -404,7 +418,7 @@ t.setValue(value1);
 			store:note,
 			displayField: 'note',
 			valueField: 'note',
-    	}
+    	}*/
     	]
     },
     	/*{  
