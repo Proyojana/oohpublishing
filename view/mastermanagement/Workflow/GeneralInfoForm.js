@@ -71,7 +71,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			allowBlank: false,
 			afterLabelTextTpl: required,
     	},
-    	{
+    	/*{
     		xtype:'multiselect',
 			id:'workflow_client',
 			fieldLabel: 'Select Clients',
@@ -86,6 +86,23 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 			displayField: 'name',
 			valueField: 'id',
 		//	multiSelect:true,
+			
+    	},*/
+    	{
+    		xtype:'combo',
+    		id:'workflow_client',
+			fieldLabel: 'Select Clients',
+			//name: 'workflow_client',
+			multiSelect: true,
+			x:100,
+			y:40,
+			width:320,
+			store:client,
+			displayField:'name',
+			valueField: 'id',
+			allowBlank: false,
+			afterLabelTextTpl: required,
+			//labelWidth:140,
 			
     	},
     	
