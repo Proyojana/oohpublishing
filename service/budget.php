@@ -45,7 +45,7 @@ include("../inc/php/encryptDecrypt.php");
 			getReceivable_a($_POST['job_code']);
 			break;
 	   case 14:
-			insertBudgetDetails($_POST['projectID'],$_POST['ponumber1'],$_POST['ponumber2'],$_POST['total_receive_USD'],$_POST['total_receive_GDP'],$_POST['total_receive_project_USD'],$_POST['total_receive_project_GDP'],$_POST['total_pay_USD'],$_POST['total_pay_GDP'],$_POST['profit_GDP'],$_POST['profit_percentage'],$_POST['invoice_date'],$_POST['prostatus']);
+			insertBudgetDetails($_POST['projectID'],$_POST['ponumber1'],$_POST['ponumber2'],$_POST['total_receive_USD'],$_POST['total_receive_GDP'],$_POST['total_receive_project_USD'],$_POST['total_receive_project_GDP'],$_POST['total_pay_USD'],$_POST['total_pay_GDP'],$_POST['profit_GDP'],$_POST['profit_percentage'],$_POST['edit_total_receive_budgeted_GBP'],$_POST['edit_total_receive_budgeted_total'],$_POST['edit_total_receive_actual_USD'],$_POST['edit_total_receive_actual_total'],$_POST['edit_total_pay_budgeted_GBP'],$_POST['edit_total_pay_budgeted_total'],$_POST['edit_total_pay_actual_USD'],$_POST['edit_total_pay_actual_total'],$_POST['invoice_date'],$_POST['prostatus']);
 			break;
        case 15:
 		    getCurrencyRate();
@@ -725,7 +725,7 @@ And
 	   	echo'({"results":'.json_encode($data).'})';
 	}
 
-function insertBudgetDetails($projectid,$ponumber1,$ponumber2,$total_receive_USD,$total_receive_GDP,$total_receive_project_USD,$total_receive_project_GDP,$total_pay_USD,$total_pay_GDP,$profit_GDP,$profit_percentage,$invoice_date,$prostatus){
+function insertBudgetDetails($projectid,$ponumber1,$ponumber2,$total_receive_USD,$total_receive_GDP,$total_receive_project_USD,$total_receive_project_GDP,$total_pay_USD,$total_pay_GDP,$profit_GDP,$profit_percentage,$edit_total_receive_budgeted_GBP,$edit_total_receive_budgeted_total,$edit_total_receive_actual_USD,$edit_total_receive_actual_total,$edit_total_pay_budgeted_GBP,$edit_total_pay_budgeted_total,$edit_total_pay_actual_USD,$edit_total_pay_actual_total,$invoice_date,$prostatus){
 $checkquery="SELECT id FROM budget_total_detail WHERE project_id='".$projectid."' ";
        		$result2=mysql_query($checkquery);
        		$num_rows=mysql_num_rows($result2);
@@ -738,7 +738,7 @@ $checkquery="SELECT id FROM budget_total_detail WHERE project_id='".$projectid."
 					
 					
 				
-				$result1 = mysql_query("UPDATE budget_total_detail SET  ponumber1='".$ponumber1."',ponumber2 = '".$ponumber2."', total_receive_usd = '".$total_receive_USD."', total_receive_gdp = '".$total_receive_GDP."',total_receive_project_usd='".$total_receive_project_USD."', total_receive_project_gdp='".$total_receive_project_GDP."',total_pay_usd = '".$total_pay_USD."', total_pay_gdp = '".$total_pay_GDP."', project_profit_gdp='".$profit_GDP."', project_profit_per='".$profit_percentage."', invoice_date='".$invoice_date."', status='".$prostatus."'  WHERE project_id = '".$projectid."'");
+				$result1 = mysql_query("UPDATE budget_total_detail SET  ponumber1='".$ponumber1."',ponumber2 = '".$ponumber2."', total_receive_usd = '".$total_receive_USD."', edit_total_receive_budgeted_GBP = '".$edit_total_receive_budgeted_GBP."', edit_total_receive_budgeted_total = '".$edit_total_receive_budgeted_total."', edit_total_receive_actual_USD = '".$edit_total_receive_actual_USD."', total_receive_gdp = '".$total_receive_GDP."',edit_total_receive_actual_total = '".$edit_total_receive_actual_total."',total_receive_project_usd='".$total_receive_project_USD."', total_receive_project_gdp='".$total_receive_project_GDP."',total_pay_usd = '".$total_pay_USD."',edit_total_pay_budgeted_GBP = '".$edit_total_pay_budgeted_GBP."',edit_total_pay_budgeted_total = '".$edit_total_pay_budgeted_total."', edit_total_pay_actual_USD = '".$edit_total_pay_actual_USD."',total_pay_gdp = '".$total_pay_GDP."',edit_total_pay_actual_total = '".$edit_total_pay_actual_total."', project_profit_gdp='".$profit_GDP."', project_profit_per='".$profit_percentage."', invoice_date='".$invoice_date."', status='".$prostatus."'  WHERE project_id = '".$projectid."'");
 				
 				
 				if(!$result1)
@@ -755,8 +755,8 @@ $checkquery="SELECT id FROM budget_total_detail WHERE project_id='".$projectid."
 			
 			else
 			{
-				$result1 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,total_receive_gdp,total_receive_project_usd,total_receive_project_gdp,total_pay_usd,total_pay_gdp,project_profit_gdp,project_profit_per,invoice_date,status)
-                                VALUES ('' ,'".$projectid."', '".$ponumber1."','".$ponumber2."','".$total_receive_USD."',  '".$total_receive_GDP."', '".$total_receive_project_USD."','".$total_receive_project_GDP."','".$total_pay_USD."', '".$total_pay_GDP."', '".$profit_GDP."', '".$profit_percentage."', '', 'Current')");
+				$result1 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,edit_total_receive_budgeted_GBP,edit_total_receive_budgeted_total,edit_total_receive_actual_USD,total_receive_gdp,edit_total_receive_actual_total,total_receive_project_usd,total_receive_project_gdp,total_pay_usd,edit_total_pay_budgeted_GBP,edit_total_pay_budgeted_total,edit_total_pay_actual_USD,total_pay_gdp,edit_total_pay_actual_total,project_profit_gdp,project_profit_per,invoice_date,status)
+                                VALUES ('' ,'".$projectid."', '".$ponumber1."','".$ponumber2."','".$total_receive_USD."','".$edit_total_receive_budgeted_GBP."','".$edit_total_receive_budgeted_total."','".$edit_total_receive_actual_USD."','".$total_receive_GDP."','".$edit_total_receive_actual_total."', '".$total_receive_project_USD."','".$total_receive_project_GDP."','".$total_pay_USD."','".$edit_total_pay_budgeted_GBP."','".$edit_total_pay_budgeted_total."','".$edit_total_pay_actual_USD."', '".$total_pay_GDP."', '".$profit_GDP."', '".$edit_total_pay_actual_total."', '".$profit_percentage."', '', 'Current')");
 				if(!$result1)
 				{
 					$result["failure"] = true;
@@ -808,8 +808,16 @@ function getCurrencyRate()
 		$result1 = mysql_query ("Select
  budget_total_detail.total_receive_usd as edit_total_receive_USD,
  budget_total_detail.total_receive_gdp as edit_total_receive_GBP,
+ budget_total_detail.edit_total_receive_budgeted_GBP as edit_total_receive_budgeted_GBP,
+ budget_total_detail.edit_total_receive_budgeted_total as edit_total_receive_budgeted_total,
+ budget_total_detail.edit_total_receive_actual_USD as edit_total_receive_actual_USD,
+ budget_total_detail.edit_total_receive_actual_total as edit_total_receive_actual_total,
  budget_total_detail.total_pay_gdp as edit_total_pay_GBP,
  budget_total_detail.total_pay_usd as edit_total_pay_USD,
+ budget_total_detail.edit_total_pay_budgeted_GBP as edit_total_pay_budgeted_GBP,
+ budget_total_detail.edit_total_pay_budgeted_total as edit_total_pay_budgeted_total,
+ budget_total_detail.edit_total_pay_actual_USD as edit_total_pay_actual_USD,
+ budget_total_detail.edit_total_pay_actual_total as edit_total_pay_actual_total,
  ROUND(budget_total_detail.project_profit_gdp,0) as edit_profit_GBP,
 ROUND(budget_total_detail.project_profit_per,0) as edit_profit_percentage
 From

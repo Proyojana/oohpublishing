@@ -92,35 +92,118 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                 x: 5,
                 y: 50,
                 height: 200,
-            },*/ {
+            },*/ 
+			{
+            	xtype:'fieldset',
+        		layout: 'hbox',
+        		title: 'Budget Receivable',
+             x:0,
+			//y:160,
+			layout:'absolute',
+			height:380,
+			items :[
+			{
                 xtype: 'editaccountReceiveGrid_a',
                 x: 5,
-                y: 50,
+                y: 20,
                 height: 200,
-            }, {
+            },
+            /**old column*/
+            {
                 xtype: 'numberfield',
                 id: 'edit_total_receive_USD',                
                 
                 hideTrigger:true,
-                fieldLabel: 'Total Receivable amount in $',
+                fieldLabel: 'Budgeted Receivable amount in $',
                 x: 5,
-                y: 260,
+                y: 240,
                 forcePrecision: true,       
                 decimalPrecision: 2,
                 // width:400,
-                labelWidth: 180,
-            }, {
+                labelWidth: 220,
+            },
+            {
+                xtype: 'numberfield',
+                id: 'edit_total_receive_budgeted_GBP',                
+                
+                hideTrigger:true,
+                fieldLabel: 'Budgeted Receivable amount in £',
+                x: 5,
+                y: 270,
+                forcePrecision: true,       
+                decimalPrecision: 2,
+                // width:400,
+                labelWidth: 220,
+            },
+            {
+                xtype: 'numberfield',
+                id: 'edit_total_receive_budgeted_total',                
+                
+                hideTrigger:true,
+                fieldLabel: 'Total Budgeted Receivable amount',
+                x: 5,
+                y: 300,
+                forcePrecision: true,       
+                decimalPrecision: 2,
+                // width:400,
+                labelWidth: 220,
+            },
+            {
+							xtype : 'label',
+							forId : 'edit_total_pay_budgeted_total_pounds',
+							text : 'GBP',
+							x : 380,
+							y : 305,
+			},
+            {
+                xtype: 'numberfield',
+                id: 'edit_total_receive_actual_USD',                
+                
+                hideTrigger:true,
+                fieldLabel: 'Actual Receivable amount in $',
+                x: 500,
+                y: 240,
+                forcePrecision: true,       
+                decimalPrecision: 2,
+                // width:400,
+                labelWidth: 220,
+            },
+            /**old column*/
+            {
                 xtype: 'numberfield',
                 id: 'edit_total_receive_GBP',
-                fieldLabel: 'Total Receivable amount in £',
+                fieldLabel: 'Actual Receivable amount in £',
                 x: 500,
-                y: 260,
+                y: 270,
                 //width:400,
                 hideTrigger:true,
-                labelWidth: 180,
+                labelWidth: 220,
                  forcePrecision: true,    
                   decimalPrecision: 2,
             },
+            
+            {
+                xtype: 'numberfield',
+                id: 'edit_total_receive_actual_total',                
+                
+                hideTrigger:true,
+                fieldLabel: 'Total Actual Receivable amount',
+                x: 500,
+                y: 300,
+                forcePrecision: true,       
+                decimalPrecision: 2,
+                // width:400,
+                labelWidth: 220,
+            },
+            {
+							xtype : 'label',
+							forId : 'edit_total_pay_actual_total_pounds',
+							text : 'GBP',
+							x : 875,
+							y : 305,
+			}
+            ]
+			},
 
             /*{
                 xtype: 'textfield',
@@ -138,51 +221,138 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
                 y: 260,
                 //width:400,
                 labelWidth: 180,
-            },*/ {
+            },*/ 
+            {
+            	xtype:'fieldset',
+        		layout: 'hbox',
+        		title: 'Budget Payable',
+             	x:0,
+				y:390,
+				layout:'absolute',
+				height:370,
+			items :[
+            {
                 xtype: 'editaccountPayableGrid',
                 x: 5,
-                y: 300,
+                y: 20,
                 height: 200,
-            }, {
+            },
+            /**old column*/
+            {
                 xtype: 'numberfield',
                 id: 'edit_total_pay_USD',
-                fieldLabel: 'Total Payable amount in $',
+                fieldLabel: 'Budgeted Payable amount in $',
                 x: 5,
-                y: 510,
+                y: 240,
                 // width:400,
                 hideTrigger:true,
                 labelWidth: 180,
                  forcePrecision: true,    
                   decimalPrecision: 2,
-            }, {
+            },
+             {
+                xtype: 'numberfield',
+                id: 'edit_total_pay_budgeted_GBP',
+                fieldLabel: 'Budgeted Payable amount in £',
+                x: 5,
+                y: 270,
+                // width:400,
+                hideTrigger:true,
+                labelWidth: 180,
+                 forcePrecision: true,    
+                  decimalPrecision: 2,
+            },
+            {
+                xtype: 'numberfield',
+                id: 'edit_total_pay_budgeted_total',
+                fieldLabel: 'Total Budgeted Payable amount',
+                x: 5,
+                y: 300,
+                // width:400,
+                hideTrigger:true,
+                labelWidth: 180,
+                 forcePrecision: true,    
+                  decimalPrecision: 2,
+            },
+            {
+							xtype : 'label',
+							forId : 'edit_total_pay_budgeted_total_pounds',
+							text : 'GBP',
+							x : 340,
+							y : 305,
+			},
+            {
+                xtype: 'numberfield',
+                id: 'edit_total_pay_actual_USD',
+                fieldLabel: 'Actual Payable amount in $',
+                x: 500,
+                y: 240,
+                // width:400,
+                hideTrigger:true,
+                labelWidth: 180,
+                 forcePrecision: true,    
+                  decimalPrecision: 2,
+            },
+            /**old column*/
+            {
                 xtype: 'numberfield',
                 id: 'edit_total_pay_GBP',
-                fieldLabel: 'Total Payable amount in £',
+                fieldLabel: 'Actual Payable amount in £',
                 x: 500,
-                y: 510,
+                y: 270,
                 //width:400,
                 labelWidth: 180,
                 hideTrigger:true,
                 forcePrecision: true,    
                 decimalPrecision: 2,
 
-            }, {
+            },
+            {
+                xtype: 'numberfield',
+                id: 'edit_total_pay_actual_total',
+                fieldLabel: 'Total Actual Payable amount',
+                x: 500,
+                y: 300,
+                // width:400,
+                hideTrigger:true,
+                labelWidth: 180,
+                 forcePrecision: true,    
+                  decimalPrecision: 2,
+            },
+            {
+							xtype : 'label',
+							forId : 'edit_total_pay_actual_total_pounds',
+							text : 'GBP',
+							x : 835,
+							y : 305,
+			}
+            ]},
+            /**old column*/
+            	{
                 xtype: 'numberfield',
                 id: 'edit_profit_GBP',
                 fieldLabel: 'Project profit £',
-                x: 5,
-                y: 540,
+                x: 20,
+                y: 775,
                 labelWidth: 180,
                 hideTrigger:true,
                 forcePrecision: true,       
                 decimalPrecision: 2,
 
-            }, {
+            },
+            {
+							xtype : 'label',
+							forId : 'edit_profit_GBP_pounds',
+							text : 'GBP',
+							x : 355,
+							y : 780,
+			},
+            {
                 xtype: 'numberfield',
                 id: 'edit_profit_percentage',
                 fieldLabel: 'Project profit ',
-                x: 500,
-                y: 540,
+                x: 515,
+                y: 775,
                 labelWidth: 180,
                 hideTrigger:true,
                 forcePrecision: true,       
@@ -191,10 +361,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
             {
 							xtype : 'label',
 							forId : 'edit_profit_percentage_symbol',
-							text : '%',
-							x : 835,
-							y : 545
-							,
+							text : 'GBP %',
+							x : 850,
+							y : 780,
 			},
 
         ]

@@ -508,13 +508,15 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							pressed:true,
 							width:100,
 							x:200,
-							y:760,
+							y:1020,
 							handler: function() 
 							{
 								
 																
 								var total_USD = 0;
 								var total_GBP = 0;
+								var all_receivable_actual_total=0,all_receivable_budgeted_total=0;
+								var all_payable_actual_total=0,all_payable_budgeted_total=0;
 								
 								var conversion_rate=Ext.getCmp('conversion_rate').getValue();
 								
@@ -525,6 +527,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									if(currency_rate=="USD")
 								{
 										total_USD = total_USD + parseFloat(rec.get('actual_amount_USD_GBP'));	
+										
 								}
 								else if(currency_rate=="GBP")
 								{
@@ -533,8 +536,17 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							
 									
 								});
+								all_receivable_actual_total=(total_USD*conversion_rate)+total_GBP;
+								all_receivable_budgeted_total=(total_USD*conversion_rate)+total_GBP;
+								
 								Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
 								Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
+								
+								Ext.getCmp('edit_total_receive_actual_USD').setValue(total_USD);
+								Ext.getCmp('edit_total_receive_budgeted_GBP').setValue(total_GBP);
+								
+								Ext.getCmp('edit_total_receive_actual_total').setValue(all_receivable_actual_total);
+								Ext.getCmp('edit_total_receive_budgeted_total').setValue(all_receivable_budgeted_total);
 								
 								var total_USD_Payable = 0;
 								var total_GBP_Payable = 0;
@@ -557,8 +569,18 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									
 								});
 								
+								all_payable_actual_total=(total_USD_Payable*conversion_rate)+total_GBP_Payable;
+								all_payable_budgeted_total=(total_USD_Payable*conversion_rate)+total_GBP_Payable;
+								
 								Ext.getCmp('edit_total_pay_USD').setValue(total_USD_Payable);
 								Ext.getCmp('edit_total_pay_GBP').setValue(total_GBP_Payable);
+								
+								
+								Ext.getCmp('edit_total_pay_actual_USD').setValue(total_USD_Payable);
+								Ext.getCmp('edit_total_pay_budgeted_GBP').setValue(total_GBP_Payable);
+								
+								Ext.getCmp('edit_total_pay_actual_total').setValue(all_payable_actual_total);
+								Ext.getCmp('edit_total_pay_budgeted_total').setValue(all_payable_budgeted_total);
 								
 								total_profit=((total_USD_Payable*conversion_rate)+total_GBP_Payable)-((total_USD*conversion_rate)+total_GBP);
 								total_profit_percentage=(((total_USD_Payable*conversion_rate)+total_GBP_Payable)/((total_USD*conversion_rate)+total_GBP));
@@ -575,7 +597,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							pressed:true,
 							width:100,
 							x:400,
-							y:760,
+							y:1020,
 							handler: function() {
 								
 
@@ -728,6 +750,16 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								var total_pay_GDP = Ext.getCmp("edit_total_pay_GBP").getValue();
 								var profit_GDP = Ext.getCmp("edit_profit_GBP").getValue();
 								var profit_percentage = Ext.getCmp("edit_profit_percentage").getValue();
+								
+								var edit_total_receive_budgeted_GBP = Ext.getCmp("edit_total_receive_budgeted_GBP").getValue();
+								var edit_total_receive_budgeted_total = Ext.getCmp("edit_total_receive_budgeted_total").getValue();
+								var edit_total_receive_actual_USD = Ext.getCmp("edit_total_receive_actual_USD").getValue();
+								var edit_total_receive_actual_total = Ext.getCmp("edit_total_receive_actual_total").getValue();
+								var edit_total_pay_budgeted_GBP = Ext.getCmp("edit_total_pay_budgeted_GBP").getValue();
+								var edit_total_pay_budgeted_total = Ext.getCmp("edit_total_pay_budgeted_total").getValue();
+								var edit_total_pay_actual_USD = Ext.getCmp("edit_total_pay_actual_USD").getValue();
+								var edit_total_pay_actual_total = Ext.getCmp("edit_total_pay_actual_total").getValue();
+								
 								//new changes
 								var total_receive_project_USD = 0;
 								//alert(total_receive_project_USD);
@@ -754,6 +786,14 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 											total_pay_GDP:total_pay_GDP,
 											profit_GDP:profit_GDP,
 											profit_percentage:profit_percentage,
+											edit_total_receive_budgeted_GBP:edit_total_receive_budgeted_GBP, 
+											edit_total_receive_budgeted_total:edit_total_receive_budgeted_total,
+											edit_total_receive_actual_USD:edit_total_receive_actual_USD,
+											edit_total_receive_actual_total:edit_total_receive_actual_total,
+											edit_total_pay_budgeted_GBP:edit_total_pay_budgeted_GBP,
+											edit_total_pay_budgeted_total:edit_total_pay_budgeted_total, 
+											edit_total_pay_actual_USD:edit_total_pay_actual_USD,
+											edit_total_pay_actual_total:edit_total_pay_actual_total,
 											invoice_date:invoice_date,
 											prostatus:prostatus
 										},
@@ -772,7 +812,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							iconCls : 'cancelClass',
 							width:100,
 							x:600,
-							y:760,
+							y:1020,
 							handler: function() {
 								
 								

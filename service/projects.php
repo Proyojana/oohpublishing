@@ -926,8 +926,10 @@ $profit_GBP=@ceil(($balance/$rec_budget_GBP_total)*100);
 //insert budget total
 function insertBudgetTotal($project_id)
 {
-$result2 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,total_receive_gdp,total_receive_project_usd,total_receive_project_gdp,total_pay_usd,total_pay_gdp,project_profit_gdp,project_profit_per,invoice_date,status)
-VALUES ('' ,'".$project_id."', '','','', '', '','','', '', '', '', '', 'Current')");
+$result2 = mysql_query("INSERT INTO budget_total_detail (id ,project_id,ponumber1,ponumber2,total_receive_usd ,edit_total_receive_budgeted_GBP ,edit_total_receive_budgeted_total, edit_total_receive_actual_USD, total_receive_gdp,edit_total_receive_actual_total,total_receive_project_usd,total_receive_project_gdp,total_pay_usd,
+edit_total_pay_budgeted_GBP,edit_total_pay_budgeted_total, edit_total_pay_actual_USD,total_pay_gdp,edit_total_pay_actual_total,project_profit_gdp,project_profit_per,invoice_date,status)
+
+VALUES ('' ,'".$project_id."', '','','','','','','','','','','', '', '','','', '', '', '', '', 'Current')");
 if(!$result2)
 {
 $result["failure"] = true;

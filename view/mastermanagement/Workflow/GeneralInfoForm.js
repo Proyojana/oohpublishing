@@ -187,7 +187,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
 				{
 				var conn = new Ext.data.Connection();
 					conn.request({
-						url: 'service/workflow.php',
+						url: 'service/Workflow.php',
 						method: 'POST',
 						params : {action:4,workflow_id:workflow_id,workflow_code:workflow_code,workflow_name:workflow_name,clients:clients,workflow_description:workflow_description},
 						success:function(response){
