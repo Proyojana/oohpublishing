@@ -78,7 +78,7 @@ Group By
 	$result1 = mysql_query ("Select
   workflow.code as workflow_code,
   workflow.name as workflow_name,
- Group_Concat(customers.name) as workflow_client,
+ Group_Concat(customers.id) as workflow_client,
   workflow.id as workflow_id,
   workflow.description as workflow_description
 From

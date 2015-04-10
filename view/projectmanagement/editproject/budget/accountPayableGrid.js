@@ -27,7 +27,7 @@ var encode = false;
   
 Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayableGrid', {
 	extend:'Ext.grid.Panel',
-	title:'Budgeted Expenses and Accounts Payable',
+	title:'Budgeted Expenses and Accounts Payables',
 	
 	alias:'widget.editaccountPayableGrid',
 	closeAction: 'hide',

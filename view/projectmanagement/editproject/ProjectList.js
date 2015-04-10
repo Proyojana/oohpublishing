@@ -487,7 +487,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							type : 'absolute'
 						},
 						autoScroll : true,
-						title : 'Edit Budget',
+						title : 'Edit Project Budget',
 						width : 1145,
 
 						height : 600,
@@ -507,8 +507,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Calculate',
 							pressed:true,
 							width:100,
-							x:200,
-							y:1020,
+							x:300,
+							y:1000,
 							handler: function() 
 							{
 								
@@ -596,8 +596,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Update',
 							pressed:true,
 							width:100,
-							x:400,
-							y:1020,
+							x:500,
+							y:1000,
 							handler: function() {
 								
 
@@ -811,8 +811,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Close',
 							iconCls : 'cancelClass',
 							width:100,
-							x:600,
-							y:1020,
+							x:700,
+							y:1000,
 							handler: function() {
 								
 								

@@ -26,7 +26,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.CustomersGrid', {
 			hidden:true
 		},{
 			dataIndex: 'currency_rate_gbp',
-			text: '1 GBP per USD',
+			text: 'USD per GBP',
 			align: 'center',
 			flex:1,
 			filter: {
