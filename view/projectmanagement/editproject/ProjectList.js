@@ -517,6 +517,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								var total_GBP = 0;
 								var all_receivable_actual_total=0,all_receivable_budgeted_total=0;
 								var all_payable_actual_total=0,all_payable_budgeted_total=0;
+								var budgeted_total_profit=0,budgeted_total_profit_percentage=0;
+								
+								
 								
 								var conversion_rate=Ext.getCmp('conversion_rate').getValue();
 								
@@ -589,6 +592,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								
 								Ext.getCmp('edit_profit_GBP').setValue(total_profit);
 								Ext.getCmp('edit_profit_percentage').setValue(total_profit_percentage);
+								
+								budgeted_total_profit=((total_USD_Payable*conversion_rate)+total_GBP_Payable)-((total_USD*conversion_rate)+total_GBP);
+						        budgeted_total_profit_percentage=(((total_USD_Payable*conversion_rate)+total_GBP_Payable)/((total_USD*conversion_rate)+total_GBP));
+                                
+                                Ext.getCmp('edit_profit_budget_GBP').setValue(budgeted_total_profit);
+                                Ext.getCmp('edit_profit_budget_percentage').setValue(budgeted_total_profit_percentage);
 						}
 						},
 						{
@@ -760,6 +769,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								var edit_total_pay_actual_USD = Ext.getCmp("edit_total_pay_actual_USD").getValue();
 								var edit_total_pay_actual_total = Ext.getCmp("edit_total_pay_actual_total").getValue();
 								
+								var edit_profit_budget_GBP = Ext.getCmp("edit_profit_budget_GBP").getValue();//
+								var edit_profit_budget_percentage = Ext.getCmp("edit_profit_budget_percentage").getValue();//
+								
+								
+								
 								//new changes
 								var total_receive_project_USD = 0;
 								//alert(total_receive_project_USD);
@@ -794,6 +808,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 											edit_total_pay_budgeted_total:edit_total_pay_budgeted_total, 
 											edit_total_pay_actual_USD:edit_total_pay_actual_USD,
 											edit_total_pay_actual_total:edit_total_pay_actual_total,
+											edit_profit_budget_GBP:edit_profit_budget_GBP,//
+											edit_profit_budget_percentage:edit_profit_budget_percentage,
+											
 											invoice_date:invoice_date,
 											prostatus:prostatus
 										},

@@ -328,6 +328,24 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
 			}
             ]},
             /**old column*/
+            {
+               xtype: 'numberfield',
+               id: 'edit_profit_budget_GBP',
+               fieldLabel: 'Budget Project profit £',
+               x: 110,
+               y: 720,
+               labelWidth: 220,
+               hideTrigger:true,
+               forcePrecision: true,       
+               decimalPrecision: 2,
+                },
+                {
+                                     xtype : 'label',
+                                     forId : 'edit_profit_budget_GBP_pounds',
+                                     text : 'GBP',
+                                     x : 490,
+                                     y : 720,
+                                                        },
             	{
                 xtype: 'numberfield',
                 id: 'edit_profit_GBP',
@@ -366,6 +384,24 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
 							y : 760,
 			},
 
+{
+               xtype: 'numberfield',
+               id: 'edit_profit_budget_percentage',
+               fieldLabel: 'Budget Project profit ',
+               x: 610,
+               y: 720,
+               labelWidth: 220,
+               hideTrigger:true,
+               forcePrecision: true, 
+                  decimalPrecision: 2,
+           },
+            {
+                                                       xtype : 'label',
+                                                       forId : 'edit_profit_budget_percentage_symbol',
+                                                       text : 'GBP %',
+                                                        x : 990,
+                                                       y : 720,
+                       },
         ]
 
 
