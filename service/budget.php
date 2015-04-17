@@ -86,6 +86,21 @@ include("../inc/php/encryptDecrypt.php");
 	 case 27:
 			getCurrencyRatePayable($_POST['edit_Job_code'],$_POST['activityid']);
 			break;
+	case 28:
+			getbudgetdetails($_POST['projectID']);
+			break;
+	case 29:
+			getbudgetinfodetails($_POST['projectID']);
+			break;
+	case 30:
+			getbudgetdetailspay($_POST['projectID']);
+			break;
+	case 31:
+			getbudgetpayableinfodetails($_POST['projectID']);
+			break;
+	case 32:
+			getbudgetprofit($_POST['projectID']);
+			break;
 		default: 
 			break;
 	}
@@ -1216,5 +1231,122 @@ Where
 		
 		
       	echo(json_encode($result));
+	}
+	function getbudgetdetails($projectID) {
+		
+		$num_result = mysql_query("SELECT  budget_receivable.activity as activity,
+		budget_receivable.currency_rate as currency_rate,
+		budget_receivable.unit_of_measurement as unit_of_measurement,
+		budget_receivable.no_of_unit as no_of_unit,
+		budget_receivable.rate_usd_gbp as rat_usd_gbp,
+		budget_receivable.budgeted_usd_gbp as budgeted_usd_gbp,
+		budget_receivable.actual_usd_gbp as actual_usd_gbp
+		
+		from budget_receivable WHERE flag = 0 and project_id = '".$projectID."' ")or die(mysql_error());
+		
+		
+		while($row=mysql_fetch_object($num_result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"results":'.json_encode($data).'})';
+		
+	}
+	function getbudgetinfodetails($projectID){
+		
+		$result1 = mysql_query("SELECT 
+		budget_total_detail.total_receive_usd as budgetedreceivableamountUSD,
+		budget_total_detail.total_receive_gdp as budgetedreceivableamountGDP FROM budget_total_detail Where project_id = '".$projectID."'");
+		while($row = mysql_fetch_array($result1)) {
+				
+			$data1 = $row['budgetedreceivableamountUSD'];
+			$data2 = $row['budgetedreceivableamountGDP'];
+			if($result1==1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["budgetedreceivableamountUSD"] = $data1;
+				$result["budgetedreceivableamountGDP"] = $data2;
+				
+								
+			}
+			echo(json_encode($result));
+		}
+		
+	}
+	function getbudgetdetailspay($projectID) {
+		
+		$num_result = mysql_query("SELECT  budget_expense.activity as activitys,
+		budget_expense.vendor as vendor,
+		budget_expense.currency_rate as currency_rate,
+		budget_expense.unit_of_measurement as unit_of_measurement,
+		budget_expense.no_of_unit as no_of_unit,
+		budget_expense.rate_USD_GBP as rate_USD_GBP,
+		budget_expense.budgeted_amount_USD_GBP as budgeted_amount_USD_GBP,
+		budget_expense.acual_amount_USD_GBP as acual_amount_USD_GBP
+	
+		
+		from budget_expense WHERE flag = 0 and project_id = '".$projectID."' ")or die(mysql_error());
+		
+		
+		while($row=mysql_fetch_object($num_result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"results":'.json_encode($data).'})';
+		
+	}
+	function getbudgetpayableinfodetails($projectID){
+		
+		$result1 = mysql_query("SELECT 
+		budget_total_detail.total_pay_usd as budgetedpayableamountUSD,
+		budget_total_detail.total_pay_gdp as budgetedpayableamountGDP FROM budget_total_detail Where project_id = '".$projectID."'");
+		while($row = mysql_fetch_array($result1)) {
+				
+			$data1 = $row['budgetedpayableamountUSD'];
+			$data2 = $row['budgetedpayableamountGDP'];
+			if($result1==1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["budgetedpayableamountUSD"] = $data1;
+				$result["budgetedpayableamountGDP"] = $data2;
+				
+								
+			}
+			echo(json_encode($result));
+		}
+		
+	}
+	function getbudgetprofit($projectID){
+		
+		$result1 = mysql_query("SELECT 
+		budget_total_detail.project_profit_gdp as ActualprojectprofitGDP,
+		budget_total_detail.project_profit_per as Actualprojectprofit FROM budget_total_detail Where project_id = '".$projectID."'");
+		while($row = mysql_fetch_array($result1)) {
+				
+			$data1 = $row['ActualprojectprofitGDP'];
+			$data2 = $row['Actualprojectprofit'];
+			if($result1==1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["ActualprojectprofitGDP"] = $data1;
+				$result["Actualprojectprofit"] = $data2;
+				
+								
+			}
+			echo(json_encode($result));
+		}
+		
 	}
 	?>

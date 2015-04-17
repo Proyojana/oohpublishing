@@ -16,7 +16,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 	'MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleGrid','MyDesktop.view.projectmanagement.editproject.schedule.editprojectScheduleHeaderForm',
 	'MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid','MyDesktop.view.projectmanagement.editproject.notes.NotesHeaderForm','MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkHeaderForm',
 	'MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkgrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid_a',
-	'MyDesktop.view.projectmanagement.editproject.schedule.emailVendor','MyDesktop.view.projectmanagement.editproject.schedule.emailAuthor','MyDesktop.view.projectmanagement.editproject.budget.newprojectBudgetForm','MyDesktop.view.projectmanagement.editproject.artwork.newprojectArtworkForm'],
+	'MyDesktop.view.projectmanagement.editproject.schedule.emailVendor','MyDesktop.view.projectmanagement.editproject.schedule.emailAuthor','MyDesktop.view.projectmanagement.editproject.budget.newprojectBudgetForm','MyDesktop.view.projectmanagement.editproject.artwork.newprojectArtworkForm',
+	'MyDesktop.view.projectmanagement.editproject.budget.budgetform','MyDesktop.view.projectmanagement.editproject.budget.budgetinfogrid','MyDesktop.view.projectmanagement.editproject.budget.accountPayableInfoGrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableInfoGrid',
+	'MyDesktop.view.projectmanagement.editproject.budget.budgetinfogrid','MyDesktop.view.projectmanagement.editproject.budget.budgetpayinfogrid','MyDesktop.view.projectmanagement.editproject.budget.budgetprofit'],
 
 	id : 'projectlist',
 	initComponent : function() {
@@ -1006,6 +1008,126 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									});
 								}
 							}
+						},{
+							xtype:'button',
+							text:'Print Preview',
+							pressed:true,
+							width:100,
+							x:900,
+							y:1000,
+							handler : function() {
+								
+				var win = Ext.create('Ext.Window', {
+						extend : 'Ext.form.Panel',
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Message',
+						width : 1000,
+						height : 500,
+						items : [{
+							xtype : 'budgetsform',
+							x : 0,
+							y : 0,
+							margin:'5 5 5 5'
+
+						}],
+						buttons:[{
+							text:'Print',
+							handler: function()
+							{
+							//	Ext.ux.grid.Printer.printAutomatically = false;
+                             //   Ext.ux.grid.Printer.print(Ext.getCmp('pschedulegrid'));
+                            var targetElement = Ext.getCmp('budgetsform');
+		                    var myWindow = window.open('', '', 'width=400,height=500');
+		                    myWindow.document.write('<html><head>');
+		                    myWindow.document.write('<title>' + 'Title' + '</title>');
+		                    myWindow.document.write('<link rel="Stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-4.0.1/resources/css/ext-all.css" />');
+		                    myWindow.document.write('<script type="text/javascript" src="http://dev.sencha.com/deploy/ext-4.0.1/bootstrap.js"></script>');
+		                    myWindow.document.write('</head><body>');
+		                    myWindow.document.write(targetElement.body.dom.innerHTML);
+		                    myWindow.document.write('</body></html>');
+		                    myWindow.print();
+							},
+						}]
+					});
+					win.show();
+					//here accountPayableInfoGrid
+					var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
+								
+								
+								var grid1 = Ext.getCmp('accountPayableInfoGrid');
+					grid1.getStore().load({
+						params : {
+							action : 28,
+							projectID : projectID,
+							
+						}
+					});
+					//here accountReceivableInfoGrid
+					var projectID=Ext.getCmp('editbudgetHeader_projectID').getValue();
+								//alert(projectID);
+								
+								var grid1 = Ext.getCmp('accountReceivableInfoGrid');
+					grid1.getStore().load({
+						params : {
+							action : 30,
+							projectID : projectID,
+							
+						}
+					});
+					
+					var conn = new Ext.data.Connection();
+					conn.request({
+						url : 'service/budget.php',
+						method : 'POST',
+						params : {
+							action : 29,
+							
+							projectID : projectID
+						},
+						success : function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							var myGrid = Ext.getCmp('budinfogrid');
+							myGrid.setSource(obj);
+						},
+					});
+					//Here Budgeted Expenses And Account Payables Details
+					var conne = new Ext.data.Connection();
+					conne.request({
+						url : 'service/budget.php',
+						method : 'POST',
+						params : {
+							action : 31,
+							
+							projectID : projectID
+						},
+						success : function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							var myGrid = Ext.getCmp('budgetpayinfogrid');
+							myGrid.setSource(obj);
+						},
+					});
+					//Here Profit
+					var pro = new Ext.data.Connection();
+					pro.request({
+						url : 'service/budget.php',
+						method : 'POST',
+						params : {
+							action : 32,
+							
+							projectID : projectID
+						},
+						success : function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							var myGrid = Ext.getCmp('budgetprofit');
+							myGrid.setSource(obj);
+						},
+					});
+					}
+						
+							
 						}]
 					});
 					win.show();
@@ -1462,10 +1584,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										job_code:job_code
 									}
 								});
-							}
-						}]
+							}//Heare Adding print button into Edit Schedule scheduleform
+						},]
 					});
 					win.show();
+					
 					var rec = grid.getStore().getAt(rowIndex);
 					var project_id = rec.get('pro_id');
 					var job_code = rec.get('pro_code');
@@ -1489,6 +1612,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							action : 5,
 							job_code:job_code,
 						},
+						
 
 					});
 				}
