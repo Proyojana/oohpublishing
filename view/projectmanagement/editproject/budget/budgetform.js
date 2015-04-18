@@ -35,7 +35,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 		}, 
 
 	     //here adding Budgets Account Receivable Details
-		/*{
+		{
 			xtype : 'label',
 			text : 'Budgets Account Receivable Details',
 			align : 'center',
@@ -110,7 +110,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 		 	x:5,
 		 	y:640,
 		 	height:90
-		 },*/
+		 },
 
 		];
 	
