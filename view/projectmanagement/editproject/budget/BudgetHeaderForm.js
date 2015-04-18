@@ -163,7 +163,7 @@
 
              }, {
                  xtype: 'combo',
-                 x: 520,
+                 x: 500,
                  y: 67,
                  fieldLabel: 'Status',
                  store: type,
@@ -183,13 +183,19 @@
              {
     		xtype:'textfield',
 			id:'conversion_rate',
-			fieldLabel: 'Conversion Rate',
+			fieldLabel: 'Conversion Rate 1 GBP=',
 			align:'center',
 			x:780,
 			y:67,
-			width:200,
 			allowBlank: false,
 			//afterLabelTextTpl: required,
+			},
+			{
+				xtype : 'label',
+				forId : 'currency_rate_usd_new',
+				text : 'USD',
+				x : 1030,
+				y : 73,
 			},
 
 

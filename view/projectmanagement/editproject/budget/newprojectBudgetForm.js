@@ -379,7 +379,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
             {
 							xtype : 'label',
 							forId : 'edit_profit_percentage_symbol',
-							text : 'GBP %',
+							text : '%',
 							x : 990,
 							y : 760,
 			},
@@ -398,7 +398,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.newprojectBudget
             {
                                                        xtype : 'label',
                                                        forId : 'edit_profit_budget_percentage_symbol',
-                                                       text : 'GBP %',
+                                                       text : '%',
                                                         x : 990,
                                                        y : 720,
                        },
