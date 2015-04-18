@@ -65,15 +65,18 @@ Where
 						$result["success"] = true;
 						$result["message"] = "Saved successfully";
 					}
+					
+					
+					//echo "User ID".$id;
 	$result1 = mysql_query ("Select 
 Group_Concat(project_team.email) as production_html_to,
-user_masters.user_email as production_html_from,
+users.email as production_html_from,
 temp.message as production_html_message
 From
  project_team,
- user_masters,
+ users,
  temp
-    Where (project_team.project_id='".$project_id."' and project_team.flag=0)");
+    Where (project_team.project_id='".$project_id."' and users.id='".$id."' and project_team.flag=0)");
 			
 		if(!$result1)
 			{
@@ -147,13 +150,13 @@ Where
 					}
 	$result1 = mysql_query ("Select 
 Group_Concat(project_team.email) as production_pdf_to,
-user_masters.user_email as production_pdf_from,
+users.email as production_pdf_from,
 temp.message as production_pdf_message
 From
  project_team,
- user_masters,
+ users,
  temp
-    Where (project_team.project_id='".$project_id."' and project_team.flag=0)");
+    Where (project_team.project_id='".$project_id."' and users.id='".$id."' and project_team.flag=0)");
 			
 		if(!$result1)
 			{
@@ -228,13 +231,13 @@ Where
 					}
 	$result1 = mysql_query ("Select 
 Group_Concat(project_team.email) as typesetting_html_to,
-user_masters.user_email as typesetting_html_from,
+users.email as typesetting_html_from,
 temp.message as typesetting_html_message
 From
  project_team,
- user_masters,
+ users,
  temp
-    Where (project_team.project_id='".$project_id."' and project_team.flag=0) ");
+    Where (project_team.project_id='".$project_id."' and users.id='".$id."' and project_team.flag=0) ");
 			
 		if(!$result1)
 			{
@@ -308,13 +311,13 @@ Where
 					}
 	$result1 = mysql_query ("Select 
 Group_Concat(project_team.email) as typesetting_pdf_to,
-user_masters.user_email as typesetting_pdf_from,
+users.email as typesetting_pdf_from,
 temp.message as typesetting_pdf_message
 From
  project_team,
- user_masters,
+ users,
  temp
- Where (project_team.project_id='".$project_id."' and project_team.flag=0) ");
+ Where (project_team.project_id='".$project_id."' and users.id='".$id."' and project_team.flag=0) ");
 			
 		if(!$result1)
 			{

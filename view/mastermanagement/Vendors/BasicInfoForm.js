@@ -137,7 +137,7 @@ Ext.define('MyDesktop.view.mastermanagement.Vendors.BasicInfoForm' , {
     		id:'basic_service',
 			fieldLabel: 'Services',
 			name: 'basic_service',
-			multiSelect: true,
+			//multiSelect: true,
 			x:660,
 			y:10,
 			width:250,

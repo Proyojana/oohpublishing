@@ -18,7 +18,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 	'MyDesktop.view.projectmanagement.editproject.artwork.editprojectArtworkgrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableGrid_a',
 	'MyDesktop.view.projectmanagement.editproject.schedule.emailVendor','MyDesktop.view.projectmanagement.editproject.schedule.emailAuthor','MyDesktop.view.projectmanagement.editproject.budget.newprojectBudgetForm','MyDesktop.view.projectmanagement.editproject.artwork.newprojectArtworkForm',
 	'MyDesktop.view.projectmanagement.editproject.budget.budgetform','MyDesktop.view.projectmanagement.editproject.budget.budgetinfogrid','MyDesktop.view.projectmanagement.editproject.budget.accountPayableInfoGrid','MyDesktop.view.projectmanagement.editproject.budget.accountReceivableInfoGrid',
-	'MyDesktop.view.projectmanagement.editproject.budget.budgetinfogrid','MyDesktop.view.projectmanagement.editproject.budget.budgetpayinfogrid','MyDesktop.view.projectmanagement.editproject.budget.budgetprofit'],
+	'MyDesktop.view.projectmanagement.editproject.budget.budgetinfogrid','MyDesktop.view.projectmanagement.editproject.budget.budgetpayinfogrid','MyDesktop.view.projectmanagement.editproject.budget.budgetprofit','MyDesktop.view.projectmanagement.editproject.schedule.scheduleform',
+	],
 
 	id : 'projectlist',
 	initComponent : function() {
@@ -91,7 +92,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Close',
 							iconCls : 'cancelClass',
 							width:100,
-							x:600,
+							x:800,
 							y:445,
 							handler: function() {
 								Ext.Array.each(Ext.ComponentQuery.query('editprojectaddform'), function (editprojectaddform) {
@@ -187,7 +188,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									}
 								});
 							}
-						}
+						},
 						]
 					});
 					win.show();
@@ -509,7 +510,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Calculate',
 							pressed:true,
 							width:100,
-							x:300,
+							x:200,
 							y:1000,
 							handler: function() 
 							{
@@ -607,7 +608,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Update',
 							pressed:true,
 							width:100,
-							x:500,
+							x:350,
 							y:1000,
 							handler: function() {
 								
@@ -830,7 +831,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Close',
 							iconCls : 'cancelClass',
 							width:100,
-							x:700,
+							x:650,
 							y:1000,
 							handler: function() {
 								
@@ -1010,10 +1011,10 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							}
 						},{
 							xtype:'button',
-							text:'Print Preview',
+							text:'Print',
 							pressed:true,
 							width:100,
-							x:900,
+							x:500,
 							y:1000,
 							handler : function() {
 								
@@ -1262,7 +1263,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							iconCls : 'updateClass',
 							pressed:true,
 							width:100,
-							x:560,
+							x:500,
 							y:500,
 							//	margin:'0 0 0 100',
 							handler: function() {
@@ -1346,7 +1347,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							iconCls : 'cancelClass',
 							pressed:true,
 							width:100,
-							x:700,
+							x:800,
 							y:500,
 							handler: function() {
 								var myStore = Ext.getCmp('editprojectSchedulegrid').getStore();
@@ -1440,7 +1441,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Email to Vendor',
 							iconCls : 'emailClass',
 							pressed:true,
-							x:250,
+							x:200,
 							y:500,
 							handler: function() {
 								
@@ -1527,7 +1528,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							text:'Email to Author',
 							iconCls : 'emailClass',
 							pressed:true,
-							x:400,
+							x:350,
 							y:500,
 							handler: function() {
 								var email_author = Ext.create('Ext.Window', {
@@ -1585,7 +1586,82 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									}
 								});
 							}//Heare Adding print button into Edit Schedule scheduleform
-						},]
+						},{
+							xtype:'button',
+							text:'Print',
+							pressed:true,
+							width:100,
+							x:650,
+							y:500,
+							handler : function() {
+								
+				var win = Ext.create('Ext.Window', {
+						extend : 'Ext.form.Panel',
+						layout : {
+							type : 'absolute'
+						},
+						autoScroll : true,
+						title : 'Message',
+						width : 1000,
+						height : 500,
+						items : [{
+							xtype : 'scheduleform',
+							x : 0,
+							y : 0,
+							margin:'5 5 5 5'
+
+						}],
+						buttons:[{
+							text:'Print',
+							handler: function()
+							{
+							
+                            var targetElement = Ext.getCmp('scheduleform');
+		                    var myWindow = window.open('', '', 'width=400,height=500');
+		                    myWindow.document.write('<html><head>');
+		                    myWindow.document.write('<title>' + 'Title' + '</title>');
+		                    myWindow.document.write('<link rel="Stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-4.0.1/resources/css/ext-all.css" />');
+		                    myWindow.document.write('<script type="text/javascript" src="http://dev.sencha.com/deploy/ext-4.0.1/bootstrap.js"></script>');
+		                    myWindow.document.write('</head><body>');
+		                    myWindow.document.write(targetElement.body.dom.innerHTML);
+		                    myWindow.document.write('</body></html>');
+		                    myWindow.print();
+							},
+						}]
+					});
+					win.show();
+					//heare scheduleInfoGrid
+					var projectid=Ext.getCmp('edit_scheduleHeader_projectID').getValue();								
+					var grid1 = Ext.getCmp('scheduleInfoGrid');
+					grid1.getStore().load({
+						params : {
+							action : 10,
+							projectid : projectid,
+							
+						}
+					});
+					
+						var pro = new Ext.data.Connection();
+					pro.request({
+						url : 'service/schedule.php',
+						method : 'POST',
+						params : {
+							action : 11,
+							
+							job_code : job_code
+						},
+						success : function(response) {
+							obj = Ext.JSON.decode(response.responseText);
+							var myGrid = Ext.getCmp('scheduledetails');
+							myGrid.setSource(obj);
+						},
+					});
+					
+					
+					}
+					
+												
+						}]
 					});
 					win.show();
 					

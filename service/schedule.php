@@ -32,6 +32,12 @@ $id=$_SESSION['id'];
 	   case 9:
             ActualschangeDependsStartDate($_POST['projectid'],$_POST['project_start_date'],$_POST['schedule_id']);
             break; 
+	case 10:
+            scheduleinfo($_POST['projectid']);
+		    break; 
+	case 11:
+            getscheduleheaderdetails($_POST['job_code']);
+            break; 
 		default: 
 			break;
 	}
@@ -478,4 +484,49 @@ $result["message"] = 'dates changed successfully';
 
 echo json_encode($result);
 }
+function scheduleinfo($projectid) {
+		
+		$num_result = mysql_query("SELECT  schedule.stage_order as stageorder,
+		schedule.activity as activityid,
+		schedule.stage as stage,
+		schedule.estimated_daysperstage as estimated_daysperstage,
+		schedule.estimated_start_date as estimated_start_date,
+		schedule.actual_start_date as actual_start_date,
+		schedule.estimated_end_date as estimated_end_date,
+		schedule.actual_end_date as actual_end_date
+		from schedule WHERE flag = 0 and project_id = '".$projectid."' ")or die(mysql_error());
+		
+		
+		while($row=mysql_fetch_object($num_result))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"results":'.json_encode($data).'})';
+		
+	}
+function getscheduleheaderdetails($job_code){
+		
+		$result1 = mysql_query("SELECT 
+		project_title.job_code as Jobcode,
+		project_title.project_name as Projectname FROM project_title Where job_code = '".$job_code."'");
+		while($row = mysql_fetch_array($result1)) {
+				
+			$data1 = $row['Jobcode'];
+			$data2 = $row['Projectname'];
+			if($result1==1)
+			{
+				$result[failure] = true;
+				$result[message] =  'Invalid query: ' . mysql_error();
+			}
+			else
+			{
+				$result["Jobcode"] = $data1;
+				$result["Projectname"] = $data2;
+				
+								
+			}
+			echo(json_encode($result));
+		}
+		
+	}
 ?>

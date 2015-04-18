@@ -93,7 +93,7 @@ Ext.define('MyDesktop.view.mastermanagement.Workflow.GeneralInfoForm' ,{
     		id:'workflow_client',
 			fieldLabel: 'Select Clients',
 			//name: 'workflow_client',
-			multiSelect: true,
+			//multiSelect: true,
 			x:100,
 			y:40,
 			width:320,

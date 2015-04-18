@@ -101,7 +101,7 @@ Ext.define('MyDesktop.view.mastermanagement.Customers.BasicInfoForm' , {
     		xtype:'combo',
     		id:'custsevicesven',
 			fieldLabel: 'Services',
-			multiSelect: true,
+			//multiSelect: true,
 			x:660,
 			y:10,
 			width:250,
