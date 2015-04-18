@@ -33,7 +33,6 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 		var editproject = "undefined";
 		var report = "undefined";
 		var completedproject = "undefined";
-		var archives = "undefined";
 		var win = "undefined";
 
 		if(!Ext.getCmp('content-panel8')){
@@ -84,13 +83,6 @@ Ext.define('MyDesktop.view.ProjectWindow', {
 					if(report == "undefined") {
 						report = Ext.create('MyDesktop.view.projectmanagement.Reports.ProjectReportTabPanel');
 						contentPanel8.add(report);
-						contentPanel8.doLayout();
-					}
-					break;
-				case 'archives':
-					if(archives == "undefined") {
-						archives = Ext.create('MyDesktop.view.projectmanagement.Archives.ArchivesTabPanel');
-						contentPanel8.add(archives);
 						contentPanel8.doLayout();
 					}
 					break;
