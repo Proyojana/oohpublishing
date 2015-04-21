@@ -43,7 +43,7 @@ Ext.define('MyDesktop.App', {
     getDesktopConfig: function () {
         var me = this, ret = me.callParent();
       
-if(role==1){
+if(role>=1){
         return Ext.apply(ret, {
         	
             contextMenuItems: [

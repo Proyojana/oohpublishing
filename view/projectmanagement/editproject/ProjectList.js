@@ -518,6 +518,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 																
 								var total_USD = 0;
 								var total_GBP = 0;
+								var total_budgeted_USD=0,total_budgeted_GBP=0;
 								var all_receivable_actual_total=0,all_receivable_budgeted_total=0;
 								var all_payable_actual_total=0,all_payable_budgeted_total=0;
 								var budgeted_total_profit=0,budgeted_total_profit_percentage=0;
@@ -542,14 +543,37 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 							
 									
 								});
+								
+								//budgeted receivable amount
+								
+								
+								var myStore2 = Ext.getCmp('editaccountReceiveGrid_a').getStore();
+								myStore2.each( function(rec) 
+								{
+									var currency_rate=rec.get('currency_rate');
+									if(currency_rate=="USD")
+								{
+										total_budgeted_USD = total_budgeted_USD + parseFloat(rec.get('budgeted_amount_USD_GBP'));	
+										
+								}
+								else if(currency_rate=="GBP")
+								{
+									total_budgeted_GBP = total_budgeted_GBP + parseFloat(rec.get('budgeted_amount_USD_GBP'));
+								}		
+							
+									
+								});
+								
+								//Receivable Total
+								
 								all_receivable_actual_total=(total_USD/conversion_rate)+total_GBP;
-								all_receivable_budgeted_total=(total_USD/conversion_rate)+total_GBP;
+								all_receivable_budgeted_total=(total_budgeted_USD/conversion_rate)+total_budgeted_GBP;
 								
 								Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
 								Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
 								
-								Ext.getCmp('edit_total_receive_actual_USD').setValue(total_USD);
-								Ext.getCmp('edit_total_receive_budgeted_GBP').setValue(total_GBP);
+								Ext.getCmp('edit_total_receive_actual_USD').setValue(total_budgeted_USD);
+								Ext.getCmp('edit_total_receive_budgeted_GBP').setValue(total_budgeted_GBP);
 								
 								Ext.getCmp('edit_total_receive_actual_total').setValue(all_receivable_actual_total);
 								Ext.getCmp('edit_total_receive_budgeted_total').setValue(all_receivable_budgeted_total);
@@ -558,6 +582,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								var total_GBP_Payable = 0;
 								var total_profit=0;
 								var total_profit_percentage=0;
+								var total_pay_budgeted_USD=0,total_pay_budgeted_GBP=0;
 								
 								var myStore1 = Ext.getCmp('editaccountPayableGrid').getStore();
 								myStore1.each( function(rec) 
@@ -575,29 +600,50 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 									
 								});
 								
+								var myStore3 = Ext.getCmp('editaccountPayableGrid').getStore();
+								myStore3.each( function(rec) 
+								{
+									var currency_rate=rec.get('currency_rate');
+									if(currency_rate=="USD")
+								{
+										total_pay_budgeted_USD = total_pay_budgeted_USD + parseFloat(rec.get('budgeted_amount_USD_GBP'));	
+								}
+								else if(currency_rate=="GBP")
+								{
+									total_pay_budgeted_GBP = total_pay_budgeted_GBP + parseFloat(rec.get('budgeted_amount_USD_GBP'));
+								}		
+							
+									
+								});
+								
+								
+								//Payable Total
 								all_payable_actual_total=(total_USD_Payable/conversion_rate)+total_GBP_Payable;
-								all_payable_budgeted_total=(total_USD_Payable/conversion_rate)+total_GBP_Payable;
+								all_payable_budgeted_total=(total_pay_budgeted_USD/conversion_rate)+total_pay_budgeted_GBP;
 								
 								Ext.getCmp('edit_total_pay_USD').setValue(total_USD_Payable);
 								Ext.getCmp('edit_total_pay_GBP').setValue(total_GBP_Payable);
 								
 								
-								Ext.getCmp('edit_total_pay_actual_USD').setValue(total_USD_Payable);
-								Ext.getCmp('edit_total_pay_budgeted_GBP').setValue(total_GBP_Payable);
+								Ext.getCmp('edit_total_pay_actual_USD').setValue(total_pay_budgeted_USD);
+								Ext.getCmp('edit_total_pay_budgeted_GBP').setValue(total_pay_budgeted_GBP);
 								
 								Ext.getCmp('edit_total_pay_actual_total').setValue(all_payable_actual_total);
 								Ext.getCmp('edit_total_pay_budgeted_total').setValue(all_payable_budgeted_total);
 								
+								
+								//Actual profit and %
 								total_profit=((total_USD_Payable/conversion_rate)+total_GBP_Payable)-((total_USD/conversion_rate)+total_GBP);
-								total_profit_percentage=(((total_USD_Payable/conversion_rate)+total_GBP_Payable)/((total_USD/conversion_rate)+total_GBP));
+								total_profit_percentage=(((total_pay_budgeted_USD/conversion_rate)+total_GBP_Payable)/((total_USD/conversion_rate)+total_GBP));
 								
 								//alert(total_profit_percentage);
 								
 								Ext.getCmp('edit_profit_GBP').setValue(total_profit);
 								Ext.getCmp('edit_profit_percentage').setValue(total_profit_percentage);
 								
-								budgeted_total_profit=((total_USD_Payable/conversion_rate)+total_GBP_Payable)-((total_USD/conversion_rate)+total_GBP);
-						        budgeted_total_profit_percentage=(((total_USD_Payable/conversion_rate)+total_GBP_Payable)/((total_USD/conversion_rate)+total_GBP));
+								//Budgeted profit and %
+								budgeted_total_profit=((total_pay_budgeted_USD/conversion_rate)+total_pay_budgeted_GBP)-((total_USD/conversion_rate)+total_GBP);
+						        budgeted_total_profit_percentage=(((total_pay_budgeted_USD/conversion_rate)+total_pay_budgeted_GBP)/((total_budgeted_USD/conversion_rate)+total_budgeted_GBP));
                                 
                                 Ext.getCmp('edit_profit_budget_GBP').setValue(budgeted_total_profit);
                                 Ext.getCmp('edit_profit_budget_percentage').setValue(budgeted_total_profit_percentage);

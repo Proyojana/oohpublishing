@@ -205,7 +205,7 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PublisherGrid', {
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
 			items:[
-{
+/*{
 xtype : 'button',
 id : 'archive',
 text : 'Archive',
@@ -257,7 +257,7 @@ Ext.Msg.alert('saving Failed !', obj.message);
 
 
 }
-}],
+}*/],
 		}),
 		
 		this.callParent(arguments);
