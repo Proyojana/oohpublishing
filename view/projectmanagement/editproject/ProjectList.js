@@ -1590,7 +1590,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 										xtype : 'emailAuthor',
 									}
 									],
-									buttons:[{
+									buttons:[/*{
 										text:'Send Email',
 										handler: function() {
 
@@ -1619,7 +1619,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 											});
 
 										}
-									}]
+									}*/]
 								});
 								email_author.show();
 								var job_code=Ext.getCmp('edit_scheduleHeader_Job').getValue();
