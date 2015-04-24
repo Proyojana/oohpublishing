@@ -14,7 +14,7 @@ Ext.define('MyDesktop.view.projectmanagement.Reports.ProjectReportGrid', {
 		Report.load({
 			params: {
 				start: 0,
-				limit: 8
+				limit: 50
 			}
 		});
 		Report.loadPage(1);

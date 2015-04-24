@@ -104,14 +104,15 @@ tinymce.init({
             xtype:'button', 
             id:'save'  ,        
             text: 'Send Email',  
-                 
-            x:210,
-		    y:440,
+              pressed:true,   
+            x:350,
+		    y:460,
 		    width:100,
             handler: function(){ 
-            	 var form = this.up('emailAuthor').getForm();               	
+            	 var form = this.up('emailAuthor').getForm(); 
+            	 var author_from=Ext.getCmp('authorFrom').getValue().toString();
                var author_to=Ext.getCmp('authorEmail').getValue().toString();
-								
+					var author_cc=Ext.getCmp('authorCc').getValue().toString();			
 								var author_message=Ext.getCmp('authorMessage').getValue().toString();
 								
 								var conn = new Ext.data.Connection();
@@ -120,17 +121,20 @@ tinymce.init({
 									method : 'POST',
 									params : {
 										action : 4,
-										//html : html,
+										author_from:author_from,
 										author_to:author_to,
-										
+										author_cc:author_cc,
 										author_message:author_message
 										
+									},									
+									success:function(form, action)
+									{
+										Ext.Msg.alert('Message sent sucessfully', action.result.message);
 									},
-									success : function(response) {
-										obj = Ext.JSON.decode(response.responseText);
-										Ext.Msg.alert('Message', obj.message);
-									//	email_author.close(); 
-									},
+									failure:function(form, action){
+										Ext.Msg.alert('Send mail Failed!', action.result.errorMessage); 
+									}
+									
 								});
                
             },

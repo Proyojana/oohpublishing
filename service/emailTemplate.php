@@ -90,16 +90,16 @@ Thanks,
 		/** Get message from temp **/			
 	$result3 = mysql_query ("Select Distinct
  Group_Concat(author.email) As authorEmail,
-  user_masters.user_email As authorFrom,
+  users.email As authorFrom,
   temp.message As authorMessage
 From
  author,
  temp,
- user_masters
+ users
 Where
  (author.job_code = '".$job_code."' And
  author.author = 'Main Contact') And
- user_masters.user_id = 1 ");
+ users.id =  '".$id."' ");
 			
 		if(!$result3)
 			{
@@ -249,15 +249,15 @@ Where
 $result1 = mysql_query (" Select distinct
 temp.email_id as vendorEmail,
 temp.message as vendorMessage,
-user_masters.user_email as vendorFrom
+users.email as vendorFrom
 From
 budget_expense Inner Join
 vendors_contacts On budget_expense.vendor =
 vendors_contacts.vendor_id,
 temp,
-user_masters
+users
 Where
-budget_expense.project_id='".$projectID."' || user_masters.user_id='".$id."'");
+budget_expense.project_id='".$projectID."' || users.id='".$id."'");
 			
 		if(!$result1)
 			{
@@ -340,7 +340,7 @@ $result["failure"] = true;
 $result["message"] = 'Invalid query: ' . mysql_error();
 } else {
 $result["success"] = true;
-$result["message"] = 'Message send sucessfully';
+$result["message"] = 'Message sent sucessfully';
 }
 
 echo(json_encode($result));	
@@ -440,11 +440,11 @@ $result["failure"] = true;
 $result["message"] = 'Invalid query: ' . mysql_error();
 } else {
 $result["success"] = true;
-$result["message"] = 'Message send sucessfully';
+$result["message"] = 'Message sent sucessfully';
 }
 
 echo(json_encode($result));
-			}
+}
 
 function getTemplateMaster()
 				{
