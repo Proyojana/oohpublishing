@@ -142,16 +142,16 @@ function vendorEmail($job_code,$projectID,$id,$activity_id)
  		 author.address as address,
  		 email_template.main as main,
  		 email_template.footer as footer,
-		 user_masters.user_mas_name As user
+		 users.username As user
  		 from 
  		 project_title Inner Join
  		 customers On project_title.client=customers.id Inner Join
  		 author On project_title.job_code=author.job_code,
  		 email_template,
-		 user_masters
+		 users
  		 where 
  		 project_title.job_code = '".$job_code."'
- 		 And author.author='Main contact' And email_template.role=2 And user_masters.user_id=1");
+ 		 And author.author='Main contact' And email_template.role=2 And users.id= '".id."'");
 		while($row = mysql_fetch_array($selectworkflow)) {
 				
 			$client = $row['client'];
@@ -257,7 +257,7 @@ vendors_contacts.vendor_id,
 temp,
 users
 Where
-budget_expense.project_id='".$projectID."' || users.id='".$id."'");
+budget_expense.project_id='".$projectID."' AND users.id='".$id."'");
 			
 		if(!$result1)
 			{
