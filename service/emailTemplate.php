@@ -377,12 +377,12 @@ $variable = ob_get_clean();
  
 
 	/*************/
-	$fp = fopen($upload_temp, "r");
+	$fp = fopen($upload_temp, "rb");
     $file = fread($fp, $upload_size);
 
     $file = chunk_split(base64_encode($file));
     $num = md5(time());
-
+fclose($fp);
         //Normal headers
 
    
@@ -434,7 +434,7 @@ $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 //$retval=mail($author_to,$subject,$author_message,$headers);
- fclose($fp);
+ 
 if(!$retval) {
 $result["failure"] = true;
 $result["message"] = 'Invalid query: ' . mysql_error();
