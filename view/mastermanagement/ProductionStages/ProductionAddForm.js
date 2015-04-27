@@ -115,9 +115,12 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 							currentForm.getForm().reset();
 							Ext.getCmp('productiongrid').getStore().reload();
 							Ext.getCmp('productiongrid').getView().refresh();
+							
+							
 						//Ext.getCmp('productiontab').layout.setActiveItem('productiongrid');
 						autoLoadCode();
-										
+						Ext.getCmp('stagesgrid').getStore().reload();
+						 Ext.getCmp('stagesgrid').getView().refresh();				
 						}
 					});
 				}
@@ -162,6 +165,8 @@ Ext.define('MyDesktop.view.mastermanagement.ProductionStages.ProductionAddForm' 
 							
 										Ext.getCmp('productiongrid').getView().refresh(); 
 										autoLoadCode();
+										Ext.getCmp('stagesgrid').getStore().reload();
+										  Ext.getCmp('stagesgrid').getView().refresh();
 							Ext.getCmp('productiontab').layout.setActiveItem('productiongrid');
 							
 						}
