@@ -197,15 +197,14 @@ Thanks,
         $result1 = mysql_query("Select
   budget_expense.project_id,
   budget_expense.vendor,
- Group_Concat(vendors_contacts.email),
+ Group_Concat(vendors.email),
  
   budget_expense.activity
 From
 
   budget_expense Inner Join
   vendors On budget_expense.vendor = vendors.id Inner Join
-  vendors_contacts On vendors.id = vendors_contacts.vendor_id
-  Inner Join
+  
   activity On budget_expense.activity = activity.id
 Where       
   budget_expense.project_id = '" . $projectID . "'  And
