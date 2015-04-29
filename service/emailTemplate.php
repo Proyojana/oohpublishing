@@ -394,7 +394,7 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
     
     // SEND MAIL
     
-    $retval = mail($author_to, $subject, $message, $headers);
+    $retval = @mail($author_to, $subject, $message, $headers);
     
     
     
