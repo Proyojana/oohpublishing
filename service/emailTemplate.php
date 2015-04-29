@@ -373,12 +373,7 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
     if($_FILES["file"]["name"]!=""){
 	
 	$headers .= "--" . $num . "\n";
-
-    
-    // Attachment headers
-   
-	
-	 
+      // Attachment headers
     $headers .= "Content-Type:" . $upload_type . " ";
     $headers .= "name=\"" . $upload_name . "\"r\n";
     $headers .= "Content-Transfer-Encoding: base64\r\n";
@@ -389,20 +384,11 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
 	}
 	
     
-    
-    
-    
     // SEND MAIL
     
-    $retval = @mail($author_to, $subject, $message, $headers);
-    
-    
-    
+    $retval = mail($author_to, $subject, $message, $headers);
+   
     /*************/
-    
-    
-    
-    
     // Always set content-type when sending HTML email
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
@@ -411,7 +397,7 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
     
     if (!$retval) {
         $result["failure"] = true;
-        $result["message"] = 'Invalid query: ' . mysql_error();
+        $result["message"] = 'Mail Error: ' . $retval;
     } else {
         $result["success"] = true;
         $result["message"] = 'Message sent sucessfully';

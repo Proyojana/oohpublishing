@@ -132,7 +132,7 @@ tinymce.init({
 										Ext.Msg.alert('Message sent sucessfully', action.result.message);
 									},
 									failure:function(form, action){
-										Ext.Msg.alert('Send mail Failed!', action.result.errorMessage); 
+										Ext.Msg.alert('Send mail Failed!', action.result.message); 
 									}
 									
 								});
