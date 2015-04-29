@@ -325,23 +325,15 @@ function sendEmailVendor($vendor_from, $vendor_to, $vendor_cc, $vendor_message)
 
 function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
 {
-    
-    
-    
-    
-    $dat     = date("d/m/Y");
+	$dat     = date("d/m/Y");
     $subject = "Check" . ' ' . $dat;
     ob_start();
     
-    
-    
     $variable = ob_get_clean();
-    
-    
-    
-    
+   
     $variable = ob_get_clean();
-    
+    //$message = "msg";
+    $subject = "subject";
 	if($_FILES["file"]["name"]!="")
 	{
 		$upload_name = $_FILES["file"]["name"];
@@ -354,19 +346,11 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
 		$file = chunk_split(base64_encode($file));
 		$num  = md5(time());
 		fclose($fp);
-	}
-    
-    $message = "msg";
-    $subject = "subject";
-    
-    
-    
-    
+	
     /*************/
     
     //Normal headers
-    
-    
+	 
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: multipart/mixed; ";
     $headers .= "boundary=" . $num . "\r\n";
@@ -376,7 +360,7 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
     
     $headers .= "Message-ID: <" . gettimeofday() . " TheSystem@" . $_SERVER['SERVER_NAME'] . ">\r\n";
     $headers .= "X-Mailer: PHP v" . phpversion() . "\r\n";
-    
+    }
     // With message
     
     $headers .= "Content-Type: text/html; charset=iso-8859-1\r\n";
@@ -385,19 +369,26 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
     $headers .= "From:" . $author_from . "\r\n";
     $headers .= "Reply-To:" . $author_from . "\r\n";
     $headers .= "" . $author_message . "\n";
-    $headers .= "--" . $num . "\n";
+	
+    if($_FILES["file"]["name"]!=""){
+	
+	$headers .= "--" . $num . "\n";
+
     
     // Attachment headers
-    
+   
+	
+	 
     $headers .= "Content-Type:" . $upload_type . " ";
     $headers .= "name=\"" . $upload_name . "\"r\n";
     $headers .= "Content-Transfer-Encoding: base64\r\n";
     $headers .= "Content-Disposition: attachment; ";
     $headers .= "filename=\"" . $upload_name . "\"\r\n\n";
-	if($_FILES){
 		$headers .= "" . $file . "\r\n";
+		$headers .= "--" . $num . "--";
 	}
-    $headers .= "--" . $num . "--";
+	
+    
     
     
     
