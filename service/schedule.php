@@ -487,14 +487,16 @@ echo json_encode($result);
 function scheduleinfo($projectid) {
 		
 		$num_result = mysql_query("SELECT  schedule.stage_order as stageorder,
-		schedule.activity as activityid,
+		activity.name as activityid,
 		schedule.stage as stage,
 		schedule.estimated_daysperstage as estimated_daysperstage,
 		schedule.estimated_start_date as estimated_start_date,
 		schedule.actual_start_date as actual_start_date,
 		schedule.estimated_end_date as estimated_end_date,
 		schedule.actual_end_date as actual_end_date
-		from schedule WHERE flag = 0 and project_id = '".$projectid."' ")or die(mysql_error());
+		from schedule Inner Join
+  activity On schedule.activity =
+    activity.id WHERE schedule.flag = 0 and schedule.project_id = '".$projectid."' ")or die(mysql_error());
 		
 		
 		while($row=mysql_fetch_object($num_result))

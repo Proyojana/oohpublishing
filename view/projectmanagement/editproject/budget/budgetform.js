@@ -40,7 +40,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 			text : 'Budgets Account Receivable Details',
 			align : 'center',
 			x : 10,
-			y : 180,
+			y : 250,
 			width : 300,
 			style : {
 				'font-weight' : 'bold',
@@ -48,8 +48,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 		}, {
 			xtype : 'budinfogrid',
 			x : 5,
-			y : 200,
-			height:90
+			y : 280,
+			height:50
 		},
 		//Here adding Budgeted Expenses And Account Payables
 		{
@@ -58,7 +58,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 		 text : 'Budgeted Expenses And Account Payables',
 		 align:'center',
 		 x:10,
-		 y:330,
+		 y:390,
 		 allowBlank: false,
 		 width:300,
 		 style:{
@@ -68,8 +68,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 		 {
 		 	xtype:'accountReceivableInfoGrid',
 		 	x:5,
-		 	y:360,
-		 	width:750,
+		 	y:420,
+		 	
 		 },
 		 //Here adding the Budgeted Expenses And Account Payables Details
 		 {
@@ -78,7 +78,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 		 text : 'Budgeted Expenses And Account Payables Details',
 		 align:'center',
 		 x:10,
-		 y:490,
+		 y:610,
 		 allowBlank: false,
 		 width:300,
 		 style:{
@@ -88,8 +88,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 		 {
 		 	xtype:'budgetpayinfogrid',
 		 	x:5,
-		 	y:520,
-		 	height:90
+		 	y:640,
+		 	height:50
 		 },
 		 //Here adding the project Profit
 		 {
@@ -98,7 +98,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 		 text : 'Project Profit',
 		 align:'center',
 		 x:10,
-		 y:620,
+		 y:750,
 		 allowBlank: false,
 		 width:300,
 		 style:{
@@ -108,8 +108,8 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.budgetform', {
 		 {
 		 	xtype:'budgetprofit',
 		 	x:5,
-		 	y:640,
-		 	height:90
+		 	y:780,
+		 	height:50
 		 },
 
 		];

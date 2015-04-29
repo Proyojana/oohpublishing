@@ -40,7 +40,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.scheduleform',
 		 text : 'Schedule Header Data',
 		 align:'center',
 		 x:10,
-		 y:250,
+		 y:480,
 		 allowBlank: false,
 		 width:300,
 		 style:{
@@ -50,7 +50,7 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.schedule.scheduleform',
 		 {
 		 	xtype:'scheduledetails',
 		 	x:5,
-		 	y:270,
+		 	y:510,
 		 	height:90
 		 },
 

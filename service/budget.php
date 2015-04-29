@@ -1234,7 +1234,7 @@ Where
 	}
 	function getbudgetdetails($projectID) {
 		
-		$num_result = mysql_query("SELECT  budget_receivable.activity as activity,
+		$num_result = mysql_query("SELECT  activity.name as activity,
 		budget_receivable.currency_rate as currency_rate,
 		budget_receivable.unit_of_measurement as unit_of_measurement,
 		budget_receivable.no_of_unit as no_of_unit,
@@ -1242,7 +1242,17 @@ Where
 		budget_receivable.budgeted_usd_gbp as budgeted_usd_gbp,
 		budget_receivable.actual_usd_gbp as actual_usd_gbp
 		
-		from budget_receivable WHERE flag = 0 and project_id = '".$projectID."' ")or die(mysql_error());
+		FROM
+		
+		budget_receivable Inner Join
+		 activity On budget_receivable.activity =
+   			activity.id
+		Where
+		 budget_receivable.project_id ='".$projectID."'
+			And
+			  budget_receivable.flag = 0")or die(mysql_error());
+		
+		//from budget_receivable WHERE flag = 0 and project_id = '".$projectID."' ")or die(mysql_error());
 		
 		
 		while($row=mysql_fetch_object($num_result))
