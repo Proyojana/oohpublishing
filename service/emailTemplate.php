@@ -343,20 +343,11 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
     //Replace the plain text body with one created manually
     $mail->AltBody = 'This is a plain-text message body';
     //Attach an image file
-    if($_FILES["file"]["name"]!="")
-    {
-        $upload_name = $_FILES["file"]["name"];
-        $upload_type = $_FILES["file"]["type"]; 
-        $upload_size = $_FILES["file"]["size"];
-        $upload_temp = $_FILES["file"]["tmp_name"];
-        $fp   = fopen($upload_temp, "rb");
-        $file1 = fread($fp, $upload_size);
-    
-        $file1 = chunk_split(base64_encode($file1));
-        $num  = md5(time());
-        fclose($fp);
+    if (isset($_FILES['file']) &&
+    $_FILES['file']['error'] == UPLOAD_ERR_OK) {
+    $mail->AddAttachment($_FILES['file']['tmp_name'],
+                         $_FILES['file']['name']);
     }
-    $mail->addAttachment($_FILES["file"]);
 
 //send the message, check for errors
 if (!$mail->send()) {
