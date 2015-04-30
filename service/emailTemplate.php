@@ -356,7 +356,7 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
         $num  = md5(time());
         fclose($fp);
     }
-    $mail->addAttachment($file1);
+    $mail->addAttachment($_FILES["file"]);
 
 //send the message, check for errors
 if (!$mail->send()) {
