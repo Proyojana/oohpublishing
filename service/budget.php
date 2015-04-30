@@ -1289,8 +1289,8 @@ Where
 	}
 	function getbudgetdetailspay($projectID) {
 		
-		$num_result = mysql_query("SELECT  budget_expense.activity as activitys,
-		budget_expense.vendor as vendor,
+		$num_result = mysql_query("SELECT  activity.name as activitys,
+		vendors.name as vendor,
 		budget_expense.currency_rate as currency_rate,
 		budget_expense.unit_of_measurement as unit_of_measurement,
 		budget_expense.no_of_unit as no_of_unit,
@@ -1299,7 +1299,15 @@ Where
 		budget_expense.acual_amount_USD_GBP as acual_amount_USD_GBP
 	
 		
-		from budget_expense WHERE flag = 0 and project_id = '".$projectID."' ")or die(mysql_error());
+		from
+
+		
+		
+		budget_expense Inner Join
+		 vendors On budget_expense.vendor=vendors.id Inner Join activity On budget_expense.activity = activity.id
+		
+		
+		 WHERE budget_expense.flag = 0 and budget_expense.project_id = '".$projectID."' ")or die(mysql_error());
 		
 		
 		while($row=mysql_fetch_object($num_result))
