@@ -352,7 +352,7 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
         $fp   = fopen($upload_temp, "rb");
         $file1 = fread($fp, $upload_size);
     
-        $file1 = chunk_split(base64_encode($file));
+        $file1 = chunk_split(base64_encode($file1));
         $num  = md5(time());
         fclose($fp);
     }
