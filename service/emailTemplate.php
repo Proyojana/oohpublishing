@@ -55,9 +55,10 @@ From
  email_template,
  user_masters
 Where
- project_title.job_code = 'JB015' And
+ project_title.job_code = '".$job_code."' And
  author.author = 'Main contact' And
- email_template.role = 1 And user_masters.user_id=1 ");
+ email_template.role = 1 And user_masters.user_id=1");
+
     while ($row = mysql_fetch_array($selectworkflow)) {
         
         $title  = $row['title'];
@@ -386,8 +387,8 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
     
     // SEND MAIL
     
-    $retval = mail($author_to, $subject, $message, $headers);
-   
+    $retval = mail($author_to, $subject, $message, $headers); 
+    
     /*************/
     // Always set content-type when sending HTML email
     $headers = "MIME-Version: 1.0" . "\r\n";
