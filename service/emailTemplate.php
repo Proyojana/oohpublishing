@@ -330,13 +330,13 @@ function sendEmailAuthor($author_from, $author_to, $author_cc, $author_message)
 	//Create a new PHPMailer instance
     $mail = new PHPMailer;
     //Set who the message is to be sent from
-    $mail->setFrom($author_from, 'First Last');
+    $mail->setFrom($author_from, $author_from);
     //Set an alternative reply-to address
-    $mail->addReplyTo($author_from, 'First Last');
+    $mail->addReplyTo($author_from, $author_from);
     //Set who the message is to be sent to
-    $mail->addAddress($author_to, 'John Doe');
+    $mail->addAddress($author_to, $author_to);
     //Set the subject line
-    $mail->Subject = 'PHPMailer mail() test';
+    $mail->Subject = 'Email from OOH Publishing Project Management System';
     //Read an HTML message body from an external file, convert referenced images to embedded,
     //convert HTML into a basic plain-text alternative body
     $mail->msgHTML($author_message);
