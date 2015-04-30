@@ -55,7 +55,7 @@ From
  email_template,
  user_masters
 Where
- project_title.job_code = 'JB015' And
+ project_title.job_code = '".$job_code."' And
  author.author = 'Main contact' And
  email_template.role = 1 And user_masters.user_id=1 ");
     while ($row = mysql_fetch_array($selectworkflow)) {
