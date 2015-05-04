@@ -143,7 +143,7 @@ Where
 							
 			}
 			
-			$budget=mysql_query("Select activity.name, budget_expense.no_of_unit, budget_expense.acual_amount_USD, budget_expense.actual_amount_GBP
+			$budget=mysql_query("Select activity.name, budget_expense.no_of_unit, budget_expense.budgeted_amount_USD_GBP, budget_expense.acual_amount_USD_GBP
 										From budget_expense Inner Join activity On budget_expense.activity = activity.id
 										 Where  budget_expense.project_id= '" . $project_id . "'");
 				while($row=mysql_fetch_array($budget))
@@ -151,8 +151,8 @@ Where
 					
 					$bActivity[]= $row['name'];
 					$actualUnit[]= $row['no_of_unit'];
-					$actual_amount_USD[]= $row['actual_amount_USD']; 
-					$actual_amount_GBP[]= $row['actual_amount_GBP'];
+					$actual_amount_USD[]= $row['budgeted_amount_USD_GBP']; 
+					$actual_amount_GBP[]= $row['acual_amount_USD_GBP'];
 					
 				}
 					
@@ -425,7 +425,7 @@ Where
 							
 			}
 			
-				$budget=mysql_query("Select activity.name, budget_expense.no_of_unit, budget_expense.acual_amount_USD, budget_expense.actual_amount_GBP
+				$budget=mysql_query("Select activity.name, budget_expense.no_of_unit, budget_expense.budgeted_amount_USD_GBP, budget_expense.acual_amount_USD_GBP
 										From budget_expense Inner Join activity On budget_expense.activity = activity.id
 										 Where  budget_expense.project_id= '" . $project_id . "'");
 				while($row=mysql_fetch_array($budget))
@@ -433,8 +433,8 @@ Where
 					
 					$bActivity[]= $row['name'];
 					$actualUnit[]= $row['no_of_unit'];
-					$actual_amount_USD[]= $row['actual_amount_USD']; 
-					$actual_amount_GBP[]= $row['actual_amount_GBP'];
+					$actual_amount_USD[]= $row['budgeted_amount_USD_GBP']; 
+					$actual_amount_GBP[]= $row['acual_amount_USD_GBP'];
 					
 				}
 			
