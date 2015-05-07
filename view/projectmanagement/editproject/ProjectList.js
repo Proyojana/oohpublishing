@@ -633,18 +633,19 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.ProjectList', {
 								
 								
 								//Actual profit and %
-								total_profit=((total_USD_Payable/conversion_rate)+total_GBP_Payable)-((total_USD/conversion_rate)+total_GBP);
-								total_profit_percentage=(((total_pay_budgeted_USD/conversion_rate)+total_GBP_Payable)/((total_USD/conversion_rate)+total_GBP));
-								
+								total_profit=-((total_USD_Payable/conversion_rate)+total_GBP_Payable)+((total_USD/conversion_rate)+total_GBP);
+								//total_profit_percentage=(((total_pay_budgeted_USD/conversion_rate)+total_GBP_Payable)/((total_USD/conversion_rate)+total_GBP));
+								total_profit_percentage=(total_profit/((total_USD/conversion_rate)+total_GBP)*100);
 								//alert(total_profit_percentage);
 								
 								Ext.getCmp('edit_profit_GBP').setValue(total_profit);
 								Ext.getCmp('edit_profit_percentage').setValue(total_profit_percentage);
 								
 								//Budgeted profit and %
-								budgeted_total_profit=((total_pay_budgeted_USD/conversion_rate)+total_pay_budgeted_GBP)-((total_USD/conversion_rate)+total_GBP);
-						        budgeted_total_profit_percentage=(((total_pay_budgeted_USD/conversion_rate)+total_pay_budgeted_GBP)/((total_budgeted_USD/conversion_rate)+total_budgeted_GBP));
-                                
+								budgeted_total_profit=-((total_pay_budgeted_USD/conversion_rate)+total_pay_budgeted_GBP)+((total_USD/conversion_rate)+total_GBP);
+						        //budgeted_total_profit_percentage=(((total_pay_budgeted_USD/conversion_rate)+total_pay_budgeted_GBP)/((total_budgeted_USD/conversion_rate)+total_budgeted_GBP));
+                                budgeted_total_profit_percentage=(budgeted_total_profit/((total_USD/conversion_rate)+total_GBP)*100);
+								
                                 Ext.getCmp('edit_profit_budget_GBP').setValue(budgeted_total_profit);
                                 Ext.getCmp('edit_profit_budget_percentage').setValue(budgeted_total_profit_percentage);
 						}

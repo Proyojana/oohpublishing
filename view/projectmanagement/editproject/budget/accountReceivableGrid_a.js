@@ -275,6 +275,29 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 			align: 'center',
 			editor: {
 				xtype: 'textfield',
+				listeners: {
+					change: function(field, newValue, oldValue) {
+
+						var grid = this.up().up();
+						var selModel = grid.getSelectionModel();
+						var rate = selModel.getSelection()[0].data.rate_USD_GBP;
+						var actual = newValue * rate;
+						selModel.getSelection()[0].set('budgeted_amount_USD_GBP', actual);
+						selModel.getSelection()[0].set('actual_amount_USD_GBP', actual);
+
+
+						var total_USD = 0;
+						var total_GBP = 0;
+						var myStore = Ext.getCmp('editaccountReceiveGrid_a').getStore();
+						myStore.each( function(rec) {
+							total_USD = total_USD + parseFloat(rec.get('actual_amount_USD'));
+							total_GBP = total_GBP + parseFloat(rec.get('actual_amount_GBP'));
+						});
+						Ext.getCmp('edit_total_receive_USD').setValue(total_USD);
+						Ext.getCmp('edit_total_receive_GBP').setValue(total_GBP);
+
+					}
+				}
 			}
 		},
 		/*{
@@ -363,14 +386,11 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.accountReceivabl
 
 						var grid = this.up().up();
 						var selModel = grid.getSelectionModel();
-						var rate = selModel.getSelection()[0].data.rate_USD;
-						var rate1 = selModel.getSelection()[0].data.rate_GBP;
+						var rate = selModel.getSelection()[0].data.rate_USD_GBP;
 						var actual = newValue * rate;
-						var actual1 = newValue * rate1;
-						selModel.getSelection()[0].set('budgeted_amount_USD', actual);
-						selModel.getSelection()[0].set('budgeted_amount_GBP', actual1);
-						selModel.getSelection()[0].set('actual_amount_USD', actual);
-						selModel.getSelection()[0].set('actual_amount_GBP', actual1);
+						selModel.getSelection()[0].set('budgeted_amount_USD_GBP', actual);
+						selModel.getSelection()[0].set('actual_amount_USD_GBP', actual);
+
 
 						var total_USD = 0;
 						var total_GBP = 0;

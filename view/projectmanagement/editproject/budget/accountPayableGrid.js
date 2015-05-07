@@ -459,14 +459,12 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 
 						var grid = this.up().up();
 						var selModel = grid.getSelectionModel();
-						var rate = selModel.getSelection()[0].data.rate_USD;
-						var rate1 = selModel.getSelection()[0].data.rate_GBP;
+						//var rate = selModel.getSelection()[0].data.rate_USD;
+						//var rate1 = selModel.getSelection()[0].data.rate_GBP;
+						var rate = selModel.getSelection()[0].data.rate_USD_GBP;
 						var actual = newValue * rate;
-						var actual1 = newValue * rate1;
-						selModel.getSelection()[0].set('budgeted_amount_USD', actual);
-						selModel.getSelection()[0].set('budgeted_amount_GBP', actual1);
-						selModel.getSelection()[0].set('actual_amount_USD', actual);
-						selModel.getSelection()[0].set('actual_amount_GBP', actual1);
+						selModel.getSelection()[0].set('budgeted_amount_USD_GBP', actual);
+						selModel.getSelection()[0].set('actual_amount_USD_GBP', actual);
 
 						var total_USD = 0;
 						var total_GBP = 0;

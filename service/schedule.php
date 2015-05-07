@@ -171,7 +171,7 @@ function insertSchedule($scheduleid,$projectid,$workflow,$stageorder,$activity,$
 				else
 				{
 					$result["success"] = true;
-					$result["message"] = "shedule saved successfully";
+					$result["message"] = "schedule saved successfully";
 				}
 		  }
 			
@@ -188,7 +188,7 @@ function insertSchedule($scheduleid,$projectid,$workflow,$stageorder,$activity,$
 				else
 				{
 					$result["success"] = true;
-					$result["message"] = "shedule inserted successfully";
+					$result["message"] = "schedule inserted successfully";
 				}
 			}
 		}
