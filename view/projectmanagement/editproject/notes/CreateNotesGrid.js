@@ -159,63 +159,27 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.notes.CreateNotesGrid',
 					});
 					notes.insert(notes.getCount(), r);
 				}
-			},
-        /*   {
-				xtype:'button',
-				text:'Save',
-				pressed:true,
-				width:100,
-				//	margin:'0 0 0 100',
-				handler: function() {
-					var job_code=Ext.getCmp('job_code').getValue();
-					var project_id=Ext.getCmp('editnotesHeader_projectID').getValue();
+			},{
+                               xtype : 'button',
+                               id : 'edit_refresh_notes',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		notes.reload();
+            				 }                           
+        },
+       
 
-					var dateresolved='';
-					var narrative='';
-					var dateraised='';
-					var notes_id='';
-					var grid=Ext.getCmp('editnotesgrid');
-
-					var myStore = Ext.getCmp('editnotesgrid').getStore();
-					myStore.each( function(rec) {
-
-						dateresolved=dateresolved+rec.get('dateresolved')+',';
-						narrative=narrative+rec.get('narrative')+',';
-						dateraised=dateraised+rec.get('dateraised')+',';
-						notes_id=notes_id+rec.get('id')+',';
-
-					});
-					var conn = new Ext.data.Connection();
-					conn.request({
-						url: 'service/notes.php',
-						method: 'POST',
-						params : {
-							action:2,
-							project_id:project_id,
-							dateresolved:dateresolved,
-							narrative:narrative,
-							dateraised:dateraised,
-							notes_id:notes_id
-						},
-						success: function(response) {
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message);
-							//refresh grid
-							var grid3=Ext.getCmp('editnotesgrid');
-							grid3.getStore().load({
-								params: {
-									action:3,
-									project_id:project_id
-								}
-							});
-
-						}
-					});
-
-				}
-			},*/
-
-			]
+			],
+			listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						}	
 
 		}),
 

@@ -201,63 +201,32 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.PublisherGrid', {
 		}];
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
-			displayInfo: true,
+			
+			items:[
+			{
+                               xtype : 'button',
+                               id : 'edit_refresh_current _proj',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		completed.reload();
+            				 }                           
+        },
+			
+			
+				],
+				listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						},
+					displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
-			items:[
-/*{
-xtype : 'button',
-id : 'archive',
-text : 'Archive',
-pressed:true,
-x : 500,
-y : 10,
-width : 100,
-height : 25,
-handler : function() {
-
-var selection = Ext.getCmp('publishergridCP').getSelectionModel().getSelection();
-if(selection.length==0)
-{
-Ext.Msg.alert("Select atleast one");
-}else
-{
-var length=selection.length;
-
-}
-var project_id='';
-for (var i=0; i < selection.length; i++)
-{
-if((length-1)>=i)
-{
-project_id = project_id + selection[i].data.id+',';
-
-}
-}
-
-var conn = new Ext.data.Connection();
-conn.request({
-url: 'service/emailTemplate.php',
-method: 'POST',
-params : {action:8,project_id:project_id},
-success:function(response){
-obj = Ext.JSON.decode(response.responseText);
-Ext.Msg.alert('Archived successfully', obj.message);
-Ext.getCmp('publishergridCP').getStore().reload();
-Ext.getCmp('archivesgrid').getStore().reload();
-//var grid3=Ext.getCmp('publishergridCP');
-//grid3.getStore().load({params:{action:1}});
-//Ext.getCmp('stagesgrid').getView().refresh();
-},
-failure:function(response){
-obj = Ext.JSON.decode(response.responseText);
-Ext.Msg.alert('saving Failed !', obj.message);
-}
-});
-
-
-}
-}*/],
 		}),
 		
 		this.callParent(arguments);

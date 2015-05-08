@@ -332,58 +332,26 @@ Ext.define('MyDesktop.view.projectmanagement.completedprojects.accountReceivable
 
         this.bbar = Ext.create('Ext.PagingToolbar', {
             store: this.store,
-            items: [/*{
-                    xtype: 'button',
-                    text: 'Insert New Row',
-                    pressed: true,
-                    x: 500,
-                    y: 10,
-                    width: 100,
-                    height: 25,
-                    handler: function() {
-                        var project_id = Ext.getCmp('editbudgetHeader_projectID').getValue();
-                        var conn = new Ext.data.Connection();
-                        conn.request({
-                            url: 'service/budget.php',
-                            method: 'POST',
-                            params: {
-                                action: 17,
-                                project_id: project_id
-                            },
-                            success: function(response) {
-                                obj1 = Ext.JSON.decode(response.responseText);
-                                var confirm = obj1.data.confirmed_extent;
-                                var cast = obj1.data.castoff_extent;
-                                if (confirm.data != null) {
-                                    var r = Ext.create('MyDesktop.model.Receive_a', {
-                                        budgetReceive_id: '',
-                                        activity_name: '',
-                                        no_of_unit: confirm,
-                                        rate_USD: '',
-                                        rate_GBP: '',
-                                        amt_USD: '',
-                                        amt_GBP: ''
-                                    });
-                                    budget.insert(budget.getCount(), r);
-                                } else {
-                                    var r = Ext.create('MyDesktop.model.Receive_a', {
-                                        budgetReceive_id: '',
-                                        activity_name: '',
-                                        no_of_unit: cast,
-                                        rate_USD: '',
-                                        rate_GBP: '',
-                                        amt_USD: '',
-                                        amt_GBP: ''
-                                    });
-                                    budget.insert(budget.getCount(), r);
-                                }
-                            }
-                        });
+            items: [
+            {
+                               xtype : 'button',
+                               id : 'edit_refresh_new_rec_budget',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		budget.reload();
+            				 }                           
+        },
 
-                    }
-                },*/
-
-            ]
+            ],listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						}
         });
 
 

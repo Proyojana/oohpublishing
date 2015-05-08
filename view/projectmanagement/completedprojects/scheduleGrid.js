@@ -139,7 +139,24 @@ initComponent: function() {
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
 		    items:[
-			]
+		    {
+                               xtype : 'button',
+                               id : 'edit_refresh_schedule',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		ci.reload();
+            				 }                           
+        },
+			],listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						}	
 
 
 		}),

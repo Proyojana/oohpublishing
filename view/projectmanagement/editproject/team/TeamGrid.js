@@ -153,36 +153,24 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.team.TeamGrid', {
                 				//store.getCount()-1
                 		       team.insert(team.getCount(), r);
             				 }                           
-        },
-			/*{
-				xtype:'button',
-				text:'Save',
-				pressed:true,
-				width:100,
-				handler:function(){
-					var project_id=Ext.getCmp('editteamHeader_projectID').getValue(); 
-					var role='';
-					var name='';
-					var email='';
-					var myStore = Ext.getCmp('editteamgrid').getStore();
-					myStore.each(function(rec) {
-						role=role+rec.get('role')+',';
-						name=name+rec.get('name')+',';
-						email=email+rec.get('email')+',';
-						});
-					var conn = new Ext.data.Connection();
-					 conn.request({
-						url: 'service/Users.php',
-						method: 'POST',
-						params : {action:11,project_id:project_id,role:role,name:name,email:email},
-						success:function(response){
-							obj = Ext.JSON.decode(response.responseText);
-							Ext.Msg.alert('Message', obj.message); 
-						}
-					});
-					
-				}
-			}*/]
+        },{
+                               xtype : 'button',
+                               id : 'edit_refresh_new_team',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		team.reload();
+            				 }                           
+        }
+			],listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						}	
 			
 						
 		}),

@@ -176,42 +176,26 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.currentprojectArtwo
 		];
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 			 	store : this.store,
-			items:[
-			/*{
+			items:[			
+			{
                                xtype : 'button',
-                               id : 'edit_add_new_artwork',
-                               text : 'Insert New Row',
+                               id : 'edit_refresh_artwork',
+                               text : 'Refresh',
                                pressed:true,
-                             
+                               x : 500,
+                               y : 10,
                                width : 100,
                                height : 25,
                                handler : function() {
-                              // 	alert("insert");
-               						 var r = Ext.create('MyDesktop.model.Artwork', {
-               						 	id:'',
-               						 figurenumber:'',
-                    				inputformat: '',
-                    				resolution: '',
-                 					colourmode: '',
-                    				vendorassessment: '',
-                    				cnvrt: '',
-                    				redrawsimple: '',
-                    				redrawcomplex: '',
-                    				relabel: '',                   				
-                    				finalartwrk: '',
-                    				cost: '',
-                    				comments: ''
-                				});
-                		       author.insert(author.getCount(), r);
+                              		author.reload();
             				 }                           
-        },*/
-			
-			
-			{
-				
-			}
+        },
 		
-			],
+			],listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						},
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display"

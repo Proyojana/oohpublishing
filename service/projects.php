@@ -574,43 +574,39 @@ function pteaminfo($project_id)
 		$data1 = "";
 		$data2 = "";
 				$result1 = mysql_query ("Select 
-  project_team.project_manager as pmanager,
-  project_team.production_editor as peditor,
-  project_team.proof_reader as preader,
-  project_team.indexer as indexer,
-  project_team.copy_editor as ceditor
+  *
 From
   project_team
 Where
   project_team.project_id = '" . $project_id . "'");
 			while($row = mysql_fetch_array($result1)) {
-				
-			$data1 = $row['pmanager'];
-			$data2 = $row['peditor'];
-			$data3 = $row['preader'];
-			$data4 = $row['ceditor'];
-			$data5 = $row['indexer'];
 			
+			switch($row['role'])
+			{
+				case 'Project Manager' :	$result["Project Manager"] = $row['user'];
+											break;
+				case 'Production Editor' :	$result["Production Editor"] = $row['user'];
+											break;
+				case 'Copy Editor' :	$result["Copy Editor"] = $row['user'];
+											break;
+				case 'Proof Reader' :	$result["Proof Reader"] = $row['user'];
+											break;
+				case 'Indexer' :	$result["Indexer"] = $row['user'];
+											break;
+				case 'Typesetter' :	$result["Typesetter"] = $row['user'];
+											break;							
+											
+										
+			}
+		
 		}
 		if(!$result1)
 			{
 				$result[failure] = true;
 				$result[message] =  'Invalid query: ' . mysql_error();
 			}
-			else
-			{
-				$result["Production Editor"] = $data2;
-				$result["Project Manager"] = $data1;
-				$result["Copy Editor"] = $data3;
-				$result["Proof Reader"] = $data4;
-				$result["Indexer"] = $data5;
-								
-			}
-       /*	while($row=mysql_fetch_object($result1))
-	   	{
-			$result ["data"] = $row;
-	  	}*/
-      	echo(json_encode($result));
+			
+	   	echo(json_encode($result));
 	}
 
 function pbudgetinfo($project_id)

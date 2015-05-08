@@ -53,11 +53,32 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.NotesGrid', {
 		this.bbar = Ext.create('Ext.PagingToolbar', {  
 
 			store : this.store,
+			items:[
+			{
+                               xtype : 'button',
+                               id : 'edit_refresh_notes',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		notes.reload();
+            				 	}                           
+        	},
+			
+			
+			],
+			listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						},	
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',
 			emptyMsg: "No topics to display",
-			items:[
-			]
+			
 			
 		}),
 		

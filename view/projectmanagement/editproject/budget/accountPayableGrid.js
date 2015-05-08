@@ -841,9 +841,26 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.budget.editaccountPayab
 					 });
                						
             				 }                           
+        },{
+                               xtype : 'button',
+                               id : 'edit_refresh_new_pay_budget',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		budget.reload();
+            				 }                           
         },
         
-        ]
+        ],
+				listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						}	
 			
 		});
 		

@@ -212,7 +212,19 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.ContribGrid', {
 					});
 					contributor.insert(contributor.getCount(), r);
 				}
-			},
+			},{
+                               xtype : 'button',
+                               id : 'edit_refresh_new_con_author',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		contributor.reload();
+									}                           
+							},	
 
 			],
 			displayInfo: true,

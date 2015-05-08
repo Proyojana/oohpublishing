@@ -87,6 +87,26 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.Author', {
 
 ];
 		this.bbar = Ext.create('Ext.PagingToolbar', {
+			items:[
+			{
+                               xtype : 'button',
+                               id : 'edit_refresh_new_author',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		author.reload();
+            				 }                           
+        },
+			],
+			listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						},
 			store : this.store,
 			displayInfo: true,
 			displayMsg: 'Displaying topics {0} - {1} of {2}',

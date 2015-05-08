@@ -205,7 +205,9 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
 		];
 		this.bbar = Ext.create('Ext.PagingToolbar', {
 			store : this.store,
-						   items:[{
+			
+						   items:[
+							{
                                xtype : 'button',
                                id : 'edit_add_new_author',
                                text : 'Insert New Row',
@@ -226,13 +228,31 @@ Ext.define('MyDesktop.view.projectmanagement.editproject.author.AuthorGrid', {
                     				no_proof: ''
                 				});
                 		       author.insert(author.getCount(), r);
-            				 }                           
-        },
+							   //author.reload();
+								}                           
+							},
+							{
+                               xtype : 'button',
+                               id : 'edit_refresh_new_author',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		author.reload();
+									}                           
+							},	
         
-        ],
-			displayInfo: true,
-			displayMsg: 'Displaying topics {0} - {1} of {2}',
-			emptyMsg: "No topics to display"
+						],
+						listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						}
+			
+			 
 		}),
 
 		this.callParent(arguments);

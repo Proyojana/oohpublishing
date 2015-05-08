@@ -263,58 +263,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.accountReceivableGr
 			renderer: Ext.util.Format.numberRenderer('000000.00'),
 			
 		},
-               /* {
-                    text: 'Actual Amount',
-                    columns: [{
-                        dataIndex: 'actual_amount_USD',
-                        text: '$',
-                        align: 'center',
-                        editor: {
-                            xtype: 'textfield',
-							listeners: {
-                            change: function(field, newValue, oldValue) {
-								var calcOldValue = parseFloat(oldValue);
-								var calcNewValue = parseFloat(newValue);
-								if(oldValue === null || oldValue === undefined || oldValue === '' || oldValue === 'NaN' || oldValue === NaN)
-									calcOldValue = 0;
-								if(newValue === null || newValue === undefined || newValue === '' || newValue === 'NaN' || newValue === NaN)
-								{
-									calcNewValue = 0;
-									field.setValue('0.00');
-								}
-								var newUsdValue = parseFloat(Ext.getCmp('edit_total_receive_USD').getValue())- parseFloat(calcOldValue) + parseFloat(calcNewValue);
-								Ext.getCmp('edit_total_receive_USD').setValue(newUsdValue);
-                            }
-                        }
-                        }
-
-
-                    }, {
-                        dataIndex: 'actual_amount_GBP',
-                        text: '£',
-                        align: 'center',
-                        editor: {
-                            xtype: 'textfield',
-							listeners: {
-                            change: function(field, newValue, oldValue) {
-								var calcOldValue = parseFloat(oldValue);
-								var calcNewValue = parseFloat(newValue);
-								if(oldValue === null || oldValue === undefined || oldValue === '' || oldValue === 'NaN' || oldValue === NaN)
-									calcOldValue = 0;
-								if(newValue === null || newValue === undefined || newValue === '' || newValue === 'NaN' || newValue === NaN)
-								{
-									calcNewValue = 0;
-									field.setValue('0.00');
-								}
-								var newGbpValue = parseFloat(Ext.getCmp('edit_total_receive_GBP').getValue())- parseFloat(calcOldValue) + parseFloat(calcNewValue);
-								Ext.getCmp('edit_total_receive_GBP').setValue(newGbpValue);
-                            }
-
-                            
-                        }
-                        }
-                    }]
-                }*/
+               
 
 
                 
@@ -325,58 +274,26 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.accountReceivableGr
 
         this.bbar = Ext.create('Ext.PagingToolbar', {
             store: this.store,
-            items: [/*{
-                    xtype: 'button',
-                    text: 'Insert New Row',
-                    pressed: true,
-                    x: 500,
-                    y: 10,
-                    width: 100,
-                    height: 25,
-                    handler: function() {
-                        var project_id = Ext.getCmp('editbudgetHeader_projectID').getValue();
-                        var conn = new Ext.data.Connection();
-                        conn.request({
-                            url: 'service/budget.php',
-                            method: 'POST',
-                            params: {
-                                action: 17,
-                                project_id: project_id
-                            },
-                            success: function(response) {
-                                obj1 = Ext.JSON.decode(response.responseText);
-                                var confirm = obj1.data.confirmed_extent;
-                                var cast = obj1.data.castoff_extent;
-                                if (confirm.data != null) {
-                                    var r = Ext.create('MyDesktop.model.Receive_a', {
-                                        budgetReceive_id: '',
-                                        activity_name: '',
-                                        no_of_unit: confirm,
-                                        rate_USD: '',
-                                        rate_GBP: '',
-                                        amt_USD: '',
-                                        amt_GBP: ''
-                                    });
-                                    budget.insert(budget.getCount(), r);
-                                } else {
-                                    var r = Ext.create('MyDesktop.model.Receive_a', {
-                                        budgetReceive_id: '',
-                                        activity_name: '',
-                                        no_of_unit: cast,
-                                        rate_USD: '',
-                                        rate_GBP: '',
-                                        amt_USD: '',
-                                        amt_GBP: ''
-                                    });
-                                    budget.insert(budget.getCount(), r);
-                                }
-                            }
-                        });
-
-                    }
-                },*/
-
-            ]
+            items: [
+{
+                               xtype : 'button',
+                               id : 'edit_refresh_new_rec_budget',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		budget.reload();
+            				 }                           
+        },
+            ],
+            listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						},
         });
 
 
