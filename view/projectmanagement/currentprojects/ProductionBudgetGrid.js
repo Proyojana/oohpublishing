@@ -5,7 +5,7 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGri
 	closeAction: 'hide',
 	
 	//height:200,
-	requires:['MyDesktop.store.Budget'],
+	requires:['MyDesktop.store.ProductionReportBudget'],
 	//title:'Budget',
 	id:'pbudgetgrid',
 	
@@ -15,24 +15,10 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGri
 		function color(value, metaData, record, rowIndex, colIndex,store){
 		return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 		}
-		//load stage
-		var stage = Ext.create('MyDesktop.store.Stages');
-		stage.load({
-			params: {
-				start: 0,
-				limit: 50
-			}
-		});
-		//load activity combo
-		var activity = Ext.create('MyDesktop.store.ProductionStages');
-		activity.load({
-			params: {
-				start: 0,
-				limit: 50
-			}
-		});
+	
+		
 		//load budget store
-		var budget = Ext.create('MyDesktop.store.Budget');
+		var budget = Ext.create('MyDesktop.store.ProductionReportBudget');
 		budget.load({
 			params: {
 				start: 0,
@@ -48,50 +34,36 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.ProductionBudgetGri
 		
 	
 		        {				
-					dataIndex: 'activityid',
+					dataIndex: 'name',
 					text: 'Activity',
-					 flex: 2,
-					 
-					 editor: { 
-						xtype:'combo',
-						store: activity,
-						queryMode: 'local',
-						displayField: 'product_name',
-						valueField: 'product_id',
-						},
-						renderer: function(value) {
-					var index = activity.find('product_id', value);
-					if (index != -1) {
-					return activity.getAt(index).data.product_name;
-					}
-					return value;
-					}
-						
-					
+					flex: 2			 
 				},
 				{
-					dataIndex: 'stage',
-					text: 'Stage',
-					flex: 2,
-				},
-				 
-				{
-					dataIndex: 'unit',
-					text: 'Unit',
+					dataIndex: 'currency_rate',
+					text: 'Currency',
 					flex: 2,
 					
-				},
-								
+				},	
 	     	   {
-	     			dataIndex:'actual_unit',
-		        	text: 'No. of Units Actual',
+	     			dataIndex:'unit_of_measurement',
+		        	text: 'UOM',
 		        	flex: 2,
 		        	
 		        },
+				{
+					dataIndex:'no_of_unit',
+		        	text: 'No of Units',
+		        	flex: 2,
+				},
+				{
+					dataIndex:'rate_USD_GBP',
+		        	text: 'Rate / Unit',
+		        	flex: 2,
+				},
 		       		        			
 				{
-		        	dataIndex:'actual_amount_USD',
-		        	text: 'Actual Amount in $',
+		        	dataIndex:'acual_amount_USD_GBP',
+		        	text: 'Actual Amount',
 		       },
 		      
 			

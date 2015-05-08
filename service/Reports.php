@@ -126,20 +126,18 @@ Where
 			
 			}	
 			
-			$team=mysql_query("Select
-  users.firstname,
-  
-  project_team.role
+			$team=mysql_query("Select 
+  project_team.role,
+  project_team.user
 From
-  users Inner Join
-  project_team On users.id = project_team.user
+  project_team
 Where
   project_team.project_id = '" . $project_id . "'");
 			while($team1=mysql_fetch_array($team))
 			{
 				
-				$name[]= $team1['firstname'];
 				$role[]= $team1['role'];
+				$user[]= $team1['user'];
 							
 			}
 			
@@ -266,16 +264,16 @@ Where
 		</td>
 		<td style="padding-left:10px;">
 			<b>
-			Name
+			User
 			</b>
 		</td>
 		
 	</tr>
-		<?php for($i=0;$i<count($name);$i++)
+		<?php for($i=0;$i<count($role);$i++)
 		{
 			echo "<tr>";
 			echo "<td width='20%' style='padding-left:10px;'>" .$role[$i]."</td>";
-			echo "<td width='80%' style='padding-left:10px;'>" .$name[$i]. "</td>";
+			echo "<td width='80%' style='padding-left:10px;'>" .$user[$i]. "</td>";
 			
 			echo "</tr>";
 			
@@ -409,19 +407,19 @@ Where
 			}	
 			
 			$team=mysql_query("Select
-  users.firstname,
+  project_team.role,
   
-  project_team.role
+  project_team.user
 From
-  users Inner Join
-  project_team On users.id = project_team.user
+  
+  project_team 
 Where
   project_team.project_id = '" . $project_id . "'");
 			while($team1=mysql_fetch_array($team))
 			{
 				
-				$name[]= $team1['firstname'];
 				$role[]= $team1['role'];
+				$user[]= $team1['user'];
 							
 			}
 			
@@ -574,16 +572,16 @@ Where
 		</td>
 		<td style="padding-left:10px;">
 			<b>
-			Name
+			User
 			</b>
 		</td>
 		
 	</tr>
-		<?php for($i=0;$i<count($name);$i++)
+		<?php for($i=0;$i<count($role);$i++)
 		{
 			echo "<tr>";
 			echo "<td width='20%' style='padding-left:10px;'>" .$role[$i]."</td>";
-			echo "<td width='80%' style='padding-left:10px;'>" .$name[$i]. "</td>";
+			echo "<td width='80%' style='padding-left:10px;'>" .$user[$i]. "</td>";
 			
 			echo "</tr>";
 			

@@ -402,8 +402,8 @@ Ext.define('MyDesktop.view.projectmanagement.currentprojects.PublisherGrid', {
 					var gridBudget=Ext.getCmp('pbudgetgrid');
 					gridBudget.getStore().load({
 						params: {
-							action:1,
-							job_code:job_code
+							action:33,
+							projectid:project_id
 						}
 					});
 										

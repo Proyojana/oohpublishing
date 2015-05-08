@@ -3,7 +3,7 @@
 include("config.php");
 include("../inc/php/encryptDecrypt.php");
 //$id=$_SESSION['user_no'];
-	switch($_POST["action"]) /*Read action sent from front-end */
+	switch($_POST['action']) /*Read action sent from front-end */
 	{
 		case 1:
 			getActivity($_POST['job_code']);
@@ -101,10 +101,13 @@ include("../inc/php/encryptDecrypt.php");
 	case 32:
 			getbudgetprofit($_POST['projectID']);
 			break;
-		default: 
+	case 33:
+			getProductionReport($_POST['projectid']);
+			break;
+	default: 
 			break;
 	}
-	function getActivity($job_code/*$workflowid,$projectid*/)
+	function getActivity($job_code)
 	{
 		//echo $job_code;
 		$workflow = mysql_query("select workflow, id from project_title where job_code = '".$job_code."'");
@@ -1367,4 +1370,20 @@ Where
 		}
 		
 	}
+	
+	function getProductionReport($projectid){
+		$result1 = mysql_query("Select activity.name, budget_expense.currency_rate, budget_expense.unit_of_measurement, budget_expense.no_of_unit, budget_expense.rate_USD_GBP, budget_expense.acual_amount_USD_GBP
+								From budget_expense Inner Join activity On budget_expense.activity = activity.id
+								Where  
+								budget_expense.activity != '0' 
+								And 
+								project_id = '".$projectid."'");
+		
+		while($row=mysql_fetch_object($result1))
+		{
+			$data [] = $row;
+		}
+	   	echo'({"results":'.json_encode($data).'})';
+	}
+	
 	?>
