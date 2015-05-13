@@ -309,7 +309,7 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
                 		       ratecard.insert(ratecard.getCount(), r);
             				 }                           
         },
-				{
+				/*{
 				xtype:'button',
 				text:'Save',
 				pressed:true,
@@ -362,8 +362,26 @@ return '<span style="background-color:#c0c0c0;">' + value + '</span>';
 									}
 								});
 				}
-			},
-			]
+			},*/
+			{
+                               xtype : 'button',
+                               id : 'edit_refresh_new_author',
+                               text : 'Refresh',
+                               pressed:true,
+                               x : 500,
+                               y : 10,
+                               width : 100,
+                               height : 25,
+                               handler : function() {
+                              		ratecard.reload();
+									}                           
+							},
+			],
+			listeners: {
+							afterrender : function() {
+								this.child('#refresh').hide();
+							}		
+						}
 		}),
 		
 		this.callParent(arguments);
